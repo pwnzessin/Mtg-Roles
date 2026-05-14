@@ -8,9 +8,14 @@ Original Google Doc mit Kommentaren:
 
 Regeln für die txt Datei Struktur:
 
-<TITLE>The Illusionist</TITLE>
-<ROLE>Renegade</ROLE>
+<TITLE>Cardname</TITLE>
+
+<ROLE>Roletype</ROLE>
+
 <RULES>
+
 Rulestext
+
 Rulestext
+
 </RULES>
