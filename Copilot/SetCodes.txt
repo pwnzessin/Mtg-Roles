@@ -1,0 +1,5 @@
+Assassin:PD3 c
+King:v11 r
+Bandit:ktk m
+Renegade:2xm m
+Guardian:clb u

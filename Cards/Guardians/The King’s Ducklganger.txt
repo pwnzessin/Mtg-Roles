@@ -1,5 +1,6 @@
 <TITLE>The King’s Ducklganger</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 - Unveil {5}  
 - When The King’s Ducklganger is revealed, create a personal decoy Planeswalker-Duck token under the King’s control with

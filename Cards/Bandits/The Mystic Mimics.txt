@@ -1,5 +1,6 @@
 <TITLE>The Mystic Mimics</TITLE>
 <ROLE>Bandit</ROLE>
+<SETCODE>ktk m</SETCODE>
 <RULES>
 Unveil {1}  
 When The Mystic Mimics are unveiled, copy target ability (that isn’t a mana ability), instant or sorcery spell. You may choose new targets for the copy.  

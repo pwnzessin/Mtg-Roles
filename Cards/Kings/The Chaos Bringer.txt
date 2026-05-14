@@ -1,5 +1,6 @@
 <TITLE>The Chaos Bringer</TITLE>
 <ROLE>King</ROLE>
+<SETCODE>v11 r</SETCODE>
 <RULES>
 At the beginning of your upkeep, roll a D6.   
 - 1 \- Surveil 1.  

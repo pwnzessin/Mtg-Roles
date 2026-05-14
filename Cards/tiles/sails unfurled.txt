@@ -1,5 +1,6 @@
 <TITLE>sails unfurled</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 sails unfurled.png
 </RULES>

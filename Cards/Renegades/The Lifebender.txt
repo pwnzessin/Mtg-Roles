@@ -1,5 +1,6 @@
 <TITLE>The Lifebender</TITLE>
 <ROLE>Renegade</ROLE>
+<SETCODE>2xm m</SETCODE>
 <RULES>
 Unveil only when a player has 20 life or less.  
 When The Lifebender is unveiled and at the beginning of your upkeep, draw a card.  

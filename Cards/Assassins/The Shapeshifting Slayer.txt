@@ -1,5 +1,6 @@
 <TITLE>The Shapeshifting Slayer</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 Unveil only if another non-Bandit, non-King role card is unveiled.  
 When The Shapeshifting Slayer is unveiled, choose a creature on the battlefield, any graveyard, in exile or the command zone. Repeat this effect at the beginning of your next end step.  

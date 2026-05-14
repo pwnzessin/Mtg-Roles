@@ -1,5 +1,6 @@
 <TITLE>weaving alliances</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 weaving alliances.png
 </RULES>

@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_a_towering_guardian_spirit_of_living_alabaster_stone__94d5ae9f-932d-4d68-9911-db62e943f5a3</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_a_towering_guardian_spirit_of_living_alabaster_stone__94d5ae9f-932d-4d68-9911-db62e943f5a3.png
 </RULES>

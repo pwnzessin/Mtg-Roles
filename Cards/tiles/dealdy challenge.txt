@@ -1,5 +1,6 @@
 <TITLE>dealdy challenge</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 dealdy challenge.png
 </RULES>

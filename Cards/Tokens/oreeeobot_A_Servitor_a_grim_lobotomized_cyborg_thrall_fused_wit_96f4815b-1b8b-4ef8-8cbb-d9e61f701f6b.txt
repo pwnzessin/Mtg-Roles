@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_A_Servitor_a_grim_lobotomized_cyborg_thrall_fused_wit_96f4815b-1b8b-4ef8-8cbb-d9e61f701f6b</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_A_Servitor_a_grim_lobotomized_cyborg_thrall_fused_wit_96f4815b-1b8b-4ef8-8cbb-d9e61f701f6b.png
 </RULES>

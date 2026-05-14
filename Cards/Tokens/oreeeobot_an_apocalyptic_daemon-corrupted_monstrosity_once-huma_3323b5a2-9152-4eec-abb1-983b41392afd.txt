@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_an_apocalyptic_daemon-corrupted_monstrosity_once-huma_3323b5a2-9152-4eec-abb1-983b41392afd</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_an_apocalyptic_daemon-corrupted_monstrosity_once-huma_3323b5a2-9152-4eec-abb1-983b41392afd.png
 </RULES>

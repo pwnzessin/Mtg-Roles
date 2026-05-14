@@ -1,5 +1,6 @@
 <TITLE>rejuvenating waters</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 rejuvenating waters.png
 </RULES>

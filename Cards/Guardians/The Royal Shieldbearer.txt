@@ -1,5 +1,6 @@
 <TITLE>The Royal Shieldbearer</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 Unveil only if the King has less life than another player.  
 When The Royal Shieldbearer is unveiled, you may add the life totals of Guardian and King, the Guardians and Kings life total each becomes half of that life total rounded up. You may put a shield counter on target permanent.  

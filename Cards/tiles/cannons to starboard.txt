@@ -1,5 +1,6 @@
 <TITLE>cannons to starboard</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 cannons to starboard.png
 </RULES>

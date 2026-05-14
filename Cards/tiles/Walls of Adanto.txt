@@ -1,5 +1,6 @@
 <TITLE>Walls of Adanto</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 Walls of Adanto.png
 </RULES>

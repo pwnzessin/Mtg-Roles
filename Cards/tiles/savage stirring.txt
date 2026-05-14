@@ -1,5 +1,6 @@
 <TITLE>savage stirring</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 savage stirring.png
 </RULES>

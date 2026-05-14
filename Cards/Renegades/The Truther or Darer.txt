@@ -1,5 +1,6 @@
 <TITLE>The Truther or Darer</TITLE>
 <ROLE>Renegade</ROLE>
+<SETCODE>2xm m</SETCODE>
 <RULES>
 Unveil only after your third turn and only as a sorcery.  
 When The Truther or Darer is unveiled, and at the beginning of your upkeep, choose an opponent. That player chooses truth or dare {-}  

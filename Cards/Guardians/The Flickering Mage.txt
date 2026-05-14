@@ -1,5 +1,6 @@
 <TITLE>The Flickering Mage</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 When the Flickering Mage is unveiled, exile up to 5 target permanents.  
 Return those cards to the battlefield tapped under their owners control at the beginning of the next endstep.

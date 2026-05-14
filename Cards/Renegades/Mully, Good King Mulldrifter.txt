@@ -1,5 +1,6 @@
 <TITLE>Mully, Good King Mulldrifter</TITLE>
 <ROLE>Renegade</ROLE>
+<SETCODE>2xm m</SETCODE>
 <RULES>
 When Mully, Good King Mulldrifter is unveiled, counter up to two target spells or abilities. Their owners create a Mulldrifter creature token for each ability or spell countered this way.  
 Form of the Mulldrifter: You may have creature cards in your hand become the card "Mulldrifter".  

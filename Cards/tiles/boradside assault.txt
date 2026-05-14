@@ -1,5 +1,6 @@
 <TITLE>boradside assault</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 boradside assault.png
 </RULES>

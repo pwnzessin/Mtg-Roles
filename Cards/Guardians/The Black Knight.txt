@@ -1,5 +1,6 @@
 <TITLE>The Black Knight</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 When The Black Knight is unveiled, put 4 limb counters on The Black Knight.  
 *“Tis but a scratch” \-* Once each turn, whenever a creature you control or a creature the King player controls is put into a graveyard from the battlefield, you may remove a limb counter from The Black Knight. If you do, create a token that’s a copy of that creature, except its power and toughness are each halved for each time you’ve activated this ability this game, rounded up. Put that token onto the battlefield under its owner’s control.

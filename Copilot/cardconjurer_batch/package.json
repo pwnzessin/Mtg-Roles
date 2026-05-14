@@ -1,0 +1,13 @@
+{
+  "name": "mtg-roles-cardconjurer-batch",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Batch-generate Mtg-Roles cards in local CardConjurer",
+  "type": "module",
+  "scripts": {
+    "generate": "node generate_role_cards.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.53.0"
+  }
+}

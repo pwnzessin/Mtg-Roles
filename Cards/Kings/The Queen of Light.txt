@@ -1,5 +1,6 @@
 <TITLE>The Queen of Light</TITLE>
 <ROLE>King</ROLE>
+<SETCODE>v11 r</SETCODE>
 <RULES>
 Start the game with a number of purification counters on The Queen of Light equal to half the number of players, rounded up.  
 {2}, Remove a purification counter from the Queen of Light: Exile a nonland permanent of your choice. You can activate this ability only once per turn.

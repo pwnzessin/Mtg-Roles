@@ -1,5 +1,6 @@
 <TITLE>bullwark</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 bullwark.png
 </RULES>

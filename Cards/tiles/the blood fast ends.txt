@@ -1,5 +1,6 @@
 <TITLE>the blood fast ends</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 the blood fast ends.png
 </RULES>

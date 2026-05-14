@@ -1,5 +1,6 @@
 <TITLE>The Illusionist</TITLE>
 <ROLE>Renegade</ROLE>
+<SETCODE>2xm m</SETCODE>
 <RULES>
 Unveil only during your turn.  
 At the beginning of your first main phase, choose another face-up role card that hasn’t been chosen this way before. The Illusionist becomes a copy of that role card. You may activate the unveil-ability of that role card. If that role card has an upkeep trigger, it triggers after The Illusionist becomes a copy of that role card.  

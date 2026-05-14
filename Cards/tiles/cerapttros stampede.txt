@@ -1,5 +1,6 @@
 <TITLE>cerapttros stampede</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 cerapttros stampede.png
 </RULES>

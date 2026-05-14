@@ -1,5 +1,6 @@
 <TITLE>deeproot tree</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 deeproot tree.png
 </RULES>

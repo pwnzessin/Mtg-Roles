@@ -1,5 +1,6 @@
 <TITLE>valuable recon</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 valuable recon.png
 </RULES>

@@ -1,5 +1,6 @@
 <TITLE>melee at the gatewws</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 melee at the gatewws.png
 </RULES>

@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_The_Wedding_Ring_a_delicate_golden_band_resting_alone_3b995cfe-6fb6-4038-9675-1db46206b089</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_The_Wedding_Ring_a_delicate_golden_band_resting_alone_3b995cfe-6fb6-4038-9675-1db46206b089.png
 </RULES>

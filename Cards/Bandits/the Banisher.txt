@@ -1,5 +1,6 @@
 <TITLE>The Banisher</TITLE>
 <ROLE>Bandit</ROLE>
+<SETCODE>ktk m</SETCODE>
 <RULES>
 Unveil {5}  
 When The Banisher is unveiled, choose any number of creatures to exile. Draw a card for each player that had one or more nontoken creatures exiled this way.  

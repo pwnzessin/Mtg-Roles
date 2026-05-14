@@ -1,5 +1,6 @@
 <TITLE>oracza the golden city</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oracza the golden city.png
 </RULES>

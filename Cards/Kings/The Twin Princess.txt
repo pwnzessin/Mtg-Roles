@@ -1,5 +1,6 @@
 <TITLE>The Twin Princess</TITLE>
 <ROLE>King</ROLE>
+<SETCODE>v11 r</SETCODE>
 <RULES>
 {2}: Copy target activated or triggered ability you control. You may choose new targets for the copy. Activate only once each turn. (Mana abilities can’t be targeted.)
 </RULES>

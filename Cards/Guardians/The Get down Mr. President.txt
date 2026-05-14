@@ -1,5 +1,6 @@
 <TITLE>The Get down Mr. President</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 When The Get down Mr. President is unveiled and whenever the king is attacked, chose up to one creature you control.
 Put a +1/+1 counter on it, then it fights an attacking creature of your choice.

@@ -1,5 +1,6 @@
 <TITLE>plunder the plunderer</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 plunder the plunderer.png
 </RULES>

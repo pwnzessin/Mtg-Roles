@@ -1,5 +1,6 @@
 <TITLE>The Mommy</TITLE>
 <ROLE>Renegade</ROLE>
+<SETCODE>2xm m</SETCODE>
 <RULES>
 Unveil {3}, gain {3}.  
 When The Mommy is unveiled, you gain {3}.  

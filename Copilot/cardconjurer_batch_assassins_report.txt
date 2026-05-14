@@ -1,0 +1,12 @@
+CardConjurer batch report for role folder: Assassins
+Generated: 2026-05-14T23:37:53.909Z
+
+Total parsed cards: 24
+Cards in run queue: 1
+Dry run: false
+
+OK | Ahriman, Chaos Sorcerer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\Ahriman, Chaos Sorcerer.png
+
+Generated: 1
+Skipped existing: 0
+Failed: 0

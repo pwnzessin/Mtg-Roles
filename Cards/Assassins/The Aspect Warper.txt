@@ -1,5 +1,6 @@
 <TITLE>The Aspect Warper</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 When The Aspect Warper is unveiled, put a flying counter on up to one creature that hasn’t been chosen by this effect.
 Repeat this process for first strike, double strike, deathtouch, hexproof, indestructible, lifelink, menace, trample, vigilance, shadow, fear, haste, defender, skulk, horsemanship, intimidate, reach, shield, stun, backbone.

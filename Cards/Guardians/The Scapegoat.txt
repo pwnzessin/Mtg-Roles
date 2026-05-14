@@ -1,5 +1,6 @@
 <TITLE>The Scapegoat</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 Unveil only if the King is being attacked.  
 When The Scapegoat is unveiled, all attacking creatures attack you instead.  

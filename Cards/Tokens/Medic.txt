@@ -1,5 +1,6 @@
 <TITLE>Medic</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 Medic.png
 </RULES>

@@ -1,5 +1,6 @@
 <TITLE>The Thrash Panda</TITLE>
 <ROLE>Bandit</ROLE>
+<SETCODE>ktk m</SETCODE>
 <RULES>
 Unveil {X}  
 When the Trash Panda is unveiled, create X 1/1 green Raccoon creature tokens with haste.  

@@ -1,5 +1,6 @@
 <TITLE>The Stealth is optional guy</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 When The Stealth is optional guy is unveiled, you get an emblem with  
 - “At the beginning of your upkeep you may pay {1}.  

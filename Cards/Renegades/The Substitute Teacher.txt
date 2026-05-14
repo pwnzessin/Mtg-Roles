@@ -1,5 +1,6 @@
 <TITLE>The Substitute Teacher</TITLE>
 <ROLE>Renegade</ROLE>
+<SETCODE>2xm m</SETCODE>
 <RULES>
 When the Substitute Teacher is unveiled, each player shuffles their commanders into their deck. Those cards are no longer their commanders. Each player searches their library for a different creature card or a background card and puts it into their command zone. That creature becomes their commander until the end of the game (it has its own commander tax and damage). Their decks keeps their color identity.  
 Your commander tax is {0}.

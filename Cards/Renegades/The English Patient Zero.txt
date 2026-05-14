@@ -1,5 +1,6 @@
 <TITLE>The English Patient Zero</TITLE>
 <ROLE>Renegade</ROLE>
+<SETCODE>2xm m</SETCODE>
 <RULES>
 Unveil {2}  
 When the English Patient Zero is unveiled, each opponent discards a card, loses 3 life, sacrifices an artifact, a creature, an enchantment, a land, a planeswalker and a battle, then exiles 5 cards from their graveyard, mills 3, then removes 3 counters from among permanents they control, then gets a poison counter.  

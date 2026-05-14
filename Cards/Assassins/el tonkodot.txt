@@ -1,5 +1,6 @@
 <TITLE>El tonkodot</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 When El Ttonkodod is unveiled, create a legendary green 1/1 ooze creature token named “el Ttonkodod” with reach, trample and “whenever a Gunk card is discarded or a player mills one or more cards, put a \+1/+1 counter on this creature”.  
 Each of your opponents mills 1 and conjures 3 Gunk card tokens into their hand.  

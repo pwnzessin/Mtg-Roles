@@ -1,5 +1,6 @@
 <TITLE>placate the raptors</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 placate the raptors.png
 </RULES>

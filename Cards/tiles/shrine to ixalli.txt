@@ -1,5 +1,6 @@
 <TITLE>shrine to ixalli</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 shrine to ixalli.png
 </RULES>

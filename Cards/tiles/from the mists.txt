@@ -1,5 +1,6 @@
 <TITLE>from the mists</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 from the mists.png
 </RULES>

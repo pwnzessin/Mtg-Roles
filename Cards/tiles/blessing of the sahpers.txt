@@ -1,5 +1,6 @@
 <TITLE>blessing of the sahpers</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 blessing of the sahpers.png
 </RULES>

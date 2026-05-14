@@ -1,5 +1,6 @@
 <TITLE>High market pirate</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 High market pirate.png
 </RULES>

@@ -1,5 +1,6 @@
 <TITLE>might of the sun empire</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 might of the sun empire.png
 </RULES>

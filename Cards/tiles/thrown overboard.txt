@@ -1,5 +1,6 @@
 <TITLE>thrown overboard</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 thrown overboard.png
 </RULES>

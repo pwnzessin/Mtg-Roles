@@ -1,5 +1,6 @@
 <TITLE>jade reflection</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 jade reflection.png
 </RULES>

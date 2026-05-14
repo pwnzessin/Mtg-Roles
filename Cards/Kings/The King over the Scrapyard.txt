@@ -1,5 +1,6 @@
 <TITLE>The King over the Scrapyard</TITLE>
 <ROLE>King</ROLE>
+<SETCODE>v11 r</SETCODE>
 <RULES>
 At the beginning of your upkeep, create a Junk token.  
 Whenever another permanent you control leaves the battlefield because of an opponent, create a tapped Treasure token.  

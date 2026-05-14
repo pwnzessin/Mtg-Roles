@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_an_unfathomable_god-beast_of_the_deep_a_titanic_Krake_ebfd661e-d10f-48c4-a9cd-1f39a72f3ecc</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_an_unfathomable_god-beast_of_the_deep_a_titanic_Krake_ebfd661e-d10f-48c4-a9cd-1f39a72f3ecc.png
 </RULES>

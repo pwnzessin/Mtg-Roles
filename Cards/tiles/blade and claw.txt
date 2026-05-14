@@ -1,5 +1,6 @@
 <TITLE>blade and claw</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 blade and claw.png
 </RULES>

@@ -1,5 +1,6 @@
 <TITLE>too much to carry</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 too much to carry.png
 </RULES>

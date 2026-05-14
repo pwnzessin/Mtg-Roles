@@ -1,5 +1,6 @@
 <TITLE>Das Alte Lineal</TITLE>
 <ROLE>King</ROLE>
+<SETCODE>v11 r</SETCODE>
 <RULES>
 Your starting life total is 55\.
 Your starting hand size and your maximum hand size are each increased by one.  

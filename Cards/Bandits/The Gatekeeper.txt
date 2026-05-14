@@ -1,5 +1,6 @@
 <TITLE>The Gatekeeper</TITLE>
 <ROLE>Bandit</ROLE>
+<SETCODE>ktk m</SETCODE>
 <RULES>
 Unveil {4}  
 When The Gatekeeper is unveiled, create Cerberus, a legendary 4/8 black and red Hound creature token with menace, double strike, trample and lifelink and “When this creature dies, create 3 1/1 black and red Hound creature tokens, one with double strike, one with trample and one with lifelink.”  

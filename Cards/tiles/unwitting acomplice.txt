@@ -1,5 +1,6 @@
 <TITLE>unwitting acomplice</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 unwitting acomplice.png
 </RULES>

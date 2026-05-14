@@ -1,5 +1,6 @@
 <TITLE>weather the storm</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 weather the storm.png
 </RULES>

@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_a_fiery_little_goat_with_deep_crimson_fur_streaked_wi_8bd61dc8-a02f-45f9-9e96-ac2ad4d4ed45</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_a_fiery_little_goat_with_deep_crimson_fur_streaked_wi_8bd61dc8-a02f-45f9-9e96-ac2ad4d4ed45.png
 </RULES>

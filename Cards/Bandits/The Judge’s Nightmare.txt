@@ -1,5 +1,6 @@
 <TITLE>The Judge’s Nightmare</TITLE>
 <ROLE>Bandit</ROLE>
+<SETCODE>ktk m</SETCODE>
 <RULES>
 Unveil only during an opponent’s turn:   
 When the Judge’s Nightmare is unveiled, choose one {-}  

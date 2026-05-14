@@ -1,5 +1,6 @@
 <TITLE>The Oneiromancer</TITLE>
 <ROLE>Bandit</ROLE>
+<SETCODE>ktk m</SETCODE>
 <RULES>
 Unveil {X}
 When The Oneiromancer is unveiled, each player exiles the top X cards of their library face down.

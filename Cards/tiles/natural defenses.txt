@@ -1,5 +1,6 @@
 <TITLE>natural defenses</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 natural defenses.png
 </RULES>

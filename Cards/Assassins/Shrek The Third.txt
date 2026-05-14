@@ -1,5 +1,6 @@
 <TITLE>Shrek The Third</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 Unveil only after your third turn.
 When Shrek The Third is unveiled:  

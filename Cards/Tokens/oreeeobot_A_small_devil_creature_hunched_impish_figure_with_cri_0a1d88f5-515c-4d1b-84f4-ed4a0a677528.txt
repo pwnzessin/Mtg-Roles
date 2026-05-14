@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_0a1d88f5-515c-4d1b-84f4-ed4a0a677528</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_0a1d88f5-515c-4d1b-84f4-ed4a0a677528.png
 </RULES>

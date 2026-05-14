@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_a_blazing_spirit_of_fire_shaped_like_a_sleek_predator_3a086f94-ca6f-42f3-8740-382c4cda7f2b</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_a_blazing_spirit_of_fire_shaped_like_a_sleek_predator_3a086f94-ca6f-42f3-8740-382c4cda7f2b.png
 </RULES>

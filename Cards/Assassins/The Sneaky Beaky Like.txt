@@ -1,5 +1,6 @@
 <TITLE>The Sneaky Beaky Like</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 When The Sneaky Beaky like is unveiled, until end of turn, whenever you deal combat damage to a player, choose a nontoken creature an opponent controls.
 Destroy that creature, then create a copy of it except it gains shadow.

@@ -1,5 +1,6 @@
 <TITLE>The Emerald Mercenary</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 When The Emerald Mercenary is unveiled, untap all permanents you control. Until end of turn, you may cast spells as though they had flash.
 </RULES>

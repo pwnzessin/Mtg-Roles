@@ -1,5 +1,6 @@
 <TITLE>cant take it with you</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 cant take it with you.png
 </RULES>

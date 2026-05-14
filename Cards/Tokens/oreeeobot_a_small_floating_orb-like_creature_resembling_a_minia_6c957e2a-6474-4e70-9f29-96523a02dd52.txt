@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_6c957e2a-6474-4e70-9f29-96523a02dd52</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_6c957e2a-6474-4e70-9f29-96523a02dd52.png
 </RULES>

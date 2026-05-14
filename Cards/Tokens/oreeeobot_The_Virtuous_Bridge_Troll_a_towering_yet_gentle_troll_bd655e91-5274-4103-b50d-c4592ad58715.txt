@@ -1,5 +1,6 @@
 <TITLE>oreeeobot_The_Virtuous_Bridge_Troll_a_towering_yet_gentle_troll_bd655e91-5274-4103-b50d-c4592ad58715</TITLE>
 <ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 The Virtuous Bridge Troll
 </RULES>

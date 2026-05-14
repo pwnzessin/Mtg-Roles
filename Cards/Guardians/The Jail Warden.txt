@@ -1,5 +1,6 @@
 <TITLE>The Jail Warden</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 Unveil only if the King was dealt combat damage this turn or if a crime was committed against the King.  
 When the Jail Warden is unveiled, exile up to three creatures. Put an incarceration counter on each of them.   

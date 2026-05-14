@@ -1,5 +1,6 @@
 <TITLE>The Shinobi</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 When The Shinobi is unveiled you get an emblem with  
 - “Whenever you attack one or more opponents, choose a creature card in your hand.  

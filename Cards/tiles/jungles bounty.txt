@@ -1,5 +1,6 @@
 <TITLE>jungles bounty</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 jungles bounty.png
 </RULES>

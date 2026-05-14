@@ -1,5 +1,6 @@
 <TITLE>scrollls of akzanza</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 scrollls of akzanza.png
 </RULES>

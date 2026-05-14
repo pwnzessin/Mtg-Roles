@@ -1,5 +1,6 @@
 <TITLE>The Taxer</TITLE>
 <ROLE>King</ROLE>
+<SETCODE>v11 r</SETCODE>
 <RULES>
 Whenever an opponent draws their second card each turn, you may draw a card unless that player pays the {1}.  
 Whenever an opponent casts their second spell each turn, create a 1/1 white Soldier creature token or a Treasure token unless that player pays the {1}.

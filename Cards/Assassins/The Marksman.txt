@@ -1,5 +1,6 @@
 <TITLE>The Marksman</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 When The Marksman is unveiled, creatures lose hexproof, shroud and ward until end of turn.  
 Deal damage to up to three targets equal to the highest mana value, power or toughness among permanents on the battlefield.

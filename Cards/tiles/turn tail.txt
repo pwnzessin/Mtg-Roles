@@ -1,5 +1,6 @@
 <TITLE>turn tail</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 turn tail.png
 </RULES>

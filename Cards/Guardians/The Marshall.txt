@@ -1,5 +1,6 @@
 <TITLE>The Marshall</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 Unveil {X}  
 When The Marshall is unveiled, choose a color and a creature type. Choose a player, that player creates X 1/1 creature tokens of the chosen color and type.  

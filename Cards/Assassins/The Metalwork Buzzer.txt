@@ -1,5 +1,6 @@
 <TITLE>The Metalwork Buzzer</TITLE>
 <ROLE>Assassin</ROLE>
+<SETCODE>PD3 c</SETCODE>
 <RULES>
 When The Metalwork Buzzer is unveiled, you get 5 Dank counters.   
 Remove 1 Dank counter: Choose a creature, it gets \+3/+3 and trample until end of turn. This effect can’t be used on the same creature more than once each turn.

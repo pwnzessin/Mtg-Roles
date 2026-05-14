@@ -1,5 +1,6 @@
 <TITLE>Dusk's Embrace</TITLE>
 <ROLE>Tile</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
 <RULES>
 Dusk's Embrace.png
 </RULES>

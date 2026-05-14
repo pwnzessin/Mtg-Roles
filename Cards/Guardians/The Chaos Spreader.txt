@@ -1,5 +1,6 @@
 <TITLE>The Chaos Spreader</TITLE>
 <ROLE>Guardian</ROLE>
+<SETCODE>clb u</SETCODE>
 <RULES>
 Unveil only when a King player is attacked.  
 When The Chaos Spreader is unveiled, each attacking creature gains trample until end of turn.  

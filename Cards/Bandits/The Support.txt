@@ -1,5 +1,6 @@
 <TITLE>The Support</TITLE>
 <ROLE>Bandit</ROLE>
+<SETCODE>ktk m</SETCODE>
 <RULES>
 Unveil only during your turn and only if a non-king, non-bandit role card is face up.  
 When The Support is unveiled, go to the kitchen and get everyone who wants a new drink.   
