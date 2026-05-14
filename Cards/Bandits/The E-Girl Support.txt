@@ -1,4 +1,7 @@
-﻿Unveil only during your turn and only if a non-king, non-bandit role card is face up.  
+<TITLE>The E-Girl Support</TITLE>
+<ROLE>Bandit</ROLE>
+<RULES>
+Unveil only during your turn and only if a non-king, non-bandit role card is face up.  
 When The E-Girl Support is unveiled, go to the kitchen and get everyone who wants a new drink.   
 Then choose two emblems with {-}  
 - • {indent}“Creatures you control have vigilance and menace and can block an additional creature.”  
@@ -6,3 +9,4 @@ Then choose two emblems with {-}
 - • {indent}“The first spell you cast during your turn has cascade.”  
 - • {indent}“Whenever you cast your first spell each turn, draw a card.”  
 Each Bandit gets one of the emblems chosen this way.
+</RULES>

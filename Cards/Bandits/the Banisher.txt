@@ -1,4 +1,8 @@
-﻿Unveil {5}  
+<TITLE>The Banisher</TITLE>
+<ROLE>Bandit</ROLE>
+<RULES>
+Unveil {5}  
 When The Banisher is unveiled, choose any number of creatures to exile. Draw a card for each player that had one or more nontoken creatures exiled this way.  
 Until end of turn, whenever a card would be put into a graveyard from anywhere exile it instead.  
 {flavor}“I don’t kill. I erase.”
+</RULES>

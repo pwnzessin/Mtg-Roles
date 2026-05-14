@@ -1,3 +1,7 @@
-﻿At the beginning of your upkeep, discard a card, then draw a card.  
+<TITLE>The Rummaging Goblin</TITLE>
+<ROLE>King</ROLE>
+<RULES>
+At the beginning of your upkeep, discard a card, then draw a card.  
 Whenever you discard a nonland card this way, create a Treasure token.  
 *To a goblin, value is based on the four S’s: shiny, stabby, smelly, and super smelly.*
+</RULES>

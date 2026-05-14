@@ -1,3 +1,7 @@
-﻿Unveil only if another non-Bandit, non-King role card is unveiled.  
+<TITLE>The Shapeshifting Slayer</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+Unveil only if another non-Bandit, non-King role card is unveiled.  
 When The Shapeshifting Slayer is unveiled, choose a creature on the battlefield, any graveyard, in exile or the command zone. Repeat this effect at the beginning of your next end step.  
 Create a token that’s a copy of that creature and put it onto the battlefield under your control. It's a changeling in addition to its other types.
+</RULES>

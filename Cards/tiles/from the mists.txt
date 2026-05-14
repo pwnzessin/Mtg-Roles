@@ -1,1 +1,5 @@
-﻿from the mists.png
+<TITLE>from the mists</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+from the mists.png
+</RULES>

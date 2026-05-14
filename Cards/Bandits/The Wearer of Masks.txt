@@ -1,3 +1,7 @@
-﻿- When The Wearer of Masks is unveiled, choose four Bandit role cards at random from outside the game.  
+<TITLE>The Wearer of Masks</TITLE>
+<ROLE>Bandit</ROLE>
+<RULES>
+- When The Wearer of Masks is unveiled, choose four Bandit role cards at random from outside the game.  
 - You may pay the unveil costs of one of those cards. The Wearer of Masks becomes a copy of that role card. (*Role cards without an unveil cost have unveil {0}.)*  
 - If you don’t, turn The Wearer of Masks face down at the beginning of your next end step.  
+</RULES>

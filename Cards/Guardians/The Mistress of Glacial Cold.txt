@@ -1,2 +1,6 @@
-﻿Unveil {9} {-} costs {1} less for each creature controlled by non-king players  
+<TITLE>The Mistress of Glacial Cold</TITLE>
+<ROLE>Guardian</ROLE>
+<RULES>
+Unveil {9} {-} costs {1} less for each creature controlled by non-king players  
 *Ice Age* \- When The Mistress of Glacial Cold is unveiled, end the combat phase. Tap all creatures your opponents control. For each opponent, put a stun counter on up to one creature they control.
+</RULES>

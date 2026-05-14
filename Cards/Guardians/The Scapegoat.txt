@@ -1,4 +1,8 @@
-﻿Unveil only if the King is being attacked.  
+<TITLE>The Scapegoat</TITLE>
+<ROLE>Guardian</ROLE>
+<RULES>
+Unveil only if the King is being attacked.  
 When The Scapegoat is unveiled, all attacking creatures attack you instead.  
 The King goads all creatures.  
 You and the King each create 5  0/1 Goat creature tokens, each of a different color with defender and reach.
+</RULES>

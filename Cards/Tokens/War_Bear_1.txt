@@ -1,1 +1,5 @@
-﻿War_Bear_1.png
+<TITLE>War_Bear_1</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+War_Bear_1.png
+</RULES>

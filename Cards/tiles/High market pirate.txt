@@ -1,1 +1,5 @@
-﻿High market pirate.png
+<TITLE>High market pirate</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+High market pirate.png
+</RULES>

@@ -1,1 +1,5 @@
-﻿weaving alliances.png
+<TITLE>weaving alliances</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+weaving alliances.png
+</RULES>

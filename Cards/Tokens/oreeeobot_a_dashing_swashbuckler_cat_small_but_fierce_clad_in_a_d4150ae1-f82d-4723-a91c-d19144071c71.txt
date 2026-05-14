@@ -1,1 +1,5 @@
-﻿oreeeobot_a_dashing_swashbuckler_cat_small_but_fierce_clad_in_a_d4150ae1-f82d-4723-a91c-d19144071c71.png
+<TITLE>oreeeobot_a_dashing_swashbuckler_cat_small_but_fierce_clad_in_a_d4150ae1-f82d-4723-a91c-d19144071c71</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_a_dashing_swashbuckler_cat_small_but_fierce_clad_in_a_d4150ae1-f82d-4723-a91c-d19144071c71.png
+</RULES>

@@ -1,1 +1,5 @@
-﻿jungles bounty.png
+<TITLE>jungles bounty</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+jungles bounty.png
+</RULES>

@@ -1,1 +1,5 @@
-﻿oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_5bf6e88a-acd0-45c0-9558-6df7d2032c0f.png
+<TITLE>oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_5bf6e88a-acd0-45c0-9558-6df7d2032c0f</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_5bf6e88a-acd0-45c0-9558-6df7d2032c0f.png
+</RULES>

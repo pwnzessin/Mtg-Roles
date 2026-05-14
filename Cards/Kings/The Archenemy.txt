@@ -1,1 +1,5 @@
+<TITLE>The Archenemy</TITLE>
+<ROLE>King</ROLE>
+<RULES>
 At the beginning of your upkeep, if it’s an even-numbered turn, set a scheme in motion.
+</RULES>

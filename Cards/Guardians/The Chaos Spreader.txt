@@ -1,6 +1,10 @@
-﻿Unveil only when a King player is attacked.  
+<TITLE>The Chaos Spreader</TITLE>
+<ROLE>Guardian</ROLE>
+<RULES>
+Unveil only when a King player is attacked.  
 When The Chaos Spreader is unveiled, each attacking creature gains trample until end of turn.  
 Then, for each of those creatures, choose an opponent of the King at random.  
 That creature attacks that player this combat if able, even if it’s their own owner.  
 All attacking creatures attack an opponent of the King at random *(even their own owner)*  
 *{flavor}"Stop Hitting yourself" {-} A Dark Knight*
+</RULES>

@@ -1,1 +1,5 @@
-﻿natural defenses.png
+<TITLE>natural defenses</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+natural defenses.png
+</RULES>

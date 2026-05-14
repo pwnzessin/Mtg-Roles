@@ -1,1 +1,5 @@
-﻿When The Emerald Mercenary is unveiled, untap all permanents you control. Until end of turn, you may cast spells as though they had flash.
+<TITLE>The Emerald Mercenary</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+When The Emerald Mercenary is unveiled, untap all permanents you control. Until end of turn, you may cast spells as though they had flash.
+</RULES>

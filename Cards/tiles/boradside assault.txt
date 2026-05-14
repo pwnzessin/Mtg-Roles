@@ -1,1 +1,5 @@
-﻿boradside assault.png
+<TITLE>boradside assault</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+boradside assault.png
+</RULES>

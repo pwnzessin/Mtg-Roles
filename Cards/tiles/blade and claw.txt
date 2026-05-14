@@ -1,1 +1,5 @@
-﻿blade and claw.png
+<TITLE>blade and claw</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+blade and claw.png
+</RULES>

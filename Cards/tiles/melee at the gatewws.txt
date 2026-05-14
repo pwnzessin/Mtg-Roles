@@ -1,1 +1,5 @@
-﻿melee at the gatewws.png
+<TITLE>melee at the gatewws</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+melee at the gatewws.png
+</RULES>

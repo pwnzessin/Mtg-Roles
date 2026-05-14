@@ -1,1 +1,5 @@
-﻿cannons to starboard.png
+<TITLE>cannons to starboard</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+cannons to starboard.png
+</RULES>

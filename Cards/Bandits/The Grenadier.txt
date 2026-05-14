@@ -1,2 +1,6 @@
-﻿Unveil {X}  
+<TITLE>The Grenadier</TITLE>
+<ROLE>Bandit</ROLE>
+<RULES>
+Unveil {X}  
 When The Grenadier is unveiled, create X colorless artifact tokens named Kaboom\! with “{1}, {t}, Sacrifice this artifact: Destroy target nonland permanent. Its controller loses 1 life.
+</RULES>

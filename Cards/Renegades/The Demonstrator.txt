@@ -1,2 +1,6 @@
-﻿The first spell you cast each turn has demonstrate. *(When you cast that spell, you may copy it. If you do, choose an opponent to also copy it. A copy of a permanent spell becomes a token.)*  
+<TITLE>The Demonstrator</TITLE>
+<ROLE>Renegade</ROLE>
+<RULES>
+The first spell you cast each turn has demonstrate. *(When you cast that spell, you may copy it. If you do, choose an opponent to also copy it. A copy of a permanent spell becomes a token.)*  
 Whenever you copy a spell, put a \+1/+1 counter on up to one creature you control.
+</RULES>

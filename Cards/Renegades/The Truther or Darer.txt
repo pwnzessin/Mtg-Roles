@@ -1,5 +1,9 @@
-﻿Unveil only after your third turn and only as a sorcery.  
+<TITLE>The Truther or Darer</TITLE>
+<ROLE>Renegade</ROLE>
+<RULES>
+Unveil only after your third turn and only as a sorcery.  
 When The Truther or Darer is unveiled, and at the beginning of your upkeep, choose an opponent. That player chooses truth or dare {-}  
 - • {indent} Truth {-} That player unveils their role card. If they can't pay its unveil cost, its unveil cost is {0} this turn.  
 - • {indent} Dare {-} That player mills cards until only ten cards remain in their library.
 
+</RULES>

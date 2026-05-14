@@ -1,1 +1,5 @@
-﻿oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_03ac3aae-0dca-46af-b4ab-344964f536ac.png
+<TITLE>oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_03ac3aae-0dca-46af-b4ab-344964f536ac</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_03ac3aae-0dca-46af-b4ab-344964f536ac.png
+</RULES>

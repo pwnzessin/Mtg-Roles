@@ -1,3 +1,7 @@
-﻿Victory: You are the first person to be eliminated by another player.  
+<TITLE>The Aggro Magnet</TITLE>
+<ROLE>Renegade</ROLE>
+<RULES>
+Victory: You are the first person to be eliminated by another player.  
 When The Aggro Magnet is unveiled, until your next turn, all creatures must attack you if able. Activate only during your turn. At the beginning of your next upkeep, your victory condition changes to:  
 Victory: You eliminate yourself.
+</RULES>

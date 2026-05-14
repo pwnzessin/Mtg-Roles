@@ -1,1 +1,5 @@
-﻿plunder the plunderer.png
+<TITLE>plunder the plunderer</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+plunder the plunderer.png
+</RULES>

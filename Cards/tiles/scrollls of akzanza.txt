@@ -1,1 +1,5 @@
-﻿scrollls of akzanza.png
+<TITLE>scrollls of akzanza</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+scrollls of akzanza.png
+</RULES>

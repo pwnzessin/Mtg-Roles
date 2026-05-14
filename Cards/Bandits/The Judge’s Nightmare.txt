@@ -1,7 +1,11 @@
-﻿Unveil only during an opponent’s turn:   
+<TITLE>The Judge’s Nightmare</TITLE>
+<ROLE>Bandit</ROLE>
+<RULES>
+Unveil only during an opponent’s turn:   
 When the Judge’s Nightmare is unveiled, choose one {-}  
 - • {indent}Reorder the stack.  
 - • {indent}Until the end of your next turn, the stackorder is reversed (first in is resolved first).  
 - • {indent}Until the end of your next turn, creatures have provoke. *(Whenever a creature with provoke attacks, you may have target creature defending player controls untap and block it if able.)*  
 - • {indent}Until the end of your next turn, untapped creatures can’t block and tapped creatures can block as though they were untapped.  
 Then until your next upkeep, you gain {i}Counter attack{/i} {-} Whenever one or more attackers are declared, target defending player may tap any number of creatures. After the damage step those creatures deal damage equal to their power to the attacking player.
+</RULES>

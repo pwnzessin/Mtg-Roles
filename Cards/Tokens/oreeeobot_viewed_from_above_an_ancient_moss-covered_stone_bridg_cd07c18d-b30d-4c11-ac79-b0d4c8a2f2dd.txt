@@ -1,1 +1,5 @@
-﻿oreeeobot_viewed_from_above_an_ancient_moss-covered_stone_bridg_cd07c18d-b30d-4c11-ac79-b0d4c8a2f2dd.png
+<TITLE>oreeeobot_viewed_from_above_an_ancient_moss-covered_stone_bridg_cd07c18d-b30d-4c11-ac79-b0d4c8a2f2dd</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_viewed_from_above_an_ancient_moss-covered_stone_bridg_cd07c18d-b30d-4c11-ac79-b0d4c8a2f2dd.png
+</RULES>

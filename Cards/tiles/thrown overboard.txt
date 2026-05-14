@@ -1,1 +1,5 @@
-﻿thrown overboard.png
+<TITLE>thrown overboard</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+thrown overboard.png
+</RULES>

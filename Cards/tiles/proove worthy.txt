@@ -1,1 +1,5 @@
-﻿proove worthy.png
+<TITLE>proove worthy</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+proove worthy.png
+</RULES>

@@ -1,1 +1,5 @@
-﻿When The Gravecaller is unveiled, if it's your turn you may pay {X}. Then each player mills X cards.
+<TITLE>The Gravecaller</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+When The Gravecaller is unveiled, if it's your turn you may pay {X}. Then each player mills X cards.
+</RULES>

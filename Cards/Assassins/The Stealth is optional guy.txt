@@ -1,4 +1,8 @@
-﻿When The Stealth is optional guy is unveiled, you get an emblem with  
+<TITLE>The Stealth is optional guy</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+When The Stealth is optional guy is unveiled, you get an emblem with  
 - “At the beginning of your upkeep you may pay {1}.  
 - If you do, create a \*/1 green Assassin Beserker token with trample, with:  
 - This creature's power is equal to the number of lands you control and Ward pay \* life."  
+</RULES>

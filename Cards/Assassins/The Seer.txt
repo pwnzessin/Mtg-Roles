@@ -1,3 +1,7 @@
-﻿Unveil {X}  
+<TITLE>The Seer</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+Unveil {X}  
 When The Seer is unveiled scry X twice. Then reveal the top card of your library. Choose up to three targets. The Seer deals damage equal to twice that cards mana value to those targets.  
 Draw half X cards, rounded up.
+</RULES>

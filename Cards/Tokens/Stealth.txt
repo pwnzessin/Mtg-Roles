@@ -1,1 +1,5 @@
-﻿The Stealth-is-optional guy
+<TITLE>Stealth</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+The Stealth-is-optional guy
+</RULES>

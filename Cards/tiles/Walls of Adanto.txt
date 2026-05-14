@@ -1,1 +1,5 @@
-﻿Walls of Adanto.png
+<TITLE>Walls of Adanto</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+Walls of Adanto.png
+</RULES>

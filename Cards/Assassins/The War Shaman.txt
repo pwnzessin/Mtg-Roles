@@ -1,2 +1,6 @@
-﻿When The War Shaman is unveiled, destroy up to two nonland permanents of your choice.  
+<TITLE>The War Shaman</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+When The War Shaman is unveiled, destroy up to two nonland permanents of your choice.  
 Create an X/X red Elemental creature token with haste and trample, where X is the total mana value of the permanents destroyed this way.
+</RULES>

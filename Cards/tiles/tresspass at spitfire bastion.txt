@@ -1,1 +1,5 @@
-﻿tresspass at spitfire bastion.png
+<TITLE>tresspass at spitfire bastion</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+tresspass at spitfire bastion.png
+</RULES>

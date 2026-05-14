@@ -1,3 +1,7 @@
-﻿Your starting life total is 55\.
+<TITLE>Das Alte Lineal</TITLE>
+<ROLE>King</ROLE>
+<RULES>
+Your starting life total is 55\.
 Your starting hand size and your maximum hand size are each increased by one.  
 At the beginning of your first three upkeeps, create a Treasure token.
+</RULES>

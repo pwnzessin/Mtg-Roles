@@ -1,1 +1,5 @@
-﻿Study the nine rivers.png
+<TITLE>Study the nine rivers</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+Study the nine rivers.png
+</RULES>

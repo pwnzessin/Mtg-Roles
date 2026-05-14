@@ -1,1 +1,5 @@
-﻿too much to carry.png
+<TITLE>too much to carry</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+too much to carry.png
+</RULES>

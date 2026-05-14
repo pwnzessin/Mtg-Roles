@@ -1,1 +1,5 @@
-﻿the blood fast ends.png
+<TITLE>the blood fast ends</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+the blood fast ends.png
+</RULES>

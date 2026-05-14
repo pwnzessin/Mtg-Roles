@@ -1,1 +1,5 @@
-﻿oreeeobot_a_mossy_little_goat_with_shaggy_emerald_wool_and_tiny_6372d251-0e30-4e57-983a-6d02d367b512.png
+<TITLE>oreeeobot_a_mossy_little_goat_with_shaggy_emerald_wool_and_tiny_6372d251-0e30-4e57-983a-6d02d367b512</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_a_mossy_little_goat_with_shaggy_emerald_wool_and_tiny_6372d251-0e30-4e57-983a-6d02d367b512.png
+</RULES>

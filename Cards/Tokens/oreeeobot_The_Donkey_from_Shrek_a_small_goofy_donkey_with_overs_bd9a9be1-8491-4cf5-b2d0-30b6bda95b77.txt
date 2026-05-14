@@ -1,1 +1,5 @@
-﻿oreeeobot_The_Donkey_from_Shrek_a_small_goofy_donkey_with_overs_bd9a9be1-8491-4cf5-b2d0-30b6bda95b77.png
+<TITLE>oreeeobot_The_Donkey_from_Shrek_a_small_goofy_donkey_with_overs_bd9a9be1-8491-4cf5-b2d0-30b6bda95b77</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_The_Donkey_from_Shrek_a_small_goofy_donkey_with_overs_bd9a9be1-8491-4cf5-b2d0-30b6bda95b77.png
+</RULES>

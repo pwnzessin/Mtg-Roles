@@ -1,4 +1,7 @@
-﻿At the beginning of your upkeep, you may choose one that hasn’t been chosen \-   
+<TITLE>The Gathering</TITLE>
+<ROLE>King</ROLE>
+<RULES>
+At the beginning of your upkeep, you may choose one that hasn’t been chosen \-   
 - White {-} You gain 8 life.  
 - Blue {-} Draw two cards.  
 - Black {-} Choose and destroy a creature or planeswalker.  
@@ -6,3 +9,4 @@
 - Green {-} Choose and destroy an artifact, enchantment or battle.  
 - Multicolor {-} Gain 1 life, scry 1, deal 1 damage to any target, create a 1/1 red Goblin creature token, at the beginning of your precombat main phase gain 1 mana of any color.  
 - Colorless {-} Create a “waste” basic-land token. It enters tapped with a stun counter on it. 
+</RULES>

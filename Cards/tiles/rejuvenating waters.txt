@@ -1,1 +1,5 @@
-﻿rejuvenating waters.png
+<TITLE>rejuvenating waters</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+rejuvenating waters.png
+</RULES>

@@ -1,1 +1,5 @@
-﻿sails unfurled.png
+<TITLE>sails unfurled</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+sails unfurled.png
+</RULES>

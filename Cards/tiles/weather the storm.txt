@@ -1,1 +1,5 @@
-﻿weather the storm.png
+<TITLE>weather the storm</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+weather the storm.png
+</RULES>

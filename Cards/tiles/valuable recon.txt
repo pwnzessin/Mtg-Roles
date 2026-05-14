@@ -1,1 +1,5 @@
-﻿valuable recon.png
+<TITLE>valuable recon</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+valuable recon.png
+</RULES>

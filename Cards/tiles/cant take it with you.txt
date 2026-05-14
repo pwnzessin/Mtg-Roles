@@ -1,1 +1,5 @@
-﻿cant take it with you.png
+<TITLE>cant take it with you</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+cant take it with you.png
+</RULES>

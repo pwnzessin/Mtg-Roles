@@ -1,3 +1,7 @@
+<TITLE>The Necromancer</TITLE>
+<ROLE>Renegade</ROLE>
+<RULES>
 When The Necromancer is unveiled, until end of turn, if an opponent would lose the game, instead set that player’s life total to the average of all life totals rounded up. They gain protection from everything until their next turn. Remove all commander damage and poison counters from that player. They reveal their role and are now also treated as a Renegade but keep their role card’s abilities.  
 All Renegades victory conditions change to:   
 Victory: All non-Renegade players are eliminated.
+</RULES>

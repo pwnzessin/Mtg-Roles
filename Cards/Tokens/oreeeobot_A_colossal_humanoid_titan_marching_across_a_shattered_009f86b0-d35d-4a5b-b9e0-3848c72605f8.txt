@@ -1,1 +1,5 @@
-﻿oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_009f86b0-d35d-4a5b-b9e0-3848c72605f8.png
+<TITLE>oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_009f86b0-d35d-4a5b-b9e0-3848c72605f8</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_009f86b0-d35d-4a5b-b9e0-3848c72605f8.png
+</RULES>

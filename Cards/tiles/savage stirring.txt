@@ -1,1 +1,5 @@
-﻿savage stirring.png
+<TITLE>savage stirring</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+savage stirring.png
+</RULES>

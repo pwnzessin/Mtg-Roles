@@ -1,1 +1,5 @@
-﻿deeproot tree.png
+<TITLE>deeproot tree</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+deeproot tree.png
+</RULES>

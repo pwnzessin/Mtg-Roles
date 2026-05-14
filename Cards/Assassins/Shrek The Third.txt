@@ -1,7 +1,11 @@
-﻿Unveil only after your third turn.
+<TITLE>Shrek The Third</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+Unveil only after your third turn.
 When Shrek The Third is unveiled:  
 - Create a 4/4 green Ogre creature token with renown 2  
 - a 1/1 Donkey creature Token with flying  
 - a 2/2 Cat creature Token with double strike  
 - and a 1/1 gingerbread food creature token  
 - Choose an opponent. That player creates a swamp land token. Then distribute 2 swampwalk counters onto any number of creatures.
+</RULES>

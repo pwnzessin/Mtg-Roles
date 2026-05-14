@@ -1,1 +1,5 @@
-﻿When the Copycat is unveiled, until your next end step, you may copy any number of target activated or triggered abilities, each type of ability may only be copied once. You may choose new targets for each copy.
+<TITLE>The Copycat</TITLE>
+<ROLE>Bandit</ROLE>
+<RULES>
+When the Copycat is unveiled, until your next end step, you may copy any number of target activated or triggered abilities, each type of ability may only be copied once. You may choose new targets for each copy.
+</RULES>

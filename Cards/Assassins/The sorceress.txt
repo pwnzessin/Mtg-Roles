@@ -1,2 +1,6 @@
-﻿When The Sorceress is unveiled, you gain control of target ability (that isn’t a mana ability), instant or sorcery spell. You may choose new targets for that spell or ability. Then copy it. You may choose new targets for the copy.  
+<TITLE>The Sorceress</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+When The Sorceress is unveiled, you gain control of target ability (that isn’t a mana ability), instant or sorcery spell. You may choose new targets for that spell or ability. Then copy it. You may choose new targets for the copy.  
 You get an emblem with “The first instant or sorcery spell you cast during your turn costs {1} less”.
+</RULES>

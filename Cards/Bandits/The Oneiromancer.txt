@@ -1,5 +1,9 @@
+<TITLE>The Oneiromancer</TITLE>
+<ROLE>Bandit</ROLE>
+<RULES>
 Unveil {X}
 When The Oneiromancer is unveiled, each player exiles the top X cards of their library face down.
 You may look at the cards exiled with The Oneiromancer and during your turn, you may play lands and cast spells from among cards exiled with The Oneiromancer without paying their mana costs.
 You can’t cast more than one spell this way each turn.
 You may play an additional land on each of your turns.
+</RULES>

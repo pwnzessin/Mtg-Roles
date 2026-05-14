@@ -1,1 +1,5 @@
-﻿oreeeobot_a_small_but_noble_goat_with_snow-white_wool_golden_ey_c7cb731a-63eb-4071-ba96-d6e28a780d30.png
+<TITLE>oreeeobot_a_small_but_noble_goat_with_snow-white_wool_golden_ey_c7cb731a-63eb-4071-ba96-d6e28a780d30</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_a_small_but_noble_goat_with_snow-white_wool_golden_ey_c7cb731a-63eb-4071-ba96-d6e28a780d30.png
+</RULES>

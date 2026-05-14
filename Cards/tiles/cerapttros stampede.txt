@@ -1,1 +1,5 @@
-﻿cerapttros stampede.png
+<TITLE>cerapttros stampede</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+cerapttros stampede.png
+</RULES>

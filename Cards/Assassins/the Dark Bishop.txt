@@ -1,2 +1,6 @@
-﻿Unveil only during a main phase.  
+<TITLE>the Dark Bishop</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+Unveil only during a main phase.  
 When The Dark Bishop is unveiled, exchange life totals, accumulated commander damage and poison counters with a player of your choice.
+</RULES>

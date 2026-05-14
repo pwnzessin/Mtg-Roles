@@ -1,1 +1,5 @@
-﻿gold laden shipwreck.png
+<TITLE>gold laden shipwreck</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+gold laden shipwreck.png
+</RULES>

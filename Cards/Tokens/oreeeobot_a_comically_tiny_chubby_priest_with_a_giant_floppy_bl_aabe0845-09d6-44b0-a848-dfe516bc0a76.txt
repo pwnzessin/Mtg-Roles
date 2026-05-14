@@ -1,1 +1,5 @@
-﻿oreeeobot_a_comically_tiny_chubby_priest_with_a_giant_floppy_bl_aabe0845-09d6-44b0-a848-dfe516bc0a76.png
+<TITLE>oreeeobot_a_comically_tiny_chubby_priest_with_a_giant_floppy_bl_aabe0845-09d6-44b0-a848-dfe516bc0a76</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_a_comically_tiny_chubby_priest_with_a_giant_floppy_bl_aabe0845-09d6-44b0-a848-dfe516bc0a76.png
+</RULES>

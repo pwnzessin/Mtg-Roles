@@ -1,1 +1,5 @@
-﻿bullwark.png
+<TITLE>bullwark</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+bullwark.png
+</RULES>

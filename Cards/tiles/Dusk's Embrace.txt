@@ -1,1 +1,5 @@
-﻿Dusk's Embrace.png
+<TITLE>Dusk's Embrace</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+Dusk's Embrace.png
+</RULES>

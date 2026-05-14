@@ -1,1 +1,5 @@
-﻿take the highground.png
+<TITLE>take the highground</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+take the highground.png
+</RULES>

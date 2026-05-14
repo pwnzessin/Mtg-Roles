@@ -1,1 +1,5 @@
-﻿rise from the depth.png
+<TITLE>rise from the depth</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+rise from the depth.png
+</RULES>

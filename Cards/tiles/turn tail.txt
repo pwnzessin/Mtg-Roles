@@ -1,1 +1,5 @@
-﻿turn tail.png
+<TITLE>turn tail</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+turn tail.png
+</RULES>

@@ -1,1 +1,5 @@
-﻿dealdy challenge.png
+<TITLE>dealdy challenge</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+dealdy challenge.png
+</RULES>

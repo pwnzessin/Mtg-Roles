@@ -1,1 +1,5 @@
-﻿oracza the golden city.png
+<TITLE>oracza the golden city</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+oracza the golden city.png
+</RULES>

@@ -1,3 +1,7 @@
-﻿When the Missionary Priest is unveiled, if it’s your main phase, for each opponent create a white Aura enchantment token named Wololo attached to a non-commander creature that player controls.  
+<TITLE>The Missionary Priest</TITLE>
+<ROLE>Guardian</ROLE>
+<RULES>
+When the Missionary Priest is unveiled, if it’s your main phase, for each opponent create a white Aura enchantment token named Wololo attached to a non-commander creature that player controls.  
 At the beginning of your upkeep, you may create a white Aura enchantment token named Wololo attached to a non-commander creature an opponent controls. Then if there are 2 or more Auras named Wololo attached to it, gain control of it. Untap it.  
 Creatures with Wololo tokens attached to them can't attack, unless their controller cites the bible (full verse with name from memory) or pays {3}.
+</RULES>

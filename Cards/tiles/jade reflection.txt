@@ -1,1 +1,5 @@
-﻿jade reflection.png
+<TITLE>jade reflection</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+jade reflection.png
+</RULES>

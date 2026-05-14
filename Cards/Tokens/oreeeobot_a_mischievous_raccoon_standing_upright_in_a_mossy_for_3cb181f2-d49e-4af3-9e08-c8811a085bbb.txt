@@ -1,1 +1,5 @@
-﻿oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_3cb181f2-d49e-4af3-9e08-c8811a085bbb.png
+<TITLE>oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_3cb181f2-d49e-4af3-9e08-c8811a085bbb</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_3cb181f2-d49e-4af3-9e08-c8811a085bbb.png
+</RULES>

@@ -1,1 +1,5 @@
-﻿Medic.png
+<TITLE>Medic</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+Medic.png
+</RULES>

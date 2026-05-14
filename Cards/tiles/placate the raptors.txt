@@ -1,1 +1,5 @@
-﻿placate the raptors.png
+<TITLE>placate the raptors</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+placate the raptors.png
+</RULES>

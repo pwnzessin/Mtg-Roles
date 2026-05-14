@@ -1,4 +1,8 @@
-﻿When The GOAT is unveiled, until the end of your next turn all creatures you don't control are goaded and gain haste.  
+<TITLE>The GOAT</TITLE>
+<ROLE>Renegade</ROLE>
+<RULES>
+When The GOAT is unveiled, until the end of your next turn all creatures you don't control are goaded and gain haste.  
 - At the beginning of each opponent's upkeep, choose a creature that player controls. It becomes goaded.  
 - Whenever a goaded creature deals damage to one of your opponents, draw a card.
 - {flavor}"Greathearted, sure. Goat-headed? absolutely."
+</RULES>

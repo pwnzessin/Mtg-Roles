@@ -1,1 +1,5 @@
-﻿shrine to ixalli.png
+<TITLE>shrine to ixalli</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+shrine to ixalli.png
+</RULES>

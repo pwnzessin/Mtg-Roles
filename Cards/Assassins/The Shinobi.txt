@@ -1,3 +1,7 @@
-﻿When The Shinobi is unveiled you get an emblem with  
+<TITLE>The Shinobi</TITLE>
+<ROLE>Assassin</ROLE>
+<RULES>
+When The Shinobi is unveiled you get an emblem with  
 - “Whenever you attack one or more opponents, choose a creature card in your hand.  
 - That creature card gains Ninjutsu {0} until end of turn.”
+</RULES>

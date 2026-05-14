@@ -1,7 +1,11 @@
-﻿Unveil only during an opponent’s turn:   
+<TITLE>The Judge’s recurring Nightmare</TITLE>
+<ROLE>Bandit</ROLE>
+<RULES>
+Unveil only during an opponent’s turn:   
 When the Judge’s recurring Nightmare is unveiled, choose one {-}  
 - • {indent}Starting with the player to your left, each player assigns their creatures to the left or right of the volcano. Creatures enter to the left or right of the volcano. Creatures can’t block creatures on the other side of the volcano.  
 - • {indent}Reselect the stack at random.  
 - • {indent}Until the end of your next turn, all targeted spells and abilities cost {2} less to cast or activate and have their targets chosen at random.   
 - • {indent}Until end of turn, all cards in hands lose all card types, costs, names, and abilities and become red sorceries named Missile that cost {2} with “Missile deals 2 damage to any target.”  
 - • {indent}All creatures have “This creature can’t attack or block unless you have paid its motivate cost once.” and motivate {3}.
+</RULES>

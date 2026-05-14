@@ -1,1 +1,5 @@
-﻿unwitting acomplice.png
+<TITLE>unwitting acomplice</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+unwitting acomplice.png
+</RULES>

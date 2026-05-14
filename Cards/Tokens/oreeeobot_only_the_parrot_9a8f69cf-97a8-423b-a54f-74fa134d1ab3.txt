@@ -1,1 +1,5 @@
-﻿oreeeobot_only_the_parrot_9a8f69cf-97a8-423b-a54f-74fa134d1ab3.png
+<TITLE>oreeeobot_only_the_parrot_9a8f69cf-97a8-423b-a54f-74fa134d1ab3</TITLE>
+<ROLE>Token</ROLE>
+<RULES>
+oreeeobot_only_the_parrot_9a8f69cf-97a8-423b-a54f-74fa134d1ab3.png
+</RULES>

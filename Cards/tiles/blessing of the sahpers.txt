@@ -1,1 +1,5 @@
-﻿blessing of the sahpers.png
+<TITLE>blessing of the sahpers</TITLE>
+<ROLE>Tile</ROLE>
+<RULES>
+blessing of the sahpers.png
+</RULES>
