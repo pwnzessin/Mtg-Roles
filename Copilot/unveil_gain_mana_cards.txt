@@ -1,0 +1,20 @@
+Cards with Unveil and gain {mana} (looser rule)
+Rule: includes cards with any Unveil cost and any gain {..} mana amount, even if values differ.
+Generated: 2026-05-14 22:18:34
+
+Card: Ah shit, here we go again
+File: Cards\Renegades\Ah shit, here we go again.txt
+Unveil Cost Token(s): {4}
+Gain Token(s): {4}
+Match Type: exact-or-partial-match
+Unveil Line: - Unveil {4}, gain {4} mana of any color.  
+Gain Line: - Unveil {4}, gain {4} mana of any color.  
+
+Card: The Mommy
+File: Cards\Renegades\The Mommy.txt
+Unveil Cost Token(s): {3}
+Gain Token(s): {3}
+Match Type: exact-or-partial-match
+Unveil Line: - Unveil {3}, gain {3}.  
+Gain Line: - Unveil {3}, gain {3}.  
+

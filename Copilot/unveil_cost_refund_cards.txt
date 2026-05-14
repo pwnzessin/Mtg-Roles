@@ -1,0 +1,15 @@
+Cards that give back their unveil cost
+Generated: 2026-05-14 22:17:09
+
+Card: Ah shit, here we go again
+File: Cards\Renegades\Ah shit, here we go again.txt
+Refunded Unveil Cost Token(s): {4}
+Unveil Line: - Unveil {4}, gain {4} mana of any color.  
+Gain Line: - Unveil {4}, gain {4} mana of any color.  
+
+Card: The Mommy
+File: Cards\Renegades\The Mommy.txt
+Refunded Unveil Cost Token(s): {3}
+Unveil Line: - Unveil {3}, gain {3}.  
+Gain Line: - Unveil {3}, gain {3}.  
+

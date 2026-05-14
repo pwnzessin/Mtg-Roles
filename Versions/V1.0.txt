@@ -1,0 +1,24 @@
+Changes:
+
+Assassins:
+- Aspect Warper
+    + Stun Counter
+    + Backbone counter
+    + creatures your opponents control lose all combat keywords until the end of your next turn
+
+-Shrek the Third
+    + Unveil only after your third turn.
+    - Unveil {4}
+
+
+Kings:
+- The Taxer
+    + These abilities each trigger only once each turncycle.
+
+Bandits:
+- The Scrapper
+    + wording
+
+Renegades:
+- Ah shit, here we go again
+    + fixed wording

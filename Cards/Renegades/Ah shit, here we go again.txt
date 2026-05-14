@@ -1,6 +1,6 @@
 Ah shit, here we go again\!
 
-- Unveil {4}, gain {4} mana of any color.  
+- Unveil {4}, gain four mana of any color.  
 - If an opponent casts an artifact or enchantment spell with mana value 0 or 1 during their first turn, you may unveil without paying the unveil cost. If you do, you don’t gain mana from the unveil effect.  
 - Whenever a land enters the battlefield under an opponent's control, scry 1\.  
 - Whenever one or more creatures deal combat damage to one or more opponents, you may exile the top card of your library. Until the end of your next turn, you may play that card.  

@@ -1,2 +1,2 @@
-- When The Get down Mr. President is unveiled, you get an emblem with  
-- “Whenever the King is attacked, put up to one \+1/+1 counter on target creature you control. Then it fights an attacking creature of your choice.”
+When The Get down Mr. President is unveiled and whenever the king is attacked, chose up to one creature you control.
+Put a \+1/+1 counter on it, then it fights an attacking creature of your choice.

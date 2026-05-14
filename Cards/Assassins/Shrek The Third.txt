@@ -1,4 +1,4 @@
-﻿- Unveil {4}  
+﻿- Unveil only after your third turn.
 - When Shrek The Third is unveiled:  
 - Create a 4/4 green Ogre creature token with renown 2  
 - a 1/1 Donkey creature Token with flying  
