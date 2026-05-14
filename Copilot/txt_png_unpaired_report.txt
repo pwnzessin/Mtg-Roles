@@ -1,0 +1,170 @@
+TXT/PNG pairing report (name-based, case-insensitive)
+Generated: 2026-05-14 23:59:04
+
+Cards txt scanned: 241
+Artworks png scanned: 84
+Txt without png pair: 158
+Png without txt pair: 1
+
+TXT files without matching PNG:
+- Cards\Renegades\Ah shit, here we go again.txt
+- Cards\Renegades\Behold the Beheld Beholder.txt
+- Cards\Renegades\It's just a prank BRO.txt
+- Cards\Renegades\Mully, Good King Mulldrifter.txt
+- Cards\Renegades\The Aggro Magnet.txt
+- Cards\Renegades\The Covenant.txt
+- Cards\Renegades\The Demonstrator.txt
+- Cards\Renegades\The English Patient Zero.txt
+- Cards\Renegades\The GOAT.txt
+- Cards\Renegades\The Illusionist.txt
+- Cards\Renegades\The Lifebender.txt
+- Cards\Renegades\The Mommy.txt
+- Cards\Renegades\The Necromancer.txt
+- Cards\Renegades\The Party Rock Anthem.txt
+- Cards\Renegades\The Rumbling.txt
+- Cards\Renegades\The Substitute Teacher.txt
+- Cards\Renegades\The Truther or Darer.txt
+- Cards\Renegades\Viktor I. Winkontroll.txt
+- Cards\Renegades\Wrath of doG.txt
+- Cards\tiles\blade and claw.txt
+- Cards\tiles\blessing of the sahpers.txt
+- Cards\tiles\boradside assault.txt
+- Cards\tiles\cannons to port.txt
+- Cards\tiles\cannons to starboard.txt
+- Cards\tiles\cant take it with you.txt
+- Cards\tiles\cerapttros stampede.txt
+- Cards\tiles\dealdy challenge.txt
+- Cards\tiles\deeproot tree.txt
+- Cards\tiles\Dusk's Embrace.txt
+- Cards\tiles\from the mists.txt
+- Cards\tiles\gold laden shipwreck.txt
+- Cards\tiles\High market pirate.txt
+- Cards\tiles\jade reflection.txt
+- Cards\tiles\jungles bounty.txt
+- Cards\tiles\melee at the gatewws.txt
+- Cards\tiles\might of the sun empire.txt
+- Cards\tiles\natural defenses.txt
+- Cards\tiles\oracza the golden city.txt
+- Cards\tiles\placate the raptors.txt
+- Cards\tiles\plunder the plunderer.txt
+- Cards\tiles\proove worthy.txt
+- Cards\tiles\rejuvenating waters.txt
+- Cards\tiles\rise from the depth.txt
+- Cards\tiles\sails unfurled.txt
+- Cards\tiles\savage stirring.txt
+- Cards\tiles\scrollls of akzanza.txt
+- Cards\tiles\shrine to ixalli.txt
+- Cards\tiles\Study the nine rivers.txt
+- Cards\tiles\take the highground.txt
+- Cards\tiles\the blood fast ends.txt
+- Cards\tiles\thrown overboard.txt
+- Cards\tiles\too much to carry.txt
+- Cards\tiles\tresspass at spitfire bastion.txt
+- Cards\tiles\turn tail.txt
+- Cards\tiles\unwitting acomplice.txt
+- Cards\tiles\valuable recon.txt
+- Cards\tiles\Walls of Adanto.txt
+- Cards\tiles\weather the storm.txt
+- Cards\tiles\weaving alliances.txt
+- Cards\Tokens\blast-aa5c-4898-88a1-a30b014246e2.txt
+- Cards\Tokens\bullwark.txt
+- Cards\Tokens\Medic.txt
+- Cards\Tokens\oreeeobot_a_blazing_spirit_of_fire_shaped_like_a_sleek_predator_207b169e-aff9-4265-a5ce-512cbb43b183.txt
+- Cards\Tokens\oreeeobot_a_blazing_spirit_of_fire_shaped_like_a_sleek_predator_3a086f94-ca6f-42f3-8740-382c4cda7f2b.txt
+- Cards\Tokens\oreeeobot_a_calm_ethereal_being_woven_from_flowing_water_and_lu_0371495a-5a8d-4e8f-b9a6-9077e5b8b15f.txt
+- Cards\Tokens\oreeeobot_a_calm_ethereal_being_woven_from_flowing_water_and_lu_c8dafed5-755b-4f74-957d-fbde392af763.txt
+- Cards\Tokens\oreeeobot_a_cheerful_gingerbread_man_cookie_come_to_life_decora_3c029087-65ad-4945-8302-c7d832af84a2.txt
+- Cards\Tokens\oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_009f86b0-d35d-4a5b-b9e0-3848c72605f8.txt
+- Cards\Tokens\oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_3fa162ce-b149-46f3-b05b-1e2c231df7f8.txt
+- Cards\Tokens\oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_aeb68571-adb9-49b8-b4ed-3d10c6c22917.txt
+- Cards\Tokens\oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_c1ea764c-618e-44c8-906c-fd25a378de2f.txt
+- Cards\Tokens\oreeeobot_a_colossal_whale-like_leviathan_clad_in_jagged_sapphi_ef6fba54-6e9a-4091-9589-af37cb8f5ac7.txt
+- Cards\Tokens\oreeeobot_a_comically_tiny_chubby_priest_with_a_giant_floppy_bl_60153508-1db0-48d4-aed7-cab68ef16b2b.txt
+- Cards\Tokens\oreeeobot_a_comically_tiny_chubby_priest_with_a_giant_floppy_bl_aabe0845-09d6-44b0-a848-dfe516bc0a76.txt
+- Cards\Tokens\oreeeobot_a_comically_tiny_chubby_priest_with_a_giant_floppy_bl_dce646ad-3d88-47cc-969a-fdf1c7ef4aa9.txt
+- Cards\Tokens\oreeeobot_a_comically_tiny_chubby_priest_with_a_giant_floppy_bl_e9720a05-0aa3-4786-a8e4-c481735b7806.txt
+- Cards\Tokens\oreeeobot_a_comically_tiny_chubby_priest_with_a_giant_floppy_bl_f92d34c7-a0cd-44eb-95fc-aa5c8f7197cf.txt
+- Cards\Tokens\oreeeobot_a_dashing_swashbuckler_cat_small_but_fierce_clad_in_a_d4150ae1-f82d-4723-a91c-d19144071c71.txt
+- Cards\Tokens\oreeeobot_a_ferocious_primal_beast_of_the_deep_forest_lean_and__29ad03bb-ed6c-4be1-9ec5-72c9e1c3fb2f.txt
+- Cards\Tokens\oreeeobot_a_ferocious_primal_beast_of_the_deep_forest_lean_and__6d9c7bad-6354-4327-a3c5-c09d93804437.txt
+- Cards\Tokens\oreeeobot_a_ferocious_primal_beast_of_the_deep_forest_lean_and__84c2a12a-1f78-4196-b8f7-96823076bdb3.txt
+- Cards\Tokens\oreeeobot_a_ferocious_primal_beast_of_the_deep_forest_lean_and__bcc5062f-233f-4d4b-8e82-8d0cb1eaf5ca.txt
+- Cards\Tokens\oreeeobot_a_fiery_little_goat_with_deep_crimson_fur_streaked_wi_8bd61dc8-a02f-45f9-9e96-ac2ad4d4ed45.txt
+- Cards\Tokens\oreeeobot_a_fiery_little_goat_with_deep_crimson_fur_streaked_wi_baceac03-4d0f-4d90-96b3-ffec3f6f2345.txt
+- Cards\Tokens\oreeeobot_A_glowing_golden_shield_emblem_with_a_clean_symmetric_88f0abbf-03af-4de6-97a2-cf456759778a.txt
+- Cards\Tokens\oreeeobot_a_large_awkward_deep-sea_fish_with_shimmering_blue_sc_1677f866-07f5-4b90-aed9-7cd77b2197c4.txt
+- Cards\Tokens\oreeeobot_a_legendary_green_ooze_looming_like_an_eldritch_horro_415e0ecf-1c16-474a-ae3b-19b76808596e.txt
+- Cards\Tokens\oreeeobot_a_legendary_green_ooze_looming_like_an_eldritch_horro_5a74d65b-f512-4525-bb17-b43142169f89.txt
+- Cards\Tokens\oreeeobot_a_legendary_raccoon_knight_artificer_standing_proudly_5a5ca5f8-f40f-4ba2-aa61-aac47baaf542.txt
+- Cards\Tokens\oreeeobot_A_massive_brutal_missile_roaring_through_the_sky_forg_0c9d7802-bc7e-4c0d-a5bd-39d6cf01bf8d.txt
+- Cards\Tokens\oreeeobot_A_massive_brutal_missile_roaring_through_the_sky_forg_0cdbbadc-de6f-457a-9d5d-e6d281d79ae2.txt
+- Cards\Tokens\oreeeobot_A_massive_brutal_missile_roaring_through_the_sky_forg_0d1a2d5a-84d1-4417-acbf-31b4501b38ec.txt
+- Cards\Tokens\oreeeobot_A_massive_brutal_missile_roaring_through_the_sky_forg_3865330c-f532-458d-85e8-abb86fd9d8f4.txt
+- Cards\Tokens\oreeeobot_A_massive_brutal_missile_roaring_through_the_sky_forg_73ff8dc8-5451-415a-b8b8-a5ce7b4261b1.txt
+- Cards\Tokens\oreeeobot_A_massive_brutal_missile_roaring_through_the_sky_forg_951b6feb-5915-45d9-b3b4-a98f2c3c6318.txt
+- Cards\Tokens\oreeeobot_A_massive_brutal_missile_roaring_through_the_sky_forg_cb019b15-5371-4ee3-a109-4dedb601ab76.txt
+- Cards\Tokens\oreeeobot_A_massive_brutal_missile_roaring_through_the_sky_forg_d0ec24d5-dbb9-4694-a06a-5053a45e3d3e.txt
+- Cards\Tokens\oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_3cb181f2-d49e-4af3-9e08-c8811a085bbb.txt
+- Cards\Tokens\oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_7cf603bc-da9c-4ae5-8077-b9574522fe60.txt
+- Cards\Tokens\oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_af55b645-17b7-4a6d-a1b6-c655da922ca0.txt
+- Cards\Tokens\oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_af576a45-9c87-4ec3-8a6c-939e9ef8dbfc.txt
+- Cards\Tokens\oreeeobot_a_mossy_little_goat_with_shaggy_emerald_wool_and_tiny_6372d251-0e30-4e57-983a-6d02d367b512.txt
+- Cards\Tokens\oreeeobot_a_mossy_little_goat_with_shaggy_emerald_wool_and_tiny_df9e5d02-0e63-48f6-ae9a-3d380a58ae36.txt
+- Cards\Tokens\oreeeobot_A_Servitor_a_grim_lobotomized_cyborg_thrall_fused_wit_96f4815b-1b8b-4ef8-8cbb-d9e61f701f6b.txt
+- Cards\Tokens\oreeeobot_A_Servitor_a_grim_lobotomized_cyborg_thrall_fused_wit_cb11e35a-bf6b-4b7c-a82e-64c3d2e24145.txt
+- Cards\Tokens\oreeeobot_a_sleek_little_goat_with_shimmering_sapphire-blue_fur_a12916ea-b6e1-467d-bff1-38cfba634467.txt
+- Cards\Tokens\oreeeobot_a_sleek_little_goat_with_shimmering_sapphire-blue_fur_e1cb7137-0bd5-4a41-895b-0ffb3ad92f0c.txt
+- Cards\Tokens\oreeeobot_a_small_but_fierce_spirit_of_tangled_vines_and_thorns_12de7100-85fa-4b7f-8bac-d810fe3e74b3.txt
+- Cards\Tokens\oreeeobot_a_small_but_fierce_spirit_of_tangled_vines_and_thorns_a40f380e-bc6d-49a3-a79e-6594cfd3f639.txt
+- Cards\Tokens\oreeeobot_a_small_but_noble_goat_with_snow-white_wool_golden_ey_c7cb731a-63eb-4071-ba96-d6e28a780d30.txt
+- Cards\Tokens\oreeeobot_a_small_but_noble_goat_with_snow-white_wool_golden_ey_ffc0ab5b-a29e-4135-be4c-1894677e00bf.txt
+- Cards\Tokens\oreeeobot_a_small_but_unsettling_goat_with_midnight-black_wool__ac583da5-76fb-42c0-87e5-f2e911ed41bc.txt
+- Cards\Tokens\oreeeobot_a_small_but_unsettling_goat_with_midnight-black_wool__d9b4b104-5986-4916-bc37-6b3ec8826d43.txt
+- Cards\Tokens\oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_0a1d88f5-515c-4d1b-84f4-ed4a0a677528.txt
+- Cards\Tokens\oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_39107aaa-36c7-4cc9-8485-3402e2a910ff.txt
+- Cards\Tokens\oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_5bf6e88a-acd0-45c0-9558-6df7d2032c0f.txt
+- Cards\Tokens\oreeeobot_A_small_devil_creature_hunched_impish_figure_with_cri_e51c1d5f-c207-42d4-a9a7-570e348fb85b.txt
+- Cards\Tokens\oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_03ac3aae-0dca-46af-b4ab-344964f536ac.txt
+- Cards\Tokens\oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_0bccf63c-8817-4b3d-8cfd-e58967f8f588.txt
+- Cards\Tokens\oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_2a12fb93-2295-4bcc-845f-84e5d3ba5583.txt
+- Cards\Tokens\oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_3d72c612-17d7-41c4-9048-d9e97d02b240.txt
+- Cards\Tokens\oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_4a0acbac-5d06-453c-82a1-8055ccce59e8.txt
+- Cards\Tokens\oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_6c957e2a-6474-4e70-9f29-96523a02dd52.txt
+- Cards\Tokens\oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_7e6d14e6-2265-4ca3-98cd-c8c10213afe3.txt
+- Cards\Tokens\oreeeobot_a_small_floating_orb-like_creature_resembling_a_minia_b7691d79-baf2-4d43-99bb-fd7afe7a543c.txt
+- Cards\Tokens\oreeeobot_a_tiny_almost_cute_deep-sea_worm_with_big_curious_glo_38934e9f-2475-4398-814a-613ea92d733a.txt
+- Cards\Tokens\oreeeobot_a_towering_being_of_living_fire_and_molten_rock_its_b_51791d40-c8ad-4e40-bd53-41c400ade5d4.txt
+- Cards\Tokens\oreeeobot_a_towering_guardian_spirit_of_living_alabaster_stone__94d5ae9f-932d-4d68-9911-db62e943f5a3.txt
+- Cards\Tokens\oreeeobot_a_towering_guardian_spirit_of_living_alabaster_stone__e86907ce-7690-4679-9543-63f2bb1407c1.txt
+- Cards\Tokens\oreeeobot_A_Wololo_Token_a_comically_tiny_chubby_priest_with_a__4332163b-6c80-45b3-9b7d-d928ed7133cc.txt
+- Cards\Tokens\oreeeobot_A_Wololo_Token_a_comically_tiny_chubby_priest_with_a__9b81fca0-f3ab-4de2-8f9b-d3245a5947d3.txt
+- Cards\Tokens\oreeeobot_A_Wololo_Token_a_comically_tiny_chubby_priest_with_a__b8b11823-2576-490b-abf3-6ecafd8ffc47.txt
+- Cards\Tokens\oreeeobot_an_apocalyptic_daemon-corrupted_monstrosity_once-huma_3323b5a2-9152-4eec-abb1-983b41392afd.txt
+- Cards\Tokens\oreeeobot_an_apocalyptic_daemon-corrupted_monstrosity_once-huma_58f50ddc-e0d6-49ef-a8ce-6985df64ad94.txt
+- Cards\Tokens\oreeeobot_an_unfathomable_god-beast_of_the_deep_a_titanic_Krake_ebfd661e-d10f-48c4-a9cd-1f39a72f3ecc.txt
+- Cards\Tokens\oreeeobot_Ceberus_the_three_headed_hound_of_hell._3_heads_on_1__cc0ab7d3-e4eb-48f2-9918-de36c37be8d1.txt
+- Cards\Tokens\oreeeobot_hound_with_massive_bulk_paws_slamming_into_the_earth__23b5d37f-8ed0-46ac-883a-b16e698cde2a.txt
+- Cards\Tokens\oreeeobot_hound_with_massive_bulk_paws_slamming_into_the_earth__34ac567b-1b75-4e27-b2df-8f0557775146.txt
+- Cards\Tokens\oreeeobot_hound_with_massive_bulk_paws_slamming_into_the_earth__bebab39d-b481-4605-b61f-023792186966.txt
+- Cards\Tokens\oreeeobot_latform_pale_scarred_flesh_bound_in_rusted_iron_frame_3a5cf1c8-9d41-4a50-94db-b1a35d110a14.txt
+- Cards\Tokens\oreeeobot_only_the_parrot_9a8f69cf-97a8-423b-a54f-74fa134d1ab3.txt
+- Cards\Tokens\oreeeobot_Shrek_the_Ogre_a_big_round-bellied_green_ogre_with_wi_28250f4f-460a-4214-bf57-81947ec04de2.txt
+- Cards\Tokens\oreeeobot_The_Donkey_from_Shrek_a_small_goofy_donkey_with_overs_42a69c6a-be21-41a6-b275-ff1e6fd8507b.txt
+- Cards\Tokens\oreeeobot_The_Donkey_from_Shrek_a_small_goofy_donkey_with_overs_bd9a9be1-8491-4cf5-b2d0-30b6bda95b77.txt
+- Cards\Tokens\oreeeobot_The_Goat-Tank_a_monstrous_fusion_of_iron_war_machine__93b9639d-3156-45bd-9a9b-eebc3626bf80.txt
+- Cards\Tokens\oreeeobot_The_Goat-Tank_a_monstrous_fusion_of_iron_war_machine__c2cf93c7-e4e8-441e-8035-9f881e449b5e.txt
+- Cards\Tokens\oreeeobot_The_Goat-Tank_a_monstrous_fusion_of_iron_war_machine__daeb9430-bd36-4d53-9633-9d70646796df.txt
+- Cards\Tokens\oreeeobot_The_Virtuous_Bridge_Troll_a_towering_yet_gentle_troll_bd655e91-5274-4103-b50d-c4592ad58715.txt
+- Cards\Tokens\oreeeobot_The_Wedding_Ring_a_delicate_golden_band_resting_alone_3b995cfe-6fb6-4038-9675-1db46206b089.txt
+- Cards\Tokens\oreeeobot_The_Wedding_Ring_a_delicate_golden_band_resting_alone_62ab7fe6-f4c1-4383-8002-9a08b028631a.txt
+- Cards\Tokens\oreeeobot_viewed_from_above_an_ancient_moss-covered_stone_bridg_cd07c18d-b30d-4c11-ac79-b0d4c8a2f2dd.txt
+- Cards\Tokens\Purge.txt
+- Cards\Tokens\Shredder.txt
+- Cards\Tokens\Stealth.txt
+- Cards\Tokens\THE_SUPPORT_sJHHIED.txt
+- Cards\Tokens\War_Bear.txt
+- Cards\Tokens\War_Bear_1.txt
+- Cards\Tokens\War_Bear_2.txt
+
+PNG files without matching TXT:
+- Artworks\Bandits\The Drunken Master.png
