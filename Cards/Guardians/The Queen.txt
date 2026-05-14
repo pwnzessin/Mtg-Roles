@@ -1,4 +1,4 @@
-﻿- Unveil {4}  
-- When the Queen is unveiled, you and another player get an emblem named Wedding Ring with  
-- “Whenever another player who controls an emblem named Wedding Ring draws one or more cards during their turn, you draw a card.  
-- Whenever another player who controls an emblem named Wedding Ring gains life during their turn, you gain that much life.”
+﻿Unveil {4}  
+When the Queen is unveiled, you and another player get an emblem named Wedding Ring with  
+“Whenever another player who controls an emblem named Wedding Ring draws one or more cards during their turn, you draw a card.  
+Whenever another player who controls an emblem named Wedding Ring gains life during their turn, you gain that much life.”

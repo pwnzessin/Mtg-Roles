@@ -1,1 +1,1 @@
-- At the beginning of your upkeep, if it’s an even-numbered turn, set a scheme in motion.
+At the beginning of your upkeep, if it’s an even-numbered turn, set a scheme in motion.

@@ -1,1 +1,2 @@
-﻿- When The Sneaky Beaky like is unveiled, until end of turn, whenever you deal combat damage to a player, choose a nontoken creature an opponent controls. Destroy that creature, then create a copy of it except it gains shadow.
+﻿When The Sneaky Beaky like is unveiled, until end of turn, whenever you deal combat damage to a player, choose a nontoken creature an opponent controls.
+Destroy that creature, then create a copy of it except it gains shadow.

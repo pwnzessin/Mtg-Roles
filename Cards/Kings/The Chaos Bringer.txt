@@ -1,4 +1,4 @@
-﻿- At the beginning of your upkeep, roll a D6.   
+﻿At the beginning of your upkeep, roll a D6.   
 - 1 \- Surveil 1.  
 - 2 \- Scry 1, then draw a card.  
 - 3 \- You gain 4 life. Deal 2 damage to any target.  

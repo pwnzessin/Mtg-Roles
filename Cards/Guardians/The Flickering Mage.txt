@@ -1,2 +1,2 @@
-﻿- When the Flickering Mage is unveiled, exile up to 5 target permanents.  
-- Return those cards to the battlefield tapped under their owners control at the beginning of the next endstep.
+﻿When the Flickering Mage is unveiled, exile up to 5 target permanents.  
+Return those cards to the battlefield tapped under their owners control at the beginning of the next endstep.

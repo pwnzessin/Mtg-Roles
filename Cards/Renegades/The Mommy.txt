@@ -1,8 +1,6 @@
-The Mommy
-
-- Unveil {3}, gain {3}.  
-- When The Mommy is unveiled, you gain {3}.  
-- Whenever a source an opponent controls deals damage to you or a permanent you control, that source’s controller loses 2 life unless they pay {1}.  
-- Creatures you control gain \+1/+1.  
-- At the beginning of combat on your turn, choose a creature you control. That creature gains vigilance until end of turn.  
-- {flavor}"It's like mom always says: Rawr rawr-rawr-rawr rawr rawr."
+Unveil {3}, gain {3}.  
+When The Mommy is unveiled, you gain {3}.  
+Whenever a source an opponent controls deals damage to you or a permanent you control, that source’s controller loses 2 life unless they pay {1}.  
+Creatures you control gain \+1/+1.  
+At the beginning of combat on your turn, choose a creature you control. That creature gains vigilance until end of turn.  
+{flavor}"It's like mom always says: Rawr rawr-rawr-rawr rawr rawr."

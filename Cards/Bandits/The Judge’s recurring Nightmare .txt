@@ -1,5 +1,5 @@
-﻿- Unveil only during an opponent’s turn:   
-- When the Judge’s recurring Nightmare is unveiled, choose one {-}  
+﻿Unveil only during an opponent’s turn:   
+When the Judge’s recurring Nightmare is unveiled, choose one {-}  
 - • {indent}Starting with the player to your left, each player assigns their creatures to the left or right of the volcano. Creatures enter to the left or right of the volcano. Creatures can’t block creatures on the other side of the volcano.  
 - • {indent}Reselect the stack at random.  
 - • {indent}Until the end of your next turn, all targeted spells and abilities cost {2} less to cast or activate and have their targets chosen at random.   

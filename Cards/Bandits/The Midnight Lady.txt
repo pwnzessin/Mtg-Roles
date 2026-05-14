@@ -1,2 +1,2 @@
-﻿- When The Midnight Lady is unveiled, create six Blood tokens. You get an emblem with  
+﻿When The Midnight Lady is unveiled, create six Blood tokens. You get an emblem with  
 - “Each card in your hand has madness. The madness cost is equal to its mana cost \-{1}.”

@@ -1,6 +1,4 @@
-﻿The Covenant
-
-- When a player is unveiled, unveil The Covenant.  
-- Starting with the player who triggered this ability, that player bids any amount of life. In turn order, each player may top the high bid. The bidding ends if the high bid stands. The highest bidder loses life equal to their bid and sacrifices a quarter of lands or of the nontoken nonland permanents they control, rounded up each time. Then that player joins your team.  
-- (((Victory: Your teammate wins.  
-- Defeat: You or your teammate are eliminated.)))
+﻿When a player is unveiled, unveil The Covenant.  
+Starting with the player who triggered this ability, that player bids any amount of life. In turn order, each player may top the high bid. The bidding ends if the high bid stands. The highest bidder loses life equal to their bid and sacrifices a quarter of lands or of the nontoken nonland permanents they control, rounded up each time. Then that player joins your team.  
+(((Victory: Your teammate wins.  
+Defeat: You or your teammate are eliminated.)))

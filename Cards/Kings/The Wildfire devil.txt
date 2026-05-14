@@ -1,3 +1,3 @@
-﻿- At the beginning of your upkeep, choose a player at random. That player exiles a nonland card from their graveyard. Copy that card. You may cast the copy without paying its mana cost.  
-- If the player didn't exile a card this way, create a 1/1 red Devil creature token with “When this creature dies, choose a player at random. That player exiles cards from the top of their library until they exile a nonland card. You may put that card into their graveyard.”  
-- *Devils sow grief and harvest glee.*
+﻿At the beginning of your upkeep, choose a player at random. That player exiles a nonland card from their graveyard. Copy that card. You may cast the copy without paying its mana cost.  
+If the player didn't exile a card this way, create a 1/1 red Devil creature token with “When this creature dies, choose a player at random. That player exiles cards from the top of their library until they exile a nonland card. You may put that card into their graveyard.”  
+{flavor}*Devils sow grief and harvest glee.*

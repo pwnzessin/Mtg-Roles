@@ -1,2 +1,2 @@
-﻿- If any damage would be dealt to the King, you may unveil this card.  
-- When The Maitresse is unveiled, prevent all damage that would be dealt to the King this turn. The King gains life equal to the damage prevented this way.
+﻿If any damage would be dealt to the King, you may unveil this card.  
+When The Maitresse is unveiled, prevent all damage that would be dealt to the King this turn. The King gains life equal to the damage prevented this way.

@@ -1,3 +1,3 @@
-﻿- Unveil only if the King has less life than another player.  
-- When The Royal Shieldbearer is unveiled, you may add the life totals of Guardian and King, the Guardians and Kings life total each becomes half of that life total rounded up. You may put a shield counter on target permanent.  
-- As long as The Royal Shieldbearer is unveiled, whenever a source would deal damage to the King, prevent half of that damage rounded down. You also take that much damage.
+﻿Unveil only if the King has less life than another player.  
+When The Royal Shieldbearer is unveiled, you may add the life totals of Guardian and King, the Guardians and Kings life total each becomes half of that life total rounded up. You may put a shield counter on target permanent.  
+As long as The Royal Shieldbearer is unveiled, whenever a source would deal damage to the King, prevent half of that damage rounded down. You also take that much damage.

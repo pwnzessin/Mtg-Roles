@@ -1,2 +1,2 @@
-﻿- At the beginning of your upkeep, choose a player other than you that has not been chosen on your last turn. Whenever chosen player is attacked, create a Gold token. Each opponent attacking that player does the same.  
-- {flavor}Jingling coins beckon many an eager hand.
+﻿At the beginning of your upkeep, choose a player other than you that has not been chosen on your last turn. Whenever chosen player is attacked, create a Gold token. Each opponent attacking that player does the same.  
+{flavor}Jingling coins beckon many an eager hand.

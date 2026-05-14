@@ -1,4 +1,4 @@
-﻿- At the beginning of your upkeep, you may choose one that hasn’t been chosen \-   
+﻿At the beginning of your upkeep, you may choose one that hasn’t been chosen \-   
 - White {-} You gain 8 life.  
 - Blue {-} Draw two cards.  
 - Black {-} Choose and destroy a creature or planeswalker.  

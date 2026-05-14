@@ -1,4 +1,2 @@
-It’s just a prank BRO
-
-- When the It’s just a prank BRO is unveiled, remove all attacking creatures from combat. During your next main phase, gain {1} for each creature removed from combat this way.  
-- {0}: You may remove up to one creature from combat, you may untap that creature. Activate only once each turn.
+When the It’s just a prank BRO is unveiled, remove all attacking creatures from combat. During your next main phase, gain {1} for each creature removed from combat this way.  
+{0}: You may remove up to one creature from combat, you may untap that creature. Activate only once each turn.

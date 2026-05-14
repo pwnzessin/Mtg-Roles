@@ -1,4 +1,4 @@
-- When The Abyssal Prowler is unveiled, create a   
+When The Abyssal Prowler is unveiled, create a   
 - 1/1 blue Worm creature token with: When this creature deals combat damage to a player, create a Treasure token and when this creature leaves the battlefield, create a   
 - 3/3 blue Fish create token with: Trample and when this creature leaves the battlefield, create a   
 - 6/6 blue Whale creature token named Timmy with: Islandwalk,Double strike and when this creature leaves the battlefield, create a   

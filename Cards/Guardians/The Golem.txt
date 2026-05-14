@@ -1,2 +1,2 @@
-﻿- When The Golem is unveiled, you and the King each gain 7 life. Create 2 3/3 colorless Golem artifact creature tokens.  
-- As long as you have 7 or more life, King players have hexproof and can’t be attacked.
+﻿When The Golem is unveiled, you and the King each gain 7 life. Create 2 3/3 colorless Golem artifact creature tokens.  
+As long as you have 7 or more life, King players have hexproof and can’t be attacked.

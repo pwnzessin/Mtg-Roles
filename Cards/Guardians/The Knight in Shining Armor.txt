@@ -1,1 +1,1 @@
-﻿- When The Knight in Shining Armor is unveiled, until end of turn, when the King would be dealt damage by an opponent, deal that much damage to an opponent instead.
+﻿When The Knight in Shining Armor is unveiled, until end of turn, when the King would be dealt damage by an opponent, deal that much damage to an opponent instead.

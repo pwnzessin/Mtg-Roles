@@ -1,5 +1,5 @@
-﻿- Put 4 loyalty counters onto yourself. Damage taken reduces the loyalty counters on you by the same amount.  
-- You gain the following abilities:  
+﻿Put 4 loyalty counters onto yourself. Damage taken reduces the loyalty counters on you by the same amount.  
+You gain the following abilities:  
 + 1: Cast a copy of one of the following cards chosen at random—Ignorant Bliss, Crack the Earth, Blazing Volley.  
 + 3: Cast a copy of one of the following cards chosen at random—Seething Song, Dance with Devils, Flamebreak.  
 + 6: Cast a copy of one of the following cards chosen at random—Hellion Eruption, Insurrection, Warp World.

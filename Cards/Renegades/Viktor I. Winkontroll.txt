@@ -1,4 +1,2 @@
-Viktor I. Winkontroll
-
-- When Viktor I. Winkontroll is unveiled, exile the stack.  
-- Create a blue Incarnation Avatar creature token named Wincing with flying, shroud and “This creature’s power and toughness are each equal to the turn count. When this creature enters, draw cards equal to its power.”
+When Viktor I. Winkontroll is unveiled, exile the stack.  
+Create a blue Incarnation Avatar creature token named Wincing with flying, shroud and “This creature’s power and toughness are each equal to the turn count. When this creature enters, draw cards equal to its power.”

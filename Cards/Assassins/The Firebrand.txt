@@ -1,1 +1,2 @@
-﻿- When The Firebrand is unveiled, each player exiles their hand and the top card of their library, then draws that many cards minus 1\. Deal damage equal to the total mana value of cards exiled this way to all creatures and Planeswalkers.
+﻿When The Firebrand is unveiled, each player exiles their hand and the top card of their library, then draws that many cards minus 1.
+Deal damage equal to the total mana value of cards exiled this way to all creatures and Planeswalkers.

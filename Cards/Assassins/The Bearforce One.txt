@@ -1,2 +1,2 @@
-﻿- Unveil only if an opponent has 30 life or less.  
-- When the Bearforce One is unveiled, create three 2/2 green Bear creature tokens named War Bear. They gain haste and have {t}: This creature deals damage equal to its power to target creature. If a creature dealt damage this way dies this turn, put a \+1/+1 counter on this creature.
+﻿Unveil only if an opponent has 30 life or less.  
+When the Bearforce One is unveiled, create three 2/2 green Bear creature tokens named War Bear. They gain haste and have {t}: This creature deals damage equal to its power to target creature. If a creature dealt damage this way dies this turn, put a \+1/+1 counter on this creature.

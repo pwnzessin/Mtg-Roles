@@ -1,1 +1,1 @@
-﻿- At the beginning of your upkeep, discover a {1} cost tile. Every third turn discover a {3} cost tile instead. Every sixth turn discover a {6} cost tile instead.
+﻿At the beginning of your upkeep, discover a {1} cost tile. Every third turn discover a {3} cost tile instead. Every sixth turn discover a {6} cost tile instead.

@@ -1,2 +1,2 @@
-﻿- Start the game with a number of seed counters on Her Seedborn Highness equal to half the number of players, rounded up.  
-- {3}, Remove a seed counter from Her Seedborn Highness: Untap all permanents you control. Activate only once each turn.
+﻿Start the game with a number of seed counters on Her Seedborn Highness equal to half the number of players, rounded up.  
+{3}, Remove a seed counter from Her Seedborn Highness: Untap all permanents you control. Activate only once each turn.

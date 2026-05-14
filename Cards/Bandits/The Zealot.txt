@@ -1,3 +1,3 @@
-﻿- When The Zealot is unveiled, each player with a face up role card reveals cards from the top of their library until they reveal a creature card.  
-- For each creature card revealed this way, you may put it onto the battlefield under your control. Shuffle all cards not put onto the battlefield this way into their owners’ libraries.  
-- Those creatures gain vigilance, haste and double strike until end of turn.
+﻿When The Zealot is unveiled, each player with a face up role card reveals cards from the top of their library until they reveal a creature card.  
+For each creature card revealed this way, you may put it onto the battlefield under your control. Shuffle all cards not put onto the battlefield this way into their owners’ libraries.  
+Those creatures gain vigilance, haste and double strike until end of turn.

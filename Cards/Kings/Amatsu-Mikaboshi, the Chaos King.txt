@@ -1,3 +1,3 @@
-- Chaos Wand {-} {2}: Choose an opponent. That opponent exiles cards from the top of their library until they exile an instant or sorcery card.
+Chaos Wand {-} {2}: Choose an opponent. That opponent exiles cards from the top of their library until they exile an instant or sorcery card.
 You cast that card without paying its mana cost. Then put the exiled cards that weren’t cast this way on the bottom of that library in a random order.
 Activate only during your turn and only once each turn.
