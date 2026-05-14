@@ -8,14 +8,14 @@ Original Google Doc mit Kommentaren:
 
 Regeln für die txt Datei Struktur:
 
-"<TITLE>Cardname</TITLE>
+"<TITLE Cardname /TITLE>
 
-<ROLE>Roletype</ROLE>
+<ROLE Roletype /ROLE>
 
-<RULES>
-
-Rulestext
+<RULES
 
 Rulestext
 
-</RULES>"
+Rulestext
+
+/RULES>
