@@ -1,3 +1,3 @@
-﻿- When El Ttonkodod is unveiled, create a legendary green 1/1 ooze creature token named â€œel Ttonkododâ€ with reach, trample and â€œwhenever a Gunk card is discarded or a player mills one or more cards, put a \+1/+1 counter on this creatureâ€.  
+- When El Ttonkodod is unveiled, create a legendary green 1/1 ooze creature token named “el Ttonkodod” with reach, trample and “whenever a Gunk card is discarded or a player mills one or more cards, put a \+1/+1 counter on this creature”.  
 - Each of your opponents mills 1 and conjures 3 Gunk card tokens into their hand.  
-- They're colorless kindred \- ooze cards with no mana cost, cycling {4} and this card can't be discarded during your end step, unless your handsize is less than the number of cards in your hand named Gunkâ€.
+- They're colorless kindred \- ooze cards with no mana cost, cycling {4} and this card can't be discarded during your end step, unless your handsize is less than the number of cards in your hand named Gunk”.

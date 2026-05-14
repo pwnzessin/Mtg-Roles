@@ -1,1 +1,1 @@
-﻿* â€¢ {indent}SHREDDER: A 2/4 Gyro artifact creature token with flying, haste and vanishing 3\.
+* • {indent}SHREDDER: A 2/4 Gyro artifact creature token with flying, haste and vanishing 3\.

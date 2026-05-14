@@ -1,2 +1,2 @@
-﻿- When The Puppetmaster is unveiled, you get an emblem with â€œWhenever one or more of your opponents is attacked, you and the attacking player each draw a card.â€  
+- When The Puppetmaster is unveiled, you get an emblem with “Whenever one or more of your opponents is attacked, you and the attacking player each draw a card.”  
 - Whenever you draw your second card each turn, choose a player. You and that player both create a 1/1 Faerie Spy token with flying and deathtouch. They are goaded for the rest of the game.

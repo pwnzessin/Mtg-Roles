@@ -1,6 +1,6 @@
-﻿- When The Abyssal Prowler is unveiled, create a   
+- When The Abyssal Prowler is unveiled, create a   
 - 1/1 blue Worm creature token with: When this creature deals combat damage to a player, create a Treasure token and when this creature leaves the battlefield, create a   
 - 3/3 blue Fish create token with: Trample and when this creature leaves the battlefield, create a   
 - 6/6 blue Whale creature token with: Double strike and when this creature leaves the battlefield, create a   
 - 9/9 blue Kraken creature token with: Double strike, trample, ward 2\.  
-- Players canâ€™t create token copies of those tokens and permanents canâ€™t enter the battlefield as a copy of those tokens.
+- Players can’t create token copies of those tokens and permanents can’t enter the battlefield as a copy of those tokens.
