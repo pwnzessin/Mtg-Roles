@@ -1,0 +1,3 @@
+﻿- When The Tempest is unveiled, for each player you may return a permanent that player controls to their hand.  
+- If you return a permanent to your hand this way, create X tapped treasure tokens where X is the returned Cards mana value  
+- At the beginning of your upkeep choose one permanent. Return that permanent to its owner’s hand, unless that player pays {2} or 5 life.

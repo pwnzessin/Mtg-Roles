@@ -1,0 +1,4 @@
+﻿- Unveil {1}  
+- When The Ferryman is unveiled, choose a permanent. When that permanent is put into a graveyard this turn, return a card that shares a card type with it from its owner’s graveyard to the battlefield under your control.  
+- {3}: Turn the Ferryman face down. Activate only during your turn and only once each turn.  
+- {flavor}"Death is permanent. There’s no coming back if you get off the Ferryman’s boat." \- Martha Sweeney (Killmore)

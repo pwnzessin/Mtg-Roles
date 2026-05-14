@@ -1,0 +1,2 @@
+﻿- Start the game with the Baldur’s Gate Wilderness dungeon.  
+- At the beginning of your upkeep, venture into the Wilderness.

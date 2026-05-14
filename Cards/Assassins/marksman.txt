@@ -1,0 +1,2 @@
+﻿- When The Marksman is unveiled, creatures lose hexproof, shroud and ward until end of turn.  
+- Deal damage to up to three targets equal to the highest mana value, power or toughness among permanents on the battlefield.

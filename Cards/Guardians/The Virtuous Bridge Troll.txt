@@ -1,0 +1,3 @@
+﻿- Unveil {4}  
+- When the Virtuous Bridge Troll is unveiled, the King creates a 5/5 green and white Troll creature token with vigilance, reach and “{3}: Regenerate this creature.” and “No more than one creature can attack you each combat.”  
+- You create a colorless Bridge land token with “{T}: Add {1}.”

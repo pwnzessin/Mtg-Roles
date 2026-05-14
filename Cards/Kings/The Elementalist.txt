@@ -1,0 +1,5 @@
+﻿- At the beginning of your upkeep, choose one that hasn’t been chosen this cycle. *(A cycle lasts four turns. At the end of each cycle, the choices reset.)*  
+- • {indent}Create a 0/3 white Elemental creature token with defender. Put a shield counter on up to one creature.  
+- • {indent}Create a 2/1 red Elemental creature token with flying. Deal 1 damage to target creature, planeswalker or battle.  
+- • {indent}Create a 1/2 blue Elemental creature token. You gain 2 life and draw a card.  
+- • {indent}Create a 1/1 green Elemental creature token with haste. Put a stun counter on target creature.

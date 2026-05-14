@@ -1,0 +1,4 @@
+﻿- When The itâ€™s-better-in-my-deck-guy is unveiled, for each player other than you, choose another player at random, who has not been chosen already.  
+- That player gains control of that players commander.  
+- If that commander is in the command zone, that player may cast that commander by only paying the commander tax on it.  
+- At the beginning of you next turns end step, return all commanders you don't control to their command zones.

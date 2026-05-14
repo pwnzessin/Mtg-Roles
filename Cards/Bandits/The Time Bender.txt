@@ -1,0 +1,8 @@
+﻿The Time Bender
+
+- Unveil {4}  
+- When The Time Bender is unveiled, choose two {-}  
+- â€¢ {indent}Each player shuffles their hand and graveyard into their library, then draws seven cards.  
+- â€¢ {indent}Take an extra turn after this one.  
+- â€¢ {indent}End the turn.  
+- {flavor}"Anything less than immortality is a complete waste of time." \- Bender

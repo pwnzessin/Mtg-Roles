@@ -1,0 +1,6 @@
+﻿The Lifebender
+
+- Unveil only when a player has 20 life or less.  
+- When The Lifebender is unveiled and at the beginning of your upkeep, draw a card.  
+- At the beginning of your upkeep, you may have a player lose 1 life and you may have another player gain 1 life.  
+- Whenever two players have the same life total, you may have one of those players lose the game.

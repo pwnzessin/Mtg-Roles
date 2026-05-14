@@ -1,0 +1,3 @@
+﻿- Unveil {X}  
+- When The Marshall is unveiled, choose a color and a creature type. Choose a player, that player creates X 1/1 creature tokens of the chosen color and type.  
+- If X is 3 or more, destroy all other creatures.

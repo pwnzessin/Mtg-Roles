@@ -1,0 +1,2 @@
+﻿- Whenever you move to combat, starting with the player on your left, each player votes for one of your opponents.  
+- Whenever you attack an opponent who has the highest or is tied for the highest votes, put up to 2 \+1/+1 counters on up to two attacking creatures.

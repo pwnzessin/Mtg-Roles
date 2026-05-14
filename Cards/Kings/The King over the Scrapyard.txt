@@ -1,0 +1,3 @@
+﻿- At the beginning of your upkeep, create a Junk token.  
+- Whenever another permanent you control leaves the battlefield because of an opponent, create a tapped Treasure token.  
+- Sacrifice 3 noncreature tokens: Create a 3/3 colorless Servitor artifact creature token.

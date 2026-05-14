@@ -1,0 +1,7 @@
+﻿* When The Scrapper is unveiled, choose any number of players. Each of those players creates any number of tokens of your choice from among the following {-}  
+* • {indent}BLAST: A tapped 5/1 colorless Gyro artifact creature token with flying and haste. It has “When this creature dies, it deals 5 damage to you and 1 damage to each creature you control” and “Sacrifice this creature at the beginning of your next end step.” Goad it.  
+* • {indent}BULWARK: A 0/5 Gyro artifact creature token with flying, defender and “When this creature enters, you gain hexroof until the end of your next turn”.  
+* • {indent}SHREDDER: A 2/4 Gyro artifact creature token with flying, haste and vanishing 3\.  
+* • {indent}STEALTH: A 0/1 Gyro artifact creature token with flying, shroud and {3}, Sacrifice this creature: You phase out until your next turn. *(Your permanents remain on the battlefield.)*”  
+* • {indent}PURGE: A 0/2 Gyro artifact creature token with flying and “When this creature enters, you lose all counters.”  
+* • {indent}MEDIC: A 0/1 Gyro artifact creature token with flying and “When this creature enters, you gain 5 life and draw a card.”

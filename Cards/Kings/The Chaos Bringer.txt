@@ -1,0 +1,7 @@
+﻿- At the beginning of your upkeep, roll a D6.   
+- 1 \- Surveil 1.  
+- 2 \- Scry 1, then draw a card.  
+- 3 \- You gain 4 life. Deal 2 damage to any target.  
+- 4 \- Create a 0/4 white Goat Tank creature token with defender.  
+- 5 \- Create a Treasure token.  
+- 6 \- Repeat this process two more times.

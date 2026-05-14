@@ -1,0 +1,2 @@
+﻿- Unveil only during your turn.  
+- When The Giant is unveiled, put 5 \+1/1 counters on up to one target creature, then choose a creature with the highest combined power and toughness. Destroy the rest.

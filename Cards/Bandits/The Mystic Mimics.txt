@@ -1,0 +1,3 @@
+﻿- Unveil {1}  
+- When The Mystic Mimics are unveiled, copy target ability (that isn’t a mana ability), instant or sorcery spell. You may choose new targets for the copy.  
+- {3}: Turn The Mystic Mimics face down. Activate only during your turn and only once each turn.

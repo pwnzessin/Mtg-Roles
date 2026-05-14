@@ -1,0 +1,1 @@
+﻿- At the beginning of your upkeep, choose a player. Gain control of an artifact chosen at random controlled by that player until end of turn. Untap it.

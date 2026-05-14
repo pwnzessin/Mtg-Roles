@@ -1,0 +1,2 @@
+﻿* â€¢ {indent}PURGE: A 0/2 Gyro artifact creature token with flying and â€œWhen this creature enters, you lose all counters.â€  
+* â€¢ {indent}MEDIC: A 0/1 Gyro artifact creature token with flying and â€œWhen this creature enters, you gain 5 life and draw a card.â€
