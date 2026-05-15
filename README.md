@@ -12,6 +12,11 @@
 - [x] ~~Add `Y_POS` parameter to cards for artwork vertical position~~ _(done)_
 - [ ] Verify syntax across all cards
 - [ ] Set artwork Y-positions manually
+  - [x] ~~Assassins~~ _(done)_
+  - [ ] Bandits
+  - [ ] Guardians
+  - [ ] Kings
+  - [ ] Renegades
 - [ ] Create generic card api
 - [ ] _(Future)_ Automate artwork Y-position detection
 
