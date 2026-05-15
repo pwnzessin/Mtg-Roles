@@ -1,5 +1,5 @@
 CardConjurer batch report for role folder: Assassins
-Generated: 2026-05-15T12:39:10.935Z
+Generated: 2026-05-15T19:24:22.132Z
 
 Total parsed cards: 24
 Cards in run queue: 24

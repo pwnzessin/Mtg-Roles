@@ -2,6 +2,11 @@
 
 This script batch-creates role card PNGs from `Cards/<RoleFolder>/*.txt` files using your local CardConjurer.
 
+This folder now includes three workflows:
+- `generate_role_cards.mjs`: core generator used by npm script
+- `Rolecard_Batch_Generator.ps1`: interactive role/count/quality runner
+- `generate_all_compressed.ps1`: one-shot all roles with automatic compression
+
 It expects each card text file to use:
 - `<TITLE>...</TITLE>`
 - `<ROLE>...</ROLE>`
@@ -30,6 +35,33 @@ npx playwright install chromium
 npm run generate -- --role Bandits --headless false --start-launcher true --overwrite false
 ```
 
+## Interactive batch runner (recommended)
+Use this when you want prompts for role selection, card limit, and output quality/compression:
+
+```powershell
+.\Rolecard_Batch_Generator.ps1
+```
+
+Quality presets in this script:
+- `1`: Original PNG (full resolution)
+- `2`: 50% PNG
+- `3`: 37% PNG (`750x1050` at `300 DPI`)
+- `4`: 50% JPEG quality 85 (default)
+
+## Generate all roles with auto compression
+Use this for unattended generation of all roles with automatic post-processing to compressed output:
+
+```powershell
+.\generate_all_compressed.ps1
+```
+
+Current compression profile in `generate_all_compressed.ps1`:
+- Format: `Jpeg`
+- Scale: `0.5`
+- Quality: `85`
+
+You can edit the `$compression` block in that script to switch format, scale, target size, DPI, or JPEG quality.
+
 ## Useful flags
 - `--role <FolderName>`: Role folder under `Cards/` and `Artworks/` (default `Bandits`)
 - `--headless true|false`: Playwright headless mode (default `false`)
@@ -44,3 +76,8 @@ npm run generate -- --role Bandits --headless false --start-launcher true --over
 npm run generate -- --role Bandits --dry-run true --limit 5
 npm run generate -- --role Bandits --limit 3
 ```
+
+## Notes
+- When using the launcher flow, default base URL is `http://localhost:8080`.
+- Server mode fallback is `http://localhost:4242`.
+- Batch reports are written to `Copilot/cardconjurer_batch_<rolefolder>_report.txt`.

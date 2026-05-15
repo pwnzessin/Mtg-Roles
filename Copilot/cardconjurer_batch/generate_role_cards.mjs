@@ -203,6 +203,69 @@ async function waitForServer(baseUrl, timeoutMs = 45000) {
   return false;
 }
 
+async function fetchWithTimeout(url, timeoutMs = 7000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, {
+      method: "GET",
+      signal: controller.signal,
+      redirect: "follow"
+    });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function waitForCreatorReady(baseUrl, timeoutMs = 120000) {
+  const candidatePaths = ["/creator/", "/creator"];
+  const start = Date.now();
+
+  while (Date.now() - start < timeoutMs) {
+    for (const relPath of candidatePaths) {
+      const url = `${baseUrl}${relPath}`;
+      try {
+        const res = await fetchWithTimeout(url, 7000);
+        if (!res.ok) {
+          continue;
+        }
+
+        const contentType = (res.headers.get("content-type") || "").toLowerCase();
+        if (!contentType.includes("text/html")) {
+          continue;
+        }
+
+        const html = await res.text();
+        if (html.includes("loadCard(") || html.includes("creator-23.js") || html.includes("Card Conjurer")) {
+          return relPath;
+        }
+      } catch {
+        // Keep retrying while launcher/server starts up.
+      }
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+
+  return null;
+}
+
+async function gotoWithRetries(page, url, timeoutMs = 90000, attempts = 3) {
+  let lastErr = null;
+  for (let i = 0; i < attempts; i += 1) {
+    try {
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: timeoutMs });
+      return;
+    } catch (err) {
+      lastErr = err;
+      if (i < attempts - 1) {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      }
+    }
+  }
+  throw lastErr;
+}
+
 function maybeStartLauncher(cardConjurerRoot) {
   const launcherPath = path.join(cardConjurerRoot, "launcher.exe");
   if (!fs.existsSync(launcherPath)) {
@@ -319,13 +382,22 @@ async function main() {
     return;
   }
 
-  if (opts.startLauncher) {
+  let creatorPath = await waitForCreatorReady(opts.baseUrl, 8000);
+
+  if (opts.startLauncher && !creatorPath) {
     maybeStartLauncher(cardConjurerRoot);
   }
 
-  const isUp = await waitForServer(opts.baseUrl, 45000);
+  const isUp = await waitForServer(opts.baseUrl, opts.startLauncher ? 120000 : 45000);
   if (!isUp) {
     throw new Error(`CardConjurer not reachable at ${opts.baseUrl}. Start launcher manually and retry.`);
+  }
+
+  if (!creatorPath) {
+    creatorPath = await waitForCreatorReady(opts.baseUrl, opts.startLauncher ? 120000 : 45000);
+  }
+  if (!creatorPath) {
+    throw new Error(`CardConjurer responded at ${opts.baseUrl}, but creator page did not become ready in time.`);
   }
 
   const { chromium } = await import("playwright");
@@ -334,7 +406,7 @@ async function main() {
   const page = await context.newPage();
 
   try {
-    await page.goto(`${opts.baseUrl}/creator`, { waitUntil: "commit", timeout: 60000 });
+    await gotoWithRetries(page, `${opts.baseUrl}${creatorPath}`, opts.startLauncher ? 120000 : 90000, 3);
     await page.waitForFunction(() => typeof window.downloadCard === "function" && typeof window.loadCard === "function", null, { timeout: 60000 });
     await page.evaluate(async ({ cardTemplate, packScript }) => {
       const loadScriptWait = (src) => new Promise((resolve, reject) => {

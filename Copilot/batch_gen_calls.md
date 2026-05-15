@@ -6,6 +6,14 @@
 .\Copilot\cardconjurer_batch\Rolecard_Batch_Generator.ps1
 ```
 
+## Compressed All-Roles Script
+
+```powershell
+.\Copilot\cardconjurer_batch\generate_all_compressed.ps1
+```
+
+Run from the workspace root. This runs all roles and auto-compresses output images using the compression profile in `generate_all_compressed.ps1`.
+
 Run from the workspace root. The script will interactively prompt for:
 
 1. **Which roles to generate**
