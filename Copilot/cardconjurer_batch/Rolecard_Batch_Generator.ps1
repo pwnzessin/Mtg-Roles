@@ -277,15 +277,19 @@ function Convert-ImageQuality {
                 $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
                 $graphics.DrawImage($sourceImage, 0, 0, $targetWidth, $targetHeight)
 
-                # Draw 1/8-inch black margin guide frame
-                $marginPx = [int]($bmp.HorizontalResolution * 0.125)
-                $pen = New-Object System.Drawing.Pen([System.Drawing.Color]::Black, 1)
+                # Fill 1/8-inch solid black margin border
+                # Use pixel width / 20 (= 1/8 of 2.5-inch card width) — DPI metadata is unreliable
+                $marginPx = [int]($targetWidth / 20.0)
+                $brush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::Black)
                 try {
                     $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::None
-                    $graphics.DrawRectangle($pen, $marginPx, $marginPx, ($targetWidth - 2 * $marginPx - 1), ($targetHeight - 2 * $marginPx - 1))
+                    $graphics.FillRectangle($brush, 0,                          0,                           $targetWidth,  $marginPx)
+                    $graphics.FillRectangle($brush, 0,                          ($targetHeight - $marginPx), $targetWidth,  $marginPx)
+                    $graphics.FillRectangle($brush, 0,                          $marginPx,                   $marginPx,     ($targetHeight - 2 * $marginPx))
+                    $graphics.FillRectangle($brush, ($targetWidth - $marginPx), $marginPx,                   $marginPx,     ($targetHeight - 2 * $marginPx))
                 }
                 finally {
-                    $pen.Dispose()
+                    $brush.Dispose()
                 }
             }
             finally {

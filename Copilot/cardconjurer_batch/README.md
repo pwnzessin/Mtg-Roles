@@ -62,6 +62,22 @@ Current compression profile in `generate_all_compressed.ps1`:
 
 You can edit the `$compression` block in that script to switch format, scale, target size, DPI, or JPEG quality.
 
+## Apply margin frame to existing JPGs
+Use this to stamp a solid black 1/8-inch border onto already-generated JPGs without regenerating cards from scratch:
+
+```powershell
+.\apply_margin_frame.ps1
+```
+
+Run from this folder (or from workspace root as `.\.\Copilot\cardconjurer_batch\apply_margin_frame.ps1`).
+
+- Processes every `.jpg` in `Cards/templates/Assassins|Bandits|Guardians|Kings/`
+- Margin size: `floor(imageWidth / 20)` pixels = 1/8 inch of a standard 2.5" card, independent of DPI metadata
+- Overwrites each JPG in-place via a `.tmp` swap — originals are replaced atomically
+- Re-saves at JPEG Q85 (same quality as the compression pipeline)
+
+> **Tip:** This script is also the right tool after the first-ever run of `generate_all_compressed.ps1`, since the margin is baked in during compression on all future runs.
+
 ## Useful flags
 - `--role <FolderName>`: Role folder under `Cards/` and `Artworks/` (default `Bandits`)
 - `--headless true|false`: Playwright headless mode (default `false`)

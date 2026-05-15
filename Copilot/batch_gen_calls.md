@@ -31,6 +31,14 @@ Run from the workspace root. The script will interactively prompt for:
    - `3` — 37% PNG (~1.4 MB, 750×1050, 300 DPI at card size)
    - `4` — 50% JPEG 85% (~300 KB, 1005×1407) *(default)*
 
+## Apply Margin Frame to Existing JPGs
+
+```powershell
+.\Copilot\cardconjurer_batch\apply_margin_frame.ps1
+```
+
+Run from the workspace root. Stamps a solid black 1/8-inch border on every existing `.jpg` in all role template folders. Use this after initial generation or whenever the margin needs to be re-applied without regenerating cards.
+
 ## Examples
 
 | Roles | Count | Quality | Effect |
