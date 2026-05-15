@@ -5,6 +5,12 @@
 
 ---
 
+## What This Project Does
+
+This project generates custom Magic: The Gathering-style "role" cards for multiplayer games, where each player is secretly assigned a role (Assassin, Bandit, Guardian, King, or Renegade) with unique passive abilities. Cards are defined in simple tagged `.txt` files and rendered into print-quality JPGs using a Node.js + Playwright automation pipeline against a local CardConjurer instance. Output images include 1/8-inch print margins and are ready for upload to a card printing service like MakePlayingCards.
+
+---
+
 ## To Do
 
 - [x] ~~Add 1/8 inch margin to layout~~ _(done)_
