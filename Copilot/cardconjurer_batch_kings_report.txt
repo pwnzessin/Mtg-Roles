@@ -1,0 +1,12 @@
+CardConjurer batch report for role folder: Kings
+Generated: 2026-05-15T12:32:09.291Z
+
+Total parsed cards: 20
+Cards in run queue: 1
+Dry run: false
+
+OK | Amatsu-Mikaboshi, the Chaos King.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\Amatsu-Mikaboshi, the Chaos King.png
+
+Generated: 1
+Skipped existing: 0
+Failed: 0

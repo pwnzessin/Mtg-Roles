@@ -54,6 +54,7 @@ function parseArgs(argv) {
 function parseTaggedCardFile(raw, filePath) {
   const titleMatch = raw.match(/<TITLE>([\s\S]*?)<\/TITLE>/i);
   const roleMatch = raw.match(/<ROLE>([\s\S]*?)<\/ROLE>/i);
+  const setCodeMatch = raw.match(/<SETCODE>([\s\S]*?)<\/SETCODE>/i);
   const rulesMatch = raw.match(/<RULES>[\r\n]*([\s\S]*?)[\r\n]*<\/RULES>/i);
 
   if (!titleMatch || !roleMatch || !rulesMatch) {
@@ -63,8 +64,53 @@ function parseTaggedCardFile(raw, filePath) {
   return {
     title: titleMatch[1].trim(),
     role: roleMatch[1].trim(),
+    setCode: setCodeMatch ? setCodeMatch[1].trim() : "",
     rules: rulesMatch[1].trim()
   };
+}
+
+function parseSetCodeInfo(setCodeRaw) {
+  const tokens = String(setCodeRaw || "").trim().split(/\s+/).filter(Boolean);
+  const zoomToken = tokens[2] && /^\d*\.?\d+$/.test(tokens[2]) ? parseFloat(tokens[2]) : null;
+  return {
+    setCode: tokens[0] ? tokens[0].toUpperCase() : "",
+    rarity: tokens[1] ? tokens[1].charAt(0).toUpperCase() : "",
+    zoom: zoomToken,
+    number: ""
+  };
+}
+
+function singularizeRoleFolder(roleFolder) {
+  const normalized = String(roleFolder || "").trim();
+  const map = {
+    Assassins: "Assassin",
+    Bandits: "Bandit",
+    Guardians: "Guardian",
+    Kings: "King",
+    Renegades: "Renegade"
+  };
+
+  if (map[normalized]) {
+    return map[normalized];
+  }
+
+  if (normalized.toLowerCase().endsWith("s") && normalized.length > 1) {
+    return normalized.slice(0, -1);
+  }
+
+  return normalized || "Assassin";
+}
+
+function resolveTemplatePath(workspaceRoot, roleFolder) {
+  const templatesDir = path.join(workspaceRoot, "Cards", "templates");
+  const roleStem = singularizeRoleFolder(roleFolder);
+  const roleTemplatePath = path.join(templatesDir, `${roleStem}_Layout.cardconjurer`);
+
+  if (fs.existsSync(roleTemplatePath)) {
+    return roleTemplatePath;
+  }
+
+  return path.join(templatesDir, "Assassin_Layout.cardconjurer");
 }
 
 function loadTemplateCard(templatePath) {
@@ -80,6 +126,37 @@ function loadTemplateCard(templatePath) {
   }
 
   return templateCard;
+}
+
+function fillTemplateText(templateText, tagName, value) {
+  if (typeof templateText !== "string" || !templateText.length) {
+    return value;
+  }
+
+  const pattern = new RegExp(`<${tagName}>[\\s\\S]*?<\\/${tagName}>`, "i");
+  return templateText.replace(pattern, value);
+}
+
+function loadRoleSetCodes(workspaceRoot) {
+  const setCodesPath = path.join(workspaceRoot, "Copilot", "SetCodes.txt");
+  const map = {};
+  if (!fs.existsSync(setCodesPath)) {
+    return map;
+  }
+  const lines = fs.readFileSync(setCodesPath, "utf8").split(/\r?\n/);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || !trimmed.includes(":")) {
+      continue;
+    }
+    const colonIdx = trimmed.indexOf(":");
+    const role = trimmed.slice(0, colonIdx).trim();
+    const value = trimmed.slice(colonIdx + 1).trim();
+    if (role && value) {
+      map[role] = value;
+    }
+  }
+  return map;
 }
 
 function slugifyForUrl(p) {
@@ -155,8 +232,25 @@ async function main() {
   const localArtOutDir = path.join(cardConjurerRoot, "local_art", "auto", opts.roleFolder);
   const generatedOutDir = path.join(workspaceRoot, "Cards", "templates", opts.roleFolder);
   const reportPath = path.join(workspaceRoot, "Copilot", `cardconjurer_batch_${opts.roleFolder.toLowerCase()}_report.txt`);
-  const templatePath = path.join(workspaceRoot, "Cards", "templates", "Assassin_Layout.cardconjurer");
+  const roleSetCodes = loadRoleSetCodes(workspaceRoot);
+  const roleSingular = singularizeRoleFolder(opts.roleFolder);
+  const roleDefaultSetCode = roleSetCodes[roleSingular] || "";
+
+  const templatePath = resolveTemplatePath(workspaceRoot, opts.roleFolder);
   const templateCard = loadTemplateCard(templatePath);
+  // Overwrite the set symbol baked into the template with the role's setcode
+  const roleSetInfo = parseSetCodeInfo(roleDefaultSetCode);
+  if (roleSetInfo.setCode && roleSetInfo.rarity) {
+    templateCard.setSymbolSource = `${opts.baseUrl}/img/setSymbols/official/${roleSetInfo.setCode.toLowerCase()}-${roleSetInfo.rarity.toLowerCase()}.svg`;
+    if (roleSetInfo.zoom !== null) {
+      templateCard.setSymbolZoom = roleSetInfo.zoom;
+    }
+  }
+  const templateText = {
+    title: templateCard.text?.title?.text || "",
+    type: templateCard.text?.type?.text || "",
+    rules: templateCard.text?.rules?.text || ""
+  };
   const templatePackScript = templateCard.version
     ? `/js/frames/pack${templateCard.version.charAt(0).toUpperCase()}${templateCard.version.slice(1)}.js`
     : null;
@@ -178,6 +272,8 @@ async function main() {
   for (const filePath of cardFiles) {
     const raw = fs.readFileSync(filePath, "utf8");
     const parsed = parseTaggedCardFile(raw, filePath);
+    const effectiveSetCode = parsed.setCode || roleDefaultSetCode;
+    const parsedSetInfo = parseSetCodeInfo(effectiveSetCode);
     const stem = path.parse(filePath).name;
 
     const artSrcPath = findArtworkByStem(artworksRoleDir, stem);
@@ -193,6 +289,9 @@ async function main() {
       filePath,
       title: parsed.title,
       role: parsed.role,
+      setCode: parsedSetInfo.setCode,
+      rarity: parsedSetInfo.rarity,
+      number: parsedSetInfo.number,
       rules: parsed.rules,
       artUrl,
       outputPath: path.join(generatedOutDir, `${stem}.png`)
@@ -300,19 +399,35 @@ async function main() {
 
         await page.evaluate((payload) => {
           if (card.text?.title) {
-            card.text.title.text = payload.title;
+            card.text.title.text = payload.templateText.title;
           }
           if (card.text?.type) {
-            card.text.type.text = payload.role;
+            card.text.type.text = payload.templateText.type;
           }
           if (card.text?.rules) {
-            card.text.rules.text = payload.rules;
+            card.text.rules.text = payload.templateText.rules;
           }
           if (card.text?.reminder) {
             card.text.reminder.text = "";
           }
           if (card.text?.pt) {
             card.text.pt.text = "";
+          }
+
+          const infoSet = document.querySelector("#info-set");
+          if (infoSet) {
+            infoSet.value = payload.setCode || "";
+          }
+          const infoRarity = document.querySelector("#info-rarity");
+          if (infoRarity) {
+            infoRarity.value = payload.rarity || "";
+          }
+          const infoNumber = document.querySelector("#info-number");
+          if (infoNumber) {
+            infoNumber.value = payload.number || "";
+          }
+          if (typeof window.bottomInfoEdited === "function") {
+            window.bottomInfoEdited();
           }
 
           const artistValue = payload.artist || "Unknown";
@@ -339,7 +454,15 @@ async function main() {
           } else if (typeof window.drawCard === "function") {
             window.drawCard();
           }
-        }, { ...c, artist: opts.artist });
+        }, {
+          ...c,
+          artist: opts.artist,
+          templateText: {
+            title: fillTemplateText(templateText.title, "TITLE", c.title),
+            type: fillTemplateText(templateText.type, "ROLE", c.role),
+            rules: fillTemplateText(templateText.rules, "RULES", c.rules)
+          }
+        });
 
         await page.evaluate(() => {
           if (typeof window.drawFrames === "function") {

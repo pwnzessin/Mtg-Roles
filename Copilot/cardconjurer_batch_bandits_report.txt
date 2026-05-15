@@ -1,9 +1,12 @@
 CardConjurer batch report for role folder: Bandits
-Generated: 2026-05-14T23:14:38.719Z
+Generated: 2026-05-15T12:31:42.241Z
 
 Total parsed cards: 22
 Cards in run queue: 1
-Dry run: true
+Dry run: false
 
-Dry run card list:
-- The Banisher.txt | title=The Banisher | art=/local_art/auto/Bandits/The Banisher.png
+OK | The Banisher.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Banisher.png
+
+Generated: 1
+Skipped existing: 0
+Failed: 0

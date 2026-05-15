@@ -1,0 +1,12 @@
+CardConjurer batch report for role folder: Guardians
+Generated: 2026-05-15T12:31:55.823Z
+
+Total parsed cards: 17
+Cards in run queue: 1
+Dry run: false
+
+OK | The Black Knight.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Black Knight.png
+
+Generated: 1
+Skipped existing: 0
+Failed: 0
