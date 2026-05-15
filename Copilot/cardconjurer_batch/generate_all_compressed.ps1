@@ -115,6 +115,17 @@ function Compress-Image {
                 $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
                 $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
                 $graphics.DrawImage($sourceImage, 0, 0, $targetWidth, $targetHeight)
+
+                # Draw 1/8-inch black margin guide frame
+                $marginPx = [int]($bmp.HorizontalResolution * 0.125)
+                $pen = New-Object System.Drawing.Pen([System.Drawing.Color]::Black, 1)
+                try {
+                    $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::None
+                    $graphics.DrawRectangle($pen, $marginPx, $marginPx, ($targetWidth - 2 * $marginPx - 1), ($targetHeight - 2 * $marginPx - 1))
+                }
+                finally {
+                    $pen.Dispose()
+                }
             }
             finally {
                 $graphics.Dispose()

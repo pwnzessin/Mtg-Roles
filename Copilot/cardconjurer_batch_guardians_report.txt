@@ -1,5 +1,5 @@
 CardConjurer batch report for role folder: Guardians
-Generated: 2026-05-15T19:27:28.737Z
+Generated: 2026-05-15T20:20:52.786Z
 
 Total parsed cards: 17
 Cards in run queue: 17
