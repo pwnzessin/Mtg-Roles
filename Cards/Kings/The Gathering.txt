@@ -1,6 +1,7 @@
 <TITLE>The Gathering</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
+<ART_YPOS>0.07</ART_YPOS>
 <RULES>
 At the beginning of your upkeep, you may choose one that hasn’t been chosen \-   
 - White {-} You gain 8 life.  

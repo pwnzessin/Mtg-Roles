@@ -1,6 +1,7 @@
 <TITLE>The Elementalist</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
+<ART_YPOS>0.05</ART_YPOS>
 <RULES>
 At the beginning of your upkeep, choose one that hasn’t been chosen this cycle. *(A cycle lasts four turns. At the end of each cycle, the choices reset.)*  
 - • {indent}Create a 0/3 white Elemental creature token with defender. Put a shield counter on up to one creature.  

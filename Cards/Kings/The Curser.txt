@@ -1,6 +1,7 @@
 <TITLE>The Curser</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
+<ART_YPOS>0.05</ART_YPOS>
 <RULES>
 At the beginning of your upkeep, choose a player other than you that has not been chosen on your last turn. Whenever chosen player is attacked, create a Gold token. Each opponent attacking that player does the same.  
 {flavor}Jingling coins beckon many an eager hand.

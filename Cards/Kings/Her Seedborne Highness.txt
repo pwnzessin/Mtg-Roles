@@ -1,6 +1,7 @@
 <TITLE>Her Seedborne Highness</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
+<ART_YPOS>0.07</ART_YPOS>
 <RULES>
 Start the game with a number of seed counters on Her Seedborn Highness equal to half the number of players, rounded up.  
 {3}, Remove a seed counter from Her Seedborn Highness: Untap all permanents you control. Activate only once each turn.

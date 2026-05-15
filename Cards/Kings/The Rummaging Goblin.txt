@@ -1,6 +1,7 @@
 <TITLE>The Rummaging Goblin</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
+<ART_YPOS>0.07</ART_YPOS>
 <RULES>
 At the beginning of your upkeep, discard a card, then draw a card.  
 Whenever you discard a nonland card this way, create a Treasure token.  

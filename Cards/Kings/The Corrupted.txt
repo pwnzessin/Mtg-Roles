@@ -1,6 +1,7 @@
 <TITLE>The Corrupted</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
+<ART_YPOS>0.08</ART_YPOS>
 <RULES>
 At the beginning of your end step, each other player exiles the top card of their library face down. You may look at and choose one of those cards and put it under the corrupted until the end of your next turn. You may cast cards under the corrupted and mana of any type can be spent to cast that spell.
 </RULES>

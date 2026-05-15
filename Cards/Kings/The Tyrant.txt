@@ -1,6 +1,7 @@
 <TITLE>The Tyrant</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
+<ART_YPOS>0.05</ART_YPOS>
 <RULES>
 At the beginning of your upkeep, each opponent loses 1 life.  
 At the beginning of combat on your turn, create a token that’s a copy of a random creature you control, except it has haste and isn’t legendary if that creature is legendary. Exile it at the beginning of the next end step.

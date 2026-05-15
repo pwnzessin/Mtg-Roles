@@ -11,11 +11,12 @@
 - [ ] Simplify layout usage — should work with any downloaded layout
 - [x] ~~Add `Y_POS` parameter to cards for artwork vertical position~~ _(done)_
 - [ ] Verify syntax across all cards
+- [ ] Final Check of different card compressions in makeplayingcards
 - [ ] Set artwork Y-positions manually
   - [x] ~~Assassins~~ _(done)_
   - [ ] Bandits
   - [ ] Guardians
-  - [ ] Kings
+  - [x] ~~Kings~~ _(done)_
   - [ ] Renegades
 - [ ] Create generic card api
 - [ ] _(Future)_ Automate artwork Y-position detection

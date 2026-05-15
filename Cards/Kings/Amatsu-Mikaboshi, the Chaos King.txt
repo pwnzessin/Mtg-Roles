@@ -1,6 +1,7 @@
 <TITLE>Amatsu-Mikaboshi, the Chaos King</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
+<ART_YPOS>0.05</ART_YPOS>
 <RULES>
 Chaos Wand {-} {2}: Choose an opponent. That opponent exiles cards from the top of their library until they exile an instant or sorcery card.
 You cast that card without paying its mana cost. Then put the exiled cards that weren’t cast this way on the bottom of that library in a random order.
