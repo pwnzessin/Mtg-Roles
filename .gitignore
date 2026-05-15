@@ -1,2 +1,10 @@
 # Ignore local CardConjurer source folder
 /cardconjurer-master/
+
+# Ignore generated PNGs in template subfolders (keep .cardconjurer layout files)
+Cards/templates/Assassins/
+Cards/templates/Bandits/
+Cards/templates/Guardians/
+Cards/templates/Kings/
+Cards/templates/Renegades/
+Cards/templates/Output/

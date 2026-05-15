@@ -1,12 +1,28 @@
 CardConjurer batch report for role folder: Guardians
-Generated: 2026-05-15T12:31:55.823Z
+Generated: 2026-05-15T12:42:01.509Z
 
 Total parsed cards: 17
-Cards in run queue: 1
+Cards in run queue: 17
 Dry run: false
 
 OK | The Black Knight.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Black Knight.png
+OK | The Chaos Spreader.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Chaos Spreader.png
+OK | The Flickering Mage.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Flickering Mage.png
+OK | The Get down Mr. President.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Get down Mr. President.png
+OK | The Golem.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Golem.png
+OK | The Jail Warden.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Jail Warden.png
+OK | The King’s Ducklganger.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The King’s Ducklganger.png
+OK | The Knight in Shining Armor.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Knight in Shining Armor.png
+OK | The Maitresse.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Maitresse.png
+OK | The Marshall.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Marshall.png
+OK | The Missionary Priest.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Missionary Priest.png
+OK | The Mistress of Glacial Cold.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Mistress of Glacial Cold.png
+OK | The Queen.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Queen.png
+OK | The Royal Shieldbearer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Royal Shieldbearer.png
+OK | The Scapegoat.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Scapegoat.png
+OK | The Shieldmaiden.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Shieldmaiden.png
+OK | The Virtuous Bridge Troll.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Virtuous Bridge Troll.png
 
-Generated: 1
+Generated: 17
 Skipped existing: 0
 Failed: 0

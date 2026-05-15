@@ -1,2 +1,8 @@
+New Versions here refer to:
+- Balance changes for Role Cards
+- New Role Cards
+
+With a new entry in here you should also create a Version.txt file in the Versions folder with the same version number and a brief description of the changes. For example, if you add a new Role Card, you might create a V1.1.txt file with the description "Added new Role Card: The Shadowy Assassin".
+
 2026-05-14:V0.1
 2026-05-15:V1.0

@@ -1,12 +1,31 @@
 CardConjurer batch report for role folder: Kings
-Generated: 2026-05-15T12:32:09.291Z
+Generated: 2026-05-15T12:43:06.477Z
 
 Total parsed cards: 20
-Cards in run queue: 1
+Cards in run queue: 20
 Dry run: false
 
 OK | Amatsu-Mikaboshi, the Chaos King.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\Amatsu-Mikaboshi, the Chaos King.png
+OK | Das Alte Lineal.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\Das Alte Lineal.png
+OK | El Dorito.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\El Dorito.png
+OK | Her Seedborne Highness.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\Her Seedborne Highness.png
+OK | The Archenemy.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Archenemy.png
+OK | The Chaos Bringer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Chaos Bringer.png
+OK | The Corrupted.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Corrupted.png
+OK | The Curser.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Curser.png
+OK | The Democrat.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Democrat.png
+OK | The Dungeonmaster.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Dungeonmaster.png
+OK | The Elementalist.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Elementalist.png
+OK | The Gathering.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Gathering.png
+OK | The King over the Scrapyard.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The King over the Scrapyard.png
+OK | The Queen of Light.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Queen of Light.png
+OK | The Rummaging Goblin.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Rummaging Goblin.png
+OK | The Taxer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Taxer.png
+OK | The Twin Princess.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Twin Princess.png
+OK | The Tyrant.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Tyrant.png
+OK | The Wildfire devil.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Wildfire devil.png
+OK | The Yoinker.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Yoinker.png
 
-Generated: 1
+Generated: 20
 Skipped existing: 0
 Failed: 0

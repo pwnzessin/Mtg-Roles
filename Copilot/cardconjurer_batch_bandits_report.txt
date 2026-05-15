@@ -1,12 +1,33 @@
 CardConjurer batch report for role folder: Bandits
-Generated: 2026-05-15T12:31:42.241Z
+Generated: 2026-05-15T12:40:35.404Z
 
 Total parsed cards: 22
-Cards in run queue: 1
+Cards in run queue: 22
 Dry run: false
 
 OK | The Banisher.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Banisher.png
+OK | The Bounty Hunter.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Bounty Hunter.png
+OK | The Commander Support.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Commander Support.png
+OK | The Copycat.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Copycat.png
+OK | The E-Girl Support.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The E-Girl Support.png
+OK | The Echoing Prism.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Echoing Prism.png
+OK | The Ferryman.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Ferryman.png
+OK | The Gatekeeper.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Gatekeeper.png
+OK | The Grenadier.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Grenadier.png
+OK | The It's-better-in-my-deck guy.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The It's-better-in-my-deck guy.png
+OK | The Judge’s Nightmare.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Judge’s Nightmare.png
+OK | The Judge’s recurring Nightmare.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Judge’s recurring Nightmare.png
+OK | The Midnight Lady.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Midnight Lady.png
+OK | The Mystic Mimics.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Mystic Mimics.png
+OK | The Oneiromancer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Oneiromancer.png
+OK | The Puppetmaster.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Puppetmaster.png
+OK | The Scrapper.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Scrapper.png
+OK | The Support.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Support.png
+OK | The Thrash Panda.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Thrash Panda.png
+OK | The Timebender.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Timebender.png
+OK | The Wearer of Masks.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Wearer of Masks.png
+OK | The Zealot.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Zealot.png
 
-Generated: 1
+Generated: 22
 Skipped existing: 0
 Failed: 0
