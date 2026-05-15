@@ -9,7 +9,7 @@
 
 - [x] ~~Add 1/8 inch margin to layout~~ _(done)_
 - [ ] Simplify layout usage — should work with any downloaded layout
-- [ ] Add `Y_POS` parameter to cards for artwork vertical position
+- [x] ~~Add `Y_POS` parameter to cards for artwork vertical position~~ _(done)_
 - [ ] Verify syntax across all cards
 - [ ] Set artwork Y-positions manually
 - [ ] Create generic card api
