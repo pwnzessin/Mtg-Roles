@@ -13,7 +13,7 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
 
 ## Setup
 
-> **Note:** If you cloned this repository at this commit, the CardConjurer application is stored as a zip and must be extracted manually.
+> **Note:** If you cloned this repository at commit [`abb2aad`](https://github.com/pwnzessin/Mtg-Roles/commit/abb2aad), the CardConjurer application is stored as a zip and must be extracted manually.
 
 1. Unzip `Cardconjurer-v1.0.zip` in the repository root.
 2. Rename the extracted folder to `cardconjurer-master` — it must sit at the top level of the workspace.
