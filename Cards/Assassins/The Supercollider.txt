@@ -1,6 +1,7 @@
 <TITLE>The Supercollider</TITLE>
 <ROLE>Assassin</ROLE>
 <SETCODE>PD3 c</SETCODE>
+<ART_YPOS>0.01</ART_YPOS>
 <RULES>
 Unveil {3}  
 When the Supercollider is unveiled, gain three mana of any color.  

@@ -1,6 +1,7 @@
 <TITLE>the Dark Bishop</TITLE>
 <ROLE>Assassin</ROLE>
 <SETCODE>PD3 c</SETCODE>
+<ART_YPOS>0.02</ART_YPOS>
 <RULES>
 Unveil only during a main phase.  
 When The Dark Bishop is unveiled, exchange life totals, accumulated commander damage and poison counters with a player of your choice.

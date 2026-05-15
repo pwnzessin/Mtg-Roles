@@ -1,6 +1,7 @@
 <TITLE>The Gravecaller</TITLE>
 <ROLE>Assassin</ROLE>
 <SETCODE>PD3 c</SETCODE>
+<ART_YPOS>0.01</ART_YPOS>
 <RULES>
 When The Gravecaller is unveiled, if it's your turn you may pay {X}. Then each player mills X cards.
 </RULES>

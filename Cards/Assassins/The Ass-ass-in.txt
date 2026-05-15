@@ -1,6 +1,7 @@
 <TITLE>The Ass-ass-in</TITLE>
 <ROLE>Assassin</ROLE>
 <SETCODE>PD3 c</SETCODE>
+<ART_YPOS>0.02</ART_YPOS>
 <RULES>
 When The Ass-Ass-in is unveiled you get an emblem with  
 - “Creatures you control get \+0/+2.”  

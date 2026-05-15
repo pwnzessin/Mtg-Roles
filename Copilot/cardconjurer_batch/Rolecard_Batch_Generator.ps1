@@ -232,10 +232,26 @@ function Save-Jpeg {
     }
 }
 
+function Read-MarginSelection {
+    while ($true) {
+        Write-Host ""
+        $inputRaw = Read-Host "Apply 1/8 inch black margin frame to output images? (Y/N, default N)"
+        $trimmed = $inputRaw.Trim()
+        if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed -match "^[Nn]$") {
+            return $false
+        }
+        if ($trimmed -match "^[Yy]$") {
+            return $true
+        }
+        Write-Host "Please enter Y or N." -ForegroundColor Red
+    }
+}
+
 function Convert-ImageQuality {
     param(
         [string]$InputPath,
-        [pscustomobject]$Settings
+        [pscustomobject]$Settings,
+        [switch]$ApplyMargin
     )
 
     if ($Settings.Format -eq "Png" -and $Settings.Scale -eq 1.0 -and $Settings.Width -eq 0 -and $Settings.Height -eq 0) {
@@ -277,19 +293,21 @@ function Convert-ImageQuality {
                 $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
                 $graphics.DrawImage($sourceImage, 0, 0, $targetWidth, $targetHeight)
 
-                # Fill 1/8-inch solid black margin border
-                # Use pixel width / 20 (= 1/8 of 2.5-inch card width) — DPI metadata is unreliable
-                $marginPx = [int]($targetWidth / 20.0)
-                $brush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::Black)
-                try {
-                    $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::None
-                    $graphics.FillRectangle($brush, 0,                          0,                           $targetWidth,  $marginPx)
-                    $graphics.FillRectangle($brush, 0,                          ($targetHeight - $marginPx), $targetWidth,  $marginPx)
-                    $graphics.FillRectangle($brush, 0,                          $marginPx,                   $marginPx,     ($targetHeight - 2 * $marginPx))
-                    $graphics.FillRectangle($brush, ($targetWidth - $marginPx), $marginPx,                   $marginPx,     ($targetHeight - 2 * $marginPx))
-                }
-                finally {
-                    $brush.Dispose()
+                if ($ApplyMargin) {
+                    # Fill 1/8-inch solid black margin border
+                    # Use pixel width / 20 (= 1/8 of 2.5-inch card width) — DPI metadata is unreliable
+                    $marginPx = [int]($targetWidth / 20.0)
+                    $brush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::Black)
+                    try {
+                        $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::None
+                        $graphics.FillRectangle($brush, 0,                          0,                           $targetWidth,  $marginPx)
+                        $graphics.FillRectangle($brush, 0,                          ($targetHeight - $marginPx), $targetWidth,  $marginPx)
+                        $graphics.FillRectangle($brush, 0,                          $marginPx,                   $marginPx,     ($targetHeight - 2 * $marginPx))
+                        $graphics.FillRectangle($brush, ($targetWidth - $marginPx), $marginPx,                   $marginPx,     ($targetHeight - 2 * $marginPx))
+                    }
+                    finally {
+                        $brush.Dispose()
+                    }
                 }
             }
             finally {
@@ -369,12 +387,14 @@ $roles = @(Read-RoleSelection)
 $limit = Read-CountSelection
 $qualityChoice = Read-QualitySelection
 $qualitySettings = Get-QualitySettings -QualityChoice $qualityChoice
+$applyMargin = Read-MarginSelection
 
 Write-Host ""
 Write-Host "Summary:" -ForegroundColor Cyan
 Write-Host "  Roles: $($roles -join ', ')"
 Write-Host "  Cards per role: $(if ($limit -eq 0) { 'All' } else { $limit })"
 Write-Host "  Quality: $($qualitySettings.Name)"
+Write-Host "  Margin frame: $(if ($applyMargin) { 'Yes' } else { 'No' })"
 
 $confirm = Read-Host "Proceed? (Y/N)"
 if ($confirm -notmatch "^[Yy]$") {
@@ -446,7 +466,7 @@ for ($i = 0; $i -lt $roles.Count; $i += 1) {
 
     Write-Host "Post-processing $($generatedPaths.Count) file(s) for quality '$($qualitySettings.Name)'..." -ForegroundColor Cyan
     foreach ($p in $generatedPaths) {
-        [void](Convert-ImageQuality -InputPath $p -Settings $qualitySettings)
+        [void](Convert-ImageQuality -InputPath $p -Settings $qualitySettings -ApplyMargin:$applyMargin)
         $globalConverted += 1
     }
 }

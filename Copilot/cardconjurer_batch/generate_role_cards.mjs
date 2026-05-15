@@ -61,11 +61,14 @@ function parseTaggedCardFile(raw, filePath) {
     throw new Error(`Missing TITLE/ROLE/RULES tags in ${filePath}`);
   }
 
+  const artYPosMatch = raw.match(/<ART_YPOS>([\s\S]*?)<\/ART_YPOS>/i);
+
   return {
     title: titleMatch[1].trim(),
     role: roleMatch[1].trim(),
     setCode: setCodeMatch ? setCodeMatch[1].trim() : "",
-    rules: rulesMatch[1].trim()
+    rules: rulesMatch[1].trim(),
+    artYPos: artYPosMatch ? parseFloat(artYPosMatch[1].trim()) : null
   };
 }
 
@@ -357,6 +360,7 @@ async function main() {
       number: parsedSetInfo.number,
       rules: parsed.rules,
       artUrl,
+      artYPos: parsed.artYPos,
       outputPath: path.join(generatedOutDir, `${stem}.png`)
     });
   }
@@ -543,6 +547,16 @@ async function main() {
         });
         await page.waitForFunction(() => window.art && window.art.complete && window.art.naturalWidth > 0, null, { timeout: 15000 });
         await page.waitForTimeout(700);
+
+        if (c.artYPos !== null && !isNaN(c.artYPos)) {
+          await page.evaluate((artYPos) => {
+            card.artY = artYPos;
+            const input = document.querySelector('#art-y');
+            if (input) input.value = Math.round(artYPos * card.height);
+            if (typeof window.drawCard === 'function') window.drawCard();
+          }, c.artYPos);
+          await page.waitForTimeout(200);
+        }
 
         const downloadPromise = page.waitForEvent("download", { timeout: 15000 });
         await page.evaluate(() => window.downloadCard(false, false));

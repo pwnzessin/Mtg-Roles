@@ -1,6 +1,7 @@
 <TITLE>The Abysal Prawler</TITLE>
 <ROLE>Assassin</ROLE>
 <SETCODE>PD3 c</SETCODE>
+<ART_YPOS>0.01</ART_YPOS>
 <RULES>
 When The Abyssal Prowler is unveiled, create a   
 - 1/1 blue Worm creature token with: When this creature deals combat damage to a player, create a Treasure token and when this creature leaves the battlefield, create a   

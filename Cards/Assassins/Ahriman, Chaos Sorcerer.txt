@@ -1,6 +1,7 @@
 <TITLE>Ahriman, Chaos Sorcerer</TITLE>
 <ROLE>Assassin</ROLE>
 <SETCODE>PD3 c</SETCODE>
+<ART_YPOS>0.05</ART_YPOS>
 <RULES>
 Put 4 loyalty counters onto yourself. Damage taken reduces the loyalty counters on you by the same amount.  
 You gain the following abilities:  
