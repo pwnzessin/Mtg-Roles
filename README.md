@@ -38,6 +38,7 @@ Each card is defined in a `.txt` file with the following tag structure:
 <TITLE>Card Name</TITLE>
 <ROLE>Roletype</ROLE>
 <SETCODE>XXX x</SETCODE>
+<ART_YPOS>0.05</ART_YPOS>
 <RULES>
 Rules text line 1
 Rules text line 2
@@ -51,6 +52,7 @@ Rules text line 2
 | `<TITLE>` | Display name of the card |
 | `<ROLE>` | Role type (e.g. `Assassin`, `Bandit`, `Guardian`, `King`) |
 | `<SETCODE>` | Set code and rarity letter (e.g. `PD3 c`) |
+| `<ART_YPOS>` | _(Optional)_ Artwork vertical offset as a fraction of card height (e.g. `0.05`). Positive values shift art downward. Range: `0.0` – `0.2`. Omit to use the layout default. |
 | `<RULES>` | Rules text block; supports inline symbols (see below) |
 
 ### Inline Symbols
