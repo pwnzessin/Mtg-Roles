@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 
-$root = 'c:\Users\hecke\Desktop\Mtgit\Mtg-Rolecards'
+$root = Split-Path $PSScriptRoot -Parent
 $cards = Join-Path $root 'Cards'
 $renList = Join-Path $cards 'renegades_to_create.md'
 $md = Join-Path $cards 'Role Card Proxies__.md'

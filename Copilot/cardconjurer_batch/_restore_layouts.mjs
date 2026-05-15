@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const templatesDir = 'c:/Users/hecke/Desktop/Mtg-Roles/Cards/templates';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const templatesDir = path.resolve(__dirname, '../../Cards/templates');
 const src = path.join(templatesDir, 'Assassin_Layout.cardconjurer');
 const raw = fs.readFileSync(src, 'utf8');
 

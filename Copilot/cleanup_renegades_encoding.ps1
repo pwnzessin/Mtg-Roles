@@ -1,4 +1,4 @@
-$dir = 'c:\Users\hecke\Desktop\Mtgit\Mtg-Rolecards\Cards\Renegades'
+$dir = Join-Path (Split-Path $PSScriptRoot -Parent) 'Cards\Renegades'
 
 # Filename normalization (prefer ASCII apostrophe)
 Get-ChildItem -Path $dir -Filter '*.txt' -File | ForEach-Object {

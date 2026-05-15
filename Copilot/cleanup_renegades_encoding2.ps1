@@ -1,4 +1,4 @@
-$dir = 'c:\Users\hecke\Desktop\Mtgit\Mtg-Rolecards\Cards\Renegades'
+$dir = Join-Path (Split-Path $PSScriptRoot -Parent) 'Cards\Renegades'
 $enc1252 = [System.Text.Encoding]::GetEncoding(1252)
 $encUtf8 = [System.Text.Encoding]::UTF8
 
