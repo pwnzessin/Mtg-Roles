@@ -11,6 +11,12 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
 
 ---
 
+## Setup
+
+> **If you cloned this repository at this commit**, the CardConjurer application is not included as extracted files. Unzip `Cardconjurer-v1.0.zip` in the repository root and rename the extracted folder to `cardconjurer-master` — it must exist as a top-level folder in the workspace root. The batch scripts expect the CardConjurer server to be accessible at `http://localhost:8080`.
+
+---
+
 ## To Do
 
 - [x] ~~Add 1/8 inch margin to layout~~ _(done)_
@@ -65,3 +71,5 @@ Rules text line 2
 | `{center}` | Centered text |
 | `{fontcolor_#000000}` | Custom font color (hex) |
 | `•` + `{indent}` | Bulleted choice option with indent |
+
+
