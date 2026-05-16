@@ -1,0 +1,26 @@
+{
+  "_comment": "Default values for generic_card_pipeline.ps1. All paths are relative to workspaceRoot unless absolute.",
+
+  "workspaceRoot":  "C:\\Users\\hecke\\Desktop\\Mtg-Roles",
+
+  "fetch": {
+    "cardsDir":       "Cards\\Generic",
+    "artDir":         "Artworks\\Downloaded",
+    "cardlistsDir":   "Copilot\\cardconjurer_batch\\Cardlists",
+    "preferSet":      "",
+    "overwrite":      true,
+    "downloadArt":    true,
+    "dryRun":         false,
+    "chunkSize":      15
+  },
+
+  "generate": {
+    "outputSubDir":   "output",
+    "baseUrl":        "http://localhost:8080",
+    "headless":       true,
+    "startLauncher":  true,
+    "overwrite":      true,
+    "limit":          0,
+    "dryRun":         false
+  }
+}

@@ -47,3 +47,24 @@ Run from the workspace root. Stamps a solid black 1/8-inch border on every exist
 | `A` | `1` | `4` | Smoke test — 1 card per role |
 | `2,3` | `10` | `2` | Bandits + Guardians, 10 cards, 50% PNG |
 | `1` | `A` | `1` | Assassins only, all cards, full resolution |
+
+---
+
+## Generic Card Pipeline
+
+Fetch card data + artwork from Scryfall, then render to PNG. Run from the workspace root.
+
+```powershell
+# Fetch .txt + art_crop .jpg from Scryfall
+node Copilot/cardconjurer_batch/fetch_card.mjs `
+  "Card Name 1" "Card Name 2" `
+  --output Cards/Generic/myCards
+
+# Render to card PNG
+node Copilot/cardconjurer_batch/generate_generic_card.mjs `
+  --input  Cards/Generic/myCards `
+  --output Cards/Generic/myCards/output `
+  --overwrite
+```
+
+See `Generic_Card_Api.md` for the full option reference and `.txt` format.

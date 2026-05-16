@@ -54,6 +54,7 @@ function parseArgs(argv) {
     dryRun: false,
     overwrite: false,
     limit: 0,
+    newerThan: null,
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -68,6 +69,7 @@ function parseArgs(argv) {
     else if (arg === "--dry-run")   { opts.dryRun    = !next || next.startsWith("--") ? true  : (i += 1, next.toLowerCase() === "true"); }
     else if (arg === "--overwrite") { opts.overwrite = !next || next.startsWith("--") ? true  : (i += 1, next.toLowerCase() === "true"); }
     else if (arg === "--limit" && next)    { opts.limit = Number.parseInt(next, 10) || 0; i += 1; }
+    else if (arg === "--newer-than" && next) { opts.newerThan = next; i += 1; }
   }
 
   return opts;
@@ -271,7 +273,7 @@ function findArtworkByStem(artDir, stem) {
   for (const entry of entries) {
     if (!entry.isFile()) continue;
     const ext = path.extname(entry.name).toLowerCase();
-    if (ext !== ".png") continue;
+    if (![".png", ".jpg", ".jpeg"].includes(ext)) continue;
     if (path.parse(entry.name).name.toLowerCase() === target) {
       return path.join(artDir, entry.name);
     }
@@ -379,6 +381,13 @@ async function main() {
       .sort();
   } else {
     txtFiles = [inputResolved];
+  }
+
+  // --newer-than: only render files written/modified after the given ISO timestamp
+  if (opts.newerThan) {
+    const cutoff = new Date(opts.newerThan).getTime();
+    txtFiles = txtFiles.filter((f) => fs.statSync(f).mtimeMs >= cutoff);
+    console.log(`[newer-than] ${txtFiles.length} file(s) match after ${opts.newerThan}`);
   }
 
   const outputDir  = opts.output  ? path.resolve(opts.output)  : path.join(workspaceRoot, "Cards", "Generic");

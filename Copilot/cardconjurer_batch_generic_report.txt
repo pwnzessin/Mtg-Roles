@@ -1,23 +1,28 @@
 Generic card batch report
-Generated: 2026-05-16T17:28:01.348Z
+Generated: 2026-05-16T20:25:37.106Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 10
-Cards in run queue: 10
+Total parsed cards: 15
+Cards in run queue: 15
 Dry run: false
 
-OK | Test Beast.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Beast.png
-OK | Test Champion.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Champion.png
-OK | Test Cleric.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Cleric.png
-OK | Test Eldrazi.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Eldrazi.png
-OK | Test Fireball.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Fireball.png
-OK | Test Golem.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Golem.png
-OK | Test Mage.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Mage.png
-OK | Test Ritual.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Ritual.png
-OK | Test Ruins.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Ruins.png
-OK | Test Vehicle.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Vehicle.png
+OK | Teval, Arbiter of Virtue.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Teval, Arbiter of Virtue.png
+OK | Three Steps Ahead.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Three Steps Ahead.png
+OK | Traumatize.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Traumatize.png
+OK | Undercity Sewers.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Undercity Sewers.png
+OK | Underground Mortuary.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Underground Mortuary.png
+OK | Undergrowth Stadium.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Undergrowth Stadium.png
+OK | Uro, Titan of Nature's Wrath.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Uro, Titan of Nature's Wrath.png
+OK | Verdant Catacombs.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Verdant Catacombs.png
+OK | Villainous Wealth.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Villainous Wealth.png
+OK | Watery Grave.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Watery Grave.png
+OK | Weather the Storm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Weather the Storm.png
+OK | Willowdusk, Essence Seer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Willowdusk, Essence Seer.png
+OK | Windfall.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Windfall.png
+OK | World Shaper.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\World Shaper.png
+OK | Zagoth Triome.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Zagoth Triome.png
 
-Generated:        10
+Generated:        15
 Skipped (exists): 0
 Failed:           0

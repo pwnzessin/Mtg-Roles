@@ -1,0 +1,91 @@
+1 Aetherflux Reservoir
+1 Afterlife from the Loam
+1 Aftermath Analyst
+1 Ancient Cornucopia
+1 Arcane Signet
+1 Bloodthirsty Conqueror
+1 Breach the Multiverse
+1 Cephalid Coliseum
+1 Colossal Grave-Reaver
+1 Command Beacon
+1 Command Tower
+1 Cyclonic Rift
+1 Death Begets Life
+1 Doom Whisperer
+1 Dredger's Insight
+1 Emergence Zone
+1 Entish Restoration
+1 Essence Warden
+1 Eternity Vessel
+1 Exotic Orchard
+1 Exsanguinate
+1 Fabled Passage
+1 Fact or Fiction
+1 Fangkeeper's Familiar
+1 Farseek
+1 Fellwar Stone
+1 Finale of Revelation
+5 Forest
+1 Frantic Search
+1 Glarb, Calamity's Augur
+1 Glimpse the Unthinkable
+1 Golgari Grave-Troll
+1 Gray Merchant of Asphodel
+1 Grisly Salvage
+1 Harrow
+1 Hedge Maze
+1 Hedron Crab
+1 Hermit Druid
+1 Hydroid Krasis
+3 Island
+1 Kheru Goldkeeper
+1 Kishla Skimmer
+1 Ledger Shredder
+1 Lightning Greaves
+1 Marsh Flats
+1 Mesmeric Orb
+1 Misty Rainforest
+1 Morphic Pool
+1 Muldrotha, the Gravetide
+1 Nyx Weaver
+1 Out of the Tombs
+1 Phyrexian Tower
+1 Platinum Emperion
+1 Polluted Delta
+1 Portal to Phyrexia
+1 Prismatic Vista
+1 Profane Transfusion
+1 Reanimate
+1 Rejuvenating Springs
+1 Reliquary Tower
+1 Repay in Kind
+1 Ripples of Undeath
+1 Rise of the Dark Realms
+1 Riverchurn Monument
+1 Roiling Regrowth
+1 Sakura-Tribe Elder
+1 Satyr Wayfinder
+1 Sidisi, Brood Tyrant
+1 Six
+1 Sol Ring
+1 Stinkweed Imp
+1 Stitcher's Supplier
+5 Swamp
+1 Teval, the Balanced Scale
+1 Teval's Judgment
+1 Three Steps Ahead
+1 Traumatize
+1 Undercity Sewers
+1 Underground Mortuary
+1 Undergrowth Stadium
+1 Uro, Titan of Nature's Wrath
+1 Verdant Catacombs
+1 Villainous Wealth
+1 Watery Grave
+1 Weather the Storm
+1 Willowdusk, Essence Seer
+1 Windfall
+1 World Shaper
+1 Zagoth Triome
+
+1 Teval, Arbiter of Virtue
