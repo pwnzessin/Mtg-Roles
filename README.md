@@ -26,10 +26,10 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
 ## To Do
 
 - [x] ~~Add 1/8 inch margin to layout~~ _(done)_
-- [ ] Simplify layout usage — should work with any downloaded layout
+- [x] Simplify layout usage — should work with any downloaded layout
 - [x] ~~Add `Y_POS` parameter to cards for artwork vertical position~~ _(done)_
 - [ ] Verify syntax across all cards
-- [ ] Final Check of different card compressions in makeplayingcards
+- [x] Final Check of different card compressions in makeplayingcards
 - [ ] Set artwork Y-positions manually
   - [x] ~~Assassins~~ _(done)_
   - [ ] Bandits
@@ -37,6 +37,8 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
   - [x] ~~Kings~~ _(done)_
   - [ ] Renegades
 - [x] ~~Create generic card api~~ _(done)_
+- [x] ~~Fix scryfall usage limit~~ _(done)_
+- [x] ~~Enable mpcautofill support~~ _(done)_
 - [ ] _(Future)_ Automate artwork Y-position detection, currently you can run claude against it but takes alot of tokens to do so, currently faster manually
 
 ---

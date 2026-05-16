@@ -1,0 +1,10 @@
+﻿{
+    "roles":  [
+                  "Assassins",
+                  "Bandits",
+                  "Guardians",
+                  "Kings"
+              ],
+    "limit":  0,
+    "qualityChoice":  "4"
+}

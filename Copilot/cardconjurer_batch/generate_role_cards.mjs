@@ -447,12 +447,8 @@ async function main() {
     await page.waitForFunction(() => typeof card !== "undefined" && Array.isArray(card.frames) && card.frames.length > 0, null, { timeout: 30000 });
     await page.waitForFunction(() => card.frames.every((frame) => !frame.image || (frame.image.complete && frame.image.naturalWidth > 0)), null, { timeout: 30000 });
     await page.evaluate(() => {
-      if (typeof window.drawFrames === "function") {
-        window.drawFrames();
-      }
-      if (typeof window.drawCard === "function") {
-        window.drawCard();
-      }
+      if (typeof window.drawFrames === "function") window.drawFrames();
+      if (typeof window.drawCard   === "function") window.drawCard();
     });
 
     let generated = 0;
@@ -540,11 +536,6 @@ async function main() {
           }
         });
 
-        await page.evaluate(() => {
-          if (typeof window.drawFrames === "function") {
-            window.drawFrames();
-          }
-        });
         await page.waitForFunction(() => window.art && window.art.complete && window.art.naturalWidth > 0, null, { timeout: 15000 });
         await page.waitForTimeout(700);
 
@@ -553,15 +544,29 @@ async function main() {
             card.artY = artYPos;
             const input = document.querySelector('#art-y');
             if (input) input.value = Math.round(artYPos * card.height);
-            if (typeof window.drawCard === 'function') window.drawCard();
           }, c.artYPos);
-          await page.waitForTimeout(200);
         }
 
-        const downloadPromise = page.waitForEvent("download", { timeout: 15000 });
-        await page.evaluate(() => window.downloadCard(false, false));
-        const download = await downloadPromise;
-        await download.saveAs(c.outputPath);
+        // Render card at its native size, then copy onto an extended black canvas for
+        // symmetric print-bleed border (4.4% width left/right, 1/35 height top/bottom).
+        const dataUrl = await page.evaluate(() => {
+          if (typeof window.drawFrames === "function") window.drawFrames();
+          if (typeof window.drawCard   === "function") window.drawCard();
+          if (typeof cardCanvas === "undefined") return null;
+          const mx = Math.round(0.044 * 1.15 * card.width);
+          const my = Math.round((1.15 / 35) * card.height);
+          const ext = document.createElement("canvas");
+          ext.width  = cardCanvas.width  + 2 * mx;
+          ext.height = cardCanvas.height + 2 * my;
+          const ctx = ext.getContext("2d");
+          ctx.fillStyle = "#000000";
+          ctx.fillRect(0, 0, ext.width, ext.height);
+          ctx.drawImage(cardCanvas, mx, my);
+          return ext.toDataURL("image/png");
+        });
+        if (!dataUrl) throw new Error("cardCanvas not available in page context");
+        const pngBuffer = Buffer.from(dataUrl.replace(/^data:image\/png;base64,/, ""), "base64");
+        fs.writeFileSync(c.outputPath, pngBuffer);
 
         generated += 1;
         lines.push(`OK | ${path.basename(c.filePath)} | ${c.outputPath}`);

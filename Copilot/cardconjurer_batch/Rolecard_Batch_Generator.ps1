@@ -254,7 +254,7 @@ function Convert-ImageQuality {
         [switch]$ApplyMargin
     )
 
-    if ($Settings.Format -eq "Png" -and $Settings.Scale -eq 1.0 -and $Settings.Width -eq 0 -and $Settings.Height -eq 0) {
+    if (-not $ApplyMargin -and $Settings.Format -eq "Png" -and $Settings.Scale -eq 1.0 -and $Settings.Width -eq 0 -and $Settings.Height -eq 0) {
         return $InputPath
     }
 
@@ -275,76 +275,86 @@ function Convert-ImageQuality {
             $targetHeight = $sourceImage.Height
         }
 
-        $bmp = New-Object System.Drawing.Bitmap($targetWidth, $targetHeight)
+        # When adding a bleed border the canvas is extended, not drawn over.
+        $bx = 0; $by = 0
+        if ($ApplyMargin) {
+            $bx = [int]($targetWidth * 0.044)
+            $by = [int]($targetHeight / 35.0)
+        }
+        $bmpWidth  = $targetWidth  + 2 * $bx
+        $bmpHeight = $targetHeight + 2 * $by
+
+        # Step 1: scale source to card dimensions with high-quality rendering.
+        $scaledBmp = New-Object System.Drawing.Bitmap($targetWidth, $targetHeight)
         try {
             if ($Settings.Dpi -gt 0) {
-                $bmp.SetResolution($Settings.Dpi, $Settings.Dpi)
+                $scaledBmp.SetResolution($Settings.Dpi, $Settings.Dpi)
             }
             else {
-                $bmp.SetResolution($sourceImage.HorizontalResolution, $sourceImage.VerticalResolution)
+                $scaledBmp.SetResolution($sourceImage.HorizontalResolution, $sourceImage.VerticalResolution)
             }
-
-            $graphics = [System.Drawing.Graphics]::FromImage($bmp)
+            $sg = [System.Drawing.Graphics]::FromImage($scaledBmp)
             try {
-                $graphics.CompositingMode = [System.Drawing.Drawing2D.CompositingMode]::SourceCopy
-                $graphics.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
-                $graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
-                $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
-                $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
-                $graphics.DrawImage($sourceImage, 0, 0, $targetWidth, $targetHeight)
-
-                if ($ApplyMargin) {
-                    # Fill 1/8-inch solid black margin border
-                    # Use pixel width / 20 (= 1/8 of 2.5-inch card width) — DPI metadata is unreliable
-                    $marginPx = [int]($targetWidth / 20.0)
-                    $brush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::Black)
-                    try {
-                        $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::None
-                        $graphics.FillRectangle($brush, 0,                          0,                           $targetWidth,  $marginPx)
-                        $graphics.FillRectangle($brush, 0,                          ($targetHeight - $marginPx), $targetWidth,  $marginPx)
-                        $graphics.FillRectangle($brush, 0,                          $marginPx,                   $marginPx,     ($targetHeight - 2 * $marginPx))
-                        $graphics.FillRectangle($brush, ($targetWidth - $marginPx), $marginPx,                   $marginPx,     ($targetHeight - 2 * $marginPx))
-                    }
-                    finally {
-                        $brush.Dispose()
-                    }
-                }
+                $sg.CompositingMode    = [System.Drawing.Drawing2D.CompositingMode]::SourceCopy
+                $sg.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
+                $sg.InterpolationMode  = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+                $sg.SmoothingMode      = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+                $sg.PixelOffsetMode    = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+                $sg.DrawImage($sourceImage, 0, 0, $targetWidth, $targetHeight)
             }
             finally {
-                $graphics.Dispose()
+                $sg.Dispose()
             }
 
-            $dir = Split-Path -Parent $InputPath
-            $baseName = [System.IO.Path]::GetFileNameWithoutExtension($InputPath)
-            if ($Settings.Format -eq "Jpeg") {
-                $outPath = Join-Path $dir ($baseName + ".jpg")
-            }
-            else {
-                $outPath = Join-Path $dir ($baseName + ".png")
-            }
+            # Step 2: place scaled card onto the (possibly extended) black canvas.
+            # DrawImageUnscaled places pixels 1:1 at exact coordinates — no DPI adjustment.
+            $bmp = New-Object System.Drawing.Bitmap($bmpWidth, $bmpHeight)
+            try {
+                $bmp.SetResolution($scaledBmp.HorizontalResolution, $scaledBmp.VerticalResolution)
+                $graphics = [System.Drawing.Graphics]::FromImage($bmp)
+                try {
+                    $graphics.Clear([System.Drawing.Color]::Black)
+                    $graphics.DrawImageUnscaled($scaledBmp, $bx, $by)
+                }
+                finally {
+                    $graphics.Dispose()
+                }
 
-            $tempOut = "$outPath.tmp"
-            if (Test-Path $tempOut) {
-                Remove-Item -LiteralPath $tempOut -Force
-            }
+                $dir = Split-Path -Parent $InputPath
+                $baseName = [System.IO.Path]::GetFileNameWithoutExtension($InputPath)
+                if ($Settings.Format -eq "Jpeg") {
+                    $outPath = Join-Path $dir ($baseName + ".jpg")
+                }
+                else {
+                    $outPath = Join-Path $dir ($baseName + ".png")
+                }
 
-            if ($Settings.Format -eq "Jpeg") {
-                Save-Jpeg -Bitmap $bmp -OutPath $tempOut -Quality $Settings.JpegQuality
-            }
-            else {
-                $bmp.Save($tempOut, [System.Drawing.Imaging.ImageFormat]::Png)
-            }
+                $tempOut = "$outPath.tmp"
+                if (Test-Path $tempOut) {
+                    Remove-Item -LiteralPath $tempOut -Force
+                }
 
-            Move-Item -LiteralPath $tempOut -Destination $outPath -Force
+                if ($Settings.Format -eq "Jpeg") {
+                    Save-Jpeg -Bitmap $bmp -OutPath $tempOut -Quality $Settings.JpegQuality
+                }
+                else {
+                    $bmp.Save($tempOut, [System.Drawing.Imaging.ImageFormat]::Png)
+                }
 
-            if ($Settings.Format -eq "Jpeg" -and ($InputPath -ne $outPath) -and (Test-Path $InputPath)) {
-                Remove-Item -LiteralPath $InputPath -Force
+                Move-Item -LiteralPath $tempOut -Destination $outPath -Force
+
+                if ($Settings.Format -eq "Jpeg" -and ($InputPath -ne $outPath) -and (Test-Path $InputPath)) {
+                    Remove-Item -LiteralPath $InputPath -Force
+                }
+
+                return $outPath
             }
-
-            return $outPath
+            finally {
+                $bmp.Dispose()
+            }
         }
         finally {
-            $bmp.Dispose()
+            $scaledBmp.Dispose()
         }
     }
     finally {
@@ -387,20 +397,28 @@ $roles = @(Read-RoleSelection)
 $limit = Read-CountSelection
 $qualityChoice = Read-QualitySelection
 $qualitySettings = Get-QualitySettings -QualityChoice $qualityChoice
-$applyMargin = Read-MarginSelection
 
 Write-Host ""
 Write-Host "Summary:" -ForegroundColor Cyan
 Write-Host "  Roles: $($roles -join ', ')"
 Write-Host "  Cards per role: $(if ($limit -eq 0) { 'All' } else { $limit })"
 Write-Host "  Quality: $($qualitySettings.Name)"
-Write-Host "  Margin frame: $(if ($applyMargin) { 'Yes' } else { 'No' })"
 
-$confirm = Read-Host "Proceed? (Y/N)"
-if ($confirm -notmatch "^[Yy]$") {
+$confirm = Read-Host "Proceed? (Y/N, default Y)"
+if (-not [string]::IsNullOrWhiteSpace($confirm) -and $confirm -notmatch "^[Yy]$") {
     Write-Host "Canceled." -ForegroundColor Yellow
     exit 0
 }
+
+# Export current settings to JSON config
+$configPath = Join-Path $batchDir "Rolecard_Batch_Generator.config.json"
+$configObj = [ordered]@{
+    roles        = $roles
+    limit        = $limit
+    qualityChoice = $qualityChoice
+}
+$configObj | ConvertTo-Json | Set-Content -Path $configPath -Encoding utf8
+Write-Host "Settings saved to: $configPath" -ForegroundColor DarkGray
 
 $activeBaseUrl = "http://localhost:8080"
 $globalGenerated = 0
@@ -466,7 +484,7 @@ for ($i = 0; $i -lt $roles.Count; $i += 1) {
 
     Write-Host "Post-processing $($generatedPaths.Count) file(s) for quality '$($qualitySettings.Name)'..." -ForegroundColor Cyan
     foreach ($p in $generatedPaths) {
-        [void](Convert-ImageQuality -InputPath $p -Settings $qualitySettings -ApplyMargin:$applyMargin)
+        [void](Convert-ImageQuality -InputPath $p -Settings $qualitySettings)
         $globalConverted += 1
     }
 }
