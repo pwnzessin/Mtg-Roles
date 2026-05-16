@@ -1,2 +1,0 @@
-﻿Line 10: # Interactive mode – prompts for all settings.
-Line 100: Write-Warning "Cardback path not found – will be omitted from XML."
