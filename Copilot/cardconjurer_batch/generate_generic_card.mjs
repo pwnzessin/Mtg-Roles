@@ -121,11 +121,14 @@ function parseSetCodeInfo(setCodeRaw) {
 function buildCardObject(baseUrl, c) {
   const colorKey  = c.color in COLOR_FRAMES ? c.color : "W";
   const mainFrame = COLOR_FRAMES[colorKey];
-  const frames    = [{ ...mainFrame, masks: [] }];
 
+  // drawFrames() reverses the array before drawing, so frames[0] is drawn last (on top).
+  // PT box must be at [0] so it renders on top of the main frame.
+  const frames = [];
   if (c.pt && colorKey in COLOR_PT) {
     frames.push({ ...COLOR_PT[colorKey], bounds: M15_PT_BOUNDS, masks: [] });
   }
+  frames.push({ ...mainFrame, masks: [] });
 
   let rulesText = c.rules || "";
   if (c.flavor) {
