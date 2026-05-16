@@ -36,8 +36,92 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
   - [ ] Guardians
   - [x] ~~Kings~~ _(done)_
   - [ ] Renegades
-- [ ] Create generic card api
+- [x] ~~Create generic card api~~ _(done)_
 - [ ] _(Future)_ Automate artwork Y-position detection, currently you can run claude against it but takes alot of tokens to do so, currently faster manually
+
+---
+
+## Generic Card Pipeline
+
+An interactive PowerShell wizard (`Copilot/cardconjurer_batch/generic_card_pipeline.ps1`) that fetches real MTG cards from Scryfall and renders them as PNGs using the CardConjurer pipeline.
+
+### Running
+
+```powershell
+.\Copilot\cardconjurer_batch\generic_card_pipeline.ps1
+```
+
+### Modes
+
+| # | Mode | Description |
+|---|---|---|
+| 1 | Fetch + Render | Fetch card data from Scryfall and immediately render all cards |
+| 2 | Render only | Render `.txt` files already in `Cards\Generic\` (no Scryfall fetch) |
+| 3 | Fetch only | Download card data + art from Scryfall without rendering |
+| 4 | Card list file | Load a deck-list `.txt` from `Copilot\cardconjurer_batch\Cardlists\`, then fetch + render |
+| 5 | Clear folders | Interactively remove rendered PNGs, `.txt` files, and/or downloaded artwork |
+
+### Chunked Pipeline
+
+When a large card list is used (default threshold: 15 cards per chunk), the pipeline automatically splits the work into chunks. Each chunk's fetch and render run back-to-back, so CardConjurer is rendering the previous batch while the next Scryfall fetch waits out rate-limit delays. This significantly reduces total wall-clock time for large lists.
+
+Chunk size is controlled by `"chunkSize"` in `Copilot/cardconjurer_batch/generic_card_config.json`. Set to `0` to disable chunking.
+
+### Scryfall Rate Limiting
+
+The fetch script (`fetch_card.mjs`) enforces a 200 ms delay between requests (≈5 req/s, under Scryfall's 10 req/s limit). If a 429 response is returned, it reads the `Retry-After` header and automatically waits before retrying (up to 3 retries before aborting).
+
+### Configuration
+
+Default values live in `Copilot/cardconjurer_batch/generic_card_config.json`:
+
+| Key | Default | Description |
+|---|---|---|
+| `fetch.cardsDir` | `Cards\Generic` | Where `.txt` files are written |
+| `fetch.artDir` | `Artworks\Downloaded` | Where art crops are saved |
+| `fetch.cardlistsDir` | `Copilot\cardconjurer_batch\Cardlists` | Card list files directory |
+| `fetch.preferSet` | _(empty)_ | Prefer a specific set code when fetching |
+| `fetch.overwrite` | `true` | Overwrite existing `.txt` / art files |
+| `fetch.chunkSize` | `15` | Cards per chunk (0 = no chunking) |
+| `generate.outputSubDir` | `output` | Sub-folder inside `cardsDir` for rendered PNGs |
+| `generate.headless` | `true` | Run Playwright headless |
+| `generate.startLauncher` | `true` | Auto-start CardConjurer if not running |
+| `generate.overwrite` | `true` | Overwrite existing PNG files |
+
+---
+
+## Generic Card File Format
+
+Cards in `Cards/Generic/` use a simpler format than role cards. Flavor text is embedded inline in the `<RULES>` block using the `{flavor}` marker.
+
+```
+<COLOR>A</COLOR>
+<TITLE>Card Name</TITLE>
+<MANA>{2}{u}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>MOM R</SETCODE>
+<RULES>
+Rules text here.
+{flavor}
+Flavor text here.
+</RULES>
+<PT>2/3</PT>
+<ARTIST>Artist Name</ARTIST>
+```
+
+### Field Reference
+
+| Tag | Description |
+|---|---|
+| `<COLOR>` | Color key: `W` `U` `B` `R` `G` `M` (multi) `A` (artifact) `C` (colorless). Auto-detected on fetch. |
+| `<TITLE>` | Card name |
+| `<MANA>` | Mana cost in brace notation, e.g. `{2}{u}` |
+| `<TYPE>` | Full type line |
+| `<SETCODE>` | Set code + rarity + optional zoom, e.g. `KLD R` or `MOM R 1.2` |
+| `<RULES>` | Rules text; include `{flavor}` on its own line to begin flavor section |
+| `<PT>` | _(Optional)_ Power/toughness, e.g. `3/3` |
+| `<ARTIST>` | Artist credit |
+| `<ART_YPOS>` | _(Optional)_ Artwork vertical offset (see Role Card format above) |
 
 
 ---
