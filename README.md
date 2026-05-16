@@ -43,6 +43,34 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
 
 ---
 
+## MPC Autofill Export
+
+`Copilot/cardconjurer_batch/Generate-MpcFillXml.ps1` scans a folder of rendered PNG/JPG images and writes an XML order file compatible with the [MPC Autofill](https://github.com/chilli-axe/mpc-autofill) desktop tool for upload to MakePlayingCards.com.
+
+### Running
+
+```powershell
+cd Copilot\cardconjurer_batch
+.\Generate-MpcFillXml.ps1
+```
+
+### What it prompts for
+
+| Prompt | Description |
+|---|---|
+| Input folder | Folder containing the rendered card PNGs/JPGs |
+| Include sub-folders | Recurse into sub-directories (default N) |
+| Cardback image | Picks from files in `Cards/Cardbacks/`, or skip, or enter path manually |
+| Cardstock | Choice of S30 / S33 / M31 / P10 (default S30 Standard Smooth) |
+| Foil fronts | Y/N (default N) |
+| Output XML | Defaults to `Autofill/order.xml` |
+
+### Cardbacks
+
+Place cardback images in `Cards/Cardbacks/`. The script lists them as numbered options when building the order. Currently contains `scryfall_standard.png` as a placeholder — replace with a real MTG card-back image when available.
+
+---
+
 ## Generic Card Pipeline
 
 An interactive PowerShell wizard (`Copilot/cardconjurer_batch/generic_card_pipeline.ps1`) that fetches real MTG cards from Scryfall and renders them as PNGs using the CardConjurer pipeline.
