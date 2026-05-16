@@ -5,5 +5,5 @@
 Unveil only if the King was dealt combat damage this turn or if a crime was committed against the King.  
 When the Jail Warden is unveiled, exile up to three creatures. Put an incarceration counter on each of them.   
 The creature's owner may gift a card to the King, pay {3} and 5 life to return a card they own with an incarceration counter on them to their hand.  
-{flavor}"You are charging too high prices for sweaters, glasses: you right to jail. You undercook fish? Believe it or not, jail. You overcook chicken, also jail." \- Raul
+{flavor}"You are charging too high prices for sweaters, glasses: you right to jail. You undercook fish? Believe it or not, jail. You overcook chicken, also jail." {-} Raul
 </RULES>

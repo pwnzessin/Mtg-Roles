@@ -4,10 +4,8 @@
 <RULES>
 - Unveil {5}  
 - When The King’s Ducklganger is revealed, create a personal decoy Planeswalker-Duck token under the King’s control with
-
 “Personal Decoy enters with a number of loyalty counters on it equal to **half?** your life total. You can’t be attacked.  
-            \+1: You gain 1 life.  
+            +1: You gain 1 life.  
             −4: You and target player each draw a card.
-
-- {flavor}"I’m a Duck. Ducks adapt." \- Scrooge McDuck 
+{flavor}"I’m a Duck. Ducks adapt." {-} Scrooge McDuck 
 </RULES>

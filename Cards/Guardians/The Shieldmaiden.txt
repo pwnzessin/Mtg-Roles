@@ -4,5 +4,5 @@
 <RULES>
 When the Shieldmaden is unveiled, the King gets 5 aegis counters *(If a creature would deal damage to a player with an aegis counter, prevent that damage and remove an aegis counter from that player.)* Whenever an aegis counter is removed, the King draws a card.  
 Until end of turn, the King has “Ward {-} Pay 5 life.”  
-*“Her shield deflects more than blades; it bends fate itself.”*
+{flavor}“Her shield deflects more than blades; it bends fate itself.”
 </RULES>

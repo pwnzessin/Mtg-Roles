@@ -3,7 +3,7 @@
 <SETCODE>ktk m</SETCODE>
 <RULES>
 When The Echoing Prism is unveiled, for each other player with a face up role card choose one {-}  
-- • {indent}Copy target ability (that isn’t a mana ability).  
-- • {indent}Copy target instant or sorcery spell.  
+• {indent}Copy target ability (that isn’t a mana ability).  
+• {indent}Copy target instant or sorcery spell.  
 You may choose new targets for the original spell or ability and each copy.
 </RULES>

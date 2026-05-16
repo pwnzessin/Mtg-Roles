@@ -5,9 +5,9 @@
 Unveil only during your turn and only if a non-king, non-bandit role card is face up.  
 When The Support is unveiled, go to the kitchen and get everyone who wants a new drink.   
 Then choose two emblems with {-}  
-- • {indent}“Nontoken creatures you control get \+2/+2 and have ward {1}.”  
-- • {indent}“At the beginning of combat on your turn, a creature of your choice gains myriad until end of turn.”  
-- • {indent}“Choose a card type. Spells of the chosen type cost {1} less to cast.”  
-- • {indent}“At the beginning of your upkeep, you become the Monarch. If you already are the Monarch or when you are attacked while you are the Monarch, draw a card.”  
+• {indent}“Nontoken creatures you control get +2/+2 and have ward {1}.”  
+• {indent}“At the beginning of combat on your turn, a creature of your choice gains myriad until end of turn.”  
+• {indent}“Choose a card type. Spells of the chosen type cost {1} less to cast.”  
+• {indent}“At the beginning of your upkeep, you become the Monarch. If you already are the Monarch or when you are attacked while you are the Monarch, draw a card.”  
 Each Bandit gets one of the emblems chosen this way.
 </RULES>

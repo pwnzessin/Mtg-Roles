@@ -3,5 +3,7 @@
 <SETCODE>PD3 c</SETCODE>
 <ART_YPOS>0.01</ART_YPOS>
 <RULES>
-When The Gravecaller is unveiled, if it's your turn you may pay {X}. Then each player mills X cards.
+When The Gravecaller is unveiled, if it's your turn you may pay {X}. Then each player mills X cards.  
+For each player you may put up to one target creature card from that player’s graveyard onto the battlefield under your control.   
+They're black zombies in addition to their other types. 
 </RULES>

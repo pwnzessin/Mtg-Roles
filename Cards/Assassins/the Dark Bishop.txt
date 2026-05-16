@@ -1,4 +1,4 @@
-<TITLE>the Dark Bishop</TITLE>
+<TITLE>The Dark Bishop</TITLE>
 <ROLE>Assassin</ROLE>
 <SETCODE>PD3 c</SETCODE>
 <ART_YPOS>0.02</ART_YPOS>

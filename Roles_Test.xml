@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<order>
+    <details>
+        <quantity>86</quantity>
+        <stock>(S30) Standard Smooth</stock>
+        <foil>false</foil>
+    </details>
+    <fronts>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\Ahriman, Chaos Sorcerer.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>0</slots>
+            <name>Ahriman, Chaos Sorcerer.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\El tonkodot.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>1</slots>
+            <name>El tonkodot.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\Shrek The Third.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>2</slots>
+            <name>Shrek The Third.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Abysal Prawler.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>3</slots>
+            <name>The Abysal Prawler.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Aspect Warper.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>4</slots>
+            <name>The Aspect Warper.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Ass-ass-in.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>5</slots>
+            <name>The Ass-ass-in.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Bearforce One.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>6</slots>
+            <name>The Bearforce One.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\the Dark Bishop.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>7</slots>
+            <name>the Dark Bishop.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Emerald Mercenary.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>8</slots>
+            <name>The Emerald Mercenary.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Firebrand.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>9</slots>
+            <name>The Firebrand.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Giant.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>10</slots>
+            <name>The Giant.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Gravecaller.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>11</slots>
+            <name>The Gravecaller.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Marksman.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>12</slots>
+            <name>The Marksman.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Metalwork Buzzer.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>13</slots>
+            <name>The Metalwork Buzzer.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Seer.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>14</slots>
+            <name>The Seer.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Shapeshifting Slayer.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>15</slots>
+            <name>The Shapeshifting Slayer.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Shinobi.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>16</slots>
+            <name>The Shinobi.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Sneaky Beaky Like.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>17</slots>
+            <name>The Sneaky Beaky Like.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Sneaky Pawn.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>18</slots>
+            <name>The Sneaky Pawn.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Sorceress.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>19</slots>
+            <name>The Sorceress.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Stealth is optional guy.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>20</slots>
+            <name>The Stealth is optional guy.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Supercollider.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>21</slots>
+            <name>The Supercollider.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Tempest.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>22</slots>
+            <name>The Tempest.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The War Shaman.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>23</slots>
+            <name>The War Shaman.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Banisher.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>24</slots>
+            <name>The Banisher.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Bounty Hunter.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>25</slots>
+            <name>The Bounty Hunter.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Commander Support.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>26</slots>
+            <name>The Commander Support.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Copycat.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>27</slots>
+            <name>The Copycat.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Echoing Prism.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>28</slots>
+            <name>The Echoing Prism.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The E-Girl Support.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>29</slots>
+            <name>The E-Girl Support.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Ferryman.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>30</slots>
+            <name>The Ferryman.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Gatekeeper.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>31</slots>
+            <name>The Gatekeeper.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Grenadier.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>32</slots>
+            <name>The Grenadier.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The It&apos;s-better-in-my-deck guy.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>33</slots>
+            <name>The It&apos;s-better-in-my-deck guy.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Judge’s Nightmare.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>34</slots>
+            <name>The Judge’s Nightmare.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Judge’s Nightmare.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>35</slots>
+            <name>The Judge’s Nightmare.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Judge’s recurring Nightmare.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>36</slots>
+            <name>The Judge’s recurring Nightmare.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Judge’s recurring Nightmare.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>37</slots>
+            <name>The Judge’s recurring Nightmare.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Midnight Lady.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>38</slots>
+            <name>The Midnight Lady.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Mystic Mimics.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>39</slots>
+            <name>The Mystic Mimics.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Oneiromancer.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>40</slots>
+            <name>The Oneiromancer.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Puppetmaster.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>41</slots>
+            <name>The Puppetmaster.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Scrapper.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>42</slots>
+            <name>The Scrapper.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Support.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>43</slots>
+            <name>The Support.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Thrash Panda.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>44</slots>
+            <name>The Thrash Panda.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Timebender.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>45</slots>
+            <name>The Timebender.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Wearer of Masks.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>46</slots>
+            <name>The Wearer of Masks.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Bandits\The Zealot.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>47</slots>
+            <name>The Zealot.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Black Knight.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>48</slots>
+            <name>The Black Knight.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Chaos Spreader.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>49</slots>
+            <name>The Chaos Spreader.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Flickering Mage.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>50</slots>
+            <name>The Flickering Mage.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Get down Mr. President.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>51</slots>
+            <name>The Get down Mr. President.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Golem.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>52</slots>
+            <name>The Golem.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Jail Warden.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>53</slots>
+            <name>The Jail Warden.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The King’s Ducklganger.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>54</slots>
+            <name>The King’s Ducklganger.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The King’s Ducklganger.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>55</slots>
+            <name>The King’s Ducklganger.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Knight in Shining Armor.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>56</slots>
+            <name>The Knight in Shining Armor.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Maitresse.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>57</slots>
+            <name>The Maitresse.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Marshall.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>58</slots>
+            <name>The Marshall.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Missionary Priest.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>59</slots>
+            <name>The Missionary Priest.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Mistress of Glacial Cold.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>60</slots>
+            <name>The Mistress of Glacial Cold.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Queen.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>61</slots>
+            <name>The Queen.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Royal Shieldbearer.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>62</slots>
+            <name>The Royal Shieldbearer.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Scapegoat.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>63</slots>
+            <name>The Scapegoat.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Shieldmaiden.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>64</slots>
+            <name>The Shieldmaiden.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Guardians\The Virtuous Bridge Troll.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>65</slots>
+            <name>The Virtuous Bridge Troll.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\Amatsu-Mikaboshi, the Chaos King.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>66</slots>
+            <name>Amatsu-Mikaboshi, the Chaos King.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\Das Alte Lineal.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>67</slots>
+            <name>Das Alte Lineal.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\El Dorito.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>68</slots>
+            <name>El Dorito.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\Her Seedborne Highness.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>69</slots>
+            <name>Her Seedborne Highness.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Archenemy.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>70</slots>
+            <name>The Archenemy.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Chaos Bringer.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>71</slots>
+            <name>The Chaos Bringer.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Corrupted.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>72</slots>
+            <name>The Corrupted.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Curser.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>73</slots>
+            <name>The Curser.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Democrat.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>74</slots>
+            <name>The Democrat.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Dungeonmaster.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>75</slots>
+            <name>The Dungeonmaster.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Elementalist.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>76</slots>
+            <name>The Elementalist.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Gathering.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>77</slots>
+            <name>The Gathering.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The King over the Scrapyard.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>78</slots>
+            <name>The King over the Scrapyard.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Queen of Light.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>79</slots>
+            <name>The Queen of Light.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Rummaging Goblin.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>80</slots>
+            <name>The Rummaging Goblin.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Taxer.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>81</slots>
+            <name>The Taxer.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Twin Princess.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>82</slots>
+            <name>The Twin Princess.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Tyrant.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>83</slots>
+            <name>The Tyrant.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Wildfire devil.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>84</slots>
+            <name>The Wildfire devil.jpg</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Kings\The Yoinker.jpg</id>
+            <sourceType>Local File</sourceType>
+            <slots>85</slots>
+            <name>The Yoinker.jpg</name>
+        </card>
+    </fronts>
+    <cardback>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Cardbacks\scryfall_standard.png</cardback>
+</order>

@@ -53,39 +53,107 @@ function Escape-Xml([string]$s) {
 Write-Host ""
 Write-Host "=== MPC Autofill XML Generator ===" -ForegroundColor Cyan
 
-# Input folder
-if ([string]::IsNullOrWhiteSpace($InputFolder)) {
-    Write-Host ""
-    Write-Host "Enter the folder containing card images (PNG/JPG)."
-    Write-Host "Example: ..\..\Cards\templates\Assassins"
-    $InputFolder = Read-Host "Input folder"
-}
-$InputFolder = (Resolve-Path $InputFolder).Path
-if (-not (Test-Path $InputFolder -PathType Container)) {
-    Write-Error "Folder not found: $InputFolder"; exit 1
-}
+# ---------------------------------------------------------------------------
+# Mode selection
+# ---------------------------------------------------------------------------
+$modeOptions = @(
+    "Manual   - specify a folder",
+    "RoleCard - pick one or more roles, combine into one XML"
+)
+$modeAnswer    = Prompt-Choice "Select mode:" $modeOptions 0
+$roleCardMode  = ($modeAnswer -like "RoleCard*")
+$defaultXmlName = "order.xml"
 
-# Recursive?
-$recurse = $false
-$recurseAnswer = Read-Host "Include sub-folders? (Y/N, default N)"
-if ($recurseAnswer -match "^[Yy]$") { $recurse = $true }
-
+# ---------------------------------------------------------------------------
 # Collect images
+# ---------------------------------------------------------------------------
 $imageExts = @("*.png", "*.jpg", "*.jpeg")
-$images = @()
-foreach ($ext in $imageExts) {
-    if ($recurse) {
-        $images += Get-ChildItem -Path $InputFolder -Filter $ext -Recurse -File
-    } else {
-        $images += Get-ChildItem -Path $InputFolder -Filter $ext -File
-    }
-}
-$images = $images | Sort-Object FullName
+$images    = @()
 
-if ($images.Count -eq 0) {
-    Write-Error "No PNG/JPG images found in: $InputFolder"; exit 1
+if ($roleCardMode) {
+    # Discover role folders that actually exist
+    $templatesRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\Cards\templates"))
+    $knownRoles    = @("Assassins", "Bandits", "Guardians", "Kings", "Renegades")
+    $availableRoles = $knownRoles | Where-Object { Test-Path (Join-Path $templatesRoot $_) -PathType Container }
+
+    if ($availableRoles.Count -eq 0) {
+        Write-Error "No role folders found under: $templatesRoot"; exit 1
+    }
+
+    Write-Host ""
+    Write-Host "Available roles:"
+    for ($r = 0; $r -lt $availableRoles.Count; $r++) {
+        Write-Host ("  {0}. {1}" -f ($r + 1), $availableRoles[$r])
+    }
+    Write-Host ("  A. All roles")
+    $roleRaw = Read-Host "Select roles (comma-separated numbers, e.g. 1,3 -- or A for all)"
+
+    $selectedRoles = @()
+    if ($roleRaw -match "^[Aa]$") {
+        $selectedRoles = $availableRoles
+    } else {
+        foreach ($tok in ($roleRaw -split ',')) {
+            $tok  = $tok.Trim()
+            $rIdx = [int]$tok - 1
+            if ($rIdx -ge 0 -and $rIdx -lt $availableRoles.Count) {
+                $selectedRoles += $availableRoles[$rIdx]
+            } else {
+                Write-Warning "Ignored invalid selection: '$tok'"
+            }
+        }
+    }
+
+    if ($selectedRoles.Count -eq 0) {
+        Write-Error "No valid roles selected."; exit 1
+    }
+    Write-Host ("Selected roles: {0}" -f ($selectedRoles -join ", ")) -ForegroundColor Green
+
+    foreach ($role in $selectedRoles) {
+        $roleFolder = Join-Path $templatesRoot $role
+        foreach ($ext in $imageExts) {
+            $images += Get-ChildItem -Path $roleFolder -Filter $ext -File -ErrorAction SilentlyContinue
+        }
+    }
+    $images = $images | Sort-Object FullName
+
+    if ($images.Count -eq 0) {
+        Write-Error "No PNG/JPG images found in the selected role folders."; exit 1
+    }
+    Write-Host ("Found {0} image(s) across {1} role(s)." -f $images.Count, $selectedRoles.Count) -ForegroundColor Green
+    $defaultXmlName = ("RoleCards_{0}.xml" -f ($selectedRoles -join "_"))
+
+} else {
+    # --- Manual mode ---
+    if ([string]::IsNullOrWhiteSpace($InputFolder)) {
+        Write-Host ""
+        Write-Host "Enter the folder containing card images (PNG/JPG)."
+        Write-Host "Example: ..\..\Cards\templates\Assassins"
+        $InputFolder = Read-Host "Input folder"
+    }
+    $InputFolder = (Resolve-Path $InputFolder).Path
+    if (-not (Test-Path $InputFolder -PathType Container)) {
+        Write-Error "Folder not found: $InputFolder"; exit 1
+    }
+
+    # Recursive?
+    $recurse = $false
+    $recurseAnswer = Read-Host "Include sub-folders? (Y/N, default N)"
+    if ($recurseAnswer -match "^[Yy]$") { $recurse = $true }
+
+    foreach ($ext in $imageExts) {
+        if ($recurse) {
+            $images += Get-ChildItem -Path $InputFolder -Filter $ext -Recurse -File
+        } else {
+            $images += Get-ChildItem -Path $InputFolder -Filter $ext -File
+        }
+    }
+    $images = $images | Sort-Object FullName
+
+    if ($images.Count -eq 0) {
+        Write-Error "No PNG/JPG images found in: $InputFolder"; exit 1
+    }
+    Write-Host ("Found {0} image(s)." -f $images.Count) -ForegroundColor Green
 }
-Write-Host ("Found {0} image(s)." -f $images.Count) -ForegroundColor Green
 
 # Cardback
 if ([string]::IsNullOrWhiteSpace($CardbackPath)) {
@@ -150,13 +218,22 @@ $Foil = $Foil.ToLowerInvariant()
 if ($Foil -notin @("true","false")) { $Foil = "false" }
 
 # Output path
+$scriptDir   = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Path }
+$autofillDir = [System.IO.Path]::GetFullPath((Join-Path $scriptDir "..\..\Autofill"))
 if ([string]::IsNullOrWhiteSpace($OutputXml)) {
-    $autofillDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\Autofill"))
-    $defaultXml  = Join-Path $autofillDir "order.xml"
+    $defaultXml = Join-Path $autofillDir $defaultXmlName
     Write-Host ""
     Write-Host "Output XML path (default: $defaultXml)"
     $OutputXml = Read-Host "Output XML"
     if ([string]::IsNullOrWhiteSpace($OutputXml)) { $OutputXml = $defaultXml }
+}
+# Ensure .xml extension
+if ([System.IO.Path]::GetExtension($OutputXml) -eq "") {
+    $OutputXml = $OutputXml + ".xml"
+}
+# If no directory specified, place in Autofill folder
+if ([System.IO.Path]::GetDirectoryName($OutputXml) -eq "") {
+    $OutputXml = Join-Path $autofillDir $OutputXml
 }
 
 # ---------------------------------------------------------------------------
