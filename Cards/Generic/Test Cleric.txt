@@ -1,0 +1,13 @@
+<COLOR>W</COLOR>
+<TITLE>Test Cleric</TITLE>
+<MANA>{2}{W}</MANA>
+<TYPE>Creature — Human Cleric</TYPE>
+<SETCODE>M21 C</SETCODE>
+<PT>2/3</PT>
+<RULES>
+When Test Cleric enters the battlefield, you gain 3 life.
+</RULES>
+<FLAVOR>
+Even the smallest spark can light the darkest hall.
+</FLAVOR>
+<ARTIST>Test Artist</ARTIST>

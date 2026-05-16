@@ -1,0 +1,12 @@
+<COLOR>L</COLOR>
+<TITLE>Test Ruins</TITLE>
+<TYPE>Land — Desert</TYPE>
+<SETCODE>M21 C</SETCODE>
+<RULES>
+{T}: Add {C}.
+{T}, Pay 1 life: Add one mana of any color.
+</RULES>
+<FLAVOR>
+Long forgotten, but never truly empty.
+</FLAVOR>
+<ARTIST>Test Artist</ARTIST>

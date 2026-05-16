@@ -1,0 +1,23 @@
+Generic card batch report
+Generated: 2026-05-16T17:22:54.965Z
+Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
+Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
+
+Total parsed cards: 10
+Cards in run queue: 10
+Dry run: false
+
+OK | Test Beast.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Beast.png
+OK | Test Champion.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Champion.png
+OK | Test Cleric.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Cleric.png
+OK | Test Eldrazi.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Eldrazi.png
+OK | Test Fireball.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Fireball.png
+OK | Test Golem.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Golem.png
+OK | Test Mage.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Mage.png
+OK | Test Ritual.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Ritual.png
+OK | Test Ruins.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Ruins.png
+OK | Test Vehicle.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Test Vehicle.png
+
+Generated:        10
+Skipped (exists): 0
+Failed:           0

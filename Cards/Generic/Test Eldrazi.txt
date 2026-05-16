@@ -1,0 +1,11 @@
+<COLOR>C</COLOR>
+<TITLE>Test Eldrazi</TITLE>
+<MANA>{8}</MANA>
+<TYPE>Creature — Eldrazi</TYPE>
+<SETCODE>M21 R</SETCODE>
+<PT>8/8</PT>
+<RULES>
+Annihilator 2.
+When Test Eldrazi is put into a graveyard from anywhere, shuffle it into its owner's library.
+</RULES>
+<ARTIST>Test Artist</ARTIST>

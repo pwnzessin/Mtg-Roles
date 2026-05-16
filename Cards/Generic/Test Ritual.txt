@@ -1,0 +1,12 @@
+<COLOR>B</COLOR>
+<TITLE>Test Ritual</TITLE>
+<MANA>{2}{B}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>M21 C</SETCODE>
+<RULES>
+Each opponent discards two cards. You draw a card.
+</RULES>
+<FLAVOR>
+The price of power is always paid in someone else's blood.
+</FLAVOR>
+<ARTIST>Test Artist</ARTIST>

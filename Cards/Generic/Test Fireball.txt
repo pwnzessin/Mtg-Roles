@@ -1,0 +1,13 @@
+<COLOR>R</COLOR>
+<TITLE>Test Fireball</TITLE>
+<MANA>{X}{R}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>M21 U</SETCODE>
+<RULES>
+Test Fireball deals X damage divided as you choose among any number of targets.
+</RULES>
+<FLAVOR>
+Some problems are best solved with excessive heat.
+</FLAVOR>
+<ARTIST>Test Artist</ARTIST>
+

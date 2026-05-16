@@ -1,0 +1,13 @@
+<COLOR>U</COLOR>
+<TITLE>Test Mage</TITLE>
+<MANA>{2}{U}</MANA>
+<TYPE>Creature — Human Wizard</TYPE>
+<SETCODE>M21 U</SETCODE>
+<PT>2/3</PT>
+<RULES>
+When Test Mage enters the battlefield, draw a card.
+</RULES>
+<FLAVOR>
+Knowledge is the only armor worth wearing.
+</FLAVOR>
+<ARTIST>Test Artist</ARTIST>

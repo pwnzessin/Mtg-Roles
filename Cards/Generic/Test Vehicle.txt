@@ -1,0 +1,14 @@
+<COLOR>V</COLOR>
+<TITLE>Test Vehicle</TITLE>
+<MANA>{4}</MANA>
+<TYPE>Artifact — Vehicle</TYPE>
+<SETCODE>M21 R</SETCODE>
+<PT>5/4</PT>
+<RULES>
+Flying.
+Crew 2 (Tap any number of creatures you control with total power 2 or more: This Vehicle becomes an artifact creature until end of turn.)
+</RULES>
+<FLAVOR>
+Speed is just the beginning.
+</FLAVOR>
+<ARTIST>Test Artist</ARTIST>

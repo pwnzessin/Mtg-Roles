@@ -37,7 +37,7 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
   - [x] ~~Kings~~ _(done)_
   - [ ] Renegades
 - [ ] Create generic card api
-- [ ] _(Future)_ Automate artwork Y-position detection
+- [ ] _(Future)_ Automate artwork Y-position detection, currently you can run claude against it but takes alot of tokens to do so, currently faster manually
 
 
 ---
