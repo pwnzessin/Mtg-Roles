@@ -92,7 +92,7 @@ Default values live in `Copilot/cardconjurer_batch/generic_card_config.json`:
 
 ## Generic Card File Format
 
-Cards in `Cards/Generic/` use a simpler format than role cards. Flavor text is embedded inline in the `<RULES>` block using the `{flavor}` marker.
+Cards in `Cards/Generic/` use a simpler format than role cards. Flavor text is stored in a separate `<FLAVOR>` tag; the pipeline appends it to the rules text with the `{flavor}` marker when rendering.
 
 ```
 <COLOR>A</COLOR>
@@ -102,9 +102,10 @@ Cards in `Cards/Generic/` use a simpler format than role cards. Flavor text is e
 <SETCODE>MOM R</SETCODE>
 <RULES>
 Rules text here.
-{flavor}
-Flavor text here.
 </RULES>
+<FLAVOR>
+Flavor text here.
+</FLAVOR>
 <PT>2/3</PT>
 <ARTIST>Artist Name</ARTIST>
 ```
@@ -118,7 +119,8 @@ Flavor text here.
 | `<MANA>` | Mana cost in brace notation, e.g. `{2}{u}` |
 | `<TYPE>` | Full type line |
 | `<SETCODE>` | Set code + rarity + optional zoom, e.g. `KLD R` or `MOM R 1.2` |
-| `<RULES>` | Rules text; include `{flavor}` on its own line to begin flavor section |
+| `<RULES>` | Rules text block |
+| `<FLAVOR>` | _(Optional)_ Flavor text; rendered in italics below a divider bar |
 | `<PT>` | _(Optional)_ Power/toughness, e.g. `3/3` |
 | `<ARTIST>` | Artist credit |
 | `<ART_YPOS>` | _(Optional)_ Artwork vertical offset (see Role Card format above) |
