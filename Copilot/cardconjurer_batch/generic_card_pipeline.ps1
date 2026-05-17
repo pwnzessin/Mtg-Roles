@@ -82,6 +82,16 @@ function Write-KV {
 $cfg  = Read-Config $ConfigFile
 $root = $cfg.workspaceRoot
 
+# If workspaceRoot is null/empty in config, auto-detect from script location
+if ([string]::IsNullOrWhiteSpace($root)) {
+    try {
+        $root = (Resolve-Path "$PSScriptRoot\..\.." -ErrorAction Stop).Path
+    } catch {
+        $root = $PSScriptRoot
+    }
+    Write-Host "  [info] Auto-detected workspace root: $root" -ForegroundColor DarkGray
+}
+
 $fetchScript    = Join-Path $PSScriptRoot "fetch_card.mjs"
 $generateScript = Join-Path $PSScriptRoot "generate_generic_card.mjs"
 

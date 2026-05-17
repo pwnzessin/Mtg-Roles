@@ -1,7 +1,7 @@
 {
   "_comment": "Default values for generic_card_pipeline.ps1. All paths are relative to workspaceRoot unless absolute.",
 
-  "workspaceRoot":  "C:\\Users\\hecke\\Desktop\\Mtg-Roles",
+  "workspaceRoot":  null,
 
   "fetch": {
     "cardsDir":       "Cards\\Generic",

@@ -1,0 +1,30 @@
+[ERROR 2026-05-17 15:31:02,720] Uncaught exception
+Traceback (most recent call last):
+  File "src\utils.py", line 82, in wrapper
+  File "src\driver.py", line 486, in is_user_authenticated
+  File "selenium\webdriver\remote\webdriver.py", line 778, in find_elements
+  File "selenium\webdriver\remote\webdriver.py", line 354, in execute
+  File "selenium\webdriver\remote\errorhandler.py", line 228, in check_response
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: The email address and password you entered do not match any accounts on record.
+Please make sure that you have correctly entered the email address associated with your account.
+Message: unexpected alert open: {Alert text : The email address and password you entered do not match any accounts on record.
+Please make sure that you have correctly entered the email address associated with your account.}
+  (Session info: chrome=148.0.7778.168)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff73bc61e35+2e8d45]
+	chromedriver!GetHandleVerifier [0x7ff73b98e6c0+155d0]
+	chromedriver!(No symbol) [0x7ff73b6dd57d]
+	chromedriver!(No symbol) [0x7ff73b785703]
+	chromedriver!(No symbol) [0x7ff73b729d58]
+	chromedriver!(No symbol) [0x7ff73b72ac43]
+	chromedriver!GetHandleVerifier [0x7ff73bc8dab9+3149c9]
+	chromedriver!GetHandleVerifier [0x7ff73bc8802b+30ef3b]
+	chromedriver!GetHandleVerifier [0x7ff73bcac872+333782]
+	chromedriver!GetHandleVerifier [0x7ff73b9ab785+32695]
+	chromedriver!GetHandleVerifier [0x7ff73b9b42bc+3b1cc]
+	chromedriver!GetHandleVerifier [0x7ff73b997f24+1ee34]
+	chromedriver!GetHandleVerifier [0x7ff73b9980b4+1efc4]
+	chromedriver!GetHandleVerifier [0x7ff73b97bf27+2e37]
+	KERNEL32!BaseThreadInitThunk [0x7ff8b728e957+17]
+	ntdll!RtlUserThreadStart [0x7ff8b94c427c+2c]
+
