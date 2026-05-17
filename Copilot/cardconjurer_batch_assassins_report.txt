@@ -1,35 +1,14 @@
 CardConjurer batch report for role folder: Assassins
-Generated: 2026-05-17T13:18:01.723Z
+Generated: 2026-05-17T14:07:14.425Z
 
 Total parsed cards: 24
-Cards in run queue: 24
+Cards in run queue: 3
 Dry run: false
 
-OK | Ahriman, Chaos Sorcerer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\Ahriman, Chaos Sorcerer.png
-OK | El tonkodot.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\El tonkodot.png
-OK | Shrek The Third.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\Shrek The Third.png
-OK | The Abysal Prawler.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Abysal Prawler.png
-OK | The Aspect Warper.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Aspect Warper.png
-OK | The Ass-ass-in.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Ass-ass-in.png
-OK | The Bearforce One.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Bearforce One.png
-OK | the Dark Bishop.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\the Dark Bishop.png
-OK | The Emerald Mercenary.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Emerald Mercenary.png
-OK | The Firebrand.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Firebrand.png
-OK | The Giant.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Giant.png
-OK | The Gravecaller.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Gravecaller.png
-OK | The Marksman.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Marksman.png
-OK | The Metalwork Buzzer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Metalwork Buzzer.png
-OK | The Seer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Seer.png
-OK | The Shapeshifting Slayer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Shapeshifting Slayer.png
-OK | The Shinobi.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Shinobi.png
-OK | The Sneaky Beaky Like.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Sneaky Beaky Like.png
-OK | The Sneaky Pawn.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Sneaky Pawn.png
-OK | The Sorceress.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Sorceress.png
-OK | The Stealth is optional guy.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Stealth is optional guy.png
-OK | The Supercollider.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Supercollider.png
-OK | The Tempest.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Tempest.png
-OK | The War Shaman.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The War Shaman.png
+OK | Ahriman, Chaos Sorcerer.txt | D:\Fork\Mtg-Roles\Cards\templates\Assassins\Ahriman, Chaos Sorcerer.png
+OK | el tonkodot.txt | D:\Fork\Mtg-Roles\Cards\templates\Assassins\el tonkodot.png
+OK | Shrek The Third.txt | D:\Fork\Mtg-Roles\Cards\templates\Assassins\Shrek The Third.png
 
-Generated: 24
+Generated: 3
 Skipped existing: 0
 Failed: 0

@@ -2,6 +2,6 @@
     "roles":  [
                   "Assassins"
               ],
-    "limit":  0,
-    "qualityChoice":  "4"
+    "limit":  3,
+    "qualityChoice":  "1"
 }
