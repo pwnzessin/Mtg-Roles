@@ -28,7 +28,9 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
 - [x] ~~Add 1/8 inch margin to layout~~ _(done)_
 - [x] Simplify layout usage — should work with any downloaded layout
 - [x] ~~Add `Y_POS` parameter to cards for artwork vertical position~~ _(done)_
-- [ ] Verify syntax across all cards
+- [ ] Verify syntax across all cards !!When you check make sure to regerate the artworks first!!
+  - [ ] Flavor text and explain text in cursive
+  - [ ] loyality counters where appropriate
 - [x] Final Check of different card compressions in makeplayingcards
 - [ ] Set artwork Y-positions manually
   - [x] ~~Assassins~~ _(done)_

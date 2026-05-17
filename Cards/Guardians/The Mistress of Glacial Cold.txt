@@ -1,5 +1,6 @@
 <TITLE>The Mistress of Glacial Cold</TITLE>
 <ROLE>Guardian</ROLE>
+<ART_YPOS>0.01</ART_YPOS>
 <SETCODE>clb u</SETCODE>
 <RULES>
 Unveil {9} {-} costs {1} less for each creature controlled by non-king players  

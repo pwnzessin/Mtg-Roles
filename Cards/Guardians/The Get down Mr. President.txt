@@ -1,5 +1,6 @@
 <TITLE>The Get down Mr. President</TITLE>
 <ROLE>Guardian</ROLE>
+<ART_YPOS>0.02</ART_YPOS>
 <SETCODE>clb u</SETCODE>
 <RULES>
 When The Get down Mr. President is unveiled and whenever the king is attacked, chose up to one creature you control.

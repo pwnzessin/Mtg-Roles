@@ -1,6 +1,7 @@
 <TITLE>The Ferryman</TITLE>
 <ROLE>Bandit</ROLE>
 <SETCODE>ktk m</SETCODE>
+<ART_YPOS>0.05</ART_YPOS>
 <RULES>
 Unveil {1}  
 When The Ferryman is unveiled, choose a permanent. When that permanent is put into a graveyard this turn, return a card that shares a card type with it from its owner’s graveyard to the battlefield under your control.  

@@ -1,6 +1,7 @@
 <TITLE>The Timebender</TITLE>
 <ROLE>Bandit</ROLE>
 <SETCODE>ktk m</SETCODE>
+<ART_YPOS>0.02</ART_YPOS>
 <RULES>
 Unveil {4}  
 When The Time Bender is unveiled, choose two {-}  

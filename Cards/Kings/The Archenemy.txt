@@ -1,7 +1,7 @@
 <TITLE>The Archenemy</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
-<ART_YPOS>0.05</ART_YPOS>
+<ART_YPOS>0.03</ART_YPOS>
 <RULES>
 At the beginning of your upkeep, if it’s an even-numbered turn, set a scheme in motion.
 </RULES>

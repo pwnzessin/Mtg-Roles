@@ -1,5 +1,6 @@
 <TITLE>The Zealot</TITLE>
 <ROLE>Bandit</ROLE>
+<ART_YPOS>-0.03</ART_YPOS>
 <SETCODE>ktk m</SETCODE>
 <RULES>
 When The Zealot is unveiled, each player with a face up role card reveals cards from the top of their library until they reveal a creature card.  

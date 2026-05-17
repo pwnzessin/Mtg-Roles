@@ -1,5 +1,6 @@
 <TITLE>The Wearer of Masks</TITLE>
 <ROLE>Bandit</ROLE>
+<ART_YPOS>-0.03</ART_YPOS>
 <SETCODE>ktk m</SETCODE>
 <RULES>
 - When The Wearer of Masks is unveiled, choose four Bandit role cards at random from outside the game.  

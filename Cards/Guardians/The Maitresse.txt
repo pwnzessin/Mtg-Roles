@@ -1,5 +1,6 @@
 <TITLE>The Maitresse</TITLE>
 <ROLE>Guardian</ROLE>
+<ART_YPOS>0.01</ART_YPOS>
 <SETCODE>clb u</SETCODE>
 <RULES>
 If any damage would be dealt to the King, you may unveil this card.  

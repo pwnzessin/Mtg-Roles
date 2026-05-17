@@ -1,5 +1,6 @@
 <TITLE>The Knight in Shining Armor</TITLE>
 <ROLE>Guardian</ROLE>
+<ART_YPOS>0.01</ART_YPOS>
 <SETCODE>clb u</SETCODE>
 <RULES>
 When The Knight in Shining Armor is unveiled, until end of turn, when the King would be dealt damage by an opponent, deal that much damage to an opponent instead.

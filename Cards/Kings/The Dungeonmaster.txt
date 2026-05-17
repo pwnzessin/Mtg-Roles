@@ -1,7 +1,7 @@
 <TITLE>The Dungeonmaster</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
-<ART_YPOS>0.05</ART_YPOS>
+<ART_YPOS>0.03</ART_YPOS>
 <RULES>
 Start the game with the Baldur’s Gate Wilderness dungeon.  
 At the beginning of your upkeep, venture into the Wilderness.

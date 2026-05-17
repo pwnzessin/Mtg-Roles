@@ -1,7 +1,7 @@
 <TITLE>The Wildfire devil</TITLE>
 <ROLE>King</ROLE>
 <SETCODE>v11 r</SETCODE>
-<ART_YPOS>0.05</ART_YPOS>
+<ART_YPOS>0.02</ART_YPOS>
 <RULES>
 At the beginning of your upkeep, choose a player at random. That player exiles a nonland card from their graveyard. Copy that card. You may cast the copy without paying its mana cost.  
 If the player didn't exile a card this way, create a 1/1 red Devil creature token with “When this creature dies, choose a player at random. That player exiles cards from the top of their library until they exile a nonland card. You may put that card into their graveyard.”  
