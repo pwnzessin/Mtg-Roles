@@ -14,7 +14,11 @@
     in the same directory as this script.
 #>
 param(
-    [string]$ConfigFile = "$PSScriptRoot\generic_card_config.json"
+    [string]$ConfigFile   = "$PSScriptRoot\generic_card_config.json",
+    [int]   $RunMode      = 0,       # 1-5; 0 = ask interactively
+    [string]$CardListFile = "",     # path to .txt card list (mode 4)
+    [string]$CardNames    = "",     # comma-separated card names (modes 1/3)
+    [switch]$Yes                     # accept all config defaults, no prompts
 )
 
 Set-StrictMode -Version Latest
@@ -42,6 +46,7 @@ function Read-Config {
 
 function Ask-String {
     param([string]$Label, [string]$Default)
+    if ($Yes) { Write-Host "  $Label [$Default] (auto)" -ForegroundColor DarkGray; return $Default }
     $hint = if ($Default) { " [$Default]" } else { "" }
     $val  = Read-Host "  $Label$hint"
     if ([string]::IsNullOrWhiteSpace($val)) { return $Default }
@@ -50,6 +55,7 @@ function Ask-String {
 
 function Ask-Bool {
     param([string]$Label, [bool]$Default)
+    if ($Yes) { Write-Host "  $Label (auto: $(if ($Default) { 'Y' } else { 'N' }))" -ForegroundColor DarkGray; return $Default }
     $defLabel = if ($Default) { "Y" } else { "N" }
     $val  = Read-Host "  $Label [Y/N, default $defLabel]"
     if ([string]::IsNullOrWhiteSpace($val)) { return $Default }
@@ -58,6 +64,7 @@ function Ask-Bool {
 
 function Ask-Int {
     param([string]$Label, [int]$Default)
+    if ($Yes) { Write-Host "  $Label (auto: $Default)" -ForegroundColor DarkGray; return $Default }
     $val = Read-Host "  $Label [$Default]"
     if ([string]::IsNullOrWhiteSpace($val)) { return $Default }
     $n = 0
@@ -363,7 +370,12 @@ Write-Host "    4  Load card list file + fetch + render"
 Write-Host "    5  Clear output / downloaded art folders"
 Write-Host ""
 
-$mode = Ask-String "Mode" "1"
+if ($RunMode -gt 0) {
+    $mode = [string]$RunMode
+    Write-Host "  Mode: $mode" -ForegroundColor DarkGray
+} else {
+    $mode = Ask-String "Mode" "1"
+}
 
 $doFetch    = $mode -in @("1","3","4")
 $doGenerate = $mode -in @("1","2","4")
@@ -430,38 +442,47 @@ if ($mode -eq "5") {
 
 # ── Card list file picker (mode 4) ───────────────────────────────────────────────
 
-$preloadedCardNames = $null
+$preloadedCardNames = @()
 
 if ($mode -eq "4") {
     Write-Section "Select Card List"
 
-    $cardlistsDir = Join-Path $root $cfg.fetch.cardlistsDir
-    $txtFiles = @(Get-ChildItem $cardlistsDir -Filter "*.txt" -ErrorAction SilentlyContinue | Sort-Object Name)
+    if ($CardListFile -and (Test-Path $CardListFile)) {
+        $preloadedCardNames = @(
+            Get-Content $CardListFile | ForEach-Object {
+                ($_ -replace '^\s*\d+x?\s+', '').Trim()
+            } | Where-Object { $_ -ne "" -and -not $_.StartsWith("#") }
+        )
+        Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $(Split-Path $CardListFile -Leaf)" -ForegroundColor DarkGray
+    } else {
+        $cardlistsDir = Join-Path $root $cfg.fetch.cardlistsDir
+        $txtFiles = @(Get-ChildItem $cardlistsDir -Filter "*.txt" -ErrorAction SilentlyContinue | Sort-Object Name)
 
-    if ($txtFiles.Count -eq 0) {
-        Write-Host "  No .txt files found in $cardlistsDir" -ForegroundColor Yellow
-        exit 0
+        if ($txtFiles.Count -eq 0) {
+            Write-Host "  No .txt files found in $cardlistsDir" -ForegroundColor Yellow
+            exit 0
+        }
+
+        for ($i = 0; $i -lt $txtFiles.Count; $i++) {
+            Write-Host ("    {0}  {1}" -f ($i + 1), $txtFiles[$i].Name)
+        }
+        Write-Host ""
+
+        $pick = Ask-String "Select file" "1"
+        $idx  = 0
+        if (-not [int]::TryParse($pick, [ref]$idx) -or $idx -lt 1 -or $idx -gt $txtFiles.Count) {
+            Write-Host "  Invalid selection." -ForegroundColor Red
+            exit 1
+        }
+
+        $selectedFile = $txtFiles[$idx - 1].FullName
+        $preloadedCardNames = @(
+            Get-Content $selectedFile | ForEach-Object {
+                ($_ -replace '^\s*\d+x?\s+', '').Trim()
+            } | Where-Object { $_ -ne "" -and -not $_.StartsWith("#") }
+        )
+        Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $($txtFiles[$idx-1].Name)" -ForegroundColor DarkGray
     }
-
-    for ($i = 0; $i -lt $txtFiles.Count; $i++) {
-        Write-Host ("    {0}  {1}" -f ($i + 1), $txtFiles[$i].Name)
-    }
-    Write-Host ""
-
-    $pick = Ask-String "Select file" "1"
-    $idx  = 0
-    if (-not [int]::TryParse($pick, [ref]$idx) -or $idx -lt 1 -or $idx -gt $txtFiles.Count) {
-        Write-Host "  Invalid selection." -ForegroundColor Red
-        exit 1
-    }
-
-    $selectedFile = $txtFiles[$idx - 1].FullName
-    $preloadedCardNames = @(
-        Get-Content $selectedFile | ForEach-Object {
-            ($_ -replace '^\s*\d+x?\s+', '').Trim()
-        } | Where-Object { $_ -ne "" -and -not $_.StartsWith("#") }
-    )
-    Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $($txtFiles[$idx-1].Name)" -ForegroundColor DarkGray
 }
 
 # ── Fetch options ──────────────────────────────────────────────────────────────
@@ -469,26 +490,28 @@ if ($mode -eq "4") {
 if ($doFetch) {
     Write-Section "Scryfall Fetch"
 
-    if ($preloadedCardNames) {
-        $cardNames = $preloadedCardNames
+    [string[]]$cardNames = @()
+    if ($preloadedCardNames -and $preloadedCardNames.Count -gt 0) {
+        [string[]]$cardNames = @($preloadedCardNames)
+    } elseif (-not [string]::IsNullOrWhiteSpace($CardNames)) {
+        [string[]]$cardNames = @($CardNames -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
+        Write-Host "    Using $($cardNames.Count) card(s) from parameter." -ForegroundColor DarkGray
     } else {
         Write-Host "    Enter card names (comma-separated) or a path to a .txt file (one name per line)." -ForegroundColor DarkGray
         $rawInput = Ask-String "Card names or file path" ""
 
-        # Detect file path: ends in .txt and the file exists
         if ($rawInput -match '\.txt$' -and (Test-Path $rawInput)) {
-            $cardNames = @(Get-Content $rawInput | ForEach-Object {
-                # Strip leading deck-list count, e.g. "1 Lightning Bolt" or "4x Sol Ring"
-                $_ -replace '^\s*\d+x?\s+', '' | ForEach-Object { $_.Trim() }
-        } | Where-Object { $_ -ne "" -and -not $_.StartsWith("#") })
-        Write-Host "    Loaded $($cardNames.Count) card(s) from $rawInput" -ForegroundColor DarkGray
-    } else {
-        $cardNames = @($rawInput -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" })
+            [string[]]$cardNames = @(Get-Content $rawInput | ForEach-Object {
+                ($_ -replace '^\s*\d+x?\s+', '').Trim()
+            } | Where-Object { $_ -ne '' })
+            Write-Host "    Loaded $($cardNames.Count) card(s) from $rawInput" -ForegroundColor DarkGray
+        } else {
+            [string[]]$cardNames = @($rawInput -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
+        }
     }
-    } # end: not pre-loaded
 
-    if ($cardNames.Count -eq 0) {
-        Write-Host "  No card names entered. Exiting." -ForegroundColor Yellow
+    if ($cardNames.Count -lt 1) {
+        Write-Host "  No card names provided. Exiting." -ForegroundColor Yellow
         exit 0
     }
 
@@ -616,10 +639,14 @@ if ($doGenerate) {
 }
 
 Write-Host ""
-$confirm = Ask-Bool "Proceed?" $true
-if (-not $confirm) {
-    Write-Host "  Cancelled." -ForegroundColor Yellow
-    exit 0
+if (-not $Yes) {
+    $confirm = Ask-Bool "Proceed?" $true
+    if (-not $confirm) {
+        Write-Host "  Cancelled." -ForegroundColor Yellow
+        exit 0
+    }
+} else {
+    Write-Host "  Proceeding (auto)." -ForegroundColor DarkGray
 }
 
 # ── Save config ────────────────────────────────────────────────────────────────
@@ -804,9 +831,31 @@ if ($useChunked) {
         $beforeRenderUtc = [System.DateTime]::UtcNow
         Invoke-Expression $genCmd
         if ($LASTEXITCODE -ne 0) {
-            Write-Host ""
-            Write-Host "  Render failed (exit $LASTEXITCODE)." -ForegroundColor Red
-            exit $LASTEXITCODE
+            $firstRenderExit = $LASTEXITCODE
+            if ($genLauncher) {
+                Write-Host ""
+                Write-Host "  Render failed (exit $firstRenderExit). Retrying once with launcher disabled..." -ForegroundColor Yellow
+
+                $retryGenArgs = Build-GenArgs $genInputDir $genOutputDir $genArtDir $genBaseUrl $genHeadless $false $genOverwrite $genLimit $genDryRun
+                if ($doFetch) {
+                    $retryGenArgs += "--newer-than", "`"$beforeFetchIso`""
+                }
+
+                $retryGenCmd = "node `"$generateScript`" $($retryGenArgs -join ' ')"
+                Write-Host "  > $retryGenCmd" -ForegroundColor DarkGray
+                Write-Host ""
+
+                Invoke-Expression $retryGenCmd
+                if ($LASTEXITCODE -ne 0) {
+                    Write-Host ""
+                    Write-Host "  Render failed (exit $LASTEXITCODE)." -ForegroundColor Red
+                    exit $LASTEXITCODE
+                }
+            } else {
+                Write-Host ""
+                Write-Host "  Render failed (exit $firstRenderExit)." -ForegroundColor Red
+                exit $firstRenderExit
+            }
         }
 
         if ($genUpscaleEnabled -and -not $genDryRun) {

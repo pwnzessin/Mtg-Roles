@@ -68,10 +68,23 @@ function determineColorKey(card) {
   return "C";
 }
 
+function getPrimaryName(card) {
+  if (card.card_faces && Array.isArray(card.card_faces) && card.card_faces[0] && card.card_faces[0].name) {
+    return String(card.card_faces[0].name).trim();
+  }
+  return String(card.name || "Unknown Card").trim();
+}
+
+function getSafeFileBase(card) {
+  const base = getPrimaryName(card);
+  return base.replace(/[\\/]/g, "_").replace(/\s*\/\/\s*/g, " ").trim();
+}
+
 // ── .txt builder ──────────────────────────────────────────────────────────────
 
 function buildTxt(card) {
   const colorKey = determineColorKey(card);
+  const cardName = getPrimaryName(card);
   const setCode  = (card.set  || "").toUpperCase();
   const rarity   = (card.rarity || "common")[0].toUpperCase(); // C U R M
   const hasPt    = card.power != null && card.toughness != null;
@@ -85,7 +98,7 @@ function buildTxt(card) {
 
   const lines = [];
   lines.push(`<COLOR>${colorKey}</COLOR>`);
-  lines.push(`<TITLE>${card.name}</TITLE>`);
+  lines.push(`<TITLE>${cardName}</TITLE>`);
   if (mana) lines.push(`<MANA>${mana}</MANA>`);
   lines.push(`<TYPE>${card.type_line}</TYPE>`);
   lines.push(`<SETCODE>${setCode} ${rarity}</SETCODE>`);
@@ -236,15 +249,7 @@ async function main() {
 
       const txt = buildTxt(card);
 
-      // --- Filename logic: always use main face name, sanitized ---
-      function getFilename(card) {
-        let base = card.card_faces && Array.isArray(card.card_faces)
-          ? card.card_faces[0].name
-          : card.name;
-        // Remove slashes/backslashes and trim
-        return base.replace(/[\\/]/g, "_").replace(/\s*\|\|\s*/g, "_").trim();
-      }
-      const fileBase = getFilename(card);
+      const fileBase = getSafeFileBase(card);
 
       if (opts.dryRun) {
         console.log(`\n${"─".repeat(60)}\n${txt}\n`);
@@ -285,7 +290,7 @@ async function main() {
         }
       }
 
-      console.log(`OK → ${card.name}.txt${artNote}`);
+      console.log(`OK → ${fileBase}.txt${artNote}`);
       ok++;
     } catch (err) {
       console.log(`FAIL: ${err.message}`);
