@@ -44,7 +44,7 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
 - [x] ~~Create generic card api~~ _(done)_
 - [x] ~~Fix scryfall usage limit~~ _(done)_
 - [x] ~~Enable mpcautofill support~~ _(done)_
-- [ ] Create gui for this
+- [x] Create gui for this (CardWeaver — `Copilot/pipeline_gui_python/dist/CardWeaver.exe`)
 - [ ] _(Future)_ Automate artwork Y-position detection, currently impossible / incredibly useless / wasteful
 
 ---

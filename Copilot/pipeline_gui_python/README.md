@@ -1,4 +1,4 @@
-# MTG Pipeline GUI (Python/PyQt6)
+# CardWeaver (Python/PyQt6)
 
 A modern, standalone GUI for running MTG Roles pipeline tasks (Generic and Rolecard card generation).
 
@@ -24,7 +24,7 @@ A modern, standalone GUI for running MTG Roles pipeline tasks (Generic and Rolec
 
 ```bash
 # From command line
-.\dist\mtg-pipeline-gui.exe
+.\dist\CardWeaver.exe
 
 # Or double-click the exe file
 ```
@@ -49,7 +49,7 @@ The GUI opens immediately. No Python installation required for the .exe version.
 - `theme.py` — Lichess-style dark/light mode stylesheets
 - `pipeline.py` — PowerShell subprocess wrapper
 - `build.py` — PyInstaller build script
-- `mtg_pipeline_gui.spec` — PyInstaller spec file (reference only)
+- Settings are saved to `cardweaver_settings.json` next to the exe
 
 ## Building the Executable
 
@@ -59,7 +59,7 @@ To rebuild the standalone .exe from source:
 python build.py
 ```
 
-Output: `dist/mtg-pipeline-gui.exe` (32.7 MB)
+Output: `dist/CardWeaver.exe`
 
 ## Usage
 
