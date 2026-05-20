@@ -13,3 +13,29 @@ Cards/templates/Output/*
 !Cards/templates/Guardians/*.jpg
 !Cards/templates/Kings/*.jpg
 !Cards/templates/Renegades/*.jpg
+
+# Node / Vite / Tauri build artifacts for Copilot/pipeline_gui
+Copilot/pipeline_gui/node_modules/
+Copilot/pipeline_gui/dist/
+Copilot/pipeline_gui/src-tauri/target/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Optional local env overrides
+Copilot/pipeline_gui/.env
+Copilot/pipeline_gui/.env.local
+
+# Optional Node/Vite cache and tooling artifacts
+Copilot/pipeline_gui/.vite/
+Copilot/pipeline_gui/.turbo/
+Copilot/pipeline_gui/.eslintcache
+Copilot/pipeline_gui/.cache/
