@@ -159,11 +159,11 @@ function getArtInfo(card, artVersion) {
   };
 }
 
-async function downloadArt(card, artDir, artVersion) {
+async function downloadArt(card, artDir, artVersion, fileBase, extension) {
   const artInfo = getArtInfo(card, artVersion);
   if (!artInfo) return null;
 
-  const artPath = path.join(artDir, `${card.name}${artInfo.extension}`);
+  const artPath = path.join(artDir, `${fileBase}${extension}`);
   const res = await fetch(artInfo.url, {
     headers: { "User-Agent": USER_AGENT, "Accept": "image/*" },
   });
@@ -233,7 +233,18 @@ async function main() {
     try {
       process.stdout.write(`Fetching "${name}"... `);
       const card = await fetchCard(name, opts.set);
-      const txt  = buildTxt(card);
+
+      const txt = buildTxt(card);
+
+      // --- Filename logic: always use main face name, sanitized ---
+      function getFilename(card) {
+        let base = card.card_faces && Array.isArray(card.card_faces)
+          ? card.card_faces[0].name
+          : card.name;
+        // Remove slashes/backslashes and trim
+        return base.replace(/[\\/]/g, "_").replace(/\s*\|\|\s*/g, "_").trim();
+      }
+      const fileBase = getFilename(card);
 
       if (opts.dryRun) {
         console.log(`\n${"─".repeat(60)}\n${txt}\n`);
@@ -241,9 +252,9 @@ async function main() {
         continue;
       }
 
-      const outPath  = path.join(outDir, `${card.name}.txt`);
+      const outPath  = path.join(outDir, `${fileBase}.txt`);
       const artInfo  = opts.art ? getArtInfo(card, opts.artVersion) : null;
-      const artPath  = artInfo ? path.join(artDir, `${card.name}${artInfo.extension}`) : null;
+      const artPath  = artInfo ? path.join(artDir, `${fileBase}${artInfo.extension}`) : null;
       const txtExists = fs.existsSync(outPath);
       const artExists = artPath ? fs.existsSync(artPath) : false;
 
@@ -266,7 +277,7 @@ async function main() {
           artNote = ` (no '${opts.artVersion}' image available)`;
         } else {
         try {
-          await downloadArt(card, artDir, opts.artVersion);
+          await downloadArt(card, artDir, opts.artVersion, fileBase, artInfo.extension);
           artNote = ` + art(${opts.artVersion})`;
         } catch (artErr) {
           artNote = ` (art failed: ${artErr.message})`;

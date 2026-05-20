@@ -98,6 +98,14 @@ function Normalize-UpscaleEngine {
     return "auto"
 }
 
+function Get-RelativePath {
+    param([string]$Base, [string]$Target)
+    $baseUri   = [System.Uri]([System.IO.Path]::GetFullPath($Base).TrimEnd('\') + '\')
+    $targetUri = [System.Uri]([System.IO.Path]::GetFullPath($Target))
+    $rel = [System.Uri]::UnescapeDataString($baseUri.MakeRelativeUri($targetUri).ToString())
+    return $rel -replace '/', '\'
+}
+
 function Find-RealEsrganExe {
     $candidates = @(
         "realesrgan-ncnn-vulkan.exe",
@@ -613,6 +621,30 @@ if (-not $confirm) {
     Write-Host "  Cancelled." -ForegroundColor Yellow
     exit 0
 }
+
+# ── Save config ────────────────────────────────────────────────────────────────
+
+if ($doFetch) {
+    $cfg.fetch.cardsDir       = Get-RelativePath $root $fetchOutDir
+    $cfg.fetch.preferSet      = $fetchSet
+    $cfg.fetch.overwrite      = $fetchOverwrite
+    $cfg.fetch.downloadArt    = $fetchArt
+    $cfg.fetch.artMode        = [int]$fetchArtMode
+    $cfg.fetch.artVersion     = $fetchArtVersion
+    $cfg.fetch.upscaleEnabled = $fetchUpscaleEnabled
+    $cfg.fetch.upscaleEngine  = $fetchUpscaleEngine
+    $cfg.fetch.upscaleFactor  = $fetchUpscaleFactor
+}
+if ($doGenerate) {
+    $cfg.generate.outputSubDir   = Get-RelativePath $genInputDir $genOutputDir
+    $cfg.generate.overwrite      = $genOverwrite
+    $cfg.generate.limit          = $genLimit
+    $cfg.generate.upscaleEnabled = $genUpscaleEnabled
+    $cfg.generate.upscaleEngine  = $genUpscaleEngine
+    $cfg.generate.upscaleFactor  = $genUpscaleFactor
+}
+$cfg | ConvertTo-Json -Depth 4 | Set-Content -Path $ConfigFile -Encoding utf8
+Write-Host "  Config saved." -ForegroundColor DarkGray
 
 # ── Run fetch + generate ───────────────────────────────────────────────────────
 

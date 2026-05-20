@@ -1,35 +1,37 @@
-{
-  "_comment": "Default values for generic_card_pipeline.ps1. All paths are relative to workspaceRoot unless absolute.",
-
-  "workspaceRoot":  null,
-
-  "fetch": {
-    "cardsDir":       "Cards\\Generic",
-    "artDir":         "Artworks\\Downloaded",
-    "cardlistsDir":   "Copilot\\cardconjurer_batch\\Cardlists",
-    "preferSet":      "",
-    "artMode":        2,
-    "artVersion":     "art_crop",
-    "pngCropJpegQuality": 95,
-    "upscaleEnabled": false,
-    "upscaleEngine":  "auto",
-    "upscaleFactor":  2,
-    "overwrite":      true,
-    "downloadArt":    true,
-    "dryRun":         false,
-    "chunkSize":      15
-  },
-
-  "generate": {
-    "outputSubDir":   "output",
-    "baseUrl":        "http://localhost:8080",
-    "headless":       true,
-    "startLauncher":  true,
-    "overwrite":      true,
-    "upscaleEnabled": false,
-    "upscaleEngine":  "auto",
-    "upscaleFactor":  2,
-    "limit":          0,
-    "dryRun":         false
-  }
+﻿{
+    "_comment":  "Default values for generic_card_pipeline.ps1. All paths are relative to workspaceRoot unless absolute.",
+    "workspaceRoot":  null,
+    "fetch":  {
+                  "cardsDir":  "Cards\\Generic",
+                  "artDir":  "Artworks\\Downloaded",
+                  "cardlistsDir":  "Copilot\\cardconjurer_batch\\Cardlists",
+                  "preferSet":  "",
+                  "artMode":  1,
+                  "artVersion":  "art_crop",
+                  "pngCropJpegQuality":  95,
+                  "upscaleEnabled":  false,
+                  "upscaleEngine":  "auto",
+                  "upscaleFactor":  2,
+                  "overwrite":  true,
+                  "downloadArt":  true,
+                  "dryRun":  false,
+                  "chunkSize":  15
+              },
+    "generate":  {
+                     "outputSubDir":  "output",
+                     "baseUrl":  "http://localhost:8080",
+                     "headless":  true,
+                     "startLauncher":  true,
+                     "overwrite":  true,
+                     "upscaleEnabled":  true,
+                     "upscaleEngine":  "auto",
+                     "upscaleFactor":  2,
+                     "limit":  0,
+                     "dryRun":  false
+                 },
+    "setIcons":  {
+                     "enabled":  false,
+                     "outputDir":  "Artworks\\SetIcons",
+                     "setCodesList":  ""
+                 }
 }
