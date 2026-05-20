@@ -1,13 +1,10 @@
-﻿{
+{
     "roles":  [
-                  "Assassins",
-                  "Bandits",
-                  "Guardians",
-                  "Kings"
+                  "Assassins"
               ],
     "limit":  1,
     "qualityChoice":  "4",
     "applyMargin":  true,
     "finalUpscaleEnabled":  false,
-    "finalUpscaleFactor":  1
+    "finalUpscaleFactor":  2
 }

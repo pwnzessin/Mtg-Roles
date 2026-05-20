@@ -1,37 +1,37 @@
 """Lichess-inspired theme for MTG Pipeline GUI."""
 
-# Dark mode (default) - inspired by Lichess's dark theme
+# Dark mode (default) - Lichess-inspired with a subtle blue tint
 DARK_STYLESHEET = """
     QMainWindow, QWidget {
-        background-color: #1a1a1a;
+        background-color: #1a1e28;
         color: #e0e0e0;
     }
     
     QTabWidget::pane {
-        border: 1px solid #333;
+        border: 1px solid #2e3648;
     }
     
     QTabBar::tab {
-        background-color: #2a2a2a;
+        background-color: #252c3a;
         color: #b0b0b0;
         padding: 6px 16px;
-        border-right: 1px solid #333;
+        border-right: 1px solid #2e3648;
     }
     
     QTabBar::tab:selected {
-        background-color: #1a1a1a;
+        background-color: #1a1e28;
         color: #e0e0e0;
         border-bottom: 2px solid #7fb329;
     }
     
     QTabBar::tab:hover:!selected {
-        background-color: #333;
+        background-color: #2e3648;
     }
     
     QLineEdit, QTextEdit {
-        background-color: #2a2a2a;
+        background-color: #252c3a;
         color: #e0e0e0;
-        border: 1px solid #444;
+        border: 1px solid #3a4456;
         border-radius: 3px;
         padding: 4px;
     }
@@ -41,26 +41,26 @@ DARK_STYLESHEET = """
     }
     
     QPushButton {
-        background-color: #3a3a3a;
+        background-color: #2e3648;
         color: #e0e0e0;
-        border: 1px solid #444;
+        border: 1px solid #3a4456;
         border-radius: 3px;
         padding: 6px 12px;
         font-weight: bold;
     }
     
     QPushButton:hover {
-        background-color: #4a4a4a;
+        background-color: #3a4456;
         border: 1px solid #7fb329;
     }
     
     QPushButton:pressed {
-        background-color: #2a2a2a;
+        background-color: #252c3a;
     }
     
     QPushButton:default {
         background-color: #7fb329;
-        color: #1a1a1a;
+        color: #1a1e28;
         border: none;
     }
     
@@ -76,9 +76,9 @@ DARK_STYLESHEET = """
     QCheckBox::indicator {
         width: 16px;
         height: 16px;
-        border: 1px solid #444;
+        border: 1px solid #3a4456;
         border-radius: 3px;
-        background-color: #2a2a2a;
+        background-color: #252c3a;
     }
     
     QCheckBox::indicator:checked {
@@ -91,9 +91,9 @@ DARK_STYLESHEET = """
     }
     
     QComboBox {
-        background-color: #2a2a2a;
+        background-color: #252c3a;
         color: #e0e0e0;
-        border: 1px solid #444;
+        border: 1px solid #3a4456;
         border-radius: 3px;
         padding: 4px;
     }
@@ -107,31 +107,31 @@ DARK_STYLESHEET = """
     }
     
     QSpinBox {
-        background-color: #2a2a2a;
+        background-color: #252c3a;
         color: #e0e0e0;
-        border: 1px solid #444;
+        border: 1px solid #3a4456;
         border-radius: 3px;
         padding: 4px;
     }
     
     QScrollBar:vertical {
-        background-color: #1a1a1a;
+        background-color: #1a1e28;
         width: 12px;
         border: none;
     }
     
     QScrollBar::handle:vertical {
-        background-color: #444;
+        background-color: #3a4456;
         border-radius: 6px;
         min-height: 20px;
     }
     
     QScrollBar::handle:vertical:hover {
-        background-color: #555;
+        background-color: #4a5570;
     }
     
     QMessageBox {
-        background-color: #1a1a1a;
+        background-color: #1a1e28;
     }
     
     QMessageBox QLabel {
@@ -143,38 +143,38 @@ DARK_STYLESHEET = """
     }
 """
 
-# Light mode - clean Lichess light theme
+# Light mode - soft blue-tinted light theme
 LIGHT_STYLESHEET = """
     QMainWindow, QWidget {
-        background-color: #f5f5f5;
+        background-color: #eef3fc;
         color: #333333;
     }
     
     QTabWidget::pane {
-        border: 1px solid #ddd;
+        border: 1px solid #c5d4ee;
     }
     
     QTabBar::tab {
-        background-color: #eeeeee;
-        color: #666;
+        background-color: #dde8f7;
+        color: #555;
         padding: 6px 16px;
-        border-right: 1px solid #ddd;
+        border-right: 1px solid #c5d4ee;
     }
     
     QTabBar::tab:selected {
-        background-color: #f5f5f5;
-        color: #333;
+        background-color: #eef3fc;
+        color: #222;
         border-bottom: 2px solid #7fb329;
     }
     
     QTabBar::tab:hover:!selected {
-        background-color: #e8e8e8;
+        background-color: #cfddf4;
     }
     
     QLineEdit, QTextEdit {
-        background-color: #ffffff;
+        background-color: #f8fbff;
         color: #333;
-        border: 1px solid #ddd;
+        border: 1px solid #b8cce8;
         border-radius: 3px;
         padding: 4px;
     }
@@ -184,21 +184,21 @@ LIGHT_STYLESHEET = """
     }
     
     QPushButton {
-        background-color: #ffffff;
+        background-color: #f0f5ff;
         color: #333;
-        border: 1px solid #ddd;
+        border: 1px solid #b8cce8;
         border-radius: 3px;
         padding: 6px 12px;
         font-weight: bold;
     }
     
     QPushButton:hover {
-        background-color: #f0f0f0;
+        background-color: #dde8f7;
         border: 1px solid #7fb329;
     }
     
     QPushButton:pressed {
-        background-color: #e8e8e8;
+        background-color: #cfddf4;
     }
     
     QPushButton:default {
@@ -219,9 +219,9 @@ LIGHT_STYLESHEET = """
     QCheckBox::indicator {
         width: 16px;
         height: 16px;
-        border: 1px solid #ccc;
+        border: 1px solid #b8cce8;
         border-radius: 3px;
-        background-color: #fff;
+        background-color: #f8fbff;
     }
     
     QCheckBox::indicator:checked {
@@ -234,9 +234,9 @@ LIGHT_STYLESHEET = """
     }
     
     QComboBox {
-        background-color: #fff;
+        background-color: #f8fbff;
         color: #333;
-        border: 1px solid #ddd;
+        border: 1px solid #b8cce8;
         border-radius: 3px;
         padding: 4px;
     }
@@ -250,31 +250,31 @@ LIGHT_STYLESHEET = """
     }
     
     QSpinBox {
-        background-color: #fff;
+        background-color: #f8fbff;
         color: #333;
-        border: 1px solid #ddd;
+        border: 1px solid #b8cce8;
         border-radius: 3px;
         padding: 4px;
     }
     
     QScrollBar:vertical {
-        background-color: #f5f5f5;
+        background-color: #eef3fc;
         width: 12px;
         border: none;
     }
     
     QScrollBar::handle:vertical {
-        background-color: #ccc;
+        background-color: #b8cce8;
         border-radius: 6px;
         min-height: 20px;
     }
     
     QScrollBar::handle:vertical:hover {
-        background-color: #bbb;
+        background-color: #93afd4;
     }
     
     QMessageBox {
-        background-color: #f5f5f5;
+        background-color: #eef3fc;
     }
     
     QMessageBox QLabel {

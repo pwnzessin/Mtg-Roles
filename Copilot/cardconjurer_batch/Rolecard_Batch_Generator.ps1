@@ -1,3 +1,11 @@
+param(
+    [string]$ConfigFile = "",   # path to config JSON; empty = default Rolecard_Batch_Generator.config.json
+    [string]$Roles      = "",   # "A" for all, or "Assassins,Bandits" etc.; empty = ask interactively
+    [int]   $Limit      = -1,   # cards per role: -1 = ask; 0 = all
+    [string]$Quality    = "",   # "1"-"4"; empty = ask
+    [switch]$Yes                # accept all config defaults, skip all prompts
+)
+
 $ErrorActionPreference = "Stop"
 
 Set-StrictMode -Version Latest
@@ -469,7 +477,7 @@ $batchDir = $PSScriptRoot
 $workspaceRoot = (Resolve-Path (Join-Path $batchDir "..\.."))
 Set-Location -Path $batchDir
 
-$configPath = Join-Path $batchDir "Rolecard_Batch_Generator.config.json"
+$configPath = if (-not [string]::IsNullOrWhiteSpace($ConfigFile) -and (Test-Path $ConfigFile)) { $ConfigFile } else { Join-Path $batchDir "Rolecard_Batch_Generator.config.json" }
 $savedConfig = $null
 if (Test-Path $configPath) {
     try {
@@ -484,7 +492,12 @@ if (Test-Path $configPath) {
 $defaultApplyMargin = $false
 $defaultFinalUpscaleEnabled = $false
 $defaultFinalUpscaleFactor = 2
+$defaultLimit = 0
 if ($savedConfig) {
+    if ($savedConfig.PSObject.Properties.Match('limit').Count -gt 0 -and $null -ne $savedConfig.limit) {
+        $dl = [int]$savedConfig.limit
+        if ($dl -ge 0) { $defaultLimit = $dl }
+    }
     if ($savedConfig.PSObject.Properties.Match('applyMargin').Count -gt 0 -and $null -ne $savedConfig.applyMargin) {
         $defaultApplyMargin = [bool]$savedConfig.applyMargin
     }
@@ -499,12 +512,55 @@ if ($savedConfig) {
 
 Ensure-NodeAndDeps -BatchDir $batchDir
 
-$roles = @(Read-RoleSelection)
-$limit = Read-CountSelection
-$qualityChoice = Read-QualitySelection
+# Role selection
+if ($Yes -or -not [string]::IsNullOrWhiteSpace($Roles)) {
+    $rolesInput = if ([string]::IsNullOrWhiteSpace($Roles)) { 'A' } else { $Roles.Trim() }
+    if ($rolesInput -match '^[Aa]$') {
+        [string[]]$roles = @('Assassins', 'Bandits', 'Guardians', 'Kings')
+    } else {
+        $roleNameMap = @{ '1'='Assassins'; '2'='Bandits'; '3'='Guardians'; '4'='Kings';
+                          'Assassins'='Assassins'; 'Bandits'='Bandits'; 'Guardians'='Guardians'; 'Kings'='Kings' }
+        [string[]]$roles = @($rolesInput -split ',' | ForEach-Object { $_.Trim() } | ForEach-Object {
+            if ($roleNameMap.ContainsKey($_)) { $roleNameMap[$_] } else { $_ }
+        } | Where-Object { $_ -ne '' } | Select-Object -Unique)
+    }
+    Write-Host "  Roles: $($roles -join ', ') (auto)" -ForegroundColor DarkGray
+} else {
+    [string[]]$roles = @(Read-RoleSelection)
+}
+
+# Card count
+if ($Yes -or $Limit -ge 0) {
+    $limit = if ($Limit -ge 0) { $Limit } else { $defaultLimit }
+    Write-Host "  Cards per role: $(if ($limit -eq 0) { 'All' } else { $limit }) (auto)" -ForegroundColor DarkGray
+} else {
+    $limit = Read-CountSelection
+}
+
+# Quality
+if ($Yes -or -not [string]::IsNullOrWhiteSpace($Quality)) {
+    $qualityChoice = if (-not [string]::IsNullOrWhiteSpace($Quality)) { $Quality.Trim() } else { '4' }
+    Write-Host "  Quality: $qualityChoice (auto)" -ForegroundColor DarkGray
+} else {
+    $qualityChoice = Read-QualitySelection
+}
 $qualitySettings = Get-QualitySettings -QualityChoice $qualityChoice
-$applyMargin = Read-MarginSelection -Default $defaultApplyMargin
-$finalUpscale = Read-FinalUpscaleSelection -DefaultEnabled $defaultFinalUpscaleEnabled -DefaultFactor $defaultFinalUpscaleFactor
+
+# Margin
+if ($Yes) {
+    $applyMargin = $defaultApplyMargin
+    Write-Host "  Apply margin: $applyMargin (auto)" -ForegroundColor DarkGray
+} else {
+    $applyMargin = Read-MarginSelection -Default $defaultApplyMargin
+}
+
+# Final upscale
+if ($Yes) {
+    $finalUpscale = [pscustomobject]@{ Enabled = $defaultFinalUpscaleEnabled; Factor = $defaultFinalUpscaleFactor }
+    Write-Host "  Final upscale: $(if ($finalUpscale.Enabled) { "Yes (x$($finalUpscale.Factor))" } else { 'No' }) (auto)" -ForegroundColor DarkGray
+} else {
+    $finalUpscale = Read-FinalUpscaleSelection -DefaultEnabled $defaultFinalUpscaleEnabled -DefaultFactor $defaultFinalUpscaleFactor
+}
 
 Write-Host ""
 Write-Host "Summary:" -ForegroundColor Cyan
@@ -514,10 +570,14 @@ Write-Host "  Quality: $($qualitySettings.Name)"
 Write-Host "  Margin frame: $(if ($applyMargin) { 'Yes (1/8 inch)' } else { 'No' })"
 Write-Host "  Final upscale: $(if ($finalUpscale.Enabled) { "Yes (x$($finalUpscale.Factor))" } else { 'No' })"
 
-$confirm = Read-Host "Proceed? (Y/N, default Y)"
-if (-not [string]::IsNullOrWhiteSpace($confirm) -and $confirm -notmatch "^[Yy]$") {
-    Write-Host "Canceled." -ForegroundColor Yellow
-    exit 0
+if (-not $Yes) {
+    $confirm = Read-Host "Proceed? (Y/N, default Y)"
+    if (-not [string]::IsNullOrWhiteSpace($confirm) -and $confirm -notmatch "^[Yy]$") {
+        Write-Host "Canceled." -ForegroundColor Yellow
+        exit 0
+    }
+} else {
+    Write-Host "  Proceeding (auto)." -ForegroundColor DarkGray
 }
 
 # Export current settings to JSON config
