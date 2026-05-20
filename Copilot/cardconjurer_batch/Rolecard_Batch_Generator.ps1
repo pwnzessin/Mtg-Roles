@@ -233,11 +233,19 @@ function Save-Jpeg {
 }
 
 function Read-MarginSelection {
+    param(
+        [bool]$Default = $false
+    )
+
     while ($true) {
         Write-Host ""
-        $inputRaw = Read-Host "Apply 1/8 inch black margin frame to output images? (Y/N, default N)"
+        $defaultLabel = if ($Default) { "Y" } else { "N" }
+        $inputRaw = Read-Host "Apply 1/8 inch black margin frame to output images? (Y/N, default $defaultLabel)"
         $trimmed = $inputRaw.Trim()
-        if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed -match "^[Nn]$") {
+        if ([string]::IsNullOrWhiteSpace($trimmed)) {
+            return $Default
+        }
+        if ($trimmed -match "^[Nn]$") {
             return $false
         }
         if ($trimmed -match "^[Yy]$") {
@@ -247,11 +255,53 @@ function Read-MarginSelection {
     }
 }
 
+function Read-FinalUpscaleSelection {
+    param(
+        [bool]$DefaultEnabled = $false,
+        [int]$DefaultFactor = 2
+    )
+
+    if ($DefaultFactor -ne 2 -and $DefaultFactor -ne 4) {
+        $DefaultFactor = 2
+    }
+
+    while ($true) {
+        Write-Host ""
+        $enabledDefaultLabel = if ($DefaultEnabled) { "Y" } else { "N" }
+        $enabledRaw = Read-Host "Upscale final rendered output after margin/frame? (Y/N, default $enabledDefaultLabel)"
+        $enabledTrim = $enabledRaw.Trim()
+        if ([string]::IsNullOrWhiteSpace($enabledTrim)) {
+            if (-not $DefaultEnabled) {
+                return [pscustomobject]@{ Enabled = $false; Factor = 1 }
+            }
+            return [pscustomobject]@{ Enabled = $true; Factor = $DefaultFactor }
+        }
+        if ($enabledTrim -match "^[Nn]$") {
+            return [pscustomobject]@{ Enabled = $false; Factor = 1 }
+        }
+        if ($enabledTrim -match "^[Yy]$") {
+            while ($true) {
+                $factorRaw = Read-Host "Upscale factor (2 or 4, default $DefaultFactor)"
+                if ([string]::IsNullOrWhiteSpace($factorRaw)) {
+                    return [pscustomobject]@{ Enabled = $true; Factor = $DefaultFactor }
+                }
+                $factor = 0
+                if ([int]::TryParse($factorRaw.Trim(), [ref]$factor) -and ($factor -eq 2 -or $factor -eq 4)) {
+                    return [pscustomobject]@{ Enabled = $true; Factor = $factor }
+                }
+                Write-Host "Please enter 2 or 4." -ForegroundColor Red
+            }
+        }
+        Write-Host "Please enter Y or N." -ForegroundColor Red
+    }
+}
+
 function Convert-ImageQuality {
     param(
         [string]$InputPath,
         [pscustomobject]$Settings,
-        [switch]$ApplyMargin
+        [switch]$ApplyMargin,
+        [int]$FinalUpscaleFactor = 1
     )
 
     if (-not $ApplyMargin -and $Settings.Format -eq "Png" -and $Settings.Scale -eq 1.0 -and $Settings.Width -eq 0 -and $Settings.Height -eq 0) {
@@ -334,11 +384,39 @@ function Convert-ImageQuality {
                     Remove-Item -LiteralPath $tempOut -Force
                 }
 
-                if ($Settings.Format -eq "Jpeg") {
-                    Save-Jpeg -Bitmap $bmp -OutPath $tempOut -Quality $Settings.JpegQuality
+                $outputBmp = $bmp
+                $upscaledBmp = $null
+                if ($FinalUpscaleFactor -gt 1) {
+                    $upW = [Math]::Max(1, [int][Math]::Round($bmp.Width * $FinalUpscaleFactor))
+                    $upH = [Math]::Max(1, [int][Math]::Round($bmp.Height * $FinalUpscaleFactor))
+                    $upscaledBmp = New-Object System.Drawing.Bitmap($upW, $upH)
+                    $upscaledBmp.SetResolution($bmp.HorizontalResolution, $bmp.VerticalResolution)
+                    $ug = [System.Drawing.Graphics]::FromImage($upscaledBmp)
+                    try {
+                        $ug.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
+                        $ug.InterpolationMode  = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+                        $ug.SmoothingMode      = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+                        $ug.PixelOffsetMode    = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+                        $ug.DrawImage($bmp, 0, 0, $upW, $upH)
+                    }
+                    finally {
+                        $ug.Dispose()
+                    }
+                    $outputBmp = $upscaledBmp
                 }
-                else {
-                    $bmp.Save($tempOut, [System.Drawing.Imaging.ImageFormat]::Png)
+
+                try {
+                    if ($Settings.Format -eq "Jpeg") {
+                        Save-Jpeg -Bitmap $outputBmp -OutPath $tempOut -Quality $Settings.JpegQuality
+                    }
+                    else {
+                        $outputBmp.Save($tempOut, [System.Drawing.Imaging.ImageFormat]::Png)
+                    }
+                }
+                finally {
+                    if ($upscaledBmp) {
+                        $upscaledBmp.Dispose()
+                    }
                 }
 
                 Move-Item -LiteralPath $tempOut -Destination $outPath -Force
@@ -391,18 +469,50 @@ $batchDir = $PSScriptRoot
 $workspaceRoot = (Resolve-Path (Join-Path $batchDir "..\.."))
 Set-Location -Path $batchDir
 
+$configPath = Join-Path $batchDir "Rolecard_Batch_Generator.config.json"
+$savedConfig = $null
+if (Test-Path $configPath) {
+    try {
+        $savedConfig = Get-Content -Path $configPath -Raw | ConvertFrom-Json
+    }
+    catch {
+        Write-Host "Could not parse existing config at $configPath; using prompt defaults." -ForegroundColor Yellow
+        $savedConfig = $null
+    }
+}
+
+$defaultApplyMargin = $false
+$defaultFinalUpscaleEnabled = $false
+$defaultFinalUpscaleFactor = 2
+if ($savedConfig) {
+    if ($savedConfig.PSObject.Properties.Match('applyMargin').Count -gt 0 -and $null -ne $savedConfig.applyMargin) {
+        $defaultApplyMargin = [bool]$savedConfig.applyMargin
+    }
+    if ($savedConfig.PSObject.Properties.Match('finalUpscaleEnabled').Count -gt 0 -and $null -ne $savedConfig.finalUpscaleEnabled) {
+        $defaultFinalUpscaleEnabled = [bool]$savedConfig.finalUpscaleEnabled
+    }
+    if ($savedConfig.PSObject.Properties.Match('finalUpscaleFactor').Count -gt 0 -and $null -ne $savedConfig.finalUpscaleFactor) {
+        $f = [int]$savedConfig.finalUpscaleFactor
+        if ($f -eq 2 -or $f -eq 4) { $defaultFinalUpscaleFactor = $f }
+    }
+}
+
 Ensure-NodeAndDeps -BatchDir $batchDir
 
 $roles = @(Read-RoleSelection)
 $limit = Read-CountSelection
 $qualityChoice = Read-QualitySelection
 $qualitySettings = Get-QualitySettings -QualityChoice $qualityChoice
+$applyMargin = Read-MarginSelection -Default $defaultApplyMargin
+$finalUpscale = Read-FinalUpscaleSelection -DefaultEnabled $defaultFinalUpscaleEnabled -DefaultFactor $defaultFinalUpscaleFactor
 
 Write-Host ""
 Write-Host "Summary:" -ForegroundColor Cyan
 Write-Host "  Roles: $($roles -join ', ')"
 Write-Host "  Cards per role: $(if ($limit -eq 0) { 'All' } else { $limit })"
 Write-Host "  Quality: $($qualitySettings.Name)"
+Write-Host "  Margin frame: $(if ($applyMargin) { 'Yes (1/8 inch)' } else { 'No' })"
+Write-Host "  Final upscale: $(if ($finalUpscale.Enabled) { "Yes (x$($finalUpscale.Factor))" } else { 'No' })"
 
 $confirm = Read-Host "Proceed? (Y/N, default Y)"
 if (-not [string]::IsNullOrWhiteSpace($confirm) -and $confirm -notmatch "^[Yy]$") {
@@ -411,11 +521,13 @@ if (-not [string]::IsNullOrWhiteSpace($confirm) -and $confirm -notmatch "^[Yy]$"
 }
 
 # Export current settings to JSON config
-$configPath = Join-Path $batchDir "Rolecard_Batch_Generator.config.json"
 $configObj = [ordered]@{
     roles        = $roles
     limit        = $limit
     qualityChoice = $qualityChoice
+    applyMargin = [bool]$applyMargin
+    finalUpscaleEnabled = [bool]$finalUpscale.Enabled
+    finalUpscaleFactor = [int]$finalUpscale.Factor
 }
 $configObj | ConvertTo-Json | Set-Content -Path $configPath -Encoding utf8
 Write-Host "Settings saved to: $configPath" -ForegroundColor DarkGray
@@ -484,7 +596,7 @@ for ($i = 0; $i -lt $roles.Count; $i += 1) {
 
     Write-Host "Post-processing $($generatedPaths.Count) file(s) for quality '$($qualitySettings.Name)'..." -ForegroundColor Cyan
     foreach ($p in $generatedPaths) {
-        [void](Convert-ImageQuality -InputPath $p -Settings $qualitySettings)
+        [void](Convert-ImageQuality -InputPath $p -Settings $qualitySettings -ApplyMargin:$applyMargin -FinalUpscaleFactor $finalUpscale.Factor)
         $globalConverted += 1
     }
 }

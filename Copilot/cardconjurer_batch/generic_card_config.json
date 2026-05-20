@@ -8,6 +8,12 @@
     "artDir":         "Artworks\\Downloaded",
     "cardlistsDir":   "Copilot\\cardconjurer_batch\\Cardlists",
     "preferSet":      "",
+    "artMode":        2,
+    "artVersion":     "art_crop",
+    "pngCropJpegQuality": 95,
+    "upscaleEnabled": false,
+    "upscaleEngine":  "auto",
+    "upscaleFactor":  2,
     "overwrite":      true,
     "downloadArt":    true,
     "dryRun":         false,
@@ -20,6 +26,9 @@
     "headless":       true,
     "startLauncher":  true,
     "overwrite":      true,
+    "upscaleEnabled": false,
+    "upscaleEngine":  "auto",
+    "upscaleFactor":  2,
     "limit":          0,
     "dryRun":         false
   }

@@ -99,7 +99,7 @@ Full option list:
 
 ## Scryfall Fetch Tool
 
-`Copilot/cardconjurer_batch/fetch_card.mjs` looks up one or more cards on Scryfall and writes a ready-to-render `.txt` file **plus** the `art_crop` artwork (`.jpg`) alongside it — no manual file preparation needed.
+`Copilot/cardconjurer_batch/fetch_card.mjs` looks up one or more cards on Scryfall and writes a ready-to-render `.txt` file **plus** artwork alongside it — no manual file preparation needed.
 
 ### Usage
 
@@ -115,6 +115,7 @@ node Copilot/cardconjurer_batch/fetch_card.mjs `
 |--------|---------|-------------|
 | `--output <dir>` | `.` (current dir) | Directory to write `.txt` + `.jpg` files |
 | `--set <code>` | _(any printing)_ | Prefer a specific set, e.g. `m21` |
+| `--art-version <name>` | `art_crop` | Scryfall image variant: `art_crop`, `border_crop`, `normal`, `large`, `png` |
 | `--overwrite` | `false` | Re-fetch even if files already exist |
 | `--no-art` | `false` | Skip downloading the artwork image |
 | `--dry-run` | `false` | Print the generated `.txt` to stdout without writing files |
@@ -124,7 +125,8 @@ node Copilot/cardconjurer_batch/fetch_card.mjs `
 For each card name passed on the command line, two files are created in `--output`:
 
 - **`{Card Name}.txt`** — fully populated generic card file in the format above
-- **`{Card Name}.jpg`** — Scryfall `art_crop` JPEG, ready to use as card artwork
+- **`{Card Name}.jpg`** — for `art_crop`, `border_crop`, `normal`, or `large`
+- **`{Card Name}.png`** — when `--art-version png` is used
 
 Double-faced cards (DFC) automatically use the front face data and artwork.
 

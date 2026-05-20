@@ -117,6 +117,7 @@ Default values live in `Copilot/cardconjurer_batch/generic_card_config.json`:
 | `fetch.artDir` | `Artworks\Downloaded` | Where art crops are saved |
 | `fetch.cardlistsDir` | `Copilot\cardconjurer_batch\Cardlists` | Card list files directory |
 | `fetch.preferSet` | _(empty)_ | Prefer a specific set code when fetching |
+| `fetch.artVersion` | `art_crop` | Scryfall image variant for artwork (`art_crop`, `border_crop`, `normal`, `large`, `png`) |
 | `fetch.overwrite` | `true` | Overwrite existing `.txt` / art files |
 | `fetch.chunkSize` | `15` | Cards per chunk (0 = no chunking) |
 | `generate.outputSubDir` | `output` | Sub-folder inside `cardsDir` for rendered PNGs |

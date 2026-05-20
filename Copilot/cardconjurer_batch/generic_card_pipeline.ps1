@@ -33,7 +33,7 @@ function Read-Config {
     try { $fallbackRoot = (Resolve-Path "$PSScriptRoot\..\.." -ErrorAction Stop).Path } catch { $fallbackRoot = $PSScriptRoot }
     return [pscustomobject]@{
         workspaceRoot = $fallbackRoot
-        fetch    = [pscustomobject]@{ cardsDir="Cards\Generic"; preferSet=""; overwrite=$false; downloadArt=$true }
+        fetch    = [pscustomobject]@{ cardsDir="Cards\Generic"; preferSet=""; overwrite=$false; downloadArt=$true; artMode=2; artVersion="art_crop"; pngCropJpegQuality=95 }
         generate = [pscustomobject]@{ outputSubDir="output"; baseUrl="http://localhost:8080"; headless=$true; startLauncher=$true; overwrite=$false; limit=0 }
     }
 }
@@ -63,6 +63,244 @@ function Ask-Int {
     $n = 0
     if ([int]::TryParse($val, [ref]$n)) { return $n }
     return $Default
+}
+
+function Normalize-ArtVersion {
+    param([string]$Raw)
+    $valid = @("art_crop", "border_crop", "normal", "large", "png")
+    $v = [string]$Raw
+    if ([string]::IsNullOrWhiteSpace($v)) { return "art_crop" }
+    $v = $v.Trim().ToLower()
+    if ($valid -contains $v) { return $v }
+    Write-Host "  [warn] Invalid art version '$Raw'. Falling back to 'art_crop'." -ForegroundColor Yellow
+    return "art_crop"
+}
+
+function Normalize-ArtMode {
+    param([string]$Raw)
+    $v = [string]$Raw
+    if ([string]::IsNullOrWhiteSpace($v)) { return "2" }
+    $v = $v.Trim().ToLower()
+    if ($v -in @("1", "direct")) { return "1" }
+    if ($v -in @("2", "png_crop", "png-crop", "pngcrop")) { return "2" }
+    Write-Host "  [warn] Invalid art mode '$Raw'. Falling back to '2' (png+crop)." -ForegroundColor Yellow
+    return "2"
+}
+
+function Normalize-UpscaleEngine {
+    param([string]$Raw)
+    $valid = @("auto", "realesrgan", "lanczos")
+    $v = [string]$Raw
+    if ([string]::IsNullOrWhiteSpace($v)) { return "auto" }
+    $v = $v.Trim().ToLower()
+    if ($valid -contains $v) { return $v }
+    Write-Host "  [warn] Invalid upscale engine '$Raw'. Falling back to 'auto'." -ForegroundColor Yellow
+    return "auto"
+}
+
+function Find-RealEsrganExe {
+    $candidates = @(
+        "realesrgan-ncnn-vulkan.exe",
+        "realesrgan-ncnn-vulkan"
+    )
+    foreach ($name in $candidates) {
+        $cmd = Get-Command $name -ErrorAction SilentlyContinue
+        if ($cmd) { return $cmd.Source }
+    }
+    return $null
+}
+
+function Convert-PngArtToJpegCrop {
+    param(
+        [string]$ArtDir,
+        [datetime]$SinceUtc,
+        [int]$JpegQuality = 95,
+        [bool]$Overwrite = $true
+    )
+
+    if (-not (Test-Path $ArtDir)) { return }
+
+    $pngs = @(Get-ChildItem $ArtDir -Filter "*.png" -File | Where-Object { $_.LastWriteTimeUtc -ge $SinceUtc })
+    if ($pngs.Count -eq 0) { return }
+
+    Add-Type -AssemblyName System.Drawing
+
+    $jpegEncoder = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() |
+        Where-Object { $_.MimeType -eq "image/jpeg" } |
+        Select-Object -First 1
+    $encParams = New-Object System.Drawing.Imaging.EncoderParameters(1)
+    $encParams.Param[0] = New-Object System.Drawing.Imaging.EncoderParameter([System.Drawing.Imaging.Encoder]::Quality, [long]$JpegQuality)
+
+    $converted = 0
+    foreach ($png in $pngs) {
+        $jpgPath = Join-Path $ArtDir ("{0}.jpg" -f [System.IO.Path]::GetFileNameWithoutExtension($png.Name))
+        if ((-not $Overwrite) -and (Test-Path $jpgPath)) { continue }
+
+        $src = $null
+        $bmp = $null
+        $gfx = $null
+        try {
+            $src = [System.Drawing.Image]::FromFile($png.FullName)
+
+            $x = [int][Math]::Round($src.Width  * 0.0767)
+            $y = [int][Math]::Round($src.Height * 0.1129)
+            $w = [int][Math]::Round($src.Width  * 0.8476)
+            $h = [int][Math]::Round($src.Height * 0.4429)
+
+            if ($x -lt 0) { $x = 0 }
+            if ($y -lt 0) { $y = 0 }
+            if ($x + $w -gt $src.Width)  { $w = $src.Width - $x }
+            if ($y + $h -gt $src.Height) { $h = $src.Height - $y }
+
+            $bmp = New-Object System.Drawing.Bitmap($w, $h)
+            $gfx = [System.Drawing.Graphics]::FromImage($bmp)
+            $gfx.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+            $gfx.PixelOffsetMode   = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+            $gfx.SmoothingMode     = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+            $gfx.DrawImage($src, 0, 0, (New-Object System.Drawing.Rectangle($x, $y, $w, $h)), [System.Drawing.GraphicsUnit]::Pixel)
+
+            if ($jpegEncoder) {
+                $bmp.Save($jpgPath, $jpegEncoder, $encParams)
+            } else {
+                $bmp.Save($jpgPath, [System.Drawing.Imaging.ImageFormat]::Jpeg)
+            }
+            $converted++
+        } catch {
+            Write-Host "  [warn] PNG crop failed for '$($png.Name)': $($_.Exception.Message)" -ForegroundColor Yellow
+        } finally {
+            if ($gfx) { $gfx.Dispose() }
+            if ($bmp) { $bmp.Dispose() }
+            if ($src) { $src.Dispose() }
+        }
+    }
+
+    if ($converted -gt 0) {
+        Write-Host "  Converted $converted PNG artwork file(s) to cropped JPG art." -ForegroundColor Green
+    }
+}
+
+function Invoke-ArtUpscale {
+    param(
+        [string]$ArtDir,
+        [datetime]$SinceUtc,
+        [string]$Engine = "auto",
+        [int]$Factor = 2,
+        [bool]$Overwrite = $true,
+        [string[]]$Extensions = @('.jpg', '.jpeg', '.png')
+    )
+
+    if (-not (Test-Path $ArtDir)) { return }
+    if ($Factor -lt 2) { return }
+
+    $targets = @(Get-ChildItem $ArtDir -File | Where-Object {
+        $_.LastWriteTimeUtc -ge $SinceUtc -and $_.Extension.ToLower() -in $Extensions
+    })
+    if ($targets.Count -eq 0) { return }
+
+    $resolvedEngine = Normalize-UpscaleEngine $Engine
+    $realesrganExe = $null
+    if ($resolvedEngine -in @("auto", "realesrgan")) {
+        $realesrganExe = Find-RealEsrganExe
+        if (-not $realesrganExe -and $resolvedEngine -eq "realesrgan") {
+            Write-Host "  [warn] Real-ESRGAN not found in PATH. Falling back to Lanczos." -ForegroundColor Yellow
+            $resolvedEngine = "lanczos"
+        }
+        if (-not $realesrganExe -and $resolvedEngine -eq "auto") {
+            $resolvedEngine = "lanczos"
+        }
+    }
+
+    Add-Type -AssemblyName System.Drawing
+
+    $jpegEncoder = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() |
+        Where-Object { $_.MimeType -eq "image/jpeg" } |
+        Select-Object -First 1
+    $encParams = New-Object System.Drawing.Imaging.EncoderParameters(1)
+    $encParams.Param[0] = New-Object System.Drawing.Imaging.EncoderParameter([System.Drawing.Imaging.Encoder]::Quality, [long]95)
+
+    $upscaled = 0
+    foreach ($file in $targets) {
+        if (-not $Overwrite) { continue }
+
+        if ($resolvedEngine -eq "realesrgan" -or ($resolvedEngine -eq "auto" -and $realesrganExe)) {
+            $tmpOut = Join-Path $file.DirectoryName ("{0}.upscaled{1}" -f [System.IO.Path]::GetFileNameWithoutExtension($file.Name), $file.Extension)
+            $model = if ($Factor -ge 4) { "realesrgan-x4plus" } else { "realesrgan-x4plus" }
+            $scale = if ($Factor -ge 4) { 4 } else { 2 }
+            $args = @(
+                "-i", $file.FullName,
+                "-o", $tmpOut,
+                "-n", $model,
+                "-s", "$scale"
+            )
+
+            $ok = $false
+            try {
+                & $realesrganExe @args | Out-Null
+                if ($LASTEXITCODE -eq 0 -and (Test-Path $tmpOut)) {
+                    Move-Item -Force -Path $tmpOut -Destination $file.FullName
+                    $ok = $true
+                    $upscaled++
+                }
+            } catch {
+                $ok = $false
+            }
+            if (-not $ok -and (Test-Path $tmpOut)) { Remove-Item -Force $tmpOut }
+            if ($ok) { continue }
+            Write-Host "  [warn] Real-ESRGAN failed for '$($file.Name)'. Falling back to Lanczos for this file." -ForegroundColor Yellow
+        }
+
+        $src = $null
+        $bmp = $null
+        $gfx = $null
+        $tmpLanczosOut = Join-Path $file.DirectoryName ("{0}.upscaled{1}" -f [System.IO.Path]::GetFileNameWithoutExtension($file.Name), $file.Extension)
+        $savedLanczos = $false
+        try {
+            $src = [System.Drawing.Image]::FromFile($file.FullName)
+            $w = [int][Math]::Round($src.Width * $Factor)
+            $h = [int][Math]::Round($src.Height * $Factor)
+            $bmp = New-Object System.Drawing.Bitmap($w, $h)
+            $gfx = [System.Drawing.Graphics]::FromImage($bmp)
+            $gfx.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+            $gfx.PixelOffsetMode   = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+            $gfx.SmoothingMode     = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+            $gfx.CompositingQuality= [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
+            $gfx.DrawImage($src, 0, 0, $w, $h)
+
+            switch ($file.Extension.ToLower()) {
+                ".png"  { $bmp.Save($tmpLanczosOut, [System.Drawing.Imaging.ImageFormat]::Png) }
+                default {
+                    if ($jpegEncoder) {
+                        $bmp.Save($tmpLanczosOut, $jpegEncoder, $encParams)
+                    } else {
+                        $bmp.Save($tmpLanczosOut, [System.Drawing.Imaging.ImageFormat]::Jpeg)
+                    }
+                }
+            }
+            $savedLanczos = $true
+        } catch {
+            Write-Host "  [warn] Upscale failed for '$($file.Name)': $($_.Exception.Message)" -ForegroundColor Yellow
+        } finally {
+            if ($gfx) { $gfx.Dispose() }
+            if ($bmp) { $bmp.Dispose() }
+            if ($src) { $src.Dispose() }
+        }
+
+        if ($savedLanczos -and (Test-Path $tmpLanczosOut)) {
+            try {
+                Move-Item -Force -Path $tmpLanczosOut -Destination $file.FullName
+                $upscaled++
+            } catch {
+                Write-Host "  [warn] Upscale replace failed for '$($file.Name)': $($_.Exception.Message)" -ForegroundColor Yellow
+                if (Test-Path $tmpLanczosOut) { Remove-Item -Force $tmpLanczosOut }
+            }
+        } elseif (Test-Path $tmpLanczosOut) {
+            Remove-Item -Force $tmpLanczosOut
+        }
+    }
+
+    if ($upscaled -gt 0) {
+        Write-Host "  Upscaled $upscaled artwork file(s) using $resolvedEngine (x$Factor)." -ForegroundColor Green
+    }
 }
 
 function Write-Section {
@@ -253,6 +491,33 @@ if ($doFetch) {
     $fetchSet        = Ask-String "Prefer set code (blank = any printing)" $cfg.fetch.preferSet
     $fetchOverwrite  = Ask-Bool   "Overwrite existing files" ([bool]$cfg.fetch.overwrite)
     $fetchArt        = Ask-Bool   "Download artwork" ([bool]$cfg.fetch.downloadArt)
+    $defaultArtMode = if ($cfg.fetch.artMode) { [string]$cfg.fetch.artMode } else { "2" }
+    $fetchArtMode = if ($fetchArt) {
+        Normalize-ArtMode (Ask-String "Art mode (1=direct image variant, 2=png then auto-crop)" $defaultArtMode)
+    } else {
+        "1"
+    }
+    $defaultArtVersion = if ($cfg.fetch.artVersion) { [string]$cfg.fetch.artVersion } else { "art_crop" }
+    $fetchArtVersion = if ($fetchArt -and $fetchArtMode -eq "1") {
+        Normalize-ArtVersion (Ask-String "Art version (art_crop, border_crop, normal, large, png)" $defaultArtVersion)
+    } elseif ($fetchArt -and $fetchArtMode -eq "2") {
+        "png"
+    } else {
+        "art_crop"
+    }
+    $fetchPngCropJpegQuality = if ($cfg.fetch.pngCropJpegQuality) { [int]$cfg.fetch.pngCropJpegQuality } else { 95 }
+    $defaultUpscaleEnabled = if ($null -ne $cfg.fetch.upscaleEnabled) { [bool]$cfg.fetch.upscaleEnabled } else { $false }
+    $fetchUpscaleEnabled = if ($fetchArt) { Ask-Bool "Upscale artwork after fetch/crop" $defaultUpscaleEnabled } else { $false }
+    $defaultUpscaleEngine = if ($cfg.fetch.upscaleEngine) { [string]$cfg.fetch.upscaleEngine } else { "auto" }
+    $fetchUpscaleEngine = if ($fetchUpscaleEnabled) {
+        Normalize-UpscaleEngine (Ask-String "Upscale engine (auto, realesrgan, lanczos)" $defaultUpscaleEngine)
+    } else {
+        "auto"
+    }
+    $defaultUpscaleFactor = if ($cfg.fetch.upscaleFactor) { [int]$cfg.fetch.upscaleFactor } else { 2 }
+    $fetchUpscaleFactor = if ($fetchUpscaleEnabled) { Ask-Int "Upscale factor (2 or 4)" $defaultUpscaleFactor } else { 2 }
+    if ($fetchUpscaleFactor -lt 2) { $fetchUpscaleFactor = 2 }
+    if ($fetchUpscaleFactor -gt 4) { $fetchUpscaleFactor = 4 }
     $fetchDryRun     = [bool]$cfg.fetch.dryRun
 }
 
@@ -283,6 +548,18 @@ if ($doGenerate) {
     $genOutputDir  = Ask-String "Output directory (PNG files)" $defaultOutput
     $genOverwrite  = Ask-Bool   "Overwrite existing PNGs" ([bool]$cfg.generate.overwrite)
     $genLimit      = Ask-Int    "Card limit (0 = all)" ([int]$cfg.generate.limit)
+    $defaultRenderUpscaleEnabled = if ($null -ne $cfg.generate.upscaleEnabled) { [bool]$cfg.generate.upscaleEnabled } else { $false }
+    $genUpscaleEnabled = Ask-Bool "Upscale rendered output after render" $defaultRenderUpscaleEnabled
+    $defaultRenderUpscaleEngine = if ($cfg.generate.upscaleEngine) { [string]$cfg.generate.upscaleEngine } else { "auto" }
+    $genUpscaleEngine = if ($genUpscaleEnabled) {
+        Normalize-UpscaleEngine (Ask-String "Render upscale engine (auto, realesrgan, lanczos)" $defaultRenderUpscaleEngine)
+    } else {
+        "auto"
+    }
+    $defaultRenderUpscaleFactor = if ($cfg.generate.upscaleFactor) { [int]$cfg.generate.upscaleFactor } else { 2 }
+    $genUpscaleFactor = if ($genUpscaleEnabled) { Ask-Int "Render upscale factor (2 or 4)" $defaultRenderUpscaleFactor } else { 2 }
+    if ($genUpscaleFactor -lt 2) { $genUpscaleFactor = 2 }
+    if ($genUpscaleFactor -gt 4) { $genUpscaleFactor = 4 }
     $genDryRun     = [bool]$cfg.generate.dryRun
 }
 
@@ -301,6 +578,16 @@ if ($doFetch) {
     if ($fetchSet)       { Write-KV "Set:"         $fetchSet }
     Write-KV "Overwrite:"   $fetchOverwrite
     Write-KV "Download art:" $fetchArt
+    if ($fetchArt) {
+        Write-KV "Art mode:"    $(if ($fetchArtMode -eq "2") { "2 (png + auto-crop)" } else { "1 (direct)" })
+        if ($fetchArtMode -eq "2") {
+            Write-KV "Art version:" "png (forced)"
+            Write-KV "Crop JPG quality:" $fetchPngCropJpegQuality
+        } else {
+            Write-KV "Art version:" $fetchArtVersion
+        }
+        Write-KV "Upscale:" $(if ($fetchUpscaleEnabled) { "Yes ($fetchUpscaleEngine x$fetchUpscaleFactor)" } else { "No" })
+    }
     if ($fetchDryRun)    { Write-Host "    *** FETCH DRY RUN (config) ***" -ForegroundColor Yellow }
 }
 
@@ -315,6 +602,7 @@ if ($doGenerate) {
     Write-KV "Launcher:"    $genLauncher
     Write-KV "Overwrite:"   $genOverwrite
     Write-KV "Limit:"       $(if ($genLimit -gt 0) { $genLimit } else { "all" })
+    Write-KV "Render upscale:" $(if ($genUpscaleEnabled) { "Yes ($genUpscaleEngine x$genUpscaleFactor)" } else { "No" })
     if ($useChunked) { Write-KV "Chunk size:" "$chunkSize cards/chunk ($([Math]::Ceiling($cardNames.Count / $chunkSize)) chunks)" }
     if ($genDryRun)     { Write-Host "    *** RENDER DRY RUN (config) ***" -ForegroundColor Yellow }
 }
@@ -368,12 +656,13 @@ if ($useChunked) {
         Write-Section "Chunk $($ci + 1) of $totalChunks  ($($chunk.Count) cards)"
 
         # Fetch this chunk
-        $beforeFetch = [System.DateTime]::UtcNow.ToString("o")
+        $beforeFetchUtc = [System.DateTime]::UtcNow
+        $beforeFetch = $beforeFetchUtc.ToString("o")
 
         $fetchArgs  = @()
         $fetchArgs += $chunk | ForEach-Object { "`"$_`"" }
         $fetchArgs += "--output", "`"$fetchOutDir`""
-        if ($fetchArt)        { $fetchArgs += "--art-output", "`"$fetchArtDir`"" }
+        if ($fetchArt)        { $fetchArgs += "--art-output", "`"$fetchArtDir`""; $fetchArgs += "--art-version", "`"$fetchArtVersion`"" }
         if ($fetchSet)        { $fetchArgs += "--set", "`"$fetchSet`"" }
         if ($fetchOverwrite)  { $fetchArgs += "--overwrite" }
         if (-not $fetchArt)   { $fetchArgs += "--no-art" }
@@ -390,6 +679,14 @@ if ($useChunked) {
             exit $LASTEXITCODE
         }
 
+        if ($fetchArt -and $fetchArtMode -eq "2" -and -not $fetchDryRun) {
+            Convert-PngArtToJpegCrop -ArtDir $fetchArtDir -SinceUtc $beforeFetchUtc -JpegQuality $fetchPngCropJpegQuality -Overwrite $fetchOverwrite
+        }
+        if ($fetchArt -and $fetchUpscaleEnabled -and -not $fetchDryRun) {
+            $upscaleExts = if ($fetchArtMode -eq "2") { @('.jpg', '.jpeg') } else { @('.jpg', '.jpeg', '.png') }
+            Invoke-ArtUpscale -ArtDir $fetchArtDir -SinceUtc $beforeFetchUtc -Engine $fetchUpscaleEngine -Factor $fetchUpscaleFactor -Overwrite $fetchOverwrite -Extensions $upscaleExts
+        }
+
         # Render this chunk (only .txt files newer than $beforeFetch)
         Write-Host ""
 
@@ -400,11 +697,16 @@ if ($useChunked) {
         Write-Host "  > $genCmd" -ForegroundColor DarkGray
         Write-Host ""
 
+        $beforeRenderUtc = [System.DateTime]::UtcNow
         Invoke-Expression $genCmd
         if ($LASTEXITCODE -ne 0) {
             Write-Host ""
             Write-Host "  Render failed on chunk $($ci + 1) (exit $LASTEXITCODE). Stopping." -ForegroundColor Red
             exit $LASTEXITCODE
+        }
+
+        if ($genUpscaleEnabled -and -not $genDryRun) {
+            Invoke-ArtUpscale -ArtDir $genOutputDir -SinceUtc $beforeRenderUtc -Engine $genUpscaleEngine -Factor $genUpscaleFactor -Overwrite $true -Extensions @('.png', '.jpg', '.jpeg')
         }
     }
 
@@ -413,6 +715,8 @@ if ($useChunked) {
 
     if ($doFetch) {
         Write-Section "Running Scryfall Fetch"
+        $beforeFetchUtc = [System.DateTime]::UtcNow
+        $beforeFetchIso = $beforeFetchUtc.ToString("o")
 
         if (-not $fetchDryRun) {
             New-Item -ItemType Directory -Force -Path $fetchOutDir | Out-Null
@@ -422,7 +726,7 @@ if ($useChunked) {
         $fetchArgs  = @()
         $fetchArgs += $cardNames | ForEach-Object { "`"$_`"" }
         $fetchArgs += "--output", "`"$fetchOutDir`""
-        if ($fetchArt)        { $fetchArgs += "--art-output", "`"$fetchArtDir`"" }
+        if ($fetchArt)        { $fetchArgs += "--art-output", "`"$fetchArtDir`""; $fetchArgs += "--art-version", "`"$fetchArtVersion`"" }
         if ($fetchSet)        { $fetchArgs += "--set", "`"$fetchSet`"" }
         if ($fetchOverwrite)  { $fetchArgs += "--overwrite" }
         if (-not $fetchArt)   { $fetchArgs += "--no-art" }
@@ -438,6 +742,14 @@ if ($useChunked) {
             Write-Host "  Fetch failed (exit $LASTEXITCODE)." -ForegroundColor Red
             exit $LASTEXITCODE
         }
+
+        if ($fetchArt -and $fetchArtMode -eq "2" -and -not $fetchDryRun) {
+            Convert-PngArtToJpegCrop -ArtDir $fetchArtDir -SinceUtc $beforeFetchUtc -JpegQuality $fetchPngCropJpegQuality -Overwrite $fetchOverwrite
+        }
+        if ($fetchArt -and $fetchUpscaleEnabled -and -not $fetchDryRun) {
+            $upscaleExts = if ($fetchArtMode -eq "2") { @('.jpg', '.jpeg') } else { @('.jpg', '.jpeg', '.png') }
+            Invoke-ArtUpscale -ArtDir $fetchArtDir -SinceUtc $beforeFetchUtc -Engine $fetchUpscaleEngine -Factor $fetchUpscaleFactor -Overwrite $fetchOverwrite -Extensions $upscaleExts
+        }
     }
 
     if ($doGenerate) {
@@ -448,16 +760,25 @@ if ($useChunked) {
         }
 
         $genArgs  = Build-GenArgs $genInputDir $genOutputDir $genArtDir $genBaseUrl $genHeadless $genLauncher $genOverwrite $genLimit $genDryRun
+        if ($doFetch) {
+            # In fetch+render mode, only render .txt files created/updated in this run.
+            $genArgs += "--newer-than", "`"$beforeFetchIso`""
+        }
 
         $genCmd = "node `"$generateScript`" $($genArgs -join ' ')"
         Write-Host "  > $genCmd" -ForegroundColor DarkGray
         Write-Host ""
 
+        $beforeRenderUtc = [System.DateTime]::UtcNow
         Invoke-Expression $genCmd
         if ($LASTEXITCODE -ne 0) {
             Write-Host ""
             Write-Host "  Render failed (exit $LASTEXITCODE)." -ForegroundColor Red
             exit $LASTEXITCODE
+        }
+
+        if ($genUpscaleEnabled -and -not $genDryRun) {
+            Invoke-ArtUpscale -ArtDir $genOutputDir -SinceUtc $beforeRenderUtc -Engine $genUpscaleEngine -Factor $genUpscaleFactor -Overwrite $true -Extensions @('.png', '.jpg', '.jpeg')
         }
     }
 }

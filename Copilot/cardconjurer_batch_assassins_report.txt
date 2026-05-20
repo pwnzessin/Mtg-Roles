@@ -1,14 +1,16 @@
 CardConjurer batch report for role folder: Assassins
-Generated: 2026-05-17T14:07:14.425Z
+Generated: 2026-05-20T18:11:51.023Z
 
 Total parsed cards: 24
-Cards in run queue: 3
+Cards in run queue: 5
 Dry run: false
 
-OK | Ahriman, Chaos Sorcerer.txt | D:\Fork\Mtg-Roles\Cards\templates\Assassins\Ahriman, Chaos Sorcerer.png
-OK | el tonkodot.txt | D:\Fork\Mtg-Roles\Cards\templates\Assassins\el tonkodot.png
-OK | Shrek The Third.txt | D:\Fork\Mtg-Roles\Cards\templates\Assassins\Shrek The Third.png
+OK | Ahriman, Chaos Sorcerer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\Ahriman, Chaos Sorcerer.png
+OK | El tonkodot.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\El tonkodot.png
+OK | Shrek The Third.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\Shrek The Third.png
+OK | The Abysal Prawler.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Abysal Prawler.png
+OK | The Aspect Warper.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Assassins\The Aspect Warper.png
 
-Generated: 3
+Generated: 5
 Skipped existing: 0
 Failed: 0

@@ -1,6 +1,6 @@
 /**
  * fetch_card.mjs — Query Scryfall by card name and write a Generic Card .txt file
- *                  plus the art_crop artwork image (.jpg) ready for generate_generic_card.mjs.
+ *                  plus the artwork image ready for generate_generic_card.mjs.
  *
  * Usage:
  *   node fetch_card.mjs "Lightning Bolt" "Llanowar Elves" --output Cards/Generic
@@ -9,6 +9,8 @@
  *   --output <dir>       Directory to write .txt files (default: current dir)
  *   --art-output <dir>   Directory to write artwork .jpg files (default: same as --output)
  *   --set <code>         Prefer a specific printing, e.g. "m21"
+ *   --art-version <name> Scryfall image variant for artwork
+ *                        (art_crop|border_crop|normal|large|png; default: art_crop)
  *   --overwrite          Re-create files even if they already exist
  *   --no-art             Skip downloading the artwork image
  *   --dry-run            Print the .txt to stdout without writing any files
@@ -20,6 +22,7 @@ import path from "node:path";
 const SCRYFALL_BASE  = "https://api.scryfall.com";
 const USER_AGENT     = "MtgRolesCardGen/1.0";
 const API_DELAY_MS   = 200; // 5 req/s — safely under Scryfall's 10 req/s limit
+const ART_VERSIONS   = ["art_crop", "border_crop", "normal", "large", "png"];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -142,12 +145,26 @@ async function fetchCard(name, preferSet) {
 
 // ── Art download ──────────────────────────────────────────────────────────────
 
-async function downloadArt(card, artDir) {
-  const artUrl = card.image_uris && card.image_uris.art_crop;
-  if (!artUrl) return null;
+function getArtInfo(card, artVersion) {
+  const imageUris = card.image_uris;
+  if (!imageUris) return null;
 
-  const artPath = path.join(artDir, `${card.name}.jpg`);
-  const res = await fetch(artUrl, {
+  const url = imageUris[artVersion];
+  if (!url) return null;
+
+  return {
+    version: artVersion,
+    url,
+    extension: artVersion === "png" ? ".png" : ".jpg",
+  };
+}
+
+async function downloadArt(card, artDir, artVersion) {
+  const artInfo = getArtInfo(card, artVersion);
+  if (!artInfo) return null;
+
+  const artPath = path.join(artDir, `${card.name}${artInfo.extension}`);
+  const res = await fetch(artInfo.url, {
     headers: { "User-Agent": USER_AGENT, "Accept": "image/*" },
   });
   if (!res.ok) throw new Error(`Art HTTP ${res.status}`);
@@ -160,17 +177,21 @@ async function downloadArt(card, artDir) {
 // ── CLI ───────────────────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const opts = { names: [], output: ".", artOutput: null, set: null, dryRun: false, overwrite: false, art: true };
+  const opts = { names: [], output: ".", artOutput: null, set: null, artVersion: "art_crop", dryRun: false, overwrite: false, art: true };
   for (let i = 0; i < argv.length; i++) {
     const arg  = argv[i];
     const next = argv[i + 1];
     if      (arg === "--output"     && next) { opts.output    = next;  i++; }
     else if (arg === "--art-output" && next) { opts.artOutput = next;  i++; }
     else if (arg === "--set"        && next) { opts.set       = next;  i++; }
+    else if (arg === "--art-version"&& next) { opts.artVersion = next.toLowerCase(); i++; }
     else if (arg === "--dry-run")            { opts.dryRun    = true;       }
     else if (arg === "--overwrite")          { opts.overwrite = true;       }
     else if (arg === "--no-art")             { opts.art       = false;      }
     else if (!arg.startsWith("--"))          { opts.names.push(arg);        }
+  }
+  if (!ART_VERSIONS.includes(opts.artVersion)) {
+    throw new Error(`Invalid --art-version '${opts.artVersion}'. Expected one of: ${ART_VERSIONS.join(", ")}`);
   }
   return opts;
 }
@@ -184,8 +205,9 @@ async function main() {
     console.error(
       "Usage: node fetch_card.mjs [options] \"Card Name\" [\"Card Name 2\" ...]\n" +
       "  --output <dir>       Directory to write .txt files (default: current dir)\n" +
-      "  --art-output <dir>   Directory to write artwork .jpg files (default: same as --output)\n" +
+      "  --art-output <dir>   Directory to write artwork image files (default: same as --output)\n" +
       "  --set <code>         Prefer a specific set (e.g. m21)\n" +
+      "  --art-version <name> Scryfall image variant: art_crop|border_crop|normal|large|png\n" +
       "  --overwrite          Re-create files even if they already exist\n" +
       "  --no-art             Skip downloading the artwork image\n" +
       "  --dry-run            Print the .txt to stdout without writing any files"
@@ -220,11 +242,13 @@ async function main() {
       }
 
       const outPath  = path.join(outDir, `${card.name}.txt`);
-      const artPath  = path.join(artDir, `${card.name}.jpg`);
+      const artInfo  = opts.art ? getArtInfo(card, opts.artVersion) : null;
+      const artPath  = artInfo ? path.join(artDir, `${card.name}${artInfo.extension}`) : null;
       const txtExists = fs.existsSync(outPath);
-      const artExists = fs.existsSync(artPath);
+      const artExists = artPath ? fs.existsSync(artPath) : false;
 
-      if (txtExists && artExists && !opts.overwrite) {
+      const allTargetsExist = opts.art ? (txtExists && artExists) : txtExists;
+      if (allTargetsExist && !opts.overwrite) {
         console.log(`SKIP (exists)`);
         skip++;
         continue;
@@ -235,14 +259,18 @@ async function main() {
         fs.writeFileSync(outPath, txt, "utf8");
       }
 
-      // Download art_crop
+      // Download selected Scryfall image variant
       let artNote = "";
       if (opts.art && (!artExists || opts.overwrite)) {
+        if (!artInfo) {
+          artNote = ` (no '${opts.artVersion}' image available)`;
+        } else {
         try {
-          await downloadArt(card, artDir);
-          artNote = " + art";
+          await downloadArt(card, artDir, opts.artVersion);
+          artNote = ` + art(${opts.artVersion})`;
         } catch (artErr) {
           artNote = ` (art failed: ${artErr.message})`;
+        }
         }
       }
 

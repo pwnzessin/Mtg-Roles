@@ -215,7 +215,7 @@ function buildCardObject(baseUrl, c) {
       },
       title: {
         name:    "Title",
-        text:    c.title || "",
+        text:    `{bold}${c.title || ""}{/bold}`,
         x:       0.0854,
         y:       0.0522,
         width:   0.8292,
@@ -270,12 +270,16 @@ function findArtworkByStem(artDir, stem) {
   if (!fs.existsSync(artDir)) return null;
   const entries = fs.readdirSync(artDir, { withFileTypes: true });
   const target  = stem.toLowerCase();
-  for (const entry of entries) {
-    if (!entry.isFile()) continue;
-    const ext = path.extname(entry.name).toLowerCase();
-    if (![".png", ".jpg", ".jpeg"].includes(ext)) continue;
-    if (path.parse(entry.name).name.toLowerCase() === target) {
-      return path.join(artDir, entry.name);
+  // Prefer cropped JPG/JPEG artifacts when both PNG and JPG exist.
+  const byExtPreference = [".jpg", ".jpeg", ".png"];
+  for (const ext of byExtPreference) {
+    const match = entries.find((entry) =>
+      entry.isFile() &&
+      path.extname(entry.name).toLowerCase() === ext &&
+      path.parse(entry.name).name.toLowerCase() === target
+    );
+    if (match) {
+      return path.join(artDir, match.name);
     }
   }
   return null;

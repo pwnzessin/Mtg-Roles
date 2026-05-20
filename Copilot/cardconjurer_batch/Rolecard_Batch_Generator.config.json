@@ -2,6 +2,9 @@
     "roles":  [
                   "Assassins"
               ],
-    "limit":  3,
-    "qualityChoice":  "1"
+    "limit":  5,
+    "qualityChoice":  "1",
+    "applyMargin":  true,
+    "finalUpscaleEnabled":  false,
+    "finalUpscaleFactor":  1
 }
