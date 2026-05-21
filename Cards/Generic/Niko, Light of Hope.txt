@@ -1,0 +1,11 @@
+<COLOR>M</COLOR>
+<TITLE>Niko, Light of Hope</TITLE>
+<MANA>{2}{W}{U}</MANA>
+<TYPE>Legendary Creature — Human Wizard</TYPE>
+<SETCODE>DSK M</SETCODE>
+<PT>3/4</PT>
+<RULES>
+When Niko enters, create two Shard tokens. (They're enchantments with "{2}, Sacrifice this token: Scry 1, then draw a card.")
+{2}, {t}: Exile target nonlegendary creature you control. Shards you control become copies of it until the next end step. Return it to the battlefield under its owner's control at the beginning of the next end step.
+</RULES>
+<ARTIST>Aurore Folny</ARTIST>

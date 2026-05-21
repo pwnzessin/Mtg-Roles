@@ -9,8 +9,8 @@ from PyQt6.QtWidgets import (
     QMessageBox, QFileDialog, QComboBox, QStackedWidget, QDialog,
     QDialogButtonBox, QTextBrowser,
 )
-from PyQt6.QtCore import QThread, pyqtSignal
-from PyQt6.QtGui import QFont
+from PyQt6.QtCore import QThread, QTimer, Qt, pyqtSignal
+from PyQt6.QtGui import QColor, QFont, QPainter, QPixmap
 
 import theme
 import pipeline
@@ -535,24 +535,123 @@ class MissingDependenciesDialog(QDialog):
         return "<br><br>".join(formatted)
 
 
+class SplashScreen(QWidget):
+    """Frameless CardWeaver startup splash — auto-closes after DISPLAY_MS or on click."""
+
+    DISPLAY_MS = 2500
+    clicked = pyqtSignal()
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowFlags(
+            Qt.WindowType.FramelessWindowHint |
+            Qt.WindowType.WindowStaysOnTopHint |
+            Qt.WindowType.SplashScreen
+        )
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
+
+        # ── Background image ──────────────────────────────────────────────
+        assets = _assets_dir() / "CardWeaver_Logo.png"
+        pixmap = QPixmap(str(assets))
+        if pixmap.isNull():
+            pixmap = QPixmap(720, 460)
+            pixmap.fill(QColor(20, 20, 35))
+        # Scale to portrait-friendly bounds so the image is never too narrow
+        # for the title text (min width ~500 px).
+        max_w, max_h = 520, 730
+        pixmap = pixmap.scaled(
+            max_w, max_h,
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation,
+        )
+        self._bg = pixmap
+        self.setFixedSize(pixmap.size())
+
+        # ── Layout ────────────────────────────────────────────────────────
+        root = QVBoxLayout(self)
+        root.setContentsMargins(30, 28, 30, 18)
+        root.setSpacing(0)
+
+        title = QLabel("CardWeaver")
+        title.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
+        font = QFont()
+        font.setFamilies(["Palatino Linotype", "Book Antiqua", "Garamond", "Georgia", "serif"])
+        font.setPointSize(46)
+        font.setBold(True)
+        title.setFont(font)
+        title.setStyleSheet(
+            "color: #d4af37;"
+            "background: transparent;"
+        )
+        root.addWidget(title)
+        root.addStretch()
+
+        copyright_lbl = QLabel("\u00a9 2026 CardWeaver  \u2014  All rights reserved")
+        copyright_lbl.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)
+        copyright_lbl.setStyleSheet(
+            "color: rgba(220, 220, 220, 200);"
+            "background: transparent;"
+            "font-size: 10px;"
+        )
+        root.addWidget(copyright_lbl)
+
+    def paintEvent(self, event):  # noqa: N802
+        painter = QPainter(self)
+        painter.drawPixmap(0, 0, self._bg)
+
+    def mousePressEvent(self, event):  # noqa: N802
+        self.clicked.emit()
+
+
+def _assets_dir() -> Path:
+    """Return the assets/ folder next to the executable (frozen) or source file."""
+    if getattr(sys, 'frozen', False):
+        # --onefile extracts to sys._MEIPASS; --onedir also sets it
+        base = Path(getattr(sys, '_MEIPASS', Path(sys.executable).resolve().parent))
+        return base / "assets"
+    return Path(__file__).resolve().parent / "assets"
+
+
 def main():
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
 
-    problems = _check_dependencies()
-    if problems:
-        msg = MissingDependenciesDialog(problems)
-        msg.show()
-        app.processEvents()
-        screen = app.primaryScreen().availableGeometry()
-        msg.move(
-            screen.center().x() - msg.width() // 2,
-            screen.center().y() - msg.height() // 2,
-        )
-        msg.exec()
+    # ── Splash screen ─────────────────────────────────────────────────────
+    splash = SplashScreen()
+    splash.show()
+    screen = app.primaryScreen().availableGeometry()
+    splash.move(
+        screen.center().x() - splash.width() // 2,
+        screen.center().y() - splash.height() // 2,
+    )
+    app.processEvents()
 
+    # Run dependency check while splash is visible
+    problems = _check_dependencies()
     window = PipelineGUI()
-    window.show()
+
+    _launched = [False]
+
+    def _launch():
+        if _launched[0]:
+            return
+        _launched[0] = True
+        splash.close()
+        if problems:
+            msg = MissingDependenciesDialog(problems)
+            msg.show()
+            app.processEvents()
+            geo = app.primaryScreen().availableGeometry()
+            msg.move(
+                geo.center().x() - msg.width() // 2,
+                geo.center().y() - msg.height() // 2,
+            )
+            msg.exec()
+        window.show()
+
+    QTimer.singleShot(SplashScreen.DISPLAY_MS, _launch)
+    splash.clicked.connect(_launch)
+
     sys.exit(app.exec())
 
 

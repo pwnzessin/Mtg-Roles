@@ -1,0 +1,9 @@
+<COLOR>U</COLOR>
+<TITLE>Virtue of Knowledge</TITLE>
+<MANA>{4}{U} // {1}{U}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>WOE M</SETCODE>
+<RULES>
+If a permanent entering causes a triggered ability of a permanent you control to trigger, that ability triggers an additional time.
+</RULES>
+<ARTIST>Piotr Dura</ARTIST>
