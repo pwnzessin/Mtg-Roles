@@ -1,11 +1,13 @@
 import sys
 import json
+import html
 import subprocess
 from pathlib import Path
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QTabWidget, QLabel, QLineEdit, QPushButton, QTextEdit,
-    QMessageBox, QFileDialog, QComboBox, QStackedWidget,
+    QMessageBox, QFileDialog, QComboBox, QStackedWidget, QDialog,
+    QDialogButtonBox, QTextBrowser,
 )
 from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QFont
@@ -493,20 +495,53 @@ class PipelineGUI(QMainWindow):
             self.theme_btn.setText("☾ Dark")
 
 
+class MissingDependenciesDialog(QDialog):
+    """Dependency warning dialog with a clickable output area."""
+
+    def __init__(self, problems: list[str], parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Missing Dependencies")
+        self.resize(760, 360)
+
+        root = QVBoxLayout(self)
+
+        intro = QLabel(
+            "<b>One or more required dependencies are missing.</b><br>"
+            "The GUI will open but pipelines will not run until these are fixed."
+        )
+        intro.setWordWrap(True)
+        root.addWidget(intro)
+
+        output = QTextBrowser()
+        output.setReadOnly(True)
+        output.setOpenExternalLinks(True)
+        output.setHtml(self._problems_to_html(problems))
+        root.addWidget(output, stretch=1)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok)
+        buttons.accepted.connect(self.accept)
+        root.addWidget(buttons)
+
+    @staticmethod
+    def _problems_to_html(problems: list[str]) -> str:
+        formatted = []
+        for problem in problems:
+            line = html.escape(problem).replace("\n", "<br>")
+            line = line.replace(
+                "https://nodejs.org/",
+                '<a href="https://nodejs.org/">https://nodejs.org/</a>'
+            )
+            formatted.append(f"&bull; {line}")
+        return "<br><br>".join(formatted)
+
+
 def main():
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
 
     problems = _check_dependencies()
     if problems:
-        msg = QMessageBox()
-        msg.setWindowTitle("Missing Dependencies")
-        msg.setIcon(QMessageBox.Icon.Warning)
-        msg.setText(
-            "<b>One or more required dependencies are missing.</b><br>"
-            "The GUI will open but pipelines will not run until these are fixed."
-        )
-        msg.setDetailedText("\n\n".join(problems))
+        msg = MissingDependenciesDialog(problems)
         msg.show()
         app.processEvents()
         screen = app.primaryScreen().availableGeometry()
