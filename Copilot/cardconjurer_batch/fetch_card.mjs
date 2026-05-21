@@ -49,6 +49,20 @@ function convertSymbols(text) {
     ;
 }
 
+// ── Planeswalker ability parser ────────────────────────────────────────────────
+
+function parsePlaneswalkerAbilities(oracleText) {
+  // Each PW ability is one line: "[cost]: [text]"
+  // Scryfall uses Unicode minus sign (\u2212) for negative loyalty costs.
+  const lines = (oracleText || "").split("\n").filter((l) => l.trim() !== "");
+  const abilities = [];
+  for (const line of lines) {
+    const m = line.match(/^([+\-\u2212][0-9X]*|0): (.+)/);
+    if (m) abilities.push({ cost: m[1].trim().replace(/\u2212/g, "-"), text: m[2].trim() });
+  }
+  return abilities;
+}
+
 // ── Color key ─────────────────────────────────────────────────────────────────
 
 function determineColorKey(card) {
@@ -96,21 +110,34 @@ function buildTxt(card) {
   const flavor  = (card.flavor_text || "").trim();
   const mana    = (card.mana_cost   || "").trim();
 
+  const isPlaneswalker = /planeswalker/i.test(card.type_line || "");
+
   const lines = [];
   lines.push(`<COLOR>${colorKey}</COLOR>`);
   lines.push(`<TITLE>${cardName}</TITLE>`);
   if (mana) lines.push(`<MANA>${mana}</MANA>`);
   lines.push(`<TYPE>${card.type_line}</TYPE>`);
   lines.push(`<SETCODE>${setCode} ${rarity}</SETCODE>`);
-  if (hasPt) lines.push(`<PT>${card.power}/${card.toughness}</PT>`);
-  lines.push(`<RULES>`);
-  lines.push(rules);
-  lines.push(`</RULES>`);
-  if (flavor) {
-    lines.push(`<FLAVOR>`);
-    lines.push(flavor);
-    lines.push(`</FLAVOR>`);
+
+  if (isPlaneswalker) {
+    const loyalty   = card.loyalty || "";
+    const abilities = parsePlaneswalkerAbilities(card.oracle_text || "");
+    if (loyalty) lines.push(`<LOYALTY>${loyalty}</LOYALTY>`);
+    abilities.slice(0, 4).forEach((a, i) => {
+      lines.push(`<ABILITY${i}>${a.cost} | ${convertSymbols(a.text)}</ABILITY${i}>`);
+    });
+  } else {
+    if (hasPt) lines.push(`<PT>${card.power}/${card.toughness}</PT>`);
+    lines.push(`<RULES>`);
+    lines.push(rules);
+    lines.push(`</RULES>`);
+    if (flavor) {
+      lines.push(`<FLAVOR>`);
+      lines.push(flavor);
+      lines.push(`</FLAVOR>`);
+    }
   }
+
   if (card.artist) lines.push(`<ARTIST>${card.artist}</ARTIST>`);
 
   return lines.join("\n");

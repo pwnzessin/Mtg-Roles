@@ -1,19 +1,20 @@
 Generic card batch report
-Generated: 2026-05-20T22:43:56.587Z
+Generated: 2026-05-21T22:08:24.470Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 6
-Cards in run queue: 6
+Total parsed cards: 7
+Cards in run queue: 7
 Dry run: false
 
-OK | Niko, Light of Hope.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Niko, Light of Hope.png
-OK | Thought Vessel.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Thought Vessel.png
-OK | Thran Dynamo.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Thran Dynamo.png
-OK | Virtue of Knowledge.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Virtue of Knowledge.png
-OK | Witch Enchanter.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Witch Enchanter.png
-OK | Worn Powerstone.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Worn Powerstone.png
+OK | Domri, Anarch of Bolas.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Domri, Anarch of Bolas.png
+OK | Eldrazi Temple.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Eldrazi Temple.png
+OK | Huatli, Warrior Poet.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Huatli, Warrior Poet.png
+OK | Petrified Hamlet.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Petrified Hamlet.png
+OK | Together as One.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Together as One.png
+OK | Ulalek, Fused Atrocity.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Ulalek, Fused Atrocity.png
+OK | Vivien, Champion of the Wilds.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Vivien, Champion of the Wilds.png
 
-Generated:        6
+Generated:        7
 Skipped (exists): 0
 Failed:           0
