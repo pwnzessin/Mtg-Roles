@@ -159,7 +159,7 @@ class _PipelineTabBase(QWidget):
             self.mode_combo = QComboBox()
             self.mode_combo.addItems([
                 "1 \u2014 Fetch from Scryfall + render",
-                "2 \u2014 Fetch .txt by artwork filenames + render",
+                "2 \u2014 Render custom art files",
                 "3 \u2014 Fetch from Scryfall only",
                 "4 \u2014 Load card list + fetch + render",
                 "5 \u2014 Clear output / downloaded art",

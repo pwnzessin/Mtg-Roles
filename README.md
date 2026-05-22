@@ -91,8 +91,8 @@ An interactive PowerShell wizard (`Copilot/cardconjurer_batch/generic_card_pipel
 
 | # | Mode | Description |
 |---|---|---|
-| 1 | Fetch + Render | Fetch card data from Scryfall and immediately render all cards |
-| 2 | Render only | Render `.txt` files already in `Cards\Generic\` (no Scryfall fetch) |
+| 1 | Fetch + Render | Enter card names; fetch data + art from Scryfall, then render |
+| 2 | Render custom art files | Scan an art directory for images, derive card names from filenames, fetch only the `.txt` from Scryfall, then render |
 | 3 | Fetch only | Download card data + art from Scryfall without rendering |
 | 4 | Card list file | Load a deck-list `.txt` from `Copilot\cardconjurer_batch\Cardlists\`, then fetch + render |
 | 5 | Clear folders | Interactively remove rendered PNGs, `.txt` files, and/or downloaded artwork |
@@ -114,7 +114,8 @@ Default values live in `Copilot/cardconjurer_batch/generic_card_config.json`:
 | Key | Default | Description |
 |---|---|---|
 | `fetch.cardsDir` | `Cards\Generic` | Where `.txt` files are written |
-| `fetch.artDir` | `Artworks\Downloaded` | Where art crops are saved |
+| `fetch.artDir` | `Artworks\Downloaded` | Where art crops are saved (modes 1, 3, 4) |
+| `fetch.artScanDir` | _(absolute path)_ | Directory scanned for existing artwork in **mode 2**; filenames (without extension) are used as card names |
 | `fetch.cardlistsDir` | `Copilot\cardconjurer_batch\Cardlists` | Card list files directory |
 | `fetch.preferSet` | _(empty)_ | Prefer a specific set code when fetching |
 | `fetch.artVersion` | `art_crop` | Scryfall image variant for artwork (`art_crop`, `border_crop`, `normal`, `large`, `png`) |
@@ -124,6 +125,31 @@ Default values live in `Copilot/cardconjurer_batch/generic_card_config.json`:
 | `generate.headless` | `true` | Run Playwright headless |
 | `generate.startLauncher` | `true` | Auto-start CardConjurer if not running |
 | `generate.overwrite` | `true` | Overwrite existing PNG files |
+
+---
+
+## Custom Art Workflow (Mode 2)
+
+Use mode 2 when you already have artwork on disk and only need card data fetched from Scryfall.
+
+**Steps:**
+
+1. Name each image file exactly after the card — e.g. `Lightning Bolt.jpg`, `Llanowar Elves.png`.
+2. Place all images in one directory (default configured in `fetch.artScanDir`).
+3. Run the pipeline and select **mode 2**. The script:
+   - Scans the art directory for `.jpg` / `.jpeg` / `.png` files
+   - Derives card names from the filenames
+   - Fetches only the `.txt` card data from Scryfall (`--no-art` — existing art is not re-downloaded)
+   - Renders each card using the local image
+4. Rendered PNGs appear in the `output/` sub-directory next to the `.txt` files.
+
+**Configure the default art directory** once in `Copilot/cardconjurer_batch/generic_card_config.json`:
+
+```json
+"fetch": {
+    "artScanDir": "C:\\Users\\you\\path\\to\\Custom_Art"
+}
+```
 
 ---
 

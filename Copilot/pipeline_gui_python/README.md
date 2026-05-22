@@ -66,13 +66,26 @@ Output: `dist/CardWeaver.exe`
 ### Generic Pipeline
 
 1. **Select Tab**: Click "Generic Pipeline" tab
-2. **Configure**:
-   - Browse to input cards directory
-   - Set output directory for rendered PNGs
-   - Select artwork directory
-   - Adjust rendering options (headless, launcher, overwrite)
-3. **Run**: Click "Run Generic Pipeline" button
-4. **Monitor**: Watch real-time output in the log area
+2. **Load Config**: Browse to `Copilot/cardconjurer_batch/generic_card_config.json` to pre-fill all defaults.
+3. **Choose a Mode**:
+
+   | Mode | Name | What it does |
+   |---|---|---|
+   | 1 | Fetch + Render | Enter card names; fetches data + art from Scryfall, then renders |
+   | 2 | Render custom art files | Scans your `artScanDir` for images, derives card names from filenames, fetches only the `.txt` from Scryfall (no art re-download), then renders |
+   | 3 | Fetch only | Downloads card data + art without rendering |
+   | 4 | Card list file | Loads a `.txt` card list, then fetches + renders |
+   | 5 | Clear folders | Removes rendered PNGs and/or downloaded art |
+
+4. **Card Input** (modes 1 & 3): type card names, comma-separated.
+5. **Card Input** (mode 4): browse to a card list `.txt` file.
+6. **Card Input** (mode 2 & 5): no card input needed — mode 2 reads names from artwork filenames automatically.
+7. **Run**: Click "Run Generic Pipeline".
+8. **Monitor**: Watch real-time output in the log area.
+
+#### Custom Art Workflow (Mode 2)
+
+Name your artwork files exactly after the card (e.g. `Lightning Bolt.jpg`) and place them in the directory configured as `fetch.artScanDir` in `generic_card_config.json`. Run the pipeline in mode 2 — it scans that folder, fetches the matching card data from Scryfall, and renders PNGs alongside the artwork.
 
 ### Rolecard Pipeline
 

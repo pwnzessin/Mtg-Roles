@@ -364,7 +364,7 @@ Write-Host "  ==========================================" -ForegroundColor White
 
 Write-Section "Select mode"
 Write-Host "    1  Fetch from Scryfall + render cards"
-Write-Host "    2  Fetch .txt from Scryfall by artwork filenames + render"
+Write-Host "    2  Render custom art files"
 Write-Host "    3  Fetch from Scryfall only (no render)"
 Write-Host "    4  Load card list file + fetch + render"
 Write-Host "    5  Clear output / downloaded art folders"
