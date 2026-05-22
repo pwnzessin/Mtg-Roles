@@ -364,7 +364,7 @@ Write-Host "  ==========================================" -ForegroundColor White
 
 Write-Section "Select mode"
 Write-Host "    1  Fetch from Scryfall + render cards"
-Write-Host "    2  Render existing .txt files"
+Write-Host "    2  Fetch .txt from Scryfall by artwork filenames + render"
 Write-Host "    3  Fetch from Scryfall only (no render)"
 Write-Host "    4  Load card list file + fetch + render"
 Write-Host "    5  Clear output / downloaded art folders"
@@ -377,7 +377,7 @@ if ($RunMode -gt 0) {
     $mode = Ask-String "Mode" "1"
 }
 
-$doFetch    = $mode -in @("1","3","4")
+$doFetch    = $mode -in @("1","2","3","4")
 $doGenerate = $mode -in @("1","2","4")
 
 if (-not $doFetch -and -not $doGenerate -and $mode -ne "5") {
@@ -485,6 +485,34 @@ if ($mode -eq "4") {
     }
 }
 
+# ── Art scan (mode 2) ────────────────────────────────────────────────────────
+
+$mode2ArtDir = $null
+
+if ($mode -eq "2") {
+    Write-Section "Scan Art Directory"
+
+    $defaultArtDir = if ($cfg.fetch.artScanDir) { $cfg.fetch.artScanDir } else { Join-Path $root $cfg.fetch.artDir }
+    $mode2ArtDir   = Ask-String "Art directory to scan" $defaultArtDir
+
+    if (-not (Test-Path $mode2ArtDir)) {
+        Write-Host "  Directory not found: $mode2ArtDir" -ForegroundColor Red
+        exit 1
+    }
+
+    $artFiles = @(Get-ChildItem $mode2ArtDir -File | Where-Object { $_.Extension -in @('.jpg','.jpeg','.png') } | Sort-Object Name)
+
+    if ($artFiles.Count -eq 0) {
+        Write-Host "  No image files (.jpg/.jpeg/.png) found in $mode2ArtDir" -ForegroundColor Yellow
+        exit 0
+    }
+
+    $preloadedCardNames = @($artFiles | ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) })
+    Write-Host "    Found $($preloadedCardNames.Count) artwork file(s):" -ForegroundColor DarkGray
+    $preloadedCardNames | ForEach-Object { Write-Host "      $_" -ForegroundColor DarkGray }
+    Write-Host ""
+}
+
 # ── Fetch options ──────────────────────────────────────────────────────────────
 
 if ($doFetch) {
@@ -517,11 +545,18 @@ if ($doFetch) {
 
     $defaultFetchOut = Join-Path $root $cfg.fetch.cardsDir
     $fetchOutDir     = Ask-String "Output directory (.txt files)" $defaultFetchOut
-    $fetchArtDir     = Join-Path $root $cfg.fetch.artDir
-    Write-Host "    Art output: $fetchArtDir" -ForegroundColor DarkGray
+    if ($mode -eq "2") {
+        # Art already on disk — use the scanned directory, skip downloading
+        $fetchArtDir = $mode2ArtDir
+        Write-Host "    Art directory: $fetchArtDir (existing, will not re-download)" -ForegroundColor DarkGray
+        $fetchArt = $false
+    } else {
+        $fetchArtDir = Join-Path $root $cfg.fetch.artDir
+        Write-Host "    Art output: $fetchArtDir" -ForegroundColor DarkGray
+        $fetchArt = Ask-Bool "Download artwork" ([bool]$cfg.fetch.downloadArt)
+    }
     $fetchSet        = Ask-String "Prefer set code (blank = any printing)" $cfg.fetch.preferSet
     $fetchOverwrite  = Ask-Bool   "Overwrite existing files" ([bool]$cfg.fetch.overwrite)
-    $fetchArt        = Ask-Bool   "Download artwork" ([bool]$cfg.fetch.downloadArt)
     $defaultArtMode = if ($cfg.fetch.artMode) { [string]$cfg.fetch.artMode } else { "2" }
     $fetchArtMode = if ($fetchArt) {
         Normalize-ArtMode (Ask-String "Art mode (1=direct image variant, 2=png then auto-crop)" $defaultArtMode)

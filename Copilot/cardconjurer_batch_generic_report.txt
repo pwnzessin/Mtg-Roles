@@ -1,20 +1,16 @@
 Generic card batch report
-Generated: 2026-05-21T22:08:24.470Z
+Generated: 2026-05-22T22:30:47.669Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 7
-Cards in run queue: 7
+Total parsed cards: 3
+Cards in run queue: 3
 Dry run: false
 
-OK | Domri, Anarch of Bolas.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Domri, Anarch of Bolas.png
-OK | Eldrazi Temple.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Eldrazi Temple.png
-OK | Huatli, Warrior Poet.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Huatli, Warrior Poet.png
-OK | Petrified Hamlet.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Petrified Hamlet.png
-OK | Together as One.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Together as One.png
-OK | Ulalek, Fused Atrocity.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Ulalek, Fused Atrocity.png
-OK | Vivien, Champion of the Wilds.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Vivien, Champion of the Wilds.png
+OK | Ravager Wurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Ravager Wurm.png
+OK | Sarinth Greatwurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Sarinth Greatwurm.png
+OK | Symbiotic Wurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Symbiotic Wurm.png
 
-Generated:        7
+Generated:        3
 Skipped (exists): 0
 Failed:           0
