@@ -91,11 +91,8 @@ An interactive PowerShell wizard (`Copilot/cardconjurer_batch/generic_card_pipel
 
 | # | Mode | Description |
 |---|---|---|
-| 1 | Fetch + Render | Enter card names; fetch data + art from Scryfall, then render |
-| 2 | Render custom art files | Scan an art directory for images, derive card names from filenames, fetch only the `.txt` from Scryfall, then render |
-| 3 | Fetch only | Download card data + art from Scryfall without rendering |
-| 4 | Card list file | Load a deck-list `.txt` from `Copilot\cardconjurer_batch\Cardlists\`, then fetch + render |
-| 5 | Clear folders | Interactively remove rendered PNGs, `.txt` files, and/or downloaded artwork |
+| 1 | Render custom art files | Scan an art directory for images, derive card names from filenames, fetch only the `.txt` from Scryfall, then render |
+| 2 | Card list + fetch + render | Load a deck-list `.txt` from `Copilot\cardconjurer_batch\Cardlists\`, then fetch + render |
 
 ### Chunked Pipeline
 

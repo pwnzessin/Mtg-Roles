@@ -29,10 +29,5 @@
                      "upscaleFactor":  2,
                      "limit":  0,
                      "dryRun":  false
-                 },
-    "setIcons":  {
-                     "enabled":  false,
-                     "outputDir":  "Artworks\\SetIcons",
-                     "setCodesList":  ""
                  }
 }

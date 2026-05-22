@@ -16,8 +16,7 @@
 param(
     [string]$ConfigFile   = "$PSScriptRoot\generic_card_config.json",
     [int]   $RunMode      = 0,       # 1-5; 0 = ask interactively
-    [string]$CardListFile = "",     # path to .txt card list (mode 4)
-    [string]$CardNames    = "",     # comma-separated card names (modes 1/3)
+    [string]$CardListFile = "",     # path to .txt card list (mode 2)
     [switch]$Yes                     # accept all config defaults, no prompts
 )
 
