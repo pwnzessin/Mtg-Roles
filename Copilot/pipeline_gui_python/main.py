@@ -158,11 +158,8 @@ class _PipelineTabBase(QWidget):
             root.addWidget(self._section_label("Mode"))
             self.mode_combo = QComboBox()
             self.mode_combo.addItems([
-                "1 \u2014 Fetch from Scryfall + render",
-                "2 \u2014 Render custom art files",
-                "3 \u2014 Fetch from Scryfall only",
-                "4 \u2014 Load card list + fetch + render",
-                "5 \u2014 Clear output / downloaded art",
+                "1 \u2014 Render custom art files",
+                "2 \u2014 Load card list + fetch + render",
             ])
             self.mode_combo.setCurrentIndex(0)
             self.mode_combo.currentIndexChanged.connect(self._on_mode_changed)
@@ -235,13 +232,12 @@ class _PipelineTabBase(QWidget):
 
     def _on_mode_changed(self, index):
         """Switch card input page to match selected mode."""
-        # modes: 0=fetch+render, 1=render only, 2=fetch only, 3=cardlist, 4=clear
-        if index == 3:          # mode 4 — card list file
+        # mode 1 (index 0) = custom art - no card input
+        # mode 2 (index 1) = card list file
+        if index == 1:   # mode 2 - card list file
             self._card_stack.setCurrentIndex(1)
-        elif index in (1, 4):   # mode 2 / 5 — no card input
+        else:            # mode 1 - no card input
             self._card_stack.setCurrentIndex(2)
-        else:                   # mode 1 / 3 — card names
-            self._card_stack.setCurrentIndex(0)
 
     def _browse_card_list(self):
         path, _ = QFileDialog.getOpenFileName(
@@ -348,14 +344,8 @@ class _PipelineTabBase(QWidget):
             mode_index = self.mode_combo.currentIndex()  # 0-based
             run_mode   = mode_index + 1                  # 1-based for PS script
 
-            # Validate card input for modes that need it
-            if run_mode in (1, 3):
-                names = self.card_names_input.text().strip()
-                if not names:
-                    QMessageBox.warning(self, "No Card Names",
-                                        "Enter at least one card name.")
-                    return
-            elif run_mode == 4:
+            # Validate card input for mode 2 (card list)
+            if run_mode == 2:
                 card_list = self.card_list_input.text().strip()
                 if not card_list or not Path(card_list).exists():
                     QMessageBox.warning(self, "No Card List",
@@ -368,9 +358,7 @@ class _PipelineTabBase(QWidget):
             if config_path and Path(config_path).exists():
                 extra_args += ["-ConfigFile", config_path]
 
-            if run_mode in (1, 3):
-                extra_args += ["-CardNames", self.card_names_input.text().strip()]
-            elif run_mode == 4:
+            if run_mode == 2:
                 extra_args += ["-CardListFile", self.card_list_input.text().strip()]
         else:
             config_path = self.config_input.text().strip()

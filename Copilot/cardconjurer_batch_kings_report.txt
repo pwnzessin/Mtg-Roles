@@ -1,5 +1,5 @@
 CardConjurer batch report for role folder: Kings
-Generated: 2026-05-20T20:19:41.209Z
+Generated: 2026-05-22T22:49:55.323Z
 
 Total parsed cards: 20
 Cards in run queue: 1

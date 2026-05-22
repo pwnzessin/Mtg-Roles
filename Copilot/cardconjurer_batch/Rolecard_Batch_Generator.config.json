@@ -1,7 +1,4 @@
-{
-    "roles":  [
-                  "Assassins"
-              ],
+﻿{
     "limit":  1,
     "qualityChoice":  "4",
     "applyMargin":  true,

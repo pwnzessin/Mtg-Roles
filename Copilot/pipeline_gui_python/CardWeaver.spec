@@ -5,7 +5,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('assets', 'assets')],
+    datas=[('C:\\Users\\hecke\\Desktop\\Mtg-Roles\\Copilot\\pipeline_gui_python\\assets', 'assets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

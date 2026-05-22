@@ -1,5 +1,5 @@
 CardConjurer batch report for role folder: Bandits
-Generated: 2026-05-20T20:19:12.756Z
+Generated: 2026-05-22T22:49:27.309Z
 
 Total parsed cards: 22
 Cards in run queue: 1

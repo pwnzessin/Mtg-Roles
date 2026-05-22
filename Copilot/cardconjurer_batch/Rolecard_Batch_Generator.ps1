@@ -582,7 +582,6 @@ if (-not $Yes) {
 
 # Export current settings to JSON config
 $configObj = [ordered]@{
-    roles        = $roles
     limit        = $limit
     qualityChoice = $qualityChoice
     applyMargin = [bool]$applyMargin

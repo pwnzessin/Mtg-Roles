@@ -71,15 +71,11 @@ Output: `dist/CardWeaver.exe`
 
    | Mode | Name | What it does |
    |---|---|---|
-   | 1 | Fetch + Render | Enter card names; fetches data + art from Scryfall, then renders |
-   | 2 | Render custom art files | Scans your `artScanDir` for images, derives card names from filenames, fetches only the `.txt` from Scryfall (no art re-download), then renders |
-   | 3 | Fetch only | Downloads card data + art without rendering |
-   | 4 | Card list file | Loads a `.txt` card list, then fetches + renders |
-   | 5 | Clear folders | Removes rendered PNGs and/or downloaded art |
+   | 1 | Render custom art files | Scans your `artScanDir` for images, derives card names from filenames, fetches only the `.txt` from Scryfall (no art re-download), then renders |
+   | 2 | Card list + fetch + render | Loads a `.txt` card list, then fetches + renders |
 
-4. **Card Input** (modes 1 & 3): type card names, comma-separated.
-5. **Card Input** (mode 4): browse to a card list `.txt` file.
-6. **Card Input** (mode 2 & 5): no card input needed — mode 2 reads names from artwork filenames automatically.
+4. **Card Input** (mode 1): no card input needed — names are read from artwork filenames automatically.
+5. **Card Input** (mode 2): browse to a card list `.txt` file.
 7. **Run**: Click "Run Generic Pipeline".
 8. **Monitor**: Watch real-time output in the log area.
 
