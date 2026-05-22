@@ -451,10 +451,13 @@ class PipelineGUI(QMainWindow):
         top_layout = QHBoxLayout(top_bar)
         top_layout.setContentsMargins(12, 0, 12, 0)
 
-        title_lbl = QLabel("CardWeaver")
-        title_lbl.setObjectName("appTitle")
-        top_layout.addWidget(title_lbl)
         top_layout.addStretch()
+
+        help_btn = QPushButton("Config Help")
+        help_btn.setObjectName("helpButton")
+        help_btn.setFixedWidth(110)
+        help_btn.clicked.connect(self._open_config_help)
+        top_layout.addWidget(help_btn)
 
         self.theme_btn = QPushButton("☀ Light")
         self.theme_btn.setObjectName("themeButton")
@@ -470,6 +473,12 @@ class PipelineGUI(QMainWindow):
         self.tabs.addTab(RolecardPipelineTab(), "Rolecard Pipeline")
         root.addWidget(self.tabs)
 
+    def _open_config_help(self):
+        if self.tabs.currentIndex() == 1:
+            RolecardConfigHelpDialog(self).exec()
+        else:
+            GenericConfigHelpDialog(self).exec()
+
     def _toggle_theme(self):
         self.dark_mode = not self.dark_mode
         self._apply_theme()
@@ -481,6 +490,130 @@ class PipelineGUI(QMainWindow):
         else:
             self.setStyleSheet(theme.LIGHT_STYLESHEET)
             self.theme_btn.setText("☾ Dark")
+
+
+class RolecardConfigHelpDialog(QDialog):
+    """Explains every parameter in Rolecard_Batch_Generator.config.json."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Rolecard Pipeline \u2014 Config Reference")
+        self.resize(680, 440)
+
+        root = QVBoxLayout(self)
+
+        browser = QTextBrowser()
+        browser.setOpenExternalLinks(False)
+        browser.setHtml(self._help_html())
+        root.addWidget(browser, stretch=1)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
+        buttons.rejected.connect(self.reject)
+        root.addWidget(buttons)
+
+    @staticmethod
+    def _help_html() -> str:
+        return """
+<style>
+  body  { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; margin: 8px; }
+  h3    { color: #d4af37; margin-bottom: 4px; }
+  h4    { border-bottom: 1px solid #666; padding-bottom: 3px; margin-top: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  td    { padding: 4px 6px; vertical-align: top; }
+  td:first-child { width: 190px; white-space: nowrap; font-weight: bold; }
+  tr:nth-child(even) { background: rgba(128,128,128,0.08); }
+  code  { background: rgba(128,128,128,0.15); padding: 0 3px; border-radius: 3px; }
+  p     { margin: 4px 0 10px; }
+</style>
+<h3>Rolecard Pipeline &mdash; Config Reference</h3>
+<p>Settings are saved automatically after each run, persisting your last-used values.</p>
+
+<h4>Parameters</h4>
+<table>
+  <tr><td>limit</td><td>Maximum number of cards to render per role. <code>0</code> = render all cards in the role folder.<br>Default: <code>0</code></td></tr>
+  <tr><td>qualityChoice</td><td>Output image quality preset:<br>
+    <code>1</code> &mdash; Original PNG (full resolution, lossless)<br>
+    <code>2</code> &mdash; 50% PNG (half resolution, lossless)<br>
+    <code>3</code> &mdash; 37% PNG, fixed 750&times;1050 px @ 300 DPI (print-ready)<br>
+    <code>4</code> &mdash; 50% JPEG Q85 (half resolution, lossy &mdash; default)<br>
+    Default: <code>4</code></td></tr>
+  <tr><td>applyMargin</td><td>Add a white print margin around each rendered card.<br><code>true</code> = include margin &nbsp; <code>false</code> = no margin.<br>Has no effect when quality is set to <code>3</code> (fixed-size preset already includes margins).<br>Default: <code>false</code></td></tr>
+  <tr><td>finalUpscaleEnabled</td><td>Upscale the final rendered output using bicubic interpolation after all processing steps.<br><code>false</code> = skip upscale &nbsp; <code>true</code> = upscale by <b>finalUpscaleFactor</b>.<br>Default: <code>false</code></td></tr>
+  <tr><td>finalUpscaleFactor</td><td>Integer scale multiplier applied when <b>finalUpscaleEnabled</b> is <code>true</code>. For example, <code>2</code> doubles both width and height.<br>Default: <code>2</code></td></tr>
+</table>
+"""
+
+
+class GenericConfigHelpDialog(QDialog):
+    """Explains every parameter in generic_card_config.json."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Generic Pipeline \u2014 Config Reference")
+        self.resize(700, 580)
+
+        root = QVBoxLayout(self)
+
+        browser = QTextBrowser()
+        browser.setOpenExternalLinks(False)
+        browser.setHtml(self._help_html())
+        root.addWidget(browser, stretch=1)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
+        buttons.rejected.connect(self.reject)
+        root.addWidget(buttons)
+
+    @staticmethod
+    def _help_html() -> str:
+        return """
+<style>
+  body  { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; margin: 8px; }
+  h3    { color: #d4af37; margin-bottom: 4px; }
+  h4    { border-bottom: 1px solid #666; padding-bottom: 3px; margin-top: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  td    { padding: 4px 6px; vertical-align: top; }
+  td:first-child { width: 170px; white-space: nowrap; font-weight: bold; }
+  tr:nth-child(even) { background: rgba(128,128,128,0.08); }
+  code  { background: rgba(128,128,128,0.15); padding: 0 3px; border-radius: 3px; }
+  p     { margin: 4px 0 10px; }
+</style>
+<h3>Generic Card Pipeline &mdash; Config Reference</h3>
+<p>All paths are relative to the workspace root unless absolute.
+The config file is saved automatically after each pipeline run, persisting your last-used settings.</p>
+
+<h4>fetch</h4>
+<table>
+  <tr><td>cardsDir</td><td>Output folder for fetched <code>.txt</code> card data files.<br>Default: <code>Cards\\Generic</code></td></tr>
+  <tr><td>artDir</td><td>Output folder for downloaded artwork (used in mode 2 when art download is enabled).<br>Default: <code>Artworks\\Downloaded</code></td></tr>
+  <tr><td>cardlistsDir</td><td>Folder shown when browsing for a card list file in mode 2.<br>Default: <code>Copilot\\cardconjurer_batch\\Cardlists</code></td></tr>
+  <tr><td>artScanDir</td><td>Folder scanned in mode 1. Each image filename (without extension) becomes a card name to fetch from Scryfall. Supports <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>.</td></tr>
+  <tr><td>preferSet</td><td>Preferred MTG set code (e.g. <code>m21</code>, <code>lea</code>). Leave blank to use the default printing returned by Scryfall.</td></tr>
+  <tr><td>artMode</td><td><code>1</code> &mdash; download the art image variant directly (see <b>artVersion</b>).<br><code>2</code> &mdash; download the full-card PNG then auto-crop to the art box and save as JPEG (see <b>pngCropJpegQuality</b>).</td></tr>
+  <tr><td>artVersion</td><td>Scryfall image variant used when <b>artMode</b> is <code>1</code>.<br>Options: <code>art_crop</code>, <code>border_crop</code>, <code>normal</code>, <code>large</code>, <code>png</code>.</td></tr>
+  <tr><td>pngCropJpegQuality</td><td>JPEG compression quality (1&ndash;100) for art produced by artMode 2. Higher = better quality, larger file.<br>Default: <code>95</code></td></tr>
+  <tr><td>upscaleEnabled</td><td>Upscale downloaded/cropped artwork after fetch. <code>false</code> = skip, <code>true</code> = upscale using <b>upscaleEngine</b>.</td></tr>
+  <tr><td>upscaleEngine</td><td><code>auto</code> &mdash; use Real-ESRGAN if found in PATH, otherwise fall back to Lanczos.<br><code>realesrgan</code> &mdash; force Real-ESRGAN (must be in PATH).<br><code>lanczos</code> &mdash; high-quality bicubic resize, no extra tools needed.</td></tr>
+  <tr><td>upscaleFactor</td><td>Scale multiplier applied during upscale. Accepted values: <code>2</code> or <code>4</code>.</td></tr>
+  <tr><td>overwrite</td><td>Whether to overwrite existing <code>.txt</code> and art files.<br><code>true</code> = always overwrite &nbsp; <code>false</code> = skip already-existing files.</td></tr>
+  <tr><td>downloadArt</td><td>Pre-filled default for the &ldquo;Download artwork?&rdquo; prompt shown in mode 2.<br><code>false</code> = fetch <code>.txt</code> only &nbsp; <code>true</code> = fetch <code>.txt</code> + artwork.<br>Always ignored in mode 1 (art is already on disk).</td></tr>
+  <tr><td>dryRun</td><td>If <code>true</code>, the fetch step logs what it would do but writes no files and makes no Scryfall requests. Useful for testing card lists.</td></tr>
+  <tr><td>chunkSize</td><td>Cards per batch when chaining fetch&rarr;render. <code>0</code> disables chunking (fetch all first, then render all). Chunking is useful for large lists to avoid Playwright memory issues.</td></tr>
+</table>
+
+<h4>generate</h4>
+<table>
+  <tr><td>outputSubDir</td><td>Sub-folder relative to the <code>.txt</code> input directory where rendered PNGs are saved.<br>Default: <code>output</code></td></tr>
+  <tr><td>baseUrl</td><td>URL of the local CardConjurer server. Change only if you run it on a custom port.<br>Default: <code>http://localhost:8080</code></td></tr>
+  <tr><td>headless</td><td><code>true</code> = run the Playwright browser invisibly (recommended for batch runs).<br><code>false</code> = show the browser window (useful for debugging renders).</td></tr>
+  <tr><td>startLauncher</td><td><code>true</code> = auto-start the CardConjurer launcher before rendering.<br><code>false</code> = assume the server is already running.</td></tr>
+  <tr><td>overwrite</td><td>Whether to overwrite existing output PNG files.<br><code>false</code> = skip cards that already have a rendered PNG.</td></tr>
+  <tr><td>upscaleEnabled</td><td>Upscale rendered PNG output after generation. Uses the same engine/factor options as the fetch upscale.</td></tr>
+  <tr><td>upscaleEngine</td><td>Upscale engine for rendered output. Same options as <b>fetch.upscaleEngine</b>.</td></tr>
+  <tr><td>upscaleFactor</td><td>Scale multiplier for rendered output: <code>2</code> or <code>4</code>.</td></tr>
+  <tr><td>limit</td><td>Maximum number of cards to render in one run. <code>0</code> = render all cards found in the input directory.</td></tr>
+  <tr><td>dryRun</td><td>If <code>true</code>, the render step logs which cards it would process but skips all Playwright calls.</td></tr>
+</table>
+"""
 
 
 class MissingDependenciesDialog(QDialog):
@@ -557,7 +690,7 @@ class SplashScreen(QWidget):
 
         # ── Layout ────────────────────────────────────────────────────────
         root = QVBoxLayout(self)
-        root.setContentsMargins(30, 28, 30, 18)
+        root.setContentsMargins(30, 28, 30, 14)
         root.setSpacing(0)
 
         title = QLabel("CardWeaver")
@@ -574,7 +707,16 @@ class SplashScreen(QWidget):
         root.addWidget(title)
         root.addStretch()
 
-        copyright_lbl = QLabel("\u00a9 2026 CardWeaver  \u2014  All rights reserved")
+        self._status_lbl = QLabel("")
+        self._status_lbl.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self._status_lbl.setStyleSheet(
+            "color: #d4af37;"
+            "background: transparent;"
+            "font-size: 11px;"
+        )
+        root.addWidget(self._status_lbl)
+
+        copyright_lbl = QLabel("\u00a9 2026 CardWeaver  \u2014  do what you want with this")
         copyright_lbl.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)
         copyright_lbl.setStyleSheet(
             "color: rgba(220, 220, 220, 200);"
@@ -586,6 +728,14 @@ class SplashScreen(QWidget):
     def paintEvent(self, event):  # noqa: N802
         painter = QPainter(self)
         painter.drawPixmap(0, 0, self._bg)
+
+        overlay = QColor(10, 10, 22, 175)
+        # Bottom band — covers status + copyright
+        painter.fillRect(0, self.height() - 58, self.width(), 58, overlay)
+
+    def set_status(self, text: str) -> None:
+        self._status_lbl.setText(text)
+        QApplication.processEvents()
 
     def mousePressEvent(self, event):  # noqa: N802
         self.clicked.emit()
@@ -615,6 +765,7 @@ def main():
     app.processEvents()
 
     # Run dependency check while splash is visible
+    splash.set_status("Checking dependencies\u2026")
     problems = _check_dependencies()
     window = PipelineGUI()
 
