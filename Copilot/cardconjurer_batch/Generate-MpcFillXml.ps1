@@ -53,9 +53,26 @@ function Escape-Xml([string]$s) {
     return $s
 }
 
+function Resolve-RelPath([string]$Base, [string]$Value) {
+    # Returns $Value unchanged when empty or already absolute;
+    # otherwise resolves it relative to $Base.
+    if ([string]::IsNullOrWhiteSpace($Value)) { return $Value }
+    if ([System.IO.Path]::IsPathRooted($Value)) { return $Value }
+    return [System.IO.Path]::GetFullPath((Join-Path $Base $Value))
+}
+
 # ---------------------------------------------------------------------------
 # Collect inputs
 # ---------------------------------------------------------------------------
+$workspaceRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\.."))
+
+# Resolve any relative path parameters against the workspace root.
+$TemplatesRoot = Resolve-RelPath $workspaceRoot $TemplatesRoot
+$CardbackPath  = Resolve-RelPath $workspaceRoot $CardbackPath
+$CardbacksDir  = Resolve-RelPath $workspaceRoot $CardbacksDir
+$AutofillDir   = Resolve-RelPath $workspaceRoot $AutofillDir
+$OutputXml     = Resolve-RelPath $workspaceRoot $OutputXml
+
 Write-Host ""
 Write-Host "=== MPC Autofill XML Generator ===" -ForegroundColor Cyan
 

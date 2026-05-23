@@ -112,6 +112,11 @@ function Get-RelativePath {
     return $rel -replace '/', '\'
 }
 
+function Resolve-ConfigPath([string]$Base, [string]$Value) {
+    # Returns $Value unchanged when absolute; otherwise joins with $Base.
+    if ([System.IO.Path]::IsPathRooted($Value)) { $Value } else { Join-Path $Base $Value }
+}
+
 function Find-RealEsrganExe {
     $candidates = @(
         "realesrgan-ncnn-vulkan.exe",
@@ -396,7 +401,7 @@ if ($mode -eq "2") {
         )
         Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $(Split-Path $CardListFile -Leaf)" -ForegroundColor DarkGray
     } else {
-        $cardlistsDir = Join-Path $root $cfg.fetch.cardlistsDir
+        $cardlistsDir = Resolve-ConfigPath $root $cfg.fetch.cardlistsDir
         $txtFiles = @(Get-ChildItem $cardlistsDir -Filter "*.txt" -ErrorAction SilentlyContinue | Sort-Object Name)
 
         if ($txtFiles.Count -eq 0) {
@@ -433,7 +438,10 @@ $mode2ArtDir = $null
 if ($mode -eq "1") {
     Write-Section "Scan Art Directory"
 
-    $defaultArtDir = if ($cfg.fetch.artScanDir) { $cfg.fetch.artScanDir } else { Join-Path $root $cfg.fetch.artDir }
+    $defaultArtDir = if ($cfg.fetch.artScanDir) {
+        $raw = $cfg.fetch.artScanDir
+        if ([System.IO.Path]::IsPathRooted($raw)) { $raw } else { Join-Path $root $raw }
+    } else { Resolve-ConfigPath $root $cfg.fetch.artDir }
     $mode2ArtDir   = Ask-String "Art directory to scan" $defaultArtDir
 
     if (-not (Test-Path $mode2ArtDir)) {
@@ -466,7 +474,7 @@ if ($doFetch) {
         exit 0
     }
 
-    $defaultFetchOut = Join-Path $root $cfg.fetch.cardsDir
+    $defaultFetchOut = Resolve-ConfigPath $root $cfg.fetch.cardsDir
     $fetchOutDir     = Ask-String "Output directory (.txt files)" $defaultFetchOut
     if ($mode -eq "1") {
         # Art already on disk — use the scanned directory, skip downloading
@@ -474,7 +482,7 @@ if ($doFetch) {
         Write-Host "    Art directory: $fetchArtDir (existing, will not re-download)" -ForegroundColor DarkGray
         $fetchArt = $false
     } else {
-        $fetchArtDir = Join-Path $root $cfg.fetch.artDir
+        $fetchArtDir = Resolve-ConfigPath $root $cfg.fetch.artDir
         Write-Host "    Art output: $fetchArtDir" -ForegroundColor DarkGray
         $fetchArt = Ask-Bool "Download artwork" ([bool]$cfg.fetch.downloadArt)
     }
@@ -527,13 +535,13 @@ if ($doGenerate) {
         Write-Host "    Input:  $genInputDir" -ForegroundColor DarkGray
         Write-Host "    Art:    $genArtDir"   -ForegroundColor DarkGray
     } else {
-        $genInputDir = Ask-String "Input directory (.txt files)" (Join-Path $root $cfg.fetch.cardsDir)
-        $defaultArtDir = Join-Path $root $cfg.fetch.artDir
+        $genInputDir = Ask-String "Input directory (.txt files)" (Resolve-ConfigPath $root $cfg.fetch.cardsDir)
+        $defaultArtDir = Resolve-ConfigPath $root $cfg.fetch.artDir
         $artDirRaw   = Ask-String "Art directory (blank = same as input)" $defaultArtDir
         $genArtDir   = if ($artDirRaw -and $artDirRaw -ne $genInputDir) { $artDirRaw } else { $null }
     }
 
-    $defaultOutput = Join-Path $genInputDir $cfg.generate.outputSubDir
+    $defaultOutput = Resolve-ConfigPath $genInputDir $cfg.generate.outputSubDir
     $genOutputDir  = Ask-String "Output directory (PNG files)" $defaultOutput
     $genOverwrite  = Ask-Bool   "Overwrite existing PNGs" ([bool]$cfg.generate.overwrite)
     $genLimit      = Ask-Int    "Card limit (0 = all)" ([int]$cfg.generate.limit)

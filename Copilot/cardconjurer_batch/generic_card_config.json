@@ -5,7 +5,7 @@
                   "cardsDir":  "Cards\\Generic",
                   "artDir":  "Artworks\\Downloaded",
                   "cardlistsDir":  "Copilot\\cardconjurer_batch\\Cardlists",
-                  "artScanDir":  "C:\\Users\\hecke\\Desktop\\Mtg-Roles\\Cards\\Custom_Art",
+                  "artScanDir":  "Cards\\Custom_Art",
                   "preferSet":  "",
                   "artMode":  1,
                   "artVersion":  "art_crop",

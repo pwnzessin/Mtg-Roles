@@ -112,7 +112,7 @@ Default values live in `Copilot/cardconjurer_batch/generic_card_config.json`:
 |---|---|---|
 | `fetch.cardsDir` | `Cards\Generic` | Where `.txt` files are written |
 | `fetch.artDir` | `Artworks\Downloaded` | Where art crops are saved (modes 1, 3, 4) |
-| `fetch.artScanDir` | _(absolute path)_ | Directory scanned for existing artwork in **mode 2**; filenames (without extension) are used as card names |
+| `fetch.artScanDir` | _(path)_ | Directory scanned for existing artwork in **mode 2**; filenames (without extension) are used as card names. Accepts absolute paths or paths relative to the workspace root |
 | `fetch.cardlistsDir` | `Copilot\cardconjurer_batch\Cardlists` | Card list files directory |
 | `fetch.preferSet` | _(empty)_ | Prefer a specific set code when fetching |
 | `fetch.artVersion` | `art_crop` | Scryfall image variant for artwork (`art_crop`, `border_crop`, `normal`, `large`, `png`) |
