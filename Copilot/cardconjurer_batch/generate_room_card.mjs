@@ -182,7 +182,7 @@ function buildRoomCardObject(baseUrl, c) {
         oneLine: true, font: "belerenb", size: 0.0381, rotation: -90,
       },
       type: {
-        name: "Type", text: "Enchantment \u2014 Room",
+        name: "Type (Right)", text: "Enchantment \u2014 Room",
         x: 0.55, y: 0.4381, width: 0.5367, height: 0.0286,
         oneLine: true, font: "belerenb", size: 0.0286, rotation: -90,
       },
@@ -205,7 +205,11 @@ function buildRoomCardObject(baseUrl, c) {
         x: 0.072, y: 0.8943, width: 0.5367, height: 0.0543,
         oneLine: true, font: "belerenb", size: 0.0381, rotation: -90,
       },
-      // type2 omitted — one shared type line at the divider is enough
+      type2: {
+        name: "Type (Left)", text: "Enchantment \u2014 Room",
+        x: 0.55, y: 0.8943, width: 0.5367, height: 0.0286,
+        oneLine: true, font: "belerenb", size: 0.0286, rotation: -90,
+      },
       rules2: {
         name: "Rules Text (Left)", text: c.face1.rules,
         x: 0.6087, y: 0.8896, width: 0.5174, height: 0.2443,

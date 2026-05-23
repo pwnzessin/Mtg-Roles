@@ -1,5 +1,5 @@
 Room card batch report
-Generated: 2026-05-23T14:13:31.955Z
+Generated: 2026-05-23T14:27:47.969Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
