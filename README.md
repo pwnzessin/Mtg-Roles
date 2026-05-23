@@ -21,33 +21,6 @@ This project generates custom Magic: The Gathering-style "role" cards for multip
 2. Rename the extracted folder to `cardconjurer-master` — it must sit at the top level of the workspace.
 3. Start the CardConjurer server by running the exe; the batch scripts expect it at `http://localhost:8080`.
 
----
-
-## To Do
-
-- [x] ~~Add 1/8 inch margin to layout~~ _(done)_
-- [x] Simplify layout usage — should work with any downloaded layout
-- [x] ~~Add `Y_POS` parameter to cards for artwork vertical position~~ _(done)_
-- [ ] Find better font and fontsize or dpi settings? looks a bit weird
-- [ ] Add Renegades support finally
-- [ ] Verify syntax across all cards ! If you check, make sure to regenerate the artworks first !
-  - [ ] Flavor text and explain text in cursive
-  - [ ] loyality counters where appropriate
-- [x] Final Check of different card compressions in makeplayingcards
-- [x] Set artwork Y-positions manually
-  - [x] ~~Assassins~~ _(done)_
-  - [x] Bandits
-  - [x] Guardians
-  - [x] ~~Kings~~ _(done)_
-  - [x] Renegades
-- [ ] Revise artwork y positions, carerfull top border dim!
-- [x] ~~Create generic card api~~ _(done)_
-- [x] ~~Fix scryfall usage limit~~ _(done)_
-- [x] ~~Enable mpcautofill support~~ _(done)_
-- [x] Create gui for this (CardWeaver — `Copilot/pipeline_gui_python/dist/CardWeaver.exe`)
-- [ ] _(Future)_ Automate artwork Y-position detection, currently impossible / incredibly useless / wasteful
-
----
 
 ## MPC Autofill Export
 
