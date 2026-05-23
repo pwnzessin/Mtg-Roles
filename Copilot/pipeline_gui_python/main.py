@@ -13,6 +13,7 @@ from PyQt6.QtCore import QThread, QTimer, Qt, pyqtSignal
 from PyQt6.QtGui import QColor, QFont, QPainter, QPixmap
 
 import theme
+import highlighter as _hl
 import pipeline
 
 
@@ -152,6 +153,7 @@ class _PipelineTabBase(QWidget):
         self.config_preview.setMinimumHeight(330)
         self.config_preview.setMaximumHeight(420)
         root.addWidget(self.config_preview)
+        self._highlighter = _hl.JsonHighlighter(self.config_preview.document(), dark=True)
 
         if self.HAS_MODES:
             # Mode selector
@@ -224,6 +226,9 @@ class _PipelineTabBase(QWidget):
     def _init_extra_ui(self, root):
         """Subclass hook for extra controls inserted before the Run button."""
         pass
+
+    def update_theme(self, dark: bool) -> None:
+        self._highlighter.set_dark(dark)
 
     def _section_label(self, text):
         lbl = QLabel(text)
@@ -441,36 +446,32 @@ class PipelineGUI(QMainWindow):
         central = QWidget()
         self.setCentralWidget(central)
         root = QVBoxLayout(central)
-        root.setContentsMargins(0, 0, 0, 0)
+        root.setContentsMargins(0, 6, 0, 0)
         root.setSpacing(0)
-
-        # Top bar
-        top_bar = QWidget()
-        top_bar.setObjectName("topBar")
-        top_bar.setFixedHeight(40)
-        top_layout = QHBoxLayout(top_bar)
-        top_layout.setContentsMargins(12, 0, 12, 0)
-
-        top_layout.addStretch()
-
-        help_btn = QPushButton("Config Help")
-        help_btn.setObjectName("helpButton")
-        help_btn.setFixedWidth(110)
-        help_btn.clicked.connect(self._open_config_help)
-        top_layout.addWidget(help_btn)
-
-        self.theme_btn = QPushButton("☀ Light")
-        self.theme_btn.setObjectName("themeButton")
-        self.theme_btn.setFixedWidth(80)
-        self.theme_btn.clicked.connect(self._toggle_theme)
-        top_layout.addWidget(self.theme_btn)
-
-        root.addWidget(top_bar)
 
         # Tabs
         self.tabs = QTabWidget()
         self.tabs.addTab(GenericPipelineTab(),  "Generic Pipeline")
         self.tabs.addTab(RolecardPipelineTab(), "Rolecard Pipeline")
+
+        # Corner buttons — rendered inline with the tab bar
+        corner = QWidget()
+        corner_layout = QHBoxLayout(corner)
+        corner_layout.setContentsMargins(0, 0, 8, 0)
+        corner_layout.setSpacing(6)
+
+        help_btn = QPushButton("Config Help")
+        help_btn.setObjectName("helpButton")
+        help_btn.clicked.connect(self._open_config_help)
+        corner_layout.addWidget(help_btn)
+
+        self.theme_btn = QPushButton("☀ Light")
+        self.theme_btn.setObjectName("themeButton")
+        self.theme_btn.clicked.connect(self._toggle_theme)
+        corner_layout.addWidget(self.theme_btn)
+
+        self.tabs.setCornerWidget(corner, Qt.Corner.TopRightCorner)
+
         root.addWidget(self.tabs)
 
     def _open_config_help(self):
@@ -490,6 +491,8 @@ class PipelineGUI(QMainWindow):
         else:
             self.setStyleSheet(theme.LIGHT_STYLESHEET)
             self.theme_btn.setText("☾ Dark")
+        for i in range(self.tabs.count()):
+            self.tabs.widget(i).update_theme(self.dark_mode)
 
 
 class RolecardConfigHelpDialog(QDialog):
@@ -787,6 +790,8 @@ def main():
             )
             msg.exec()
         window.show()
+        window.raise_()
+        window.activateWindow()
 
     QTimer.singleShot(SplashScreen.DISPLAY_MS, _launch)
     splash.clicked.connect(_launch)
