@@ -135,7 +135,8 @@ function buildRoomCardObject(baseUrl, c) {
     setSymbolX:      0,
     setSymbolY:      0,
     setSymbolZoom,
-    setSymbolBounds: { x: 0.517, y: 0.4381, width: 0.08, height: 0.035, vertical: "center", horizontal: "right" },
+    setSymbolBounds:  { x: 0.5, y: 0.08, width: 0.067, height: 0.048, vertical: "center", horizontal: "center" },
+    setSymbolRotate:  -90,
 
     watermarkSource:  "",
     watermarkX:       0,

@@ -227,7 +227,7 @@ function buildCardObject(baseUrl, c) {
           oneLine: true, font: "belerenb", size: 0.0381,
         },
         type: {
-          name: "Type", text: c.typeLine || "",
+          name: "Type", text: `{bold}${c.typeLine || ""}{/bold}`,
           x: 0.0867, y: 0.5625, width: 0.8267, height: 0.0548,
           oneLine: true, font: "belerenb", size: 0.0324,
         },
@@ -297,7 +297,7 @@ function buildCardObject(baseUrl, c) {
       },
       type: {
         name:    "Type",
-        text:    c.typeLine || "",
+        text:    `{bold}${c.typeLine || ""}{/bold}`,
         x:       0.0854,
         y:       0.5664,
         width:   0.8292,
@@ -317,7 +317,7 @@ function buildCardObject(baseUrl, c) {
       },
       pt: {
         name:    "Power/Toughness",
-        text:    c.pt || "",
+        text:    `{bold}${c.pt || ""}{/bold}`,
         x:       0.7928,
         y:       0.902,
         width:   0.1367,

@@ -322,6 +322,31 @@ function Invoke-ArtUpscale {
     }
 }
 
+function Expand-CardList {
+    # Parses lines like "9 Forest" or "1x Sacred Foundry" and expands to individual names.
+    # Quantities > 1 produce  CardName_1, CardName_2, ..., CardName_N  (forced suffix).
+    # Quantity   = 1 produces  CardName  (no suffix).
+    param([string[]]$Lines)
+    $result = [System.Collections.Generic.List[string]]::new()
+    foreach ($line in $Lines) {
+        $line = $line.Trim()
+        if ($line -eq "" -or $line.StartsWith("#")) { continue }
+        if ($line -match '^(\d+)x?\s+(.+)$') {
+            $qty  = [int]$Matches[1]
+            $name = $Matches[2].Trim()
+        } else {
+            $qty  = 1
+            $name = $line
+        }
+        if ($qty -le 1) {
+            $result.Add($name)
+        } else {
+            for ($n = 1; $n -le $qty; $n++) { $result.Add("${name}_${n}") }
+        }
+    }
+    return $result.ToArray()
+}
+
 function Write-Section {
     param([string]$Title)
     Write-Host ""
@@ -394,11 +419,7 @@ if ($mode -eq "2") {
     Write-Section "Select Card List"
 
     if ($CardListFile -and (Test-Path $CardListFile)) {
-        $preloadedCardNames = @(
-            Get-Content $CardListFile | ForEach-Object {
-                ($_ -replace '^\s*\d+x?\s+', '').Trim()
-            } | Where-Object { $_ -ne "" -and -not $_.StartsWith("#") }
-        )
+        $preloadedCardNames = Expand-CardList (Get-Content $CardListFile)
         Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $(Split-Path $CardListFile -Leaf)" -ForegroundColor DarkGray
     } else {
         $cardlistsDir = Resolve-ConfigPath $root $cfg.fetch.cardlistsDir
@@ -422,11 +443,7 @@ if ($mode -eq "2") {
         }
 
         $selectedFile = $txtFiles[$idx - 1].FullName
-        $preloadedCardNames = @(
-            Get-Content $selectedFile | ForEach-Object {
-                ($_ -replace '^\s*\d+x?\s+', '').Trim()
-            } | Where-Object { $_ -ne "" -and -not $_.StartsWith("#") }
-        )
+        $preloadedCardNames = Expand-CardList (Get-Content $selectedFile)
         Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $($txtFiles[$idx-1].Name)" -ForegroundColor DarkGray
     }
 }
@@ -516,6 +533,8 @@ if ($doFetch) {
     if ($fetchUpscaleFactor -lt 2) { $fetchUpscaleFactor = 2 }
     if ($fetchUpscaleFactor -gt 4) { $fetchUpscaleFactor = 4 }
     $fetchDryRun     = [bool]$cfg.fetch.dryRun
+    $defaultIncludeFlavor = if ($null -ne $cfg.fetch.includeFlavor) { [bool]$cfg.fetch.includeFlavor } else { $true }
+    $fetchIncludeFlavor = Ask-Bool "Include flavor text" $defaultIncludeFlavor
 }
 
 # ── Generate options ───────────────────────────────────────────────────────────
@@ -585,6 +604,7 @@ if ($doFetch) {
         }
         Write-KV "Upscale:" $(if ($fetchUpscaleEnabled) { "Yes ($fetchUpscaleEngine x$fetchUpscaleFactor)" } else { "No" })
     }
+    Write-KV "Flavor text:"  $(if ($fetchIncludeFlavor) { "Yes" } else { "No" })
     if ($fetchDryRun)    { Write-Host "    *** FETCH DRY RUN (config) ***" -ForegroundColor Yellow }
 }
 
@@ -624,9 +644,10 @@ if ($doFetch) {
     $cfg.fetch.downloadArt    = $fetchArt
     $cfg.fetch.artMode        = [int]$fetchArtMode
     $cfg.fetch.artVersion     = $fetchArtVersion
-    $cfg.fetch.upscaleEnabled = $fetchUpscaleEnabled
-    $cfg.fetch.upscaleEngine  = $fetchUpscaleEngine
-    $cfg.fetch.upscaleFactor  = $fetchUpscaleFactor
+    $cfg.fetch.upscaleEnabled  = $fetchUpscaleEnabled
+    $cfg.fetch.upscaleEngine   = $fetchUpscaleEngine
+    $cfg.fetch.upscaleFactor   = $fetchUpscaleFactor
+    $cfg.fetch.includeFlavor   = $fetchIncludeFlavor
 }
 if ($doGenerate) {
     $cfg.generate.outputSubDir   = Get-RelativePath $genInputDir $genOutputDir
@@ -689,9 +710,10 @@ if ($useChunked) {
         $fetchArgs += "--output", "`"$fetchOutDir`""
         if ($fetchArt)        { $fetchArgs += "--art-output", "`"$fetchArtDir`""; $fetchArgs += "--art-version", "`"$fetchArtVersion`"" }
         if ($fetchSet)        { $fetchArgs += "--set", "`"$fetchSet`"" }
-        if ($fetchOverwrite)  { $fetchArgs += "--overwrite" }
-        if (-not $fetchArt)   { $fetchArgs += "--no-art" }
-        if ($fetchDryRun)     { $fetchArgs += "--dry-run" }
+        if ($fetchOverwrite)        { $fetchArgs += "--overwrite" }
+        if (-not $fetchArt)           { $fetchArgs += "--no-art" }
+        if (-not $fetchIncludeFlavor) { $fetchArgs += "--no-flavor" }
+        if ($fetchDryRun)             { $fetchArgs += "--dry-run" }
 
         $fetchCmd = "node `"$fetchScript`" $($fetchArgs -join ' ')"
         Write-Host "  > $fetchCmd" -ForegroundColor DarkGray
@@ -753,9 +775,10 @@ if ($useChunked) {
         $fetchArgs += "--output", "`"$fetchOutDir`""
         if ($fetchArt)        { $fetchArgs += "--art-output", "`"$fetchArtDir`""; $fetchArgs += "--art-version", "`"$fetchArtVersion`"" }
         if ($fetchSet)        { $fetchArgs += "--set", "`"$fetchSet`"" }
-        if ($fetchOverwrite)  { $fetchArgs += "--overwrite" }
-        if (-not $fetchArt)   { $fetchArgs += "--no-art" }
-        if ($fetchDryRun)     { $fetchArgs += "--dry-run" }
+        if ($fetchOverwrite)        { $fetchArgs += "--overwrite" }
+        if (-not $fetchArt)           { $fetchArgs += "--no-art" }
+        if (-not $fetchIncludeFlavor) { $fetchArgs += "--no-flavor" }
+        if ($fetchDryRun)             { $fetchArgs += "--dry-run" }
 
         $fetchCmd = "node `"$fetchScript`" $($fetchArgs -join ' ')"
         Write-Host "  > $fetchCmd" -ForegroundColor DarkGray

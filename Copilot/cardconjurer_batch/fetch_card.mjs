@@ -66,13 +66,25 @@ function parsePlaneswalkerAbilities(oracleText) {
 // ── Color key ─────────────────────────────────────────────────────────────────
 
 function determineColorKey(card) {
-  const type   = card.type_line || "";
-  const colors = card.colors || [];
+  const type     = card.type_line || "";
+  const colors   = card.colors || [];
 
   // Vehicle (has its own frame regardless of color)
   if (/\bVehicle\b/.test(type)) return "V";
-  // Land
-  if (/\bLand\b/.test(type)) return "L";
+  // Land: use color_identity so basics/duals/shocks get the right frame color.
+  // e.g. Forest → G, Mountain → R, Sacred Foundry → M, Arid Mesa → M (W+U identity)
+  // For lands with no color_identity (e.g. Command Tower), fall back to produced_mana.
+  // Colorless lands (Wastes, etc.) fall back to the land frame.
+  if (/\bLand\b/.test(type)) {
+    const identity = card.color_identity || [];
+    if (identity.length >= 2) return "M";
+    if (identity.length === 1) return identity[0]; // "W" "U" "B" "R" "G"
+    // No color identity — check produced_mana (filters out "C" colorless and "S" snow)
+    const produced = (card.produced_mana || []).filter(c => c !== "C" && c !== "S");
+    if (produced.length >= 2) return "M";
+    if (produced.length === 1) return produced[0];
+    return "L"; // truly colorless land
+  }
   // Multi-color
   if (colors.length >= 2) return "M";
   // Single color
@@ -141,7 +153,7 @@ function buildRoomTxt(card) {
 
 // ── .txt builder ──────────────────────────────────────────────────────────────
 
-function buildTxt(card) {
+function buildTxt(card, includeFlavor = true) {
   const colorKey = determineColorKey(card);
   const cardName = getPrimaryName(card);
   const setCode  = (card.set  || "").toUpperCase();
@@ -176,7 +188,7 @@ function buildTxt(card) {
     lines.push(`<RULES>`);
     lines.push(rules);
     lines.push(`</RULES>`);
-    if (flavor) {
+    if (flavor && includeFlavor) {
       lines.push(`<FLAVOR>`);
       lines.push(flavor);
       lines.push(`</FLAVOR>`);
@@ -265,7 +277,7 @@ async function downloadArt(card, artDir, artVersion, fileBase, extension) {
 // ── CLI ───────────────────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const opts = { names: [], output: ".", artOutput: null, set: null, artVersion: "art_crop", dryRun: false, overwrite: false, art: true };
+  const opts = { names: [], output: ".", artOutput: null, set: null, artVersion: "art_crop", dryRun: false, overwrite: false, art: true, flavor: true };
   for (let i = 0; i < argv.length; i++) {
     const arg  = argv[i];
     const next = argv[i + 1];
@@ -276,6 +288,7 @@ function parseArgs(argv) {
     else if (arg === "--dry-run")            { opts.dryRun    = true;       }
     else if (arg === "--overwrite")          { opts.overwrite = true;       }
     else if (arg === "--no-art")             { opts.art       = false;      }
+    else if (arg === "--no-flavor")          { opts.flavor    = false;      }
     else if (!arg.startsWith("--"))          { opts.names.push(arg);        }
   }
   if (!ART_VERSIONS.includes(opts.artVersion)) {
@@ -319,12 +332,17 @@ async function main() {
     if (i > 0) await sleep(API_DELAY_MS);
 
     try {
+      // Strip trailing _N suffix (e.g. "Forest_3" → lookup "Forest", save as "Forest_3")
+      const copyMatch = name.match(/^(.+)_(\d+)$/);
+      const lookupName = copyMatch ? copyMatch[1] : name;
+
       process.stdout.write(`Fetching "${name}"... `);
-      const card = await fetchCard(name, opts.set);
+      const card = await fetchCard(lookupName, opts.set);
 
-      const txt = isRoomCard(card) ? buildRoomTxt(card) : buildTxt(card);
+      const txt = isRoomCard(card) ? buildRoomTxt(card) : buildTxt(card, opts.flavor);
 
-      const fileBase = getSafeFileBase(card);
+      const scryfallBase = getSafeFileBase(card);
+      const fileBase = copyMatch ? `${scryfallBase}_${copyMatch[2]}` : scryfallBase;
 
       if (opts.dryRun) {
         console.log(`\n${"─".repeat(60)}\n${txt}\n`);
