@@ -1,5 +1,5 @@
 {
-    "_comment": "XML Export settings for Generate-MpcFillXml.ps1. Edit via the CardWeaver GUI (XML Export tab \u2192 Save).",
+    "_comment": "XML Export settings for Generate-MpcFillXml.ps1. All paths are relative to workspace root unless absolute. Edit via the CardWeaver GUI (XML Export tab \u2192 Save).",
     "mode": 0,
     "manual": {
         "inputFolder": "Cards\\Generic\\output",

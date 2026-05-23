@@ -72,6 +72,7 @@ $CardbackPath  = Resolve-RelPath $workspaceRoot $CardbackPath
 $CardbacksDir  = Resolve-RelPath $workspaceRoot $CardbacksDir
 $AutofillDir   = Resolve-RelPath $workspaceRoot $AutofillDir
 $OutputXml     = Resolve-RelPath $workspaceRoot $OutputXml
+$InputFolder   = Resolve-RelPath $workspaceRoot $InputFolder
 
 Write-Host ""
 Write-Host "=== MPC Autofill XML Generator ===" -ForegroundColor Cyan

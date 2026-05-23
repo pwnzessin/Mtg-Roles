@@ -511,6 +511,11 @@ class XmlExportTab(_PipelineTabBase):
         if mode_index == 0:  # Manual
             m = cfg.get("manual", {})
             folder = m.get("inputFolder", "").strip()
+            if folder:
+                p = Path(folder)
+                if not p.is_absolute():
+                    p = _workspace_root() / folder
+                folder = str(p)
             if not folder or not Path(folder).is_dir():
                 QMessageBox.warning(self, "No Input Folder",
                                     'Set a valid "manual.inputFolder" in the config JSON.')
@@ -826,8 +831,8 @@ The <b>Mode</b> combo in the GUI always overrides the <code>mode</code> key at r
 
 <h4>manual</h4>
 <table>
-  <tr><td>inputFolder</td><td>Absolute path to the folder containing rendered card images to include in the XML.<br>
-    Example: <code>C:\\...\\Cards\\Generic\\output</code></td></tr>
+  <tr><td>inputFolder</td><td>Absolute or workspace-relative path to the folder containing rendered card images to include in the XML.<br>
+    Example: <code>Cards\\Generic\\output</code> or <code>C:\\...\\Cards\\Generic\\output</code></td></tr>
   <tr><td>recurse</td><td><code>true</code> = include images in all sub-folders recursively.<br>
     <code>false</code> = top-level folder only.</td></tr>
 </table>
@@ -837,16 +842,16 @@ The <b>Mode</b> combo in the GUI always overrides the <code>mode</code> key at r
   <tr><td>roles</td><td>Which role(s) to include.<br>
     <code>0</code> &mdash; A &mdash; all roles<br>
     <code>1</code> Assassins &nbsp; <code>2</code> Bandits &nbsp; <code>3</code> Guardians &nbsp; <code>4</code> Kings &nbsp; <code>5</code> Renegades</td></tr>
-  <tr><td>templatesRoot</td><td>Absolute path to the <code>Cards\\templates</code> folder. Used to locate each role&rsquo;s rendered output sub-directory.<br>
+  <tr><td>templatesRoot</td><td>Absolute or workspace-relative path to the <code>Cards\\templates</code> folder. Used to locate each role&rsquo;s rendered output sub-directory.<br>
     Leave blank to auto-detect relative to the script.</td></tr>
 </table>
 
 <h4>Cardback</h4>
 <table>
-  <tr><td>cardbackPath</td><td>Absolute path to a specific cardback image to include as the back face of every card.
+  <tr><td>cardbackPath</td><td>Absolute or workspace-relative path to a specific cardback image to include as the back face of every card.
     Leave blank to omit the cardback entirely.</td></tr>
-  <tr><td>cardbacksDir</td><td>Folder scanned for cardback image files when no explicit <b>cardbackPath</b> is set.<br>
-    Example: <code>C:\\...\\Cards\\Cardbacks</code></td></tr>
+  <tr><td>cardbacksDir</td><td>Absolute or workspace-relative folder scanned for cardback image files when no explicit <b>cardbackPath</b> is set.<br>
+    Example: <code>Cards\\Cardbacks</code></td></tr>
 </table>
 
 <h4>Print Settings</h4>
@@ -862,9 +867,9 @@ The <b>Mode</b> combo in the GUI always overrides the <code>mode</code> key at r
 
 <h4>Output</h4>
 <table>
-  <tr><td>autofillDir</td><td>Default folder where the XML file is written when <b>outputXml</b> is blank.<br>
-    Example: <code>C:\\...\\Autofill</code></td></tr>
-  <tr><td>outputXml</td><td>Absolute path for the generated XML file. Leave blank to auto-name the file inside <b>autofillDir</b>.</td></tr>
+  <tr><td>autofillDir</td><td>Absolute or workspace-relative folder where the XML file is written when <b>outputXml</b> is blank.<br>
+    Example: <code>Autofill</code></td></tr>
+  <tr><td>outputXml</td><td>Absolute or workspace-relative path for the generated XML file. Leave blank to auto-name the file inside <b>autofillDir</b>.</td></tr>
 </table>
 """
 
