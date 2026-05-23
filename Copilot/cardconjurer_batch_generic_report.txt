@@ -1,14 +1,16 @@
 Generic card batch report
-Generated: 2026-05-22T22:48:43.119Z
+Generated: 2026-05-23T00:18:38.148Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 1
-Cards in run queue: 1
+Total parsed cards: 3
+Cards in run queue: 3
 Dry run: false
 
-OK | Cramped Vents.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Cramped Vents.png
+OK | Ravager Wurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Ravager Wurm.png
+OK | Sarinth Greatwurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Sarinth Greatwurm.png
+OK | Symbiotic Wurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Symbiotic Wurm.png
 
-Generated:        1
+Generated:        3
 Skipped (exists): 0
 Failed:           0

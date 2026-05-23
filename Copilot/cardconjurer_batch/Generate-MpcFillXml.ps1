@@ -16,7 +16,9 @@ param(
     [string]$CardbackPath = "",
     [string]$OutputXml    = "",
     [string]$Stock        = "",
-    [string]$Foil         = ""
+    [string]$Foil         = "",
+    [string]$Mode         = "",   # "Manual" or "RoleCard"; empty = interactive
+    [string]$Roles        = ""    # "A" or comma-separated names e.g. "Assassins,Kings"; empty = interactive
 )
 
 # ---------------------------------------------------------------------------
@@ -60,7 +62,11 @@ $modeOptions = @(
     "Manual   - specify a folder",
     "RoleCard - pick one or more roles, combine into one XML"
 )
-$modeAnswer    = Prompt-Choice "Select mode:" $modeOptions 0
+if (-not [string]::IsNullOrWhiteSpace($Mode)) {
+    $modeAnswer = if ($Mode -eq "RoleCard") { "RoleCard" } else { "Manual" }
+} else {
+    $modeAnswer = Prompt-Choice "Select mode:" $modeOptions 0
+}
 $roleCardMode  = ($modeAnswer -like "RoleCard*")
 $defaultXmlName = "order.xml"
 
@@ -86,19 +92,28 @@ if ($roleCardMode) {
         Write-Host ("  {0}. {1}" -f ($r + 1), $availableRoles[$r])
     }
     Write-Host ("  A. All roles")
-    $roleRaw = Read-Host "Select roles (comma-separated numbers, e.g. 1,3 -- or A for all)"
+    if (-not [string]::IsNullOrWhiteSpace($Roles)) {
+        $roleRaw = $Roles
+    } else {
+        $roleRaw = Read-Host "Select roles (comma-separated numbers, e.g. 1,3 -- or A for all)"
+    }
 
     $selectedRoles = @()
     if ($roleRaw -match "^[Aa]$") {
         $selectedRoles = $availableRoles
     } else {
         foreach ($tok in ($roleRaw -split ',')) {
-            $tok  = $tok.Trim()
-            $rIdx = [int]$tok - 1
-            if ($rIdx -ge 0 -and $rIdx -lt $availableRoles.Count) {
-                $selectedRoles += $availableRoles[$rIdx]
+            $tok = $tok.Trim()
+            # Accept role name directly (from GUI) or numeric index (interactive)
+            if ($availableRoles -contains $tok) {
+                $selectedRoles += $tok
             } else {
-                Write-Warning "Ignored invalid selection: '$tok'"
+                $rIdx = [int]$tok - 1
+                if ($rIdx -ge 0 -and $rIdx -lt $availableRoles.Count) {
+                    $selectedRoles += $availableRoles[$rIdx]
+                } else {
+                    Write-Warning "Ignored invalid selection: '$tok'"
+                }
             }
         }
     }

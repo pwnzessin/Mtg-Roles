@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import (
     QDialogButtonBox, QTextBrowser,
 )
 from PyQt6.QtCore import QThread, QTimer, Qt, pyqtSignal
-from PyQt6.QtGui import QColor, QFont, QPainter, QPixmap
+from PyQt6.QtGui import QColor, QFont, QPainter, QPen, QPixmap
 
 import theme
 import highlighter as _hl
@@ -431,6 +431,325 @@ class RolecardPipelineTab(_PipelineTabBase):
         return ["-Roles", role_values[idx], "-Yes"]
 
 
+class XmlExportTab(QWidget):
+    """Tab for running Generate-MpcFillXml.ps1 non-interactively."""
+
+    SCRIPT_NAME  = "Generate-MpcFillXml.ps1"
+    SETTINGS_KEY = "xml_export_config"
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.pipeline_thread = None
+        self._init_ui()
+        self._restore_last_config()
+
+    # ── UI ────────────────────────────────────────────────────────────────
+
+    def _init_ui(self):
+        root = QVBoxLayout(self)
+        root.setSpacing(8)
+        root.setContentsMargins(16, 16, 16, 16)
+
+        # Config file row
+        root.addWidget(self._lbl("Config File"))
+        cfg_row = QHBoxLayout()
+        self.config_input = QLineEdit()
+        self.config_input.setPlaceholderText("No config file selected")
+        self.config_input.setReadOnly(True)
+        cfg_row.addWidget(self.config_input)
+        for label, slot in [("Browse\u2026", self._browse_config),
+                             ("Save",        self._save_config)]:
+            btn = QPushButton(label)
+            btn.setFixedWidth(72)
+            btn.clicked.connect(slot)
+            cfg_row.addWidget(btn)
+        root.addLayout(cfg_row)
+
+        # Mode
+        root.addWidget(self._lbl("Mode"))
+        self.mode_combo = QComboBox()
+        self.mode_combo.addItems([
+            "Manual \u2014 specify a folder",
+            "RoleCard \u2014 pick roles",
+        ])
+        self.mode_combo.currentIndexChanged.connect(self._on_mode_changed)
+        root.addWidget(self.mode_combo)
+
+        # Stacked input area
+        self._stack = QStackedWidget()
+
+        # Page 0: Manual — folder picker
+        manual_page = QWidget()
+        ml = QHBoxLayout(manual_page)
+        ml.setContentsMargins(0, 0, 0, 0)
+        self.folder_input = QLineEdit()
+        self.folder_input.setPlaceholderText("Folder containing card images (PNG/JPG)")
+        self.folder_input.setReadOnly(True)
+        ml.addWidget(self.folder_input)
+        browse_folder_btn = QPushButton("Browse\u2026")
+        browse_folder_btn.setFixedWidth(72)
+        browse_folder_btn.clicked.connect(self._browse_folder)
+        ml.addWidget(browse_folder_btn)
+        self._stack.addWidget(manual_page)   # index 0
+
+        # Page 1: RoleCard — role selector
+        role_page = QWidget()
+        rl = QHBoxLayout(role_page)
+        rl.setContentsMargins(0, 0, 0, 0)
+        self.role_combo = QComboBox()
+        self.role_combo.addItems([
+            "A \u2014 All roles",
+            "Assassins", "Bandits", "Guardians", "Kings", "Renegades",
+        ])
+        rl.addWidget(self.role_combo)
+        self._stack.addWidget(role_page)     # index 1
+
+        root.addWidget(self._lbl("Input"))
+        root.addWidget(self._stack)
+
+        # Cardback (optional)
+        root.addWidget(self._lbl("Cardback Image (optional)"))
+        cb_row = QHBoxLayout()
+        self.cardback_input = QLineEdit()
+        self.cardback_input.setPlaceholderText("Leave blank to omit cardback")
+        self.cardback_input.setReadOnly(True)
+        cb_row.addWidget(self.cardback_input)
+        browse_cb_btn = QPushButton("Browse\u2026")
+        browse_cb_btn.setFixedWidth(72)
+        browse_cb_btn.clicked.connect(self._browse_cardback)
+        cb_row.addWidget(browse_cb_btn)
+        clear_cb_btn = QPushButton("Clear")
+        clear_cb_btn.setFixedWidth(52)
+        clear_cb_btn.clicked.connect(lambda: self.cardback_input.clear())
+        cb_row.addWidget(clear_cb_btn)
+        root.addLayout(cb_row)
+
+        # Stock + Foil row
+        sf_row = QHBoxLayout()
+        stock_col = QVBoxLayout()
+        stock_col.setSpacing(4)
+        stock_col.addWidget(self._lbl("Card Stock"))
+        self.stock_combo = QComboBox()
+        self.stock_combo.addItems([
+            "(S30) Standard Smooth",
+            "(S33) Superior Smooth",
+            "(M31) Linen",
+            "(P10) Plastic",
+        ])
+        stock_col.addWidget(self.stock_combo)
+        sf_row.addLayout(stock_col)
+        sf_row.addSpacing(16)
+        from PyQt6.QtWidgets import QCheckBox
+        self.foil_check = QCheckBox("Foil fronts")
+        self.foil_check.setChecked(False)
+        sf_row.addWidget(self.foil_check, alignment=Qt.AlignmentFlag.AlignBottom)
+        sf_row.addStretch()
+        root.addLayout(sf_row)
+
+        # Output XML
+        root.addWidget(self._lbl("Output XML File"))
+        out_row = QHBoxLayout()
+        self.output_input = QLineEdit()
+        self.output_input.setPlaceholderText("Leave blank to auto-place in Autofill/")
+        out_row.addWidget(self.output_input)
+        browse_out_btn = QPushButton("Browse\u2026")
+        browse_out_btn.setFixedWidth(72)
+        browse_out_btn.clicked.connect(self._browse_output)
+        out_row.addWidget(browse_out_btn)
+        root.addLayout(out_row)
+
+        # Run button
+        self.run_btn = QPushButton("Generate XML")
+        self.run_btn.setMinimumHeight(38)
+        self.run_btn.setObjectName("runButton")
+        self.run_btn.clicked.connect(self._run)
+        root.addWidget(self.run_btn)
+
+        # Log
+        root.addWidget(self._lbl("Output Log"))
+        self.output_text = QTextEdit()
+        self.output_text.setReadOnly(True)
+        self.output_text.setFont(QFont("Courier New", 9))
+        self.output_text.setMinimumHeight(80)
+        root.addWidget(self.output_text, stretch=1)
+
+        self._on_mode_changed(0)
+
+    def _lbl(self, text):
+        lbl = QLabel(text)
+        lbl.setObjectName("sectionLabel")
+        return lbl
+
+    def _on_mode_changed(self, index):
+        self._stack.setCurrentIndex(index)
+
+    def _browse_folder(self):
+        path = QFileDialog.getExistingDirectory(self, "Select Card Image Folder")
+        if path:
+            self.folder_input.setText(path)
+
+    def _browse_cardback(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select Cardback Image", "",
+            "Images (*.png *.jpg *.jpeg);;All Files (*)")
+        if path:
+            self.cardback_input.setText(path)
+
+    def _browse_output(self):
+        path, _ = QFileDialog.getSaveFileName(
+            self, "Save XML File", "", "XML Files (*.xml);;All Files (*)")
+        if path:
+            self.output_input.setText(path)
+
+    def update_theme(self, dark: bool) -> None:
+        pass  # no highlighter on this tab
+
+    # ── Config helpers ────────────────────────────────────────────────────
+
+    def _ui_to_cfg(self) -> dict:
+        return {
+            "_comment":    "XML Export settings for Generate-MpcFillXml.ps1",
+            "mode":        self.mode_combo.currentIndex(),
+            "inputFolder": self.folder_input.text(),
+            "roles":       self.role_combo.currentIndex(),
+            "cardbackPath": self.cardback_input.text(),
+            "stock":       self.stock_combo.currentIndex(),
+            "foil":        self.foil_check.isChecked(),
+            "outputXml":   self.output_input.text(),
+        }
+
+    def _apply_cfg(self, cfg: dict) -> None:
+        self.mode_combo.setCurrentIndex(int(cfg.get("mode", 0)))
+        self.folder_input.setText(cfg.get("inputFolder", ""))
+        self.role_combo.setCurrentIndex(int(cfg.get("roles", 0)))
+        self.cardback_input.setText(cfg.get("cardbackPath", ""))
+        self.stock_combo.setCurrentIndex(int(cfg.get("stock", 0)))
+        self.foil_check.setChecked(bool(cfg.get("foil", False)))
+        self.output_input.setText(cfg.get("outputXml", ""))
+
+    def _browse_config(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select Config File", "", "JSON Files (*.json);;All Files (*)")
+        if path:
+            self.config_input.setText(path)
+            self._load_config()
+
+    def _load_config(self):
+        path = self.config_input.text()
+        if not path:
+            QMessageBox.warning(self, "No Config", "Browse to a config file first.")
+            return
+        try:
+            cfg = json.loads(Path(path).read_text(encoding="utf-8-sig"))
+            self._apply_cfg(cfg)
+            if self.SETTINGS_KEY:
+                settings = _load_settings()
+                settings[self.SETTINGS_KEY] = path
+                _save_settings(settings)
+        except Exception as e:
+            QMessageBox.critical(self, "Load Error", str(e))
+
+    def _save_config(self):
+        path = self.config_input.text()
+        if not path:
+            path, _ = QFileDialog.getSaveFileName(
+                self, "Save Config File", "", "JSON Files (*.json)")
+            if not path:
+                return
+            self.config_input.setText(path)
+        try:
+            Path(path).write_text(
+                json.dumps(self._ui_to_cfg(), indent=4), encoding="utf-8")
+            if self.SETTINGS_KEY:
+                settings = _load_settings()
+                settings[self.SETTINGS_KEY] = path
+                _save_settings(settings)
+        except Exception as e:
+            QMessageBox.critical(self, "Save Error", str(e))
+
+    def _restore_last_config(self):
+        settings = _load_settings()
+        path = settings.get(self.SETTINGS_KEY, "")
+        if not path:
+            # Fall back to the default config next to the script
+            candidate = _copilot_root() / "cardconjurer_batch" / "xml_export_config.json"
+            if candidate.exists():
+                path = str(candidate)
+        if path and Path(path).exists():
+            self.config_input.setText(path)
+            try:
+                cfg = json.loads(Path(path).read_text(encoding="utf-8-sig"))
+                self._apply_cfg(cfg)
+            except Exception:
+                pass
+
+    # ── Run ───────────────────────────────────────────────────────────────
+
+    def _run(self):
+        script_path = _copilot_root() / "cardconjurer_batch" / self.SCRIPT_NAME
+        if not script_path.exists():
+            QMessageBox.critical(self, "Script Not Found",
+                                 f"Script not found:\n{script_path}")
+            return
+
+        mode_index = self.mode_combo.currentIndex()
+        mode_str = "RoleCard" if mode_index == 1 else "Manual"
+
+        args = ["-Mode", mode_str]
+
+        if mode_index == 0:  # Manual
+            folder = self.folder_input.text().strip()
+            if not folder or not Path(folder).is_dir():
+                QMessageBox.warning(self, "No Folder", "Browse to a folder containing card images.")
+                return
+            args += ["-InputFolder", folder]
+        else:  # RoleCard
+            role_values = ["A", "Assassins", "Bandits", "Guardians", "Kings", "Renegades"]
+            args += ["-Roles", role_values[self.role_combo.currentIndex()]]
+
+        cardback = self.cardback_input.text().strip()
+        if cardback:
+            args += ["-CardbackPath", cardback]
+
+        stock_map = {
+            "(S30) Standard Smooth": "(S30) Standard Smooth",
+            "(S33) Superior Smooth": "(S33) Superior Smooth",
+            "(M31) Linen":           "(M31) Linen",
+            "(P10) Plastic":         "(P10) Plastic",
+        }
+        args += ["-Stock", stock_map[self.stock_combo.currentText()]]
+        args += ["-Foil", "true" if self.foil_check.isChecked() else "false"]
+
+        out_xml = self.output_input.text().strip()
+        if out_xml:
+            args += ["-OutputXml", out_xml]
+
+        self.run_btn.setEnabled(False)
+        self.output_text.clear()
+        self.output_text.append("[XML export started]\n")
+
+        self.pipeline_thread = PipelineThread(str(script_path), args)
+        self.pipeline_thread.output_signal.connect(self._on_output)
+        self.pipeline_thread.error_signal.connect(self._on_error)
+        self.pipeline_thread.finished_signal.connect(self._on_finished)
+        self.pipeline_thread.start()
+
+    def _on_output(self, text):
+        self.output_text.append(text)
+        self.output_text.verticalScrollBar().setValue(
+            self.output_text.verticalScrollBar().maximum())
+
+    def _on_error(self, error):
+        self.output_text.append(f"\n[ERROR] {error}")
+
+    def _on_finished(self, exit_code):
+        self.run_btn.setEnabled(True)
+        if exit_code == 0:
+            self.output_text.append("\n[XML export completed successfully]")
+        else:
+            self.output_text.append(f"\n[XML export failed — exit code {exit_code}]")
+
+
 class PipelineGUI(QMainWindow):
 
     def __init__(self):
@@ -453,6 +772,7 @@ class PipelineGUI(QMainWindow):
         self.tabs = QTabWidget()
         self.tabs.addTab(GenericPipelineTab(),  "Generic Pipeline")
         self.tabs.addTab(RolecardPipelineTab(), "Rolecard Pipeline")
+        self.tabs.addTab(XmlExportTab(),        "XML Export")
 
         # Corner buttons — rendered inline with the tab bar
         corner = QWidget()
@@ -483,6 +803,17 @@ class PipelineGUI(QMainWindow):
     def _toggle_theme(self):
         self.dark_mode = not self.dark_mode
         self._apply_theme()
+
+    def paintEvent(self, event):  # noqa: N802
+        super().paintEvent(event)
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        w, h = self.width(), self.height()
+        for offset, alpha in ((0, 60), (1, 180)):
+            pen = QPen(QColor(212, 175, 55, alpha))
+            pen.setWidth(1)
+            painter.setPen(pen)
+            painter.drawRect(offset, offset, w - 1 - 2 * offset, h - 1 - 2 * offset)
 
     def _apply_theme(self):
         if self.dark_mode:
@@ -730,11 +1061,20 @@ class SplashScreen(QWidget):
 
     def paintEvent(self, event):  # noqa: N802
         painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.drawPixmap(0, 0, self._bg)
 
         overlay = QColor(10, 10, 22, 175)
         # Bottom band — covers status + copyright
         painter.fillRect(0, self.height() - 58, self.width(), 58, overlay)
+
+        # Border: faint outer glow + solid inner ring (gold, matches title)
+        w, h = self.width(), self.height()
+        for offset, alpha in ((0, 60), (1, 180)):
+            pen = QPen(QColor(212, 175, 55, alpha))
+            pen.setWidth(1)
+            painter.setPen(pen)
+            painter.drawRect(offset, offset, w - 1 - 2 * offset, h - 1 - 2 * offset)
 
     def set_status(self, text: str) -> None:
         self._status_lbl.setText(text)
