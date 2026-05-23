@@ -455,10 +455,12 @@ function Invoke-RoleGeneration {
         [string]$Role,
         [int]$Limit,
         [bool]$StartLauncher,
-        [string]$BaseUrl
+        [string]$BaseUrl,
+        [bool]$Headless = $true,
+        [bool]$Overwrite = $true
     )
 
-    $npmArgs = @("run", "generate", "--", "--role", $Role, "--base-url", $BaseUrl, "--start-launcher", ($StartLauncher.ToString().ToLowerInvariant()), "--headless", "true", "--overwrite", "true")
+    $npmArgs = @("run", "generate", "--", "--role", $Role, "--base-url", $BaseUrl, "--start-launcher", ($StartLauncher.ToString().ToLowerInvariant()), "--headless", ($Headless.ToString().ToLowerInvariant()), "--overwrite", ($Overwrite.ToString().ToLowerInvariant()))
     if ($Limit -gt 0) {
         $npmArgs += @("--limit", "$Limit")
     }
@@ -493,6 +495,11 @@ $defaultApplyMargin = $false
 $defaultFinalUpscaleEnabled = $false
 $defaultFinalUpscaleFactor = 2
 $defaultLimit = 0
+$defaultBaseUrl = "http://localhost:8080"
+$defaultHeadless = $true
+$defaultStartLauncher = $true
+$defaultOverwrite = $true
+$defaultReportDir = "Copilot"
 if ($savedConfig) {
     if ($savedConfig.PSObject.Properties.Match('limit').Count -gt 0 -and $null -ne $savedConfig.limit) {
         $dl = [int]$savedConfig.limit
@@ -507,6 +514,24 @@ if ($savedConfig) {
     if ($savedConfig.PSObject.Properties.Match('finalUpscaleFactor').Count -gt 0 -and $null -ne $savedConfig.finalUpscaleFactor) {
         $f = [int]$savedConfig.finalUpscaleFactor
         if ($f -eq 2 -or $f -eq 4) { $defaultFinalUpscaleFactor = $f }
+    }
+    if ($savedConfig.PSObject.Properties.Match('baseUrl').Count -gt 0 -and -not [string]::IsNullOrWhiteSpace($savedConfig.baseUrl)) {
+        $defaultBaseUrl = [string]$savedConfig.baseUrl
+    }
+    if ($savedConfig.PSObject.Properties.Match('headless').Count -gt 0 -and $null -ne $savedConfig.headless) {
+        $defaultHeadless = [bool]$savedConfig.headless
+    }
+    if ($savedConfig.PSObject.Properties.Match('startLauncher').Count -gt 0 -and $null -ne $savedConfig.startLauncher) {
+        $defaultStartLauncher = [bool]$savedConfig.startLauncher
+    }
+    if ($savedConfig.PSObject.Properties.Match('overwrite').Count -gt 0 -and $null -ne $savedConfig.overwrite) {
+        $defaultOverwrite = [bool]$savedConfig.overwrite
+    }
+    if ($savedConfig.PSObject.Properties.Match('paths').Count -gt 0 -and $null -ne $savedConfig.paths) {
+        $pathsCfg = $savedConfig.paths
+        if ($pathsCfg.PSObject.Properties.Match('reportDir').Count -gt 0 -and -not [string]::IsNullOrWhiteSpace($pathsCfg.reportDir)) {
+            $defaultReportDir = [string]$pathsCfg.reportDir
+        }
     }
 }
 
@@ -582,23 +607,30 @@ if (-not $Yes) {
 
 # Export current settings to JSON config
 $configObj = [ordered]@{
-    roles        = $roles
-    limit        = $limit
-    qualityChoice = $qualityChoice
-    applyMargin = [bool]$applyMargin
+    limit               = $limit
+    qualityChoice       = $qualityChoice
+    applyMargin         = [bool]$applyMargin
     finalUpscaleEnabled = [bool]$finalUpscale.Enabled
-    finalUpscaleFactor = [int]$finalUpscale.Factor
+    finalUpscaleFactor  = [int]$finalUpscale.Factor
+    baseUrl             = $defaultBaseUrl
+    headless            = $defaultHeadless
+    startLauncher       = $defaultStartLauncher
+    overwrite           = $defaultOverwrite
 }
-$configObj | ConvertTo-Json | Set-Content -Path $configPath -Encoding utf8
+# Preserve the paths section unchanged — it is edited manually, not by this script.
+if ($savedConfig -and $savedConfig.PSObject.Properties.Match('paths').Count -gt 0) {
+    $configObj.paths = $savedConfig.paths
+}
+$configObj | ConvertTo-Json -Depth 5 | Set-Content -Path $configPath -Encoding utf8
 Write-Host "Settings saved to: $configPath" -ForegroundColor DarkGray
 
-$activeBaseUrl = "http://localhost:8080"
+$activeBaseUrl = $defaultBaseUrl
 $globalGenerated = 0
 $globalConverted = 0
 
 for ($i = 0; $i -lt $roles.Count; $i += 1) {
     $role = $roles[$i]
-    $startLauncher = ($i -eq 0)
+    $startLauncher = $defaultStartLauncher -and ($i -eq 0)
 
     Write-Host ""
     Write-Host "=== Generating $role ===" -ForegroundColor Green
@@ -619,7 +651,7 @@ for ($i = 0; $i -lt $roles.Count; $i += 1) {
 
         try {
             Write-Host "Attempting generation via $($attempt.BaseUrl) (start-launcher=$($attempt.StartLauncher.ToString().ToLowerInvariant()))..." -ForegroundColor DarkCyan
-            Invoke-RoleGeneration -BatchDir $batchDir -Role $role -Limit $limit -StartLauncher:$attempt.StartLauncher -BaseUrl $attempt.BaseUrl
+            Invoke-RoleGeneration -BatchDir $batchDir -Role $role -Limit $limit -StartLauncher:$attempt.StartLauncher -BaseUrl $attempt.BaseUrl -Headless:$defaultHeadless -Overwrite:$defaultOverwrite
             $activeBaseUrl = $attempt.BaseUrl
             $generatedThisRole = $true
             break
@@ -639,7 +671,8 @@ for ($i = 0; $i -lt $roles.Count; $i += 1) {
         throw ($attemptErrors -join " | ")
     }
 
-    $reportPath = Join-Path $workspaceRoot ("Copilot\cardconjurer_batch_{0}_report.txt" -f $role.ToLowerInvariant())
+    $reportBase = if ([System.IO.Path]::IsPathRooted($defaultReportDir)) { $defaultReportDir } else { Join-Path $workspaceRoot $defaultReportDir }
+    $reportPath = Join-Path $reportBase ("cardconjurer_batch_{0}_report.txt" -f $role.ToLowerInvariant())
     $generatedPathsRaw = Get-GeneratedPathsFromReport -ReportPath $reportPath
     $generatedPaths = New-Object System.Collections.Generic.List[string]
     foreach ($gp in @($generatedPathsRaw)) {

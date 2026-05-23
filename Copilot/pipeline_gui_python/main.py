@@ -10,9 +10,10 @@ from PyQt6.QtWidgets import (
     QDialogButtonBox, QTextBrowser,
 )
 from PyQt6.QtCore import QThread, QTimer, Qt, pyqtSignal
-from PyQt6.QtGui import QColor, QFont, QPainter, QPixmap
+from PyQt6.QtGui import QColor, QFont, QPainter, QPen, QPixmap
 
 import theme
+import highlighter as _hl
 import pipeline
 
 
@@ -152,17 +153,15 @@ class _PipelineTabBase(QWidget):
         self.config_preview.setMinimumHeight(330)
         self.config_preview.setMaximumHeight(420)
         root.addWidget(self.config_preview)
+        self._highlighter = _hl.JsonHighlighter(self.config_preview.document(), dark=True)
 
         if self.HAS_MODES:
             # Mode selector
             root.addWidget(self._section_label("Mode"))
             self.mode_combo = QComboBox()
             self.mode_combo.addItems([
-                "1 \u2014 Fetch from Scryfall + render",
-                "2 \u2014 Render existing .txt files",
-                "3 \u2014 Fetch from Scryfall only",
-                "4 \u2014 Load card list + fetch + render",
-                "5 \u2014 Clear output / downloaded art",
+                "1 \u2014 Render custom art files",
+                "2 \u2014 Load card list + fetch + render",
             ])
             self.mode_combo.setCurrentIndex(0)
             self.mode_combo.currentIndexChanged.connect(self._on_mode_changed)
@@ -228,6 +227,9 @@ class _PipelineTabBase(QWidget):
         """Subclass hook for extra controls inserted before the Run button."""
         pass
 
+    def update_theme(self, dark: bool) -> None:
+        self._highlighter.set_dark(dark)
+
     def _section_label(self, text):
         lbl = QLabel(text)
         lbl.setObjectName("sectionLabel")
@@ -235,13 +237,12 @@ class _PipelineTabBase(QWidget):
 
     def _on_mode_changed(self, index):
         """Switch card input page to match selected mode."""
-        # modes: 0=fetch+render, 1=render only, 2=fetch only, 3=cardlist, 4=clear
-        if index == 3:          # mode 4 — card list file
+        # mode 1 (index 0) = custom art - no card input
+        # mode 2 (index 1) = card list file
+        if index == 1:   # mode 2 - card list file
             self._card_stack.setCurrentIndex(1)
-        elif index in (1, 4):   # mode 2 / 5 — no card input
+        else:            # mode 1 - no card input
             self._card_stack.setCurrentIndex(2)
-        else:                   # mode 1 / 3 — card names
-            self._card_stack.setCurrentIndex(0)
 
     def _browse_card_list(self):
         path, _ = QFileDialog.getOpenFileName(
@@ -348,14 +349,8 @@ class _PipelineTabBase(QWidget):
             mode_index = self.mode_combo.currentIndex()  # 0-based
             run_mode   = mode_index + 1                  # 1-based for PS script
 
-            # Validate card input for modes that need it
-            if run_mode in (1, 3):
-                names = self.card_names_input.text().strip()
-                if not names:
-                    QMessageBox.warning(self, "No Card Names",
-                                        "Enter at least one card name.")
-                    return
-            elif run_mode == 4:
+            # Validate card input for mode 2 (card list)
+            if run_mode == 2:
                 card_list = self.card_list_input.text().strip()
                 if not card_list or not Path(card_list).exists():
                     QMessageBox.warning(self, "No Card List",
@@ -368,9 +363,7 @@ class _PipelineTabBase(QWidget):
             if config_path and Path(config_path).exists():
                 extra_args += ["-ConfigFile", config_path]
 
-            if run_mode in (1, 3):
-                extra_args += ["-CardNames", self.card_names_input.text().strip()]
-            elif run_mode == 4:
+            if run_mode == 2:
                 extra_args += ["-CardListFile", self.card_list_input.text().strip()]
         else:
             config_path = self.config_input.text().strip()
@@ -438,6 +431,131 @@ class RolecardPipelineTab(_PipelineTabBase):
         return ["-Roles", role_values[idx], "-Yes"]
 
 
+class XmlExportTab(_PipelineTabBase):
+    """Tab for running Generate-MpcFillXml.ps1.
+
+    All settings live in the JSON config file.  The only in-GUI option is
+    the mode selector (Manual vs RoleCard) which mirrors the ``mode`` key.
+    """
+
+    SCRIPT_NAME  = "Generate-MpcFillXml.ps1"
+    RUN_LABEL    = "Generate XML"
+    HAS_MODES    = False
+    SETTINGS_KEY = "xml_export_config"
+
+    _STOCK_NAMES = [
+        "(S30) Standard Smooth",
+        "(S33) Superior Smooth",
+        "(M31) Linen",
+        "(P10) Plastic",
+    ]
+    _ROLE_VALUES = ["A", "Assassins", "Bandits", "Guardians", "Kings", "Renegades"]
+
+    # ── Extra UI: mode combo only ─────────────────────────────────────────
+
+    def _init_extra_ui(self, root):
+        root.addWidget(self._section_label("Mode"))
+        self.mode_combo = QComboBox()
+        self.mode_combo.addItems([
+            "Manual \u2014 specify a folder",
+            "RoleCard \u2014 pick roles",
+        ])
+        root.addWidget(self.mode_combo)
+
+    def _apply_config(self, cfg):
+        self.mode_combo.setCurrentIndex(int(cfg.get("mode", 0)))
+
+    def update_theme(self, dark: bool) -> None:
+        self._highlighter.set_dark(dark)
+
+    # ── Restore: fall back to default config next to the script ──────────
+
+    def _restore_last_config(self):
+        settings = _load_settings()
+        path = settings.get(self.SETTINGS_KEY, "")
+        if not path:
+            candidate = _copilot_root() / "cardconjurer_batch" / "xml_export_config.json"
+            if candidate.exists():
+                path = str(candidate)
+        if path and Path(path).exists():
+            self.config_input.setText(path)
+            try:
+                with open(path, encoding="utf-8-sig") as f:
+                    raw = f.read()
+                self._config_data = json.loads(raw)
+                self.config_preview.setPlainText(raw)
+                self._apply_config(self._config_data)
+            except Exception:
+                pass
+
+    # ── Run: read all params from the JSON preview ────────────────────────
+
+    def _run_pipeline(self):
+        script_path = _copilot_root() / "cardconjurer_batch" / self.SCRIPT_NAME
+        if not script_path.exists():
+            QMessageBox.critical(self, "Script Not Found",
+                                 f"Script not found:\n{script_path}")
+            return
+
+        # Parse the live JSON from the preview (user may have edited it)
+        try:
+            cfg = json.loads(self.config_preview.toPlainText())
+        except json.JSONDecodeError as e:
+            QMessageBox.critical(self, "Invalid JSON",
+                                 f"Fix the config before running:\n{e}")
+            return
+
+        mode_index = self.mode_combo.currentIndex()
+        args = ["-Mode", "RoleCard" if mode_index == 1 else "Manual"]
+
+        if mode_index == 0:  # Manual
+            m = cfg.get("manual", {})
+            folder = m.get("inputFolder", "").strip()
+            if not folder or not Path(folder).is_dir():
+                QMessageBox.warning(self, "No Input Folder",
+                                    'Set a valid "manual.inputFolder" in the config JSON.')
+                return
+            args += ["-InputFolder", folder]
+            args += ["-Recurse", "true" if m.get("recurse", False) else "false"]
+        else:  # RoleCard
+            r = cfg.get("rolecard", {})
+            roles_idx = min(int(r.get("roles", 0)), len(self._ROLE_VALUES) - 1)
+            args += ["-Roles", self._ROLE_VALUES[roles_idx]]
+            tmpl = r.get("templatesRoot", "").strip()
+            if tmpl:
+                args += ["-TemplatesRoot", tmpl]
+
+        cardback = cfg.get("cardbackPath", "").strip()
+        if cardback:
+            args += ["-CardbackPath", cardback]
+
+        cbd = cfg.get("cardbacksDir", "").strip()
+        if cbd:
+            args += ["-CardbacksDir", cbd]
+
+        afd = cfg.get("autofillDir", "").strip()
+        if afd:
+            args += ["-AutofillDir", afd]
+
+        stock_idx = min(int(cfg.get("stock", 0)), len(self._STOCK_NAMES) - 1)
+        args += ["-Stock", self._STOCK_NAMES[stock_idx]]
+        args += ["-Foil", "true" if cfg.get("foil", False) else "false"]
+
+        out_xml = cfg.get("outputXml", "").strip()
+        if out_xml:
+            args += ["-OutputXml", out_xml]
+
+        self.run_btn.setEnabled(False)
+        self.output_text.clear()
+        self.output_text.append("[XML export started]\n")
+
+        self.pipeline_thread = PipelineThread(str(script_path), args)
+        self.pipeline_thread.output_signal.connect(self._on_output)
+        self.pipeline_thread.error_signal.connect(self._on_error)
+        self.pipeline_thread.finished_signal.connect(self._on_finished)
+        self.pipeline_thread.start()
+
+
 class PipelineGUI(QMainWindow):
 
     def __init__(self):
@@ -453,38 +571,58 @@ class PipelineGUI(QMainWindow):
         central = QWidget()
         self.setCentralWidget(central)
         root = QVBoxLayout(central)
-        root.setContentsMargins(0, 0, 0, 0)
+        root.setContentsMargins(0, 6, 0, 0)
         root.setSpacing(0)
-
-        # Top bar
-        top_bar = QWidget()
-        top_bar.setObjectName("topBar")
-        top_bar.setFixedHeight(40)
-        top_layout = QHBoxLayout(top_bar)
-        top_layout.setContentsMargins(12, 0, 12, 0)
-
-        title_lbl = QLabel("CardWeaver")
-        title_lbl.setObjectName("appTitle")
-        top_layout.addWidget(title_lbl)
-        top_layout.addStretch()
-
-        self.theme_btn = QPushButton("☀ Light")
-        self.theme_btn.setObjectName("themeButton")
-        self.theme_btn.setFixedWidth(80)
-        self.theme_btn.clicked.connect(self._toggle_theme)
-        top_layout.addWidget(self.theme_btn)
-
-        root.addWidget(top_bar)
 
         # Tabs
         self.tabs = QTabWidget()
         self.tabs.addTab(GenericPipelineTab(),  "Generic Pipeline")
         self.tabs.addTab(RolecardPipelineTab(), "Rolecard Pipeline")
+        self.tabs.addTab(XmlExportTab(),        "XML Export")
+
+        # Corner buttons — rendered inline with the tab bar
+        corner = QWidget()
+        corner_layout = QHBoxLayout(corner)
+        corner_layout.setContentsMargins(0, 0, 8, 0)
+        corner_layout.setSpacing(6)
+
+        help_btn = QPushButton("Config Help")
+        help_btn.setObjectName("helpButton")
+        help_btn.clicked.connect(self._open_config_help)
+        corner_layout.addWidget(help_btn)
+
+        self.theme_btn = QPushButton("☀ Light")
+        self.theme_btn.setObjectName("themeButton")
+        self.theme_btn.clicked.connect(self._toggle_theme)
+        corner_layout.addWidget(self.theme_btn)
+
+        self.tabs.setCornerWidget(corner, Qt.Corner.TopRightCorner)
+
         root.addWidget(self.tabs)
+
+    def _open_config_help(self):
+        idx = self.tabs.currentIndex()
+        if idx == 1:
+            RolecardConfigHelpDialog(self).exec()
+        elif idx == 2:
+            XmlExportConfigHelpDialog(self).exec()
+        else:
+            GenericConfigHelpDialog(self).exec()
 
     def _toggle_theme(self):
         self.dark_mode = not self.dark_mode
         self._apply_theme()
+
+    def paintEvent(self, event):  # noqa: N802
+        super().paintEvent(event)
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        w, h = self.width(), self.height()
+        for offset, alpha in ((0, 60), (1, 180)):
+            pen = QPen(QColor(212, 175, 55, alpha))
+            pen.setWidth(1)
+            painter.setPen(pen)
+            painter.drawRect(offset, offset, w - 1 - 2 * offset, h - 1 - 2 * offset)
 
     def _apply_theme(self):
         if self.dark_mode:
@@ -493,6 +631,242 @@ class PipelineGUI(QMainWindow):
         else:
             self.setStyleSheet(theme.LIGHT_STYLESHEET)
             self.theme_btn.setText("☾ Dark")
+        for i in range(self.tabs.count()):
+            self.tabs.widget(i).update_theme(self.dark_mode)
+
+
+class RolecardConfigHelpDialog(QDialog):
+    """Explains every parameter in Rolecard_Batch_Generator.config.json."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Rolecard Pipeline \u2014 Config Reference")
+        self.resize(680, 440)
+
+        root = QVBoxLayout(self)
+
+        browser = QTextBrowser()
+        browser.setOpenExternalLinks(False)
+        browser.setHtml(self._help_html())
+        root.addWidget(browser, stretch=1)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
+        buttons.rejected.connect(self.reject)
+        root.addWidget(buttons)
+
+    @staticmethod
+    def _help_html() -> str:
+        return """
+<style>
+  body  { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; margin: 8px; }
+  h3    { color: #d4af37; margin-bottom: 4px; }
+  h4    { border-bottom: 1px solid #666; padding-bottom: 3px; margin-top: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  td    { padding: 4px 6px; vertical-align: top; }
+  td:first-child { width: 190px; white-space: nowrap; font-weight: bold; }
+  tr:nth-child(even) { background: rgba(128,128,128,0.08); }
+  code  { background: rgba(128,128,128,0.15); padding: 0 3px; border-radius: 3px; }
+  p     { margin: 4px 0 10px; }
+</style>
+<h3>Rolecard Pipeline &mdash; Config Reference</h3>
+<p>Settings are saved automatically after each run, persisting your last-used values.</p>
+
+<h4>Parameters</h4>
+<table>
+  <tr><td>limit</td><td>Maximum number of cards to render per role. <code>0</code> = render all cards in the role folder.<br>Default: <code>0</code></td></tr>
+  <tr><td>qualityChoice</td><td>Output image quality preset:<br>
+    <code>1</code> &mdash; Original PNG (full resolution, lossless)<br>
+    <code>2</code> &mdash; 50% PNG (half resolution, lossless)<br>
+    <code>3</code> &mdash; 37% PNG, fixed 750&times;1050 px @ 300 DPI (print-ready)<br>
+    <code>4</code> &mdash; 50% JPEG Q85 (half resolution, lossy &mdash; default)<br>
+    Default: <code>4</code></td></tr>
+  <tr><td>applyMargin</td><td>Add a white print margin around each rendered card.<br><code>true</code> = include margin &nbsp; <code>false</code> = no margin.<br>Has no effect when quality is set to <code>3</code> (fixed-size preset already includes margins).<br>Default: <code>false</code></td></tr>
+  <tr><td>finalUpscaleEnabled</td><td>Upscale the final rendered output using bicubic interpolation after all processing steps.<br><code>false</code> = skip upscale &nbsp; <code>true</code> = upscale by <b>finalUpscaleFactor</b>.<br>Default: <code>false</code></td></tr>
+  <tr><td>finalUpscaleFactor</td><td>Integer scale multiplier applied when <b>finalUpscaleEnabled</b> is <code>true</code>. For example, <code>2</code> doubles both width and height.<br>Default: <code>2</code></td></tr>
+</table>
+
+<h4>Server &amp; Generation</h4>
+<table>
+  <tr><td>baseUrl</td><td>URL of the CardConjurer server used for rendering.<br>Default: <code>http://localhost:8080</code></td></tr>
+  <tr><td>headless</td><td><code>true</code> = run the Playwright browser invisibly (recommended).<br><code>false</code> = show the browser window (useful for debugging).<br>Default: <code>true</code></td></tr>
+  <tr><td>startLauncher</td><td><code>true</code> = auto-start the CardConjurer launcher before rendering the first role.<br><code>false</code> = assume the server is already running.<br>Default: <code>true</code></td></tr>
+  <tr><td>overwrite</td><td><code>true</code> = re-render cards that already have an output PNG.<br><code>false</code> = skip already-rendered cards.<br>Default: <code>true</code></td></tr>
+  <tr><td>reportDir</td><td>Sub-folder relative to the workspace root where per-role generation report files (<code>cardconjurer_batch_{role}_report.txt</code>) are read from after each role completes.<br>Default: <code>Copilot</code></td></tr>
+</table>
+
+<h4>paths</h4>
+<p>All values are relative to the workspace root (the folder two levels above the script). Defaults match the standard project layout; only change these if you have moved folders.</p>
+<table>
+  <tr><td>paths.cardsDir</td><td>Folder containing per-role card <code>.txt</code> files. A sub-folder named after the role is appended at run time.<br>Default: <code>Cards</code></td></tr>
+  <tr><td>paths.artworksDir</td><td>Folder containing per-role artwork images. A sub-folder named after the role is appended at run time.<br>Default: <code>Artworks</code></td></tr>
+  <tr><td>paths.templatesDir</td><td>Folder holding role template <code>.cardconjurer</code> files and where rendered PNGs are written (into a role sub-folder).<br>Default: <code>Cards/templates</code></td></tr>
+  <tr><td>paths.cardConjurerRoot</td><td>Root of the CardConjurer installation. Used to locate <code>local_art/auto/</code> for art staging.<br>Default: <code>cardconjurer-master/cardconjurer-master</code></td></tr>
+  <tr><td>paths.setCodesFile</td><td>Path to the set-codes definition file used to assign set symbols per role.<br>Default: <code>Copilot/SetCodes.txt</code></td></tr>
+  <tr><td>paths.reportDir</td><td>Folder where per-role generation report files (<code>cardconjurer_batch_{role}_report.txt</code>) are written and read back.<br>Default: <code>Copilot</code></td></tr>
+</table>
+"""
+
+
+class GenericConfigHelpDialog(QDialog):
+    """Explains every parameter in generic_card_config.json."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Generic Pipeline \u2014 Config Reference")
+        self.resize(700, 580)
+
+        root = QVBoxLayout(self)
+
+        browser = QTextBrowser()
+        browser.setOpenExternalLinks(False)
+        browser.setHtml(self._help_html())
+        root.addWidget(browser, stretch=1)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
+        buttons.rejected.connect(self.reject)
+        root.addWidget(buttons)
+
+    @staticmethod
+    def _help_html() -> str:
+        return """
+<style>
+  body  { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; margin: 8px; }
+  h3    { color: #d4af37; margin-bottom: 4px; }
+  h4    { border-bottom: 1px solid #666; padding-bottom: 3px; margin-top: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  td    { padding: 4px 6px; vertical-align: top; }
+  td:first-child { width: 170px; white-space: nowrap; font-weight: bold; }
+  tr:nth-child(even) { background: rgba(128,128,128,0.08); }
+  code  { background: rgba(128,128,128,0.15); padding: 0 3px; border-radius: 3px; }
+  p     { margin: 4px 0 10px; }
+</style>
+<h3>Generic Card Pipeline &mdash; Config Reference</h3>
+<p>All paths are relative to the workspace root unless absolute.
+The config file is saved automatically after each pipeline run, persisting your last-used settings.</p>
+
+<h4>fetch</h4>
+<table>
+  <tr><td>cardsDir</td><td>Output folder for fetched <code>.txt</code> card data files.<br>Default: <code>Cards\\Generic</code></td></tr>
+  <tr><td>artDir</td><td>Output folder for downloaded artwork (used in mode 2 when art download is enabled).<br>Default: <code>Artworks\\Downloaded</code></td></tr>
+  <tr><td>cardlistsDir</td><td>Folder shown when browsing for a card list file in mode 2.<br>Default: <code>Copilot\\cardconjurer_batch\\Cardlists</code></td></tr>
+  <tr><td>artScanDir</td><td>Folder scanned in mode 1. Each image filename (without extension) becomes a card name to fetch from Scryfall. Supports <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>.</td></tr>
+  <tr><td>preferSet</td><td>Preferred MTG set code (e.g. <code>m21</code>, <code>lea</code>). Leave blank to use the default printing returned by Scryfall.</td></tr>
+  <tr><td>artMode</td><td><code>1</code> &mdash; download the art image variant directly (see <b>artVersion</b>).<br><code>2</code> &mdash; download the full-card PNG then auto-crop to the art box and save as JPEG (see <b>pngCropJpegQuality</b>).</td></tr>
+  <tr><td>artVersion</td><td>Scryfall image variant used when <b>artMode</b> is <code>1</code>.<br>Options: <code>art_crop</code>, <code>border_crop</code>, <code>normal</code>, <code>large</code>, <code>png</code>.</td></tr>
+  <tr><td>pngCropJpegQuality</td><td>JPEG compression quality (1&ndash;100) for art produced by artMode 2. Higher = better quality, larger file.<br>Default: <code>95</code></td></tr>
+  <tr><td>upscaleEnabled</td><td>Upscale downloaded/cropped artwork after fetch. <code>false</code> = skip, <code>true</code> = upscale using <b>upscaleEngine</b>.</td></tr>
+  <tr><td>upscaleEngine</td><td><code>auto</code> &mdash; use Real-ESRGAN if found in PATH, otherwise fall back to Lanczos.<br><code>realesrgan</code> &mdash; force Real-ESRGAN (must be in PATH).<br><code>lanczos</code> &mdash; high-quality bicubic resize, no extra tools needed.</td></tr>
+  <tr><td>upscaleFactor</td><td>Scale multiplier applied during upscale. Accepted values: <code>2</code> or <code>4</code>.</td></tr>
+  <tr><td>overwrite</td><td>Whether to overwrite existing <code>.txt</code> and art files.<br><code>true</code> = always overwrite &nbsp; <code>false</code> = skip already-existing files.</td></tr>
+  <tr><td>downloadArt</td><td>Pre-filled default for the &ldquo;Download artwork?&rdquo; prompt shown in mode 2.<br><code>false</code> = fetch <code>.txt</code> only &nbsp; <code>true</code> = fetch <code>.txt</code> + artwork.<br>Always ignored in mode 1 (art is already on disk).</td></tr>
+  <tr><td>dryRun</td><td>If <code>true</code>, the fetch step logs what it would do but writes no files and makes no Scryfall requests. Useful for testing card lists.</td></tr>
+  <tr><td>chunkSize</td><td>Cards per batch when chaining fetch&rarr;render. <code>0</code> disables chunking (fetch all first, then render all). Chunking is useful for large lists to avoid Playwright memory issues.</td></tr>
+</table>
+
+<h4>generate</h4>
+<table>
+  <tr><td>outputSubDir</td><td>Sub-folder relative to the <code>.txt</code> input directory where rendered PNGs are saved.<br>Default: <code>output</code></td></tr>
+  <tr><td>baseUrl</td><td>URL of the local CardConjurer server. Change only if you run it on a custom port.<br>Default: <code>http://localhost:8080</code></td></tr>
+  <tr><td>headless</td><td><code>true</code> = run the Playwright browser invisibly (recommended for batch runs).<br><code>false</code> = show the browser window (useful for debugging renders).</td></tr>
+  <tr><td>startLauncher</td><td><code>true</code> = auto-start the CardConjurer launcher before rendering.<br><code>false</code> = assume the server is already running.</td></tr>
+  <tr><td>overwrite</td><td>Whether to overwrite existing output PNG files.<br><code>false</code> = skip cards that already have a rendered PNG.</td></tr>
+  <tr><td>upscaleEnabled</td><td>Upscale rendered PNG output after generation. Uses the same engine/factor options as the fetch upscale.</td></tr>
+  <tr><td>upscaleEngine</td><td>Upscale engine for rendered output. Same options as <b>fetch.upscaleEngine</b>.</td></tr>
+  <tr><td>upscaleFactor</td><td>Scale multiplier for rendered output: <code>2</code> or <code>4</code>.</td></tr>
+  <tr><td>limit</td><td>Maximum number of cards to render in one run. <code>0</code> = render all cards found in the input directory.</td></tr>
+  <tr><td>dryRun</td><td>If <code>true</code>, the render step logs which cards it would process but skips all Playwright calls.</td></tr>
+</table>
+"""
+
+
+class XmlExportConfigHelpDialog(QDialog):
+    """Explains every key in xml_export_config.json."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("XML Export \u2014 Config Reference")
+        self.resize(680, 520)
+
+        root = QVBoxLayout(self)
+
+        browser = QTextBrowser()
+        browser.setOpenExternalLinks(False)
+        browser.setHtml(self._help_html())
+        root.addWidget(browser, stretch=1)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
+        buttons.rejected.connect(self.reject)
+        root.addWidget(buttons)
+
+    @staticmethod
+    def _help_html() -> str:
+        return """
+<style>
+  body  { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; margin: 8px; }
+  h3    { color: #d4af37; margin-bottom: 4px; }
+  h4    { border-bottom: 1px solid #666; padding-bottom: 3px; margin-top: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  td    { padding: 4px 6px; vertical-align: top; }
+  td:first-child { width: 160px; white-space: nowrap; font-weight: bold; }
+  tr:nth-child(even) { background: rgba(128,128,128,0.08); }
+  code  { background: rgba(128,128,128,0.15); padding: 0 3px; border-radius: 3px; }
+  p     { margin: 4px 0 10px; }
+</style>
+<h3>XML Export &mdash; Config Reference</h3>
+<p>Edit values directly in the JSON preview, then click <b>Save</b>.
+The <b>Mode</b> combo in the GUI always overrides the <code>mode</code> key at run time.</p>
+
+<h4>mode</h4>
+<table>
+  <tr><td>mode</td><td>Which input section to use.<br>
+    <code>0</code> &mdash; Manual (uses the <code>manual</code> block)<br>
+    <code>1</code> &mdash; RoleCard (uses the <code>rolecard</code> block)<br>
+    Overridden by the Mode combo in the GUI.</td></tr>
+</table>
+
+<h4>manual</h4>
+<table>
+  <tr><td>inputFolder</td><td>Absolute path to the folder containing rendered card images to include in the XML.<br>
+    Example: <code>C:\\...\\Cards\\Generic\\output</code></td></tr>
+  <tr><td>recurse</td><td><code>true</code> = include images in all sub-folders recursively.<br>
+    <code>false</code> = top-level folder only.</td></tr>
+</table>
+
+<h4>rolecard</h4>
+<table>
+  <tr><td>roles</td><td>Which role(s) to include.<br>
+    <code>0</code> &mdash; A &mdash; all roles<br>
+    <code>1</code> Assassins &nbsp; <code>2</code> Bandits &nbsp; <code>3</code> Guardians &nbsp; <code>4</code> Kings &nbsp; <code>5</code> Renegades</td></tr>
+  <tr><td>templatesRoot</td><td>Absolute path to the <code>Cards\\templates</code> folder. Used to locate each role&rsquo;s rendered output sub-directory.<br>
+    Leave blank to auto-detect relative to the script.</td></tr>
+</table>
+
+<h4>Cardback</h4>
+<table>
+  <tr><td>cardbackPath</td><td>Absolute path to a specific cardback image to include as the back face of every card.
+    Leave blank to omit the cardback entirely.</td></tr>
+  <tr><td>cardbacksDir</td><td>Folder scanned for cardback image files when no explicit <b>cardbackPath</b> is set.<br>
+    Example: <code>C:\\...\\Cards\\Cardbacks</code></td></tr>
+</table>
+
+<h4>Print Settings</h4>
+<table>
+  <tr><td>stock</td><td>MPC card stock index:<br>
+    <code>0</code> &mdash; (S30) Standard Smooth<br>
+    <code>1</code> &mdash; (S33) Superior Smooth<br>
+    <code>2</code> &mdash; (M31) Linen<br>
+    <code>3</code> &mdash; (P10) Plastic</td></tr>
+  <tr><td>foil</td><td><code>true</code> = mark all front faces as foil in the XML.<br>
+    <code>false</code> = standard (non-foil).</td></tr>
+</table>
+
+<h4>Output</h4>
+<table>
+  <tr><td>autofillDir</td><td>Default folder where the XML file is written when <b>outputXml</b> is blank.<br>
+    Example: <code>C:\\...\\Autofill</code></td></tr>
+  <tr><td>outputXml</td><td>Absolute path for the generated XML file. Leave blank to auto-name the file inside <b>autofillDir</b>.</td></tr>
+</table>
+"""
 
 
 class MissingDependenciesDialog(QDialog):
@@ -569,7 +943,7 @@ class SplashScreen(QWidget):
 
         # ── Layout ────────────────────────────────────────────────────────
         root = QVBoxLayout(self)
-        root.setContentsMargins(30, 28, 30, 18)
+        root.setContentsMargins(30, 28, 30, 14)
         root.setSpacing(0)
 
         title = QLabel("CardWeaver")
@@ -586,7 +960,16 @@ class SplashScreen(QWidget):
         root.addWidget(title)
         root.addStretch()
 
-        copyright_lbl = QLabel("\u00a9 2026 CardWeaver  \u2014  All rights reserved")
+        self._status_lbl = QLabel("")
+        self._status_lbl.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self._status_lbl.setStyleSheet(
+            "color: #d4af37;"
+            "background: transparent;"
+            "font-size: 11px;"
+        )
+        root.addWidget(self._status_lbl)
+
+        copyright_lbl = QLabel("\u00a9 2026 CardWeaver  \u2014  do what you want with this")
         copyright_lbl.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)
         copyright_lbl.setStyleSheet(
             "color: rgba(220, 220, 220, 200);"
@@ -597,7 +980,24 @@ class SplashScreen(QWidget):
 
     def paintEvent(self, event):  # noqa: N802
         painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.drawPixmap(0, 0, self._bg)
+
+        overlay = QColor(10, 10, 22, 175)
+        # Bottom band — covers status + copyright
+        painter.fillRect(0, self.height() - 58, self.width(), 58, overlay)
+
+        # Border: faint outer glow + solid inner ring (gold, matches title)
+        w, h = self.width(), self.height()
+        for offset, alpha in ((0, 60), (1, 180)):
+            pen = QPen(QColor(212, 175, 55, alpha))
+            pen.setWidth(1)
+            painter.setPen(pen)
+            painter.drawRect(offset, offset, w - 1 - 2 * offset, h - 1 - 2 * offset)
+
+    def set_status(self, text: str) -> None:
+        self._status_lbl.setText(text)
+        QApplication.processEvents()
 
     def mousePressEvent(self, event):  # noqa: N802
         self.clicked.emit()
@@ -627,6 +1027,7 @@ def main():
     app.processEvents()
 
     # Run dependency check while splash is visible
+    splash.set_status("Checking dependencies\u2026")
     problems = _check_dependencies()
     window = PipelineGUI()
 
@@ -648,6 +1049,8 @@ def main():
             )
             msg.exec()
         window.show()
+        window.raise_()
+        window.activateWindow()
 
     QTimer.singleShot(SplashScreen.DISPLAY_MS, _launch)
     splash.clicked.connect(_launch)

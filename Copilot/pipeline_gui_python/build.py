@@ -5,7 +5,7 @@ from pathlib import Path
 def build():
     script_dir = Path(__file__).parent
     os.chdir(script_dir)
-    cmd = [sys.executable, "-m", "PyInstaller", "--onefile", "--windowed", "--name", "CardWeaver", "--distpath", str(script_dir / "dist"), "--workpath", str(script_dir / "build"), "main.py"]
+    cmd = [sys.executable, "-m", "PyInstaller", "--onefile", "--windowed", "--name", "CardWeaver", "--add-data", f"{script_dir / 'assets'};assets", "--distpath", str(script_dir / "dist"), "--workpath", str(script_dir / "build"), "main.py"]
     print(f"Building executable...")
     result = subprocess.run(cmd, cwd=script_dir)
     if result.returncode == 0:

@@ -1,0 +1,18 @@
+{
+    "_comment": "XML Export settings for Generate-MpcFillXml.ps1. Edit via the CardWeaver GUI (XML Export tab \u2192 Save).",
+    "mode": 0,
+    "manual": {
+        "inputFolder": "Cards\\Generic\\output",
+        "recurse": false
+    },
+    "rolecard": {
+        "roles": 0,
+        "templatesRoot": "Cards\\templates"
+    },
+    "cardbackPath": "",
+    "cardbacksDir": "Cards\\Cardbacks",
+    "autofillDir": "Autofill",
+    "stock": 0,
+    "foil": false,
+    "outputXml": ""
+}

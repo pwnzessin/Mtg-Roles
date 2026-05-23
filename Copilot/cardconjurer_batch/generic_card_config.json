@@ -5,15 +5,16 @@
                   "cardsDir":  "Cards\\Generic",
                   "artDir":  "Artworks\\Downloaded",
                   "cardlistsDir":  "Copilot\\cardconjurer_batch\\Cardlists",
+                  "artScanDir":  "Cards\\Custom_Art",
                   "preferSet":  "",
-                  "artMode":  2,
-                  "artVersion":  "png",
+                  "artMode":  1,
+                  "artVersion":  "art_crop",
                   "pngCropJpegQuality":  95,
                   "upscaleEnabled":  false,
                   "upscaleEngine":  "auto",
                   "upscaleFactor":  2,
                   "overwrite":  true,
-                  "downloadArt":  true,
+                  "downloadArt":  false,
                   "dryRun":  false,
                   "chunkSize":  15
               },
@@ -28,10 +29,5 @@
                      "upscaleFactor":  2,
                      "limit":  0,
                      "dryRun":  false
-                 },
-    "setIcons":  {
-                     "enabled":  false,
-                     "outputDir":  "Artworks\\SetIcons",
-                     "setCodesList":  ""
                  }
 }

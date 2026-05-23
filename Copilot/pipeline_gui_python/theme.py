@@ -11,21 +11,53 @@ DARK_STYLESHEET = """
         border: 1px solid #2e3648;
     }
     
+    QTabWidget::tab-bar {
+        left: 16px;
+    }
+    
     QTabBar::tab {
         background-color: #252c3a;
         color: #b0b0b0;
         padding: 6px 16px;
-        border-right: 1px solid #2e3648;
+        min-width: 140px;
+        border: 1px solid #2e3648;
+        border-bottom: none;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        margin-right: 2px;
     }
     
     QTabBar::tab:selected {
-        background-color: #1a1e28;
+        background-color: #2e3a50;
         color: #e0e0e0;
+        border: 1px solid #3a4a60;
         border-bottom: 2px solid #7fb329;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
     
     QTabBar::tab:hover:!selected {
         background-color: #2e3648;
+    }
+
+    QPushButton#helpButton, QPushButton#themeButton {
+        background-color: #252c3a;
+        color: #b0b0b0;
+        border: 1px solid #2e3648;
+        border-radius: 5px;
+        padding: 6px 16px;
+        min-width: 140px;
+        font-weight: normal;
+    }
+
+    QPushButton#helpButton:hover, QPushButton#themeButton:hover {
+        background-color: #2e3648;
+        border: 1px solid #3a4a60;
+        color: #e0e0e0;
+    }
+
+    QPushButton#helpButton:pressed, QPushButton#themeButton:pressed {
+        background-color: #1a1e28;
     }
     
     QLineEdit, QTextEdit {
@@ -154,21 +186,53 @@ LIGHT_STYLESHEET = """
         border: 1px solid #c5d4ee;
     }
     
+    QTabWidget::tab-bar {
+        left: 16px;
+    }
+    
     QTabBar::tab {
         background-color: #dde8f7;
         color: #555;
         padding: 6px 16px;
-        border-right: 1px solid #c5d4ee;
+        min-width: 140px;
+        border: 1px solid #c5d4ee;
+        border-bottom: none;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        margin-right: 2px;
     }
     
     QTabBar::tab:selected {
         background-color: #eef3fc;
         color: #222;
+        border: 1px solid #b8cce8;
         border-bottom: 2px solid #7fb329;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
     
     QTabBar::tab:hover:!selected {
         background-color: #cfddf4;
+    }
+
+    QPushButton#helpButton, QPushButton#themeButton {
+        background-color: #dde8f7;
+        color: #555;
+        border: 1px solid #c5d4ee;
+        border-radius: 5px;
+        padding: 6px 16px;
+        min-width: 140px;
+        font-weight: normal;
+    }
+
+    QPushButton#helpButton:hover, QPushButton#themeButton:hover {
+        background-color: #cfddf4;
+        border: 1px solid #b8cce8;
+        color: #222;
+    }
+
+    QPushButton#helpButton:pressed, QPushButton#themeButton:pressed {
+        background-color: #eef3fc;
     }
     
     QLineEdit, QTextEdit {

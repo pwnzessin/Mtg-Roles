@@ -1,19 +1,16 @@
 Generic card batch report
-Generated: 2026-05-20T22:43:56.587Z
+Generated: 2026-05-23T00:18:38.148Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 6
-Cards in run queue: 6
+Total parsed cards: 3
+Cards in run queue: 3
 Dry run: false
 
-OK | Niko, Light of Hope.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Niko, Light of Hope.png
-OK | Thought Vessel.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Thought Vessel.png
-OK | Thran Dynamo.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Thran Dynamo.png
-OK | Virtue of Knowledge.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Virtue of Knowledge.png
-OK | Witch Enchanter.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Witch Enchanter.png
-OK | Worn Powerstone.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Worn Powerstone.png
+OK | Ravager Wurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Ravager Wurm.png
+OK | Sarinth Greatwurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Sarinth Greatwurm.png
+OK | Symbiotic Wurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Symbiotic Wurm.png
 
-Generated:        6
+Generated:        3
 Skipped (exists): 0
 Failed:           0

@@ -16,8 +16,7 @@
 param(
     [string]$ConfigFile   = "$PSScriptRoot\generic_card_config.json",
     [int]   $RunMode      = 0,       # 1-5; 0 = ask interactively
-    [string]$CardListFile = "",     # path to .txt card list (mode 4)
-    [string]$CardNames    = "",     # comma-separated card names (modes 1/3)
+    [string]$CardListFile = "",     # path to .txt card list (mode 2)
     [switch]$Yes                     # accept all config defaults, no prompts
 )
 
@@ -111,6 +110,11 @@ function Get-RelativePath {
     $targetUri = [System.Uri]([System.IO.Path]::GetFullPath($Target))
     $rel = [System.Uri]::UnescapeDataString($baseUri.MakeRelativeUri($targetUri).ToString())
     return $rel -replace '/', '\'
+}
+
+function Resolve-ConfigPath([string]$Base, [string]$Value) {
+    # Returns $Value unchanged when absolute; otherwise joins with $Base.
+    if ([System.IO.Path]::IsPathRooted($Value)) { $Value } else { Join-Path $Base $Value }
 }
 
 function Find-RealEsrganExe {
@@ -363,11 +367,8 @@ Write-Host "  ==========================================" -ForegroundColor White
     Write-Host "  ==========================================" -ForegroundColor White
 
 Write-Section "Select mode"
-Write-Host "    1  Fetch from Scryfall + render cards"
-Write-Host "    2  Render existing .txt files"
-Write-Host "    3  Fetch from Scryfall only (no render)"
-Write-Host "    4  Load card list file + fetch + render"
-Write-Host "    5  Clear output / downloaded art folders"
+Write-Host "    1  Render custom art files"
+Write-Host "    2  Load card list file + fetch + render"
 Write-Host ""
 
 if ($RunMode -gt 0) {
@@ -377,74 +378,19 @@ if ($RunMode -gt 0) {
     $mode = Ask-String "Mode" "1"
 }
 
-$doFetch    = $mode -in @("1","3","4")
-$doGenerate = $mode -in @("1","2","4")
+$doFetch    = $true
+$doGenerate = $true
 
-if (-not $doFetch -and -not $doGenerate -and $mode -ne "5") {
-    Write-Host "  Invalid mode '$mode'. Choose 1-5." -ForegroundColor Red
+if ($mode -notin @("1","2")) {
+    Write-Host "  Invalid mode '$mode'. Choose 1 or 2." -ForegroundColor Red
     exit 1
 }
 
-# ── Clear folders (mode 5) ────────────────────────────────────────────────────
-
-if ($mode -eq "5") {
-    $outputDir    = Join-Path $root (Join-Path $cfg.fetch.cardsDir $cfg.generate.outputSubDir)
-    $downloadedDir = Join-Path $root $cfg.fetch.artDir
-
-    Write-Section "Clear Folders"
-    Write-Host "    Output folder:    $outputDir" -ForegroundColor DarkGray
-    Write-Host "    Downloaded art:   $downloadedDir" -ForegroundColor DarkGray
-    Write-Host ""
-
-    $clearOutput     = Ask-Bool "Clear rendered PNGs in output folder"      $true
-    $clearTxt        = Ask-Bool "Clear .txt card files in output folder"   $false
-    $clearDownloaded = Ask-Bool "Clear downloaded artwork (jpg/png)"       $true
-    Write-Host ""
-
-    $confirm = Ask-Bool "Proceed?" $true
-    if (-not $confirm) {
-        Write-Host "  Cancelled." -ForegroundColor Yellow
-        exit 0
-    }
-
-    if ($clearOutput) {
-        if (Test-Path $outputDir) {
-            $pngs = @(Get-ChildItem $outputDir -Filter "*.png" -File)
-            $pngs | ForEach-Object { Remove-Item $_.FullName -Force }
-            Write-Host "  Removed $($pngs.Count) PNG(s) from $outputDir" -ForegroundColor Green
-        } else {
-            Write-Host "  Output folder not found, nothing to clear." -ForegroundColor Yellow
-        }
-    }
-
-    if ($clearTxt) {
-        if (Test-Path $outputDir) {
-            $txts = @(Get-ChildItem $outputDir -Filter "*.txt" -File)
-            $txts | ForEach-Object { Remove-Item $_.FullName -Force }
-            Write-Host "  Removed $($txts.Count) .txt file(s) from $outputDir" -ForegroundColor Green
-        } else {
-            Write-Host "  Output folder not found, nothing to clear." -ForegroundColor Yellow
-        }
-    }
-
-    if ($clearDownloaded) {
-        if (Test-Path $downloadedDir) {
-            $imgs = @(Get-ChildItem $downloadedDir -File | Where-Object { $_.Extension -in @('.jpg','.png') })
-            $imgs | ForEach-Object { Remove-Item $_.FullName -Force }
-            Write-Host "  Removed $($imgs.Count) image(s) from $downloadedDir" -ForegroundColor Green
-        } else {
-            Write-Host "  Downloaded art folder not found, nothing to clear." -ForegroundColor Yellow
-        }
-    }
-
-    exit 0
-}
-
-# ── Card list file picker (mode 4) ───────────────────────────────────────────────
+# ── Card list file picker (mode 2) ───────────────────────────────────────────────
 
 $preloadedCardNames = @()
 
-if ($mode -eq "4") {
+if ($mode -eq "2") {
     Write-Section "Select Card List"
 
     if ($CardListFile -and (Test-Path $CardListFile)) {
@@ -455,7 +401,7 @@ if ($mode -eq "4") {
         )
         Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $(Split-Path $CardListFile -Leaf)" -ForegroundColor DarkGray
     } else {
-        $cardlistsDir = Join-Path $root $cfg.fetch.cardlistsDir
+        $cardlistsDir = Resolve-ConfigPath $root $cfg.fetch.cardlistsDir
         $txtFiles = @(Get-ChildItem $cardlistsDir -Filter "*.txt" -ErrorAction SilentlyContinue | Sort-Object Name)
 
         if ($txtFiles.Count -eq 0) {
@@ -485,43 +431,63 @@ if ($mode -eq "4") {
     }
 }
 
+# ── Art scan (mode 1) ────────────────────────────────────────────
+
+$mode2ArtDir = $null
+
+if ($mode -eq "1") {
+    Write-Section "Scan Art Directory"
+
+    $defaultArtDir = if ($cfg.fetch.artScanDir) {
+        $raw = $cfg.fetch.artScanDir
+        if ([System.IO.Path]::IsPathRooted($raw)) { $raw } else { Join-Path $root $raw }
+    } else { Resolve-ConfigPath $root $cfg.fetch.artDir }
+    $mode2ArtDir   = Ask-String "Art directory to scan" $defaultArtDir
+
+    if (-not (Test-Path $mode2ArtDir)) {
+        Write-Host "  Directory not found: $mode2ArtDir" -ForegroundColor Red
+        exit 1
+    }
+
+    $artFiles = @(Get-ChildItem $mode2ArtDir -File | Where-Object { $_.Extension -in @('.jpg','.jpeg','.png') } | Sort-Object Name)
+
+    if ($artFiles.Count -eq 0) {
+        Write-Host "  No image files (.jpg/.jpeg/.png) found in $mode2ArtDir" -ForegroundColor Yellow
+        exit 0
+    }
+
+    $preloadedCardNames = @($artFiles | ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) })
+    Write-Host "    Found $($preloadedCardNames.Count) artwork file(s):" -ForegroundColor DarkGray
+    $preloadedCardNames | ForEach-Object { Write-Host "      $_" -ForegroundColor DarkGray }
+    Write-Host ""
+}
+
 # ── Fetch options ──────────────────────────────────────────────────────────────
 
 if ($doFetch) {
     Write-Section "Scryfall Fetch"
 
-    [string[]]$cardNames = @()
-    if ($preloadedCardNames -and $preloadedCardNames.Count -gt 0) {
-        [string[]]$cardNames = @($preloadedCardNames)
-    } elseif (-not [string]::IsNullOrWhiteSpace($CardNames)) {
-        [string[]]$cardNames = @($CardNames -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
-        Write-Host "    Using $($cardNames.Count) card(s) from parameter." -ForegroundColor DarkGray
-    } else {
-        Write-Host "    Enter card names (comma-separated) or a path to a .txt file (one name per line)." -ForegroundColor DarkGray
-        $rawInput = Ask-String "Card names or file path" ""
-
-        if ($rawInput -match '\.txt$' -and (Test-Path $rawInput)) {
-            [string[]]$cardNames = @(Get-Content $rawInput | ForEach-Object {
-                ($_ -replace '^\s*\d+x?\s+', '').Trim()
-            } | Where-Object { $_ -ne '' })
-            Write-Host "    Loaded $($cardNames.Count) card(s) from $rawInput" -ForegroundColor DarkGray
-        } else {
-            [string[]]$cardNames = @($rawInput -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
-        }
-    }
+    [string[]]$cardNames = @($preloadedCardNames)
 
     if ($cardNames.Count -lt 1) {
         Write-Host "  No card names provided. Exiting." -ForegroundColor Yellow
         exit 0
     }
 
-    $defaultFetchOut = Join-Path $root $cfg.fetch.cardsDir
+    $defaultFetchOut = Resolve-ConfigPath $root $cfg.fetch.cardsDir
     $fetchOutDir     = Ask-String "Output directory (.txt files)" $defaultFetchOut
-    $fetchArtDir     = Join-Path $root $cfg.fetch.artDir
-    Write-Host "    Art output: $fetchArtDir" -ForegroundColor DarkGray
+    if ($mode -eq "1") {
+        # Art already on disk — use the scanned directory, skip downloading
+        $fetchArtDir = $mode2ArtDir
+        Write-Host "    Art directory: $fetchArtDir (existing, will not re-download)" -ForegroundColor DarkGray
+        $fetchArt = $false
+    } else {
+        $fetchArtDir = Resolve-ConfigPath $root $cfg.fetch.artDir
+        Write-Host "    Art output: $fetchArtDir" -ForegroundColor DarkGray
+        $fetchArt = Ask-Bool "Download artwork" ([bool]$cfg.fetch.downloadArt)
+    }
     $fetchSet        = Ask-String "Prefer set code (blank = any printing)" $cfg.fetch.preferSet
     $fetchOverwrite  = Ask-Bool   "Overwrite existing files" ([bool]$cfg.fetch.overwrite)
-    $fetchArt        = Ask-Bool   "Download artwork" ([bool]$cfg.fetch.downloadArt)
     $defaultArtMode = if ($cfg.fetch.artMode) { [string]$cfg.fetch.artMode } else { "2" }
     $fetchArtMode = if ($fetchArt) {
         Normalize-ArtMode (Ask-String "Art mode (1=direct image variant, 2=png then auto-crop)" $defaultArtMode)
@@ -569,13 +535,13 @@ if ($doGenerate) {
         Write-Host "    Input:  $genInputDir" -ForegroundColor DarkGray
         Write-Host "    Art:    $genArtDir"   -ForegroundColor DarkGray
     } else {
-        $genInputDir = Ask-String "Input directory (.txt files)" (Join-Path $root $cfg.fetch.cardsDir)
-        $defaultArtDir = Join-Path $root $cfg.fetch.artDir
+        $genInputDir = Ask-String "Input directory (.txt files)" (Resolve-ConfigPath $root $cfg.fetch.cardsDir)
+        $defaultArtDir = Resolve-ConfigPath $root $cfg.fetch.artDir
         $artDirRaw   = Ask-String "Art directory (blank = same as input)" $defaultArtDir
         $genArtDir   = if ($artDirRaw -and $artDirRaw -ne $genInputDir) { $artDirRaw } else { $null }
     }
 
-    $defaultOutput = Join-Path $genInputDir $cfg.generate.outputSubDir
+    $defaultOutput = Resolve-ConfigPath $genInputDir $cfg.generate.outputSubDir
     $genOutputDir  = Ask-String "Output directory (PNG files)" $defaultOutput
     $genOverwrite  = Ask-Bool   "Overwrite existing PNGs" ([bool]$cfg.generate.overwrite)
     $genLimit      = Ask-Int    "Card limit (0 = all)" ([int]$cfg.generate.limit)

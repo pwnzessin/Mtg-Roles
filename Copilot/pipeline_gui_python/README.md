@@ -1,4 +1,4 @@
-# MTG Pipeline GUI (Python/PyQt6)
+# CardWeaver (Python/PyQt6)
 
 A modern, standalone GUI for running MTG Roles pipeline tasks (Generic and Rolecard card generation).
 
@@ -24,7 +24,7 @@ A modern, standalone GUI for running MTG Roles pipeline tasks (Generic and Rolec
 
 ```bash
 # From command line
-.\dist\mtg-pipeline-gui.exe
+.\dist\CardWeaver.exe
 
 # Or double-click the exe file
 ```
@@ -49,7 +49,7 @@ The GUI opens immediately. No Python installation required for the .exe version.
 - `theme.py` — Lichess-style dark/light mode stylesheets
 - `pipeline.py` — PowerShell subprocess wrapper
 - `build.py` — PyInstaller build script
-- `mtg_pipeline_gui.spec` — PyInstaller spec file (reference only)
+- Settings are saved to `cardweaver_settings.json` next to the exe
 
 ## Building the Executable
 
@@ -59,20 +59,29 @@ To rebuild the standalone .exe from source:
 python build.py
 ```
 
-Output: `dist/mtg-pipeline-gui.exe` (32.7 MB)
+Output: `dist/CardWeaver.exe`
 
 ## Usage
 
 ### Generic Pipeline
 
 1. **Select Tab**: Click "Generic Pipeline" tab
-2. **Configure**:
-   - Browse to input cards directory
-   - Set output directory for rendered PNGs
-   - Select artwork directory
-   - Adjust rendering options (headless, launcher, overwrite)
-3. **Run**: Click "Run Generic Pipeline" button
-4. **Monitor**: Watch real-time output in the log area
+2. **Load Config**: Browse to `Copilot/cardconjurer_batch/generic_card_config.json` to pre-fill all defaults.
+3. **Choose a Mode**:
+
+   | Mode | Name | What it does |
+   |---|---|---|
+   | 1 | Render custom art files | Scans your `artScanDir` for images, derives card names from filenames, fetches only the `.txt` from Scryfall (no art re-download), then renders |
+   | 2 | Card list + fetch + render | Loads a `.txt` card list, then fetches + renders |
+
+4. **Card Input** (mode 1): no card input needed — names are read from artwork filenames automatically.
+5. **Card Input** (mode 2): browse to a card list `.txt` file.
+7. **Run**: Click "Run Generic Pipeline".
+8. **Monitor**: Watch real-time output in the log area.
+
+#### Custom Art Workflow (Mode 2)
+
+Name your artwork files exactly after the card (e.g. `Lightning Bolt.jpg`) and place them in the directory configured as `fetch.artScanDir` in `generic_card_config.json`. Run the pipeline in mode 2 — it scans that folder, fetches the matching card data from Scryfall, and renders PNGs alongside the artwork.
 
 ### Rolecard Pipeline
 

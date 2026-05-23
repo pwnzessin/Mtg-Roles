@@ -41,6 +41,18 @@ const COLOR_PT = {
   V: { name: "Vehicle Power/Toughness",     src: "/img/frames/m15/regular/m15PTV.png" },
 };
 
+// ── Planeswalker frame constants ───────────────────────────────────────────────
+
+const PW_COLOR_FRAMES = {
+  W: { name: "White Frame",        src: "/img/frames/planeswalker/regular/planeswalkerFrameW.png" },
+  U: { name: "Blue Frame",         src: "/img/frames/planeswalker/regular/planeswalkerFrameU.png" },
+  B: { name: "Black Frame",        src: "/img/frames/planeswalker/regular/planeswalkerFrameB.png" },
+  R: { name: "Red Frame",          src: "/img/frames/planeswalker/regular/planeswalkerFrameR.png" },
+  G: { name: "Green Frame",        src: "/img/frames/planeswalker/regular/planeswalkerFrameG.png" },
+  M: { name: "Multicolored Frame", src: "/img/frames/planeswalker/regular/planeswalkerFrameM.png" },
+  A: { name: "Artifact Frame",     src: "/img/frames/planeswalker/regular/planeswalkerFrameA.png" },
+};
+
 // ── Argument parsing ───────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
@@ -85,26 +97,35 @@ function getTag(raw, tag) {
 function parseGenericCardFile(raw, filePath) {
   const title    = getTag(raw, "TITLE");
   const typeLine = getTag(raw, "TYPE");
-  const rules    = getTag(raw, "RULES");
 
-  if (!title || !typeLine || !rules) {
-    throw new Error(`Missing TITLE/TYPE/RULES tags in ${filePath}`);
+  if (!title || !typeLine) {
+    throw new Error(`Missing TITLE/TYPE tags in ${filePath}`);
   }
 
-  const artYPosRaw = getTag(raw, "ART_YPOS");
+  const isPlaneswalker = /planeswalker/i.test(typeLine);
+  const artYPosRaw     = getTag(raw, "ART_YPOS");
+  const color          = (getTag(raw, "COLOR") || "W").toUpperCase();
+  const mana           = getTag(raw, "MANA") || "";
+  const setCode        = getTag(raw, "SETCODE") || "";
+  const artYPos        = artYPosRaw !== null ? parseFloat(artYPosRaw) : null;
+  const artist         = getTag(raw, "ARTIST") || "Unknown";
 
-  return {
-    title,
-    color:    (getTag(raw, "COLOR") || "W").toUpperCase(),
-    mana:     getTag(raw, "MANA") || "",
-    typeLine,
-    setCode:  getTag(raw, "SETCODE") || "",
-    artYPos:  artYPosRaw !== null ? parseFloat(artYPosRaw) : null,
-    pt:       getTag(raw, "PT") || "",
-    rules,
-    flavor:   getTag(raw, "FLAVOR") || "",
-    artist:   getTag(raw, "ARTIST") || "Unknown",
-  };
+  if (isPlaneswalker) {
+    const abilities = [0, 1, 2, 3].map((i) => {
+      const val     = getTag(raw, `ABILITY${i}`) || "";
+      const pipeIdx = val.indexOf(" | ");
+      if (pipeIdx === -1) return { cost: val.trim(), text: "" };
+      return { cost: val.slice(0, pipeIdx).trim(), text: val.slice(pipeIdx + 3).trim() };
+    });
+    return { title, isPlaneswalker: true, color, mana, typeLine, setCode, artYPos,
+             loyalty: getTag(raw, "LOYALTY") || "", abilities, artist };
+  }
+
+  const rules = getTag(raw, "RULES");
+  if (!rules) throw new Error(`Missing RULES tag in ${filePath}`);
+
+  return { title, isPlaneswalker: false, color, mana, typeLine, setCode, artYPos,
+           pt: getTag(raw, "PT") || "", rules, flavor: getTag(raw, "FLAVOR") || "", artist };
 }
 
 function parseSetCodeInfo(setCodeRaw) {
@@ -121,6 +142,109 @@ function parseSetCodeInfo(setCodeRaw) {
 // ── Card object builder ────────────────────────────────────────────────────────
 
 function buildCardObject(baseUrl, c) {
+  const setInfo = parseSetCodeInfo(c.setCode);
+
+  const setSymbolSource = setInfo.setCode && setInfo.rarity
+    ? `${baseUrl}/img/setSymbols/official/${setInfo.setCode.toLowerCase()}-${setInfo.rarity.toLowerCase()}.svg`
+    : "";
+  const setSymbolZoom = setInfo.zoom !== null ? setInfo.zoom : 1;
+
+  const commonInfo = {
+    width:    745,
+    height:   1040,
+    marginX:  0,
+    marginY:  0,
+    manaSymbols: [],
+    artSource: "/img/blank.png",
+    artX:      0,
+    artY:      0,
+    artZoom:   1,
+    artRotate: 0,
+    setSymbolSource,
+    setSymbolX:    0,
+    setSymbolY:    0,
+    setSymbolZoom,
+    watermarkSource:  "",
+    watermarkX:       0,
+    watermarkY:       0,
+    watermarkZoom:    1,
+    watermarkLeft:    false,
+    watermarkRight:   false,
+    watermarkOpacity: 0.4,
+    watermarkBounds:  { x: 0.5, y: 0.7762, width: 0.75, height: 0.2305 },
+    infoArtist:   c.artist || "Unknown",
+    infoYear:     new Date().getFullYear().toString(),
+    infoNumber:   setInfo.number || "",
+    infoRarity:   setInfo.rarity || "",
+    infoSet:      setInfo.setCode || "",
+    infoLanguage: "EN",
+    infoNote:     "",
+    margins:             false,
+    bottomInfoTranslate: 0,
+    bottomInfoRotate:    0,
+    bottomInfoZoom:      1,
+    bottomInfoColor:     "#000000",
+    hideBottomInfoBorder: false,
+    serialNumber: "",
+    serialTotal:  "",
+    serialX:      "",
+    serialY:      "",
+    serialScale:  "",
+  };
+
+  // ── Planeswalker ────────────────────────────────────────────────────────────
+  if (c.isPlaneswalker) {
+    const colorKey  = c.color in PW_COLOR_FRAMES ? c.color : "W";
+    const pwFrame   = PW_COLOR_FRAMES[colorKey];
+    const abilities = c.abilities || [];
+    const count     = Math.max(1, abilities.filter((a) => a.cost !== "" || a.text !== "").length);
+
+    return {
+      ...commonInfo,
+      version:  "planeswalkerRegular",
+      onload:   "/js/frames/versionPlaneswalker.js",
+      showsFlavorBar: false,
+      frames: [{ ...pwFrame, masks: [] }],
+      artBounds:       { x: 0.068,   y: 0.101,  width: 0.864,  height: 0.8143 },
+      setSymbolBounds: { x: 0.9227,  y: 0.5891, width: 0.12,   height: 0.0381, vertical: "center", horizontal: "right" },
+      planeswalker: {
+        abilities:     abilities.map((a) => a.cost),
+        abilityAdjust: [0, 0, 0, 0],
+        count,
+        x:     0.1167,
+        width: 0.8094,
+      },
+      text: {
+        mana: {
+          name: "Mana Cost", text: c.mana || "",
+          y: 0.0481, width: 0.9292, height: 71 / 2100, oneLine: true,
+          size: 71 / 1638, align: "right", shadowX: -0.001, shadowY: 0.0029,
+          manaCost: true, manaSpacing: 0,
+        },
+        title: {
+          name: "Title", text: `{bold}${c.title || ""}{/bold}`,
+          x: 0.0867, y: 0.0372, width: 0.8267, height: 0.0548,
+          oneLine: true, font: "belerenb", size: 0.0381,
+        },
+        type: {
+          name: "Type", text: c.typeLine || "",
+          x: 0.0867, y: 0.5625, width: 0.8267, height: 0.0548,
+          oneLine: true, font: "belerenb", size: 0.0324,
+        },
+        ability0: { name: "Ability 1", text: abilities[0]?.text || "", x: 0.18, y: 0.6239, width: 0.7467, height: 0.0972, size: 0.0353 },
+        ability1: { name: "Ability 2", text: abilities[1]?.text || "", x: 0.18, y: 0,      width: 0.7467, height: 0.0972, size: 0.0353 },
+        ability2: { name: "Ability 3", text: abilities[2]?.text || "", x: 0.18, y: 0,      width: 0.7467, height: 0.0972, size: 0.0353 },
+        ability3: { name: "Ability 4", text: abilities[3]?.text || "", x: 0.18, y: 0,      width: 0.7467, height: 0,      size: 0.0353 },
+        loyalty: {
+          name: "Loyalty", text: c.loyalty || "",
+          x: 0.806, y: 0.902, width: 0.14, height: 0.0372,
+          size: 0.0372, font: "belerenbsc", oneLine: true, align: "center", color: "white",
+        },
+      },
+    };
+  }
+
+  // ── M15Regular ──────────────────────────────────────────────────────────────
   const colorKey  = c.color in COLOR_FRAMES ? c.color : "W";
   const mainFrame = COLOR_FRAMES[colorKey];
 
@@ -137,67 +261,14 @@ function buildCardObject(baseUrl, c) {
     rulesText = `${rulesText}\n{flavor}\n${c.flavor}`;
   }
 
-  const setInfo = parseSetCodeInfo(c.setCode);
-
   return {
-    width:    745,
-    height:   1040,
-    marginX:  0,
-    marginY:  0,
+    ...commonInfo,
     version:  "m15Regular",
-    manaSymbols: [],
+    onload:   null,
+    showsFlavorBar: !!c.flavor,
     frames,
-
-    artSource: "/img/blank.png",
-    artX:      0,
-    artY:      0,
-    artZoom:   1,
-    artRotate: 0,
-    artBounds: { x: 0.0767, y: 0.1129, width: 0.8476, height: 0.4429 },
-
-    setSymbolSource:
-      setInfo.setCode && setInfo.rarity
-        ? `${baseUrl}/img/setSymbols/official/${setInfo.setCode.toLowerCase()}-${setInfo.rarity.toLowerCase()}.svg`
-        : "",
-    setSymbolX:    0,
-    setSymbolY:    0,
-    setSymbolZoom: setInfo.zoom !== null ? setInfo.zoom : 1,
-    setSymbolBounds: {
-      x: 0.9213, y: 0.591, width: 0.12, height: 0.041,
-      vertical: "center", horizontal: "right",
-    },
-
-    watermarkSource:  "",
-    watermarkX:       0,
-    watermarkY:       0,
-    watermarkZoom:    1,
-    watermarkLeft:    false,
-    watermarkRight:   false,
-    watermarkOpacity: 0.4,
-    watermarkBounds:  { x: 0.5, y: 0.7762, width: 0.75, height: 0.2305 },
-
-    infoArtist:   c.artist || "Unknown",
-    infoYear:     new Date().getFullYear().toString(),
-    infoNumber:   setInfo.number || "",
-    infoRarity:   setInfo.rarity || "",
-    infoSet:      setInfo.setCode || "",
-    infoLanguage: "EN",
-    infoNote:     "",
-
-    margins:             false,
-    bottomInfoTranslate: 0,
-    bottomInfoRotate:    0,
-    bottomInfoZoom:      1,
-    bottomInfoColor:     "#000000",
-    hideBottomInfoBorder: false,
-    showsFlavorBar:      !!c.flavor,
-    serialNumber: "",
-    serialTotal:  "",
-    serialX:      "",
-    serialY:      "",
-    serialScale:  "",
-    onload: null,
-
+    artBounds:       { x: 0.0767, y: 0.1129, width: 0.8476, height: 0.4429 },
+    setSymbolBounds: { x: 0.9213, y: 0.591,  width: 0.12,   height: 0.041, vertical: "center", horizontal: "right" },
     text: {
       mana: {
         name:        "Mana Cost",
@@ -443,7 +514,8 @@ async function main() {
   if (opts.dryRun) {
     lines.push("Dry run card list:");
     for (const c of queue) {
-      lines.push(`- ${path.basename(c.filePath)} | title=${c.title} | color=${c.color} | art=${c.artUrl || "(none)"}`);
+      const cardType = c.isPlaneswalker ? "planeswalker" : "regular";
+      lines.push(`- ${path.basename(c.filePath)} | title=${c.title} | type=${cardType} | color=${c.color} | art=${c.artUrl || "(none)"}`);
     }
     fs.writeFileSync(reportPath, lines.join("\n") + "\n", "utf8");
     console.log(`Dry run complete. Report: ${reportPath}`);
@@ -474,8 +546,8 @@ async function main() {
   const context = await browser.newContext({ acceptDownloads: true });
   const page    = await context.newPage();
 
-  const PACK_SCRIPT = "/js/frames/packM15Regular-1.js";
-  const CARD_KEY    = "__copilot_generic_card__";
+  const PACK_SCRIPT_M15 = "/js/frames/packM15Regular-1.js";
+  const CARD_KEY        = "__copilot_generic_card__";
 
   let generated      = 0;
   let skippedExisting = 0;
@@ -504,7 +576,7 @@ async function main() {
         document.head.appendChild(s);
       });
       if (typeof window.loadFramePack === "function") window.loadFramePack();
-    }, PACK_SCRIPT);
+    }, PACK_SCRIPT_M15);
 
     for (const c of queue) {
       if (!opts.overwrite && fs.existsSync(c.outputPath)) {
@@ -541,6 +613,31 @@ async function main() {
           null,
           { timeout: 30000 }
         );
+
+        // For planeswalker cards: ensure the version script has run and ability layout is applied
+        if (c.isPlaneswalker) {
+          await page.evaluate(() => window.loadScript("/js/frames/versionPlaneswalker.js"));
+          await page.waitForFunction(
+            () => typeof window.planeswalkerEdited === "function",
+            null,
+            { timeout: 30000 }
+          );
+          // Wait for the planeswalker text mask image (fires resetPlaneswalkerImages on first load)
+          await page.waitForFunction(
+            () => !window.planeswalkerTextMask || window.planeswalkerTextMask.complete,
+            null,
+            { timeout: 15000 }
+          );
+          // Apply ability positions using the injected card.planeswalker data
+          await page.evaluate(() => {
+            if (typeof window.fixPlaneswalkerInputs === "function") {
+              window.fixPlaneswalkerInputs(window.planeswalkerEdited);
+            } else {
+              window.planeswalkerEdited();
+            }
+          });
+          await page.waitForTimeout(400);
+        }
 
         // Wait for set symbol to load (resetSetSymbol fires on load)
         if (cardObj.setSymbolSource) {
