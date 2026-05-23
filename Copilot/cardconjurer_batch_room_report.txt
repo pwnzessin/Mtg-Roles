@@ -1,0 +1,16 @@
+Room card batch report
+Generated: 2026-05-23T14:13:31.955Z
+Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
+Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
+
+Total parsed cards: 3
+Cards in run queue: 3
+Dry run: false
+
+OK | Cramped Vents.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Cramped Vents.png
+OK | Ticket Booth.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Ticket Booth.png
+OK | Walk-In Closet.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Walk-In Closet.png
+
+Generated:        3
+Skipped (exists): 0
+Failed:           0

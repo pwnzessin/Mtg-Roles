@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 // ── M15Regular frame constants ─────────────────────────────────────────────────
@@ -472,9 +472,18 @@ async function main() {
   fs.mkdirSync(outputDir, { recursive: true });
 
   // Parse card files and resolve artwork
+  let hadRoomCards = false;
   const cards = [];
   for (const filePath of txtFiles) {
     const raw    = fs.readFileSync(filePath, "utf8");
+
+    // Room cards have a different structure — delegate to generate_room_card.mjs
+    if (/room/i.test(getTag(raw, "LAYOUT") || "")) {
+      console.log(`[ROOM] ${path.basename(filePath)} — Room card, will delegate to generate_room_card.mjs`);
+      hadRoomCards = true;
+      continue;
+    }
+
     const parsed = parseGenericCardFile(raw, filePath);
     const stem   = path.parse(filePath).name;
 
@@ -713,6 +722,29 @@ async function main() {
 
   fs.writeFileSync(reportPath, lines.join("\n") + "\n", "utf8");
   console.log(`Done. Report: ${reportPath}`);
+
+  // ── Delegate Room cards ───────────────────────────────────────────────────
+  if (hadRoomCards) {
+    console.log("\n[ROOM] Starting generate_room_card.mjs for Room cards...");
+    const roomScript = path.join(scriptDir, "generate_room_card.mjs");
+    const roomArgs   = [roomScript];
+    if (opts.input)        roomArgs.push("--input",          opts.input);
+    if (opts.output)       roomArgs.push("--output",         opts.output);
+    if (opts.artDir)       roomArgs.push("--art-dir",        opts.artDir);
+    if (opts.baseUrl)      roomArgs.push("--base-url",       opts.baseUrl);
+    roomArgs.push("--headless",        String(opts.headless));
+    roomArgs.push("--start-launcher",  String(opts.startLauncher));
+    roomArgs.push("--overwrite",       String(opts.overwrite));
+    roomArgs.push("--dry-run",         String(opts.dryRun));
+    if (opts.limit > 0)    roomArgs.push("--limit",          String(opts.limit));
+    if (opts.newerThan)    roomArgs.push("--newer-than",     opts.newerThan);
+
+    const result = spawnSync(process.execPath, roomArgs, { stdio: "inherit" });
+    if (result.status !== 0) {
+      console.error(`[ROOM] generate_room_card.mjs exited with code ${result.status}`);
+      process.exitCode = result.status ?? 1;
+    }
+  }
 }
 
 main().catch((err) => {

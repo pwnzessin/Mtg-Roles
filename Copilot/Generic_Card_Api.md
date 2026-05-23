@@ -70,6 +70,90 @@ Even the smallest spark can light the darkest hall.
 
 ---
 
+## Planeswalker txt Format
+
+Planeswalkers are detected automatically when `<TYPE>` contains "Planeswalker". Omit `<RULES>` and `<PT>`; use `<ABILITY0>`–`<ABILITY3>` instead.
+
+```
+<COLOR>W</COLOR>
+<TITLE>Elspeth, Sun's Champion</TITLE>
+<MANA>{4}{W}{W}</MANA>
+<TYPE>Legendary Planeswalker — Elspeth</TYPE>
+<SETCODE>THS M</SETCODE>
+<LOYALTY>4</LOYALTY>
+<ABILITY0>+1 | Create three 1/1 white Soldier creature tokens.</ABILITY0>
+<ABILITY1>-3 | Destroy all creatures with power 4 or greater.</ABILITY1>
+<ABILITY2>-7 | You get an emblem with "Creatures you control get +2/+2 and have flying."</ABILITY2>
+<ARTIST>Eric Deschamps</ARTIST>
+```
+
+### Planeswalker-specific tags
+
+| Tag | Required | Description |
+|-----|----------|-------------|
+| `<LOYALTY>` | No | Starting loyalty value |
+| `<ABILITY0>`–`<ABILITY3>` | Yes (at least 1) | Format: `{cost} \| {rules text}` — cost is e.g. `+1`, `-3`, `0` |
+
+---
+
+## Room Card txt Format
+
+Room cards use the M15 Split frame with one shared art spanning both doors. Use `generate_room_card.mjs` to render them.
+
+```
+<LAYOUT>room</LAYOUT>
+<COLOR>U</COLOR>
+<SETCODE>DSK R</SETCODE>
+<ARTIST>Slawomir Maniak</ARTIST>
+
+<FACE1_TITLE>Underwater Tunnel</FACE1_TITLE>
+<FACE1_MANA>{1}{U}</FACE1_MANA>
+<FACE1_RULES>
+When you unlock this door, look at the top four cards of your library. Put one into your hand and the rest on the bottom of your library in any order.
+</FACE1_RULES>
+
+<FACE2_TITLE>Slimy Aquarium</FACE2_TITLE>
+<FACE2_MANA>{3}{U}</FACE2_MANA>
+<FACE2_RULES>
+When you unlock this door, surveil 2.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)
+</FACE2_RULES>
+```
+
+### Room-specific tags
+
+| Tag | Required | Description |
+|-----|----------|-------------|
+| `<LAYOUT>room</LAYOUT>` | Yes | Marks the file as a Room card; `generate_generic_card.mjs` skips it |
+| `<COLOR>` | Yes | Same color values as standard cards; `U` is default if omitted |
+| `<FACE1_TITLE>` | Yes | Left-door name (bottom half in portrait output) |
+| `<FACE1_MANA>` | No | Left-door mana cost |
+| `<FACE1_RULES>` | No | Left-door rules text |
+| `<FACE2_TITLE>` | Yes | Right-door name (top half in portrait output) |
+| `<FACE2_MANA>` | No | Right-door mana cost |
+| `<FACE2_RULES>` | No | Right-door rules text |
+| `<SETCODE>` | No | Same format as standard cards |
+| `<ARTIST>` | No | Shared artist credit |
+
+**Notes:**
+- `<TYPE>` is not used — the type line is always "Enchantment — Room" (hardcoded in the renderer).
+- The artwork file (`{stem}.jpg` / `.png`) is the full landscape-crop art; it spans both halves.
+- `fetch_card.mjs` auto-detects Room cards from Scryfall and writes this format automatically.
+
+### Room generator usage
+
+```powershell
+node Copilot/cardconjurer_batch/generate_room_card.mjs `
+  --input  Cards/Generic/myRooms `
+  --output Cards/Generic/myRooms/output `
+  --headless true `
+  --overwrite true
+```
+
+Options are identical to `generate_generic_card.mjs` (`--input`, `--output`, `--art-dir`, `--base-url`, `--headless`, `--start-launcher`, `--overwrite`, `--dry-run`, `--limit`). The script ignores any non-Room `.txt` files in the input directory.
+
+---
+
 ## Generator Usage
 
 ```powershell

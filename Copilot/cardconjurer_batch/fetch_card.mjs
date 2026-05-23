@@ -94,6 +94,51 @@ function getSafeFileBase(card) {
   return base.replace(/[\\/]/g, "_").replace(/\s*\/\/\s*/g, " ").trim();
 }
 
+// ── Room card detection & builder ────────────────────────────────────────────
+
+function isRoomCard(card) {
+  if (card.layout !== "split") return false;
+  if (!card.card_faces || card.card_faces.length < 2) return false;
+  return card.card_faces.every((f) => /\bRoom\b/i.test(f.type_line || ""));
+}
+
+function buildRoomTxt(card) {
+  const face1   = card.card_faces[0];
+  const face2   = card.card_faces[1];
+  const setCode = (card.set    || "").toUpperCase();
+  const rarity  = (card.rarity || "common")[0].toUpperCase();
+
+  // Determine color key from combined card colors
+  const colors = card.colors || [];
+  let colorKey;
+  if      (colors.length >= 2)                            colorKey = "M";
+  else if (colors.length === 1)                           colorKey = colors[0];
+  else if (/\bArtifact\b/.test(face1.type_line || ""))   colorKey = "A";
+  else                                                    colorKey = "C";
+
+  const artist = face1.artist || face2.artist || card.artist || "Unknown";
+
+  const lines = [];
+  lines.push(`<LAYOUT>room</LAYOUT>`);
+  lines.push(`<COLOR>${colorKey}</COLOR>`);
+  lines.push(`<SETCODE>${setCode} ${rarity}</SETCODE>`);
+  lines.push(`<ARTIST>${artist}</ARTIST>`);
+  lines.push(``);
+  lines.push(`<FACE1_TITLE>${face1.name}</FACE1_TITLE>`);
+  lines.push(`<FACE1_MANA>${face1.mana_cost || ""}</FACE1_MANA>`);
+  lines.push(`<FACE1_RULES>`);
+  lines.push(convertSymbols(face1.oracle_text || "").trim());
+  lines.push(`</FACE1_RULES>`);
+  lines.push(``);
+  lines.push(`<FACE2_TITLE>${face2.name}</FACE2_TITLE>`);
+  lines.push(`<FACE2_MANA>${face2.mana_cost || ""}</FACE2_MANA>`);
+  lines.push(`<FACE2_RULES>`);
+  lines.push(convertSymbols(face2.oracle_text || "").trim());
+  lines.push(`</FACE2_RULES>`);
+
+  return lines.join("\n");
+}
+
 // ── .txt builder ──────────────────────────────────────────────────────────────
 
 function buildTxt(card) {
@@ -165,6 +210,9 @@ async function fetchCard(name, preferSet) {
 
     const json = await res.json();
     if (!res.ok) throw new Error(json.details || json.code || `HTTP ${res.status}`);
+
+    // Room cards: keep both faces intact — buildRoomTxt() handles them
+    if (isRoomCard(json)) return json;
 
     // For double-faced / adventure cards use the front face data
     if (json.card_faces && !json.oracle_text) {
@@ -274,7 +322,7 @@ async function main() {
       process.stdout.write(`Fetching "${name}"... `);
       const card = await fetchCard(name, opts.set);
 
-      const txt = buildTxt(card);
+      const txt = isRoomCard(card) ? buildRoomTxt(card) : buildTxt(card);
 
       const fileBase = getSafeFileBase(card);
 

@@ -1,16 +1,14 @@
 Generic card batch report
-Generated: 2026-05-23T00:18:38.148Z
+Generated: 2026-05-23T14:13:21.685Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 3
-Cards in run queue: 3
+Total parsed cards: 1
+Cards in run queue: 1
 Dry run: false
 
-OK | Ravager Wurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Ravager Wurm.png
-OK | Sarinth Greatwurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Sarinth Greatwurm.png
-OK | Symbiotic Wurm.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Symbiotic Wurm.png
+OK | The Master of Keys.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\The Master of Keys.png
 
-Generated:        3
+Generated:        1
 Skipped (exists): 0
 Failed:           0
