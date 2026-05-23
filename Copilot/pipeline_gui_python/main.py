@@ -431,296 +431,117 @@ class RolecardPipelineTab(_PipelineTabBase):
         return ["-Roles", role_values[idx], "-Yes"]
 
 
-class XmlExportTab(QWidget):
-    """Tab for running Generate-MpcFillXml.ps1 non-interactively."""
+class XmlExportTab(_PipelineTabBase):
+    """Tab for running Generate-MpcFillXml.ps1.
+
+    All settings live in the JSON config file.  The only in-GUI option is
+    the mode selector (Manual vs RoleCard) which mirrors the ``mode`` key.
+    """
 
     SCRIPT_NAME  = "Generate-MpcFillXml.ps1"
+    RUN_LABEL    = "Generate XML"
+    HAS_MODES    = False
     SETTINGS_KEY = "xml_export_config"
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.pipeline_thread = None
-        self._init_ui()
-        self._restore_last_config()
+    _STOCK_NAMES = [
+        "(S30) Standard Smooth",
+        "(S33) Superior Smooth",
+        "(M31) Linen",
+        "(P10) Plastic",
+    ]
+    _ROLE_VALUES = ["A", "Assassins", "Bandits", "Guardians", "Kings", "Renegades"]
 
-    # ── UI ────────────────────────────────────────────────────────────────
+    # ── Extra UI: mode combo only ─────────────────────────────────────────
 
-    def _init_ui(self):
-        root = QVBoxLayout(self)
-        root.setSpacing(8)
-        root.setContentsMargins(16, 16, 16, 16)
-
-        # Config file row
-        root.addWidget(self._lbl("Config File"))
-        cfg_row = QHBoxLayout()
-        self.config_input = QLineEdit()
-        self.config_input.setPlaceholderText("No config file selected")
-        self.config_input.setReadOnly(True)
-        cfg_row.addWidget(self.config_input)
-        for label, slot in [("Browse\u2026", self._browse_config),
-                             ("Save",        self._save_config)]:
-            btn = QPushButton(label)
-            btn.setFixedWidth(72)
-            btn.clicked.connect(slot)
-            cfg_row.addWidget(btn)
-        root.addLayout(cfg_row)
-
-        # Mode
-        root.addWidget(self._lbl("Mode"))
+    def _init_extra_ui(self, root):
+        root.addWidget(self._section_label("Mode"))
         self.mode_combo = QComboBox()
         self.mode_combo.addItems([
             "Manual \u2014 specify a folder",
             "RoleCard \u2014 pick roles",
         ])
-        self.mode_combo.currentIndexChanged.connect(self._on_mode_changed)
         root.addWidget(self.mode_combo)
 
-        # Stacked input area
-        self._stack = QStackedWidget()
-
-        # Page 0: Manual — folder picker
-        manual_page = QWidget()
-        ml = QHBoxLayout(manual_page)
-        ml.setContentsMargins(0, 0, 0, 0)
-        self.folder_input = QLineEdit()
-        self.folder_input.setPlaceholderText("Folder containing card images (PNG/JPG)")
-        self.folder_input.setReadOnly(True)
-        ml.addWidget(self.folder_input)
-        browse_folder_btn = QPushButton("Browse\u2026")
-        browse_folder_btn.setFixedWidth(72)
-        browse_folder_btn.clicked.connect(self._browse_folder)
-        ml.addWidget(browse_folder_btn)
-        self._stack.addWidget(manual_page)   # index 0
-
-        # Page 1: RoleCard — role selector
-        role_page = QWidget()
-        rl = QHBoxLayout(role_page)
-        rl.setContentsMargins(0, 0, 0, 0)
-        self.role_combo = QComboBox()
-        self.role_combo.addItems([
-            "A \u2014 All roles",
-            "Assassins", "Bandits", "Guardians", "Kings", "Renegades",
-        ])
-        rl.addWidget(self.role_combo)
-        self._stack.addWidget(role_page)     # index 1
-
-        root.addWidget(self._lbl("Input"))
-        root.addWidget(self._stack)
-
-        # Cardback (optional)
-        root.addWidget(self._lbl("Cardback Image (optional)"))
-        cb_row = QHBoxLayout()
-        self.cardback_input = QLineEdit()
-        self.cardback_input.setPlaceholderText("Leave blank to omit cardback")
-        self.cardback_input.setReadOnly(True)
-        cb_row.addWidget(self.cardback_input)
-        browse_cb_btn = QPushButton("Browse\u2026")
-        browse_cb_btn.setFixedWidth(72)
-        browse_cb_btn.clicked.connect(self._browse_cardback)
-        cb_row.addWidget(browse_cb_btn)
-        clear_cb_btn = QPushButton("Clear")
-        clear_cb_btn.setFixedWidth(52)
-        clear_cb_btn.clicked.connect(lambda: self.cardback_input.clear())
-        cb_row.addWidget(clear_cb_btn)
-        root.addLayout(cb_row)
-
-        # Stock + Foil row
-        sf_row = QHBoxLayout()
-        stock_col = QVBoxLayout()
-        stock_col.setSpacing(4)
-        stock_col.addWidget(self._lbl("Card Stock"))
-        self.stock_combo = QComboBox()
-        self.stock_combo.addItems([
-            "(S30) Standard Smooth",
-            "(S33) Superior Smooth",
-            "(M31) Linen",
-            "(P10) Plastic",
-        ])
-        stock_col.addWidget(self.stock_combo)
-        sf_row.addLayout(stock_col)
-        sf_row.addSpacing(16)
-        from PyQt6.QtWidgets import QCheckBox
-        self.foil_check = QCheckBox("Foil fronts")
-        self.foil_check.setChecked(False)
-        sf_row.addWidget(self.foil_check, alignment=Qt.AlignmentFlag.AlignBottom)
-        sf_row.addStretch()
-        root.addLayout(sf_row)
-
-        # Output XML
-        root.addWidget(self._lbl("Output XML File"))
-        out_row = QHBoxLayout()
-        self.output_input = QLineEdit()
-        self.output_input.setPlaceholderText("Leave blank to auto-place in Autofill/")
-        out_row.addWidget(self.output_input)
-        browse_out_btn = QPushButton("Browse\u2026")
-        browse_out_btn.setFixedWidth(72)
-        browse_out_btn.clicked.connect(self._browse_output)
-        out_row.addWidget(browse_out_btn)
-        root.addLayout(out_row)
-
-        # Run button
-        self.run_btn = QPushButton("Generate XML")
-        self.run_btn.setMinimumHeight(38)
-        self.run_btn.setObjectName("runButton")
-        self.run_btn.clicked.connect(self._run)
-        root.addWidget(self.run_btn)
-
-        # Log
-        root.addWidget(self._lbl("Output Log"))
-        self.output_text = QTextEdit()
-        self.output_text.setReadOnly(True)
-        self.output_text.setFont(QFont("Courier New", 9))
-        self.output_text.setMinimumHeight(80)
-        root.addWidget(self.output_text, stretch=1)
-
-        self._on_mode_changed(0)
-
-    def _lbl(self, text):
-        lbl = QLabel(text)
-        lbl.setObjectName("sectionLabel")
-        return lbl
-
-    def _on_mode_changed(self, index):
-        self._stack.setCurrentIndex(index)
-
-    def _browse_folder(self):
-        path = QFileDialog.getExistingDirectory(self, "Select Card Image Folder")
-        if path:
-            self.folder_input.setText(path)
-
-    def _browse_cardback(self):
-        path, _ = QFileDialog.getOpenFileName(
-            self, "Select Cardback Image", "",
-            "Images (*.png *.jpg *.jpeg);;All Files (*)")
-        if path:
-            self.cardback_input.setText(path)
-
-    def _browse_output(self):
-        path, _ = QFileDialog.getSaveFileName(
-            self, "Save XML File", "", "XML Files (*.xml);;All Files (*)")
-        if path:
-            self.output_input.setText(path)
+    def _apply_config(self, cfg):
+        self.mode_combo.setCurrentIndex(int(cfg.get("mode", 0)))
 
     def update_theme(self, dark: bool) -> None:
-        pass  # no highlighter on this tab
+        self._highlighter.set_dark(dark)
 
-    # ── Config helpers ────────────────────────────────────────────────────
-
-    def _ui_to_cfg(self) -> dict:
-        return {
-            "_comment":    "XML Export settings for Generate-MpcFillXml.ps1",
-            "mode":        self.mode_combo.currentIndex(),
-            "inputFolder": self.folder_input.text(),
-            "roles":       self.role_combo.currentIndex(),
-            "cardbackPath": self.cardback_input.text(),
-            "stock":       self.stock_combo.currentIndex(),
-            "foil":        self.foil_check.isChecked(),
-            "outputXml":   self.output_input.text(),
-        }
-
-    def _apply_cfg(self, cfg: dict) -> None:
-        self.mode_combo.setCurrentIndex(int(cfg.get("mode", 0)))
-        self.folder_input.setText(cfg.get("inputFolder", ""))
-        self.role_combo.setCurrentIndex(int(cfg.get("roles", 0)))
-        self.cardback_input.setText(cfg.get("cardbackPath", ""))
-        self.stock_combo.setCurrentIndex(int(cfg.get("stock", 0)))
-        self.foil_check.setChecked(bool(cfg.get("foil", False)))
-        self.output_input.setText(cfg.get("outputXml", ""))
-
-    def _browse_config(self):
-        path, _ = QFileDialog.getOpenFileName(
-            self, "Select Config File", "", "JSON Files (*.json);;All Files (*)")
-        if path:
-            self.config_input.setText(path)
-            self._load_config()
-
-    def _load_config(self):
-        path = self.config_input.text()
-        if not path:
-            QMessageBox.warning(self, "No Config", "Browse to a config file first.")
-            return
-        try:
-            cfg = json.loads(Path(path).read_text(encoding="utf-8-sig"))
-            self._apply_cfg(cfg)
-            if self.SETTINGS_KEY:
-                settings = _load_settings()
-                settings[self.SETTINGS_KEY] = path
-                _save_settings(settings)
-        except Exception as e:
-            QMessageBox.critical(self, "Load Error", str(e))
-
-    def _save_config(self):
-        path = self.config_input.text()
-        if not path:
-            path, _ = QFileDialog.getSaveFileName(
-                self, "Save Config File", "", "JSON Files (*.json)")
-            if not path:
-                return
-            self.config_input.setText(path)
-        try:
-            Path(path).write_text(
-                json.dumps(self._ui_to_cfg(), indent=4), encoding="utf-8")
-            if self.SETTINGS_KEY:
-                settings = _load_settings()
-                settings[self.SETTINGS_KEY] = path
-                _save_settings(settings)
-        except Exception as e:
-            QMessageBox.critical(self, "Save Error", str(e))
+    # ── Restore: fall back to default config next to the script ──────────
 
     def _restore_last_config(self):
         settings = _load_settings()
         path = settings.get(self.SETTINGS_KEY, "")
         if not path:
-            # Fall back to the default config next to the script
             candidate = _copilot_root() / "cardconjurer_batch" / "xml_export_config.json"
             if candidate.exists():
                 path = str(candidate)
         if path and Path(path).exists():
             self.config_input.setText(path)
             try:
-                cfg = json.loads(Path(path).read_text(encoding="utf-8-sig"))
-                self._apply_cfg(cfg)
+                with open(path, encoding="utf-8-sig") as f:
+                    raw = f.read()
+                self._config_data = json.loads(raw)
+                self.config_preview.setPlainText(raw)
+                self._apply_config(self._config_data)
             except Exception:
                 pass
 
-    # ── Run ───────────────────────────────────────────────────────────────
+    # ── Run: read all params from the JSON preview ────────────────────────
 
-    def _run(self):
+    def _run_pipeline(self):
         script_path = _copilot_root() / "cardconjurer_batch" / self.SCRIPT_NAME
         if not script_path.exists():
             QMessageBox.critical(self, "Script Not Found",
                                  f"Script not found:\n{script_path}")
             return
 
-        mode_index = self.mode_combo.currentIndex()
-        mode_str = "RoleCard" if mode_index == 1 else "Manual"
+        # Parse the live JSON from the preview (user may have edited it)
+        try:
+            cfg = json.loads(self.config_preview.toPlainText())
+        except json.JSONDecodeError as e:
+            QMessageBox.critical(self, "Invalid JSON",
+                                 f"Fix the config before running:\n{e}")
+            return
 
-        args = ["-Mode", mode_str]
+        mode_index = self.mode_combo.currentIndex()
+        args = ["-Mode", "RoleCard" if mode_index == 1 else "Manual"]
 
         if mode_index == 0:  # Manual
-            folder = self.folder_input.text().strip()
+            m = cfg.get("manual", {})
+            folder = m.get("inputFolder", "").strip()
             if not folder or not Path(folder).is_dir():
-                QMessageBox.warning(self, "No Folder", "Browse to a folder containing card images.")
+                QMessageBox.warning(self, "No Input Folder",
+                                    'Set a valid "manual.inputFolder" in the config JSON.')
                 return
             args += ["-InputFolder", folder]
+            args += ["-Recurse", "true" if m.get("recurse", False) else "false"]
         else:  # RoleCard
-            role_values = ["A", "Assassins", "Bandits", "Guardians", "Kings", "Renegades"]
-            args += ["-Roles", role_values[self.role_combo.currentIndex()]]
+            r = cfg.get("rolecard", {})
+            roles_idx = min(int(r.get("roles", 0)), len(self._ROLE_VALUES) - 1)
+            args += ["-Roles", self._ROLE_VALUES[roles_idx]]
+            tmpl = r.get("templatesRoot", "").strip()
+            if tmpl:
+                args += ["-TemplatesRoot", tmpl]
 
-        cardback = self.cardback_input.text().strip()
+        cardback = cfg.get("cardbackPath", "").strip()
         if cardback:
             args += ["-CardbackPath", cardback]
 
-        stock_map = {
-            "(S30) Standard Smooth": "(S30) Standard Smooth",
-            "(S33) Superior Smooth": "(S33) Superior Smooth",
-            "(M31) Linen":           "(M31) Linen",
-            "(P10) Plastic":         "(P10) Plastic",
-        }
-        args += ["-Stock", stock_map[self.stock_combo.currentText()]]
-        args += ["-Foil", "true" if self.foil_check.isChecked() else "false"]
+        cbd = cfg.get("cardbacksDir", "").strip()
+        if cbd:
+            args += ["-CardbacksDir", cbd]
 
-        out_xml = self.output_input.text().strip()
+        afd = cfg.get("autofillDir", "").strip()
+        if afd:
+            args += ["-AutofillDir", afd]
+
+        stock_idx = min(int(cfg.get("stock", 0)), len(self._STOCK_NAMES) - 1)
+        args += ["-Stock", self._STOCK_NAMES[stock_idx]]
+        args += ["-Foil", "true" if cfg.get("foil", False) else "false"]
+
+        out_xml = cfg.get("outputXml", "").strip()
         if out_xml:
             args += ["-OutputXml", out_xml]
 
@@ -733,21 +554,6 @@ class XmlExportTab(QWidget):
         self.pipeline_thread.error_signal.connect(self._on_error)
         self.pipeline_thread.finished_signal.connect(self._on_finished)
         self.pipeline_thread.start()
-
-    def _on_output(self, text):
-        self.output_text.append(text)
-        self.output_text.verticalScrollBar().setValue(
-            self.output_text.verticalScrollBar().maximum())
-
-    def _on_error(self, error):
-        self.output_text.append(f"\n[ERROR] {error}")
-
-    def _on_finished(self, exit_code):
-        self.run_btn.setEnabled(True)
-        if exit_code == 0:
-            self.output_text.append("\n[XML export completed successfully]")
-        else:
-            self.output_text.append(f"\n[XML export failed — exit code {exit_code}]")
 
 
 class PipelineGUI(QMainWindow):
@@ -795,8 +601,11 @@ class PipelineGUI(QMainWindow):
         root.addWidget(self.tabs)
 
     def _open_config_help(self):
-        if self.tabs.currentIndex() == 1:
+        idx = self.tabs.currentIndex()
+        if idx == 1:
             RolecardConfigHelpDialog(self).exec()
+        elif idx == 2:
+            XmlExportConfigHelpDialog(self).exec()
         else:
             GenericConfigHelpDialog(self).exec()
 
@@ -875,6 +684,26 @@ class RolecardConfigHelpDialog(QDialog):
   <tr><td>finalUpscaleEnabled</td><td>Upscale the final rendered output using bicubic interpolation after all processing steps.<br><code>false</code> = skip upscale &nbsp; <code>true</code> = upscale by <b>finalUpscaleFactor</b>.<br>Default: <code>false</code></td></tr>
   <tr><td>finalUpscaleFactor</td><td>Integer scale multiplier applied when <b>finalUpscaleEnabled</b> is <code>true</code>. For example, <code>2</code> doubles both width and height.<br>Default: <code>2</code></td></tr>
 </table>
+
+<h4>Server &amp; Generation</h4>
+<table>
+  <tr><td>baseUrl</td><td>URL of the CardConjurer server used for rendering.<br>Default: <code>http://localhost:8080</code></td></tr>
+  <tr><td>headless</td><td><code>true</code> = run the Playwright browser invisibly (recommended).<br><code>false</code> = show the browser window (useful for debugging).<br>Default: <code>true</code></td></tr>
+  <tr><td>startLauncher</td><td><code>true</code> = auto-start the CardConjurer launcher before rendering the first role.<br><code>false</code> = assume the server is already running.<br>Default: <code>true</code></td></tr>
+  <tr><td>overwrite</td><td><code>true</code> = re-render cards that already have an output PNG.<br><code>false</code> = skip already-rendered cards.<br>Default: <code>true</code></td></tr>
+  <tr><td>reportDir</td><td>Sub-folder relative to the workspace root where per-role generation report files (<code>cardconjurer_batch_{role}_report.txt</code>) are read from after each role completes.<br>Default: <code>Copilot</code></td></tr>
+</table>
+
+<h4>paths</h4>
+<p>All values are relative to the workspace root (the folder two levels above the script). Defaults match the standard project layout; only change these if you have moved folders.</p>
+<table>
+  <tr><td>paths.cardsDir</td><td>Folder containing per-role card <code>.txt</code> files. A sub-folder named after the role is appended at run time.<br>Default: <code>Cards</code></td></tr>
+  <tr><td>paths.artworksDir</td><td>Folder containing per-role artwork images. A sub-folder named after the role is appended at run time.<br>Default: <code>Artworks</code></td></tr>
+  <tr><td>paths.templatesDir</td><td>Folder holding role template <code>.cardconjurer</code> files and where rendered PNGs are written (into a role sub-folder).<br>Default: <code>Cards/templates</code></td></tr>
+  <tr><td>paths.cardConjurerRoot</td><td>Root of the CardConjurer installation. Used to locate <code>local_art/auto/</code> for art staging.<br>Default: <code>cardconjurer-master/cardconjurer-master</code></td></tr>
+  <tr><td>paths.setCodesFile</td><td>Path to the set-codes definition file used to assign set symbols per role.<br>Default: <code>Copilot/SetCodes.txt</code></td></tr>
+  <tr><td>paths.reportDir</td><td>Folder where per-role generation report files (<code>cardconjurer_batch_{role}_report.txt</code>) are written and read back.<br>Default: <code>Copilot</code></td></tr>
+</table>
 """
 
 
@@ -946,6 +775,96 @@ The config file is saved automatically after each pipeline run, persisting your 
   <tr><td>upscaleFactor</td><td>Scale multiplier for rendered output: <code>2</code> or <code>4</code>.</td></tr>
   <tr><td>limit</td><td>Maximum number of cards to render in one run. <code>0</code> = render all cards found in the input directory.</td></tr>
   <tr><td>dryRun</td><td>If <code>true</code>, the render step logs which cards it would process but skips all Playwright calls.</td></tr>
+</table>
+"""
+
+
+class XmlExportConfigHelpDialog(QDialog):
+    """Explains every key in xml_export_config.json."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("XML Export \u2014 Config Reference")
+        self.resize(680, 520)
+
+        root = QVBoxLayout(self)
+
+        browser = QTextBrowser()
+        browser.setOpenExternalLinks(False)
+        browser.setHtml(self._help_html())
+        root.addWidget(browser, stretch=1)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
+        buttons.rejected.connect(self.reject)
+        root.addWidget(buttons)
+
+    @staticmethod
+    def _help_html() -> str:
+        return """
+<style>
+  body  { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; margin: 8px; }
+  h3    { color: #d4af37; margin-bottom: 4px; }
+  h4    { border-bottom: 1px solid #666; padding-bottom: 3px; margin-top: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  td    { padding: 4px 6px; vertical-align: top; }
+  td:first-child { width: 160px; white-space: nowrap; font-weight: bold; }
+  tr:nth-child(even) { background: rgba(128,128,128,0.08); }
+  code  { background: rgba(128,128,128,0.15); padding: 0 3px; border-radius: 3px; }
+  p     { margin: 4px 0 10px; }
+</style>
+<h3>XML Export &mdash; Config Reference</h3>
+<p>Edit values directly in the JSON preview, then click <b>Save</b>.
+The <b>Mode</b> combo in the GUI always overrides the <code>mode</code> key at run time.</p>
+
+<h4>mode</h4>
+<table>
+  <tr><td>mode</td><td>Which input section to use.<br>
+    <code>0</code> &mdash; Manual (uses the <code>manual</code> block)<br>
+    <code>1</code> &mdash; RoleCard (uses the <code>rolecard</code> block)<br>
+    Overridden by the Mode combo in the GUI.</td></tr>
+</table>
+
+<h4>manual</h4>
+<table>
+  <tr><td>inputFolder</td><td>Absolute path to the folder containing rendered card images to include in the XML.<br>
+    Example: <code>C:\\...\\Cards\\Generic\\output</code></td></tr>
+  <tr><td>recurse</td><td><code>true</code> = include images in all sub-folders recursively.<br>
+    <code>false</code> = top-level folder only.</td></tr>
+</table>
+
+<h4>rolecard</h4>
+<table>
+  <tr><td>roles</td><td>Which role(s) to include.<br>
+    <code>0</code> &mdash; A &mdash; all roles<br>
+    <code>1</code> Assassins &nbsp; <code>2</code> Bandits &nbsp; <code>3</code> Guardians &nbsp; <code>4</code> Kings &nbsp; <code>5</code> Renegades</td></tr>
+  <tr><td>templatesRoot</td><td>Absolute path to the <code>Cards\\templates</code> folder. Used to locate each role&rsquo;s rendered output sub-directory.<br>
+    Leave blank to auto-detect relative to the script.</td></tr>
+</table>
+
+<h4>Cardback</h4>
+<table>
+  <tr><td>cardbackPath</td><td>Absolute path to a specific cardback image to include as the back face of every card.
+    Leave blank to omit the cardback entirely.</td></tr>
+  <tr><td>cardbacksDir</td><td>Folder scanned for cardback image files when no explicit <b>cardbackPath</b> is set.<br>
+    Example: <code>C:\\...\\Cards\\Cardbacks</code></td></tr>
+</table>
+
+<h4>Print Settings</h4>
+<table>
+  <tr><td>stock</td><td>MPC card stock index:<br>
+    <code>0</code> &mdash; (S30) Standard Smooth<br>
+    <code>1</code> &mdash; (S33) Superior Smooth<br>
+    <code>2</code> &mdash; (M31) Linen<br>
+    <code>3</code> &mdash; (P10) Plastic</td></tr>
+  <tr><td>foil</td><td><code>true</code> = mark all front faces as foil in the XML.<br>
+    <code>false</code> = standard (non-foil).</td></tr>
+</table>
+
+<h4>Output</h4>
+<table>
+  <tr><td>autofillDir</td><td>Default folder where the XML file is written when <b>outputXml</b> is blank.<br>
+    Example: <code>C:\\...\\Autofill</code></td></tr>
+  <tr><td>outputXml</td><td>Absolute path for the generated XML file. Leave blank to auto-name the file inside <b>autofillDir</b>.</td></tr>
 </table>
 """
 

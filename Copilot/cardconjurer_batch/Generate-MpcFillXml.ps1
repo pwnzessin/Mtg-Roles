@@ -18,7 +18,11 @@ param(
     [string]$Stock        = "",
     [string]$Foil         = "",
     [string]$Mode         = "",   # "Manual" or "RoleCard"; empty = interactive
-    [string]$Roles        = ""    # "A" or comma-separated names e.g. "Assassins,Kings"; empty = interactive
+    [string]$Roles        = "",   # "A" or comma-separated names e.g. "Assassins,Kings"; empty = interactive
+    [string]$TemplatesRoot = "",  # root folder containing per-role sub-folders; empty = auto-detect
+    [string]$CardbacksDir  = "",  # folder scanned for cardback images; empty = auto-detect
+    [string]$AutofillDir   = "",  # default output folder for the XML file; empty = auto-detect
+    [string]$Recurse       = ""   # "true" / "false"; empty = interactive prompt in Manual mode
 )
 
 # ---------------------------------------------------------------------------
@@ -78,12 +82,14 @@ $images    = @()
 
 if ($roleCardMode) {
     # Discover role folders that actually exist
-    $templatesRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\Cards\templates"))
+    if ([string]::IsNullOrWhiteSpace($TemplatesRoot)) {
+        $TemplatesRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\Cards\templates"))
+    }
     $knownRoles    = @("Assassins", "Bandits", "Guardians", "Kings", "Renegades")
-    $availableRoles = $knownRoles | Where-Object { Test-Path (Join-Path $templatesRoot $_) -PathType Container }
+    $availableRoles = $knownRoles | Where-Object { Test-Path (Join-Path $TemplatesRoot $_) -PathType Container }
 
     if ($availableRoles.Count -eq 0) {
-        Write-Error "No role folders found under: $templatesRoot"; exit 1
+        Write-Error "No role folders found under: $TemplatesRoot"; exit 1
     }
 
     Write-Host ""
@@ -124,7 +130,7 @@ if ($roleCardMode) {
     Write-Host ("Selected roles: {0}" -f ($selectedRoles -join ", ")) -ForegroundColor Green
 
     foreach ($role in $selectedRoles) {
-        $roleFolder = Join-Path $templatesRoot $role
+        $roleFolder = Join-Path $TemplatesRoot $role
         foreach ($ext in $imageExts) {
             $images += Get-ChildItem -Path $roleFolder -Filter $ext -File -ErrorAction SilentlyContinue
         }
@@ -151,12 +157,16 @@ if ($roleCardMode) {
     }
 
     # Recursive?
-    $recurse = $false
-    $recurseAnswer = Read-Host "Include sub-folders? (Y/N, default N)"
-    if ($recurseAnswer -match "^[Yy]$") { $recurse = $true }
+    $doRecurse = $false
+    if (-not [string]::IsNullOrWhiteSpace($Recurse)) {
+        $doRecurse = ($Recurse.ToLowerInvariant() -eq "true")
+    } else {
+        $recurseAnswer = Read-Host "Include sub-folders? (Y/N, default N)"
+        if ($recurseAnswer -match "^[Yy]$") { $doRecurse = $true }
+    }
 
     foreach ($ext in $imageExts) {
-        if ($recurse) {
+        if ($doRecurse) {
             $images += Get-ChildItem -Path $InputFolder -Filter $ext -Recurse -File
         } else {
             $images += Get-ChildItem -Path $InputFolder -Filter $ext -File
@@ -173,10 +183,12 @@ if ($roleCardMode) {
 # Cardback
 if ([string]::IsNullOrWhiteSpace($CardbackPath)) {
     $scriptRoot    = Split-Path -Parent $MyInvocation.MyCommand.Path
-    $cardbacksDir  = Join-Path $scriptRoot "..\..\Cards\Cardbacks"
+    if ([string]::IsNullOrWhiteSpace($CardbacksDir)) {
+        $CardbacksDir = Join-Path $scriptRoot "..\..\Cards\Cardbacks"
+    }
     $cardbackFiles = @()
-    if (Test-Path $cardbacksDir -PathType Container) {
-        $cardbackFiles = @(Get-ChildItem -Path (Join-Path $cardbacksDir "*") -Include "*.png","*.jpg","*.jpeg" -File |
+    if (Test-Path $CardbacksDir -PathType Container) {
+        $cardbackFiles = @(Get-ChildItem -Path (Join-Path $CardbacksDir "*") -Include "*.png","*.jpg","*.jpeg" -File |
             Sort-Object Name)
     }
 
@@ -233,10 +245,12 @@ $Foil = $Foil.ToLowerInvariant()
 if ($Foil -notin @("true","false")) { $Foil = "false" }
 
 # Output path
-$scriptDir   = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Path }
-$autofillDir = [System.IO.Path]::GetFullPath((Join-Path $scriptDir "..\..\Autofill"))
+$scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Path }
+if ([string]::IsNullOrWhiteSpace($AutofillDir)) {
+    $AutofillDir = [System.IO.Path]::GetFullPath((Join-Path $scriptDir "..\..\Autofill"))
+}
 if ([string]::IsNullOrWhiteSpace($OutputXml)) {
-    $defaultXml = Join-Path $autofillDir $defaultXmlName
+    $defaultXml = Join-Path $AutofillDir $defaultXmlName
     Write-Host ""
     Write-Host "Output XML path (default: $defaultXml)"
     $OutputXml = Read-Host "Output XML"
@@ -246,9 +260,9 @@ if ([string]::IsNullOrWhiteSpace($OutputXml)) {
 if ([System.IO.Path]::GetExtension($OutputXml) -eq "") {
     $OutputXml = $OutputXml + ".xml"
 }
-# If no directory specified, place in Autofill folder
+# If no directory specified, place in AutofillDir folder
 if ([System.IO.Path]::GetDirectoryName($OutputXml) -eq "") {
-    $OutputXml = Join-Path $autofillDir $OutputXml
+    $OutputXml = Join-Path $AutofillDir $OutputXml
 }
 
 # ---------------------------------------------------------------------------

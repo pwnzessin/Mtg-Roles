@@ -104,8 +104,7 @@ function singularizeRoleFolder(roleFolder) {
   return normalized || "Assassin";
 }
 
-function resolveTemplatePath(workspaceRoot, roleFolder) {
-  const templatesDir = path.join(workspaceRoot, "Cards", "templates");
+function resolveTemplatePath(templatesDir, roleFolder) {
   const roleStem = singularizeRoleFolder(roleFolder);
   const roleTemplatePath = path.join(templatesDir, `${roleStem}_Layout.cardconjurer`);
 
@@ -140,8 +139,7 @@ function fillTemplateText(templateText, tagName, value) {
   return templateText.replace(pattern, value);
 }
 
-function loadRoleSetCodes(workspaceRoot) {
-  const setCodesPath = path.join(workspaceRoot, "Copilot", "SetCodes.txt");
+function loadRoleSetCodes(setCodesPath) {
   const map = {};
   if (!fs.existsSync(setCodesPath)) {
     return map;
@@ -292,17 +290,34 @@ async function main() {
 
   const scriptDir = path.dirname(fileURLToPath(import.meta.url));
   const workspaceRoot = path.resolve(scriptDir, "..", "..");
-  const cardsRoleDir = path.join(workspaceRoot, "Cards", opts.roleFolder);
-  const artworksRoleDir = path.join(workspaceRoot, "Artworks", opts.roleFolder);
-  const cardConjurerRoot = path.join(workspaceRoot, "cardconjurer-master", "cardconjurer-master");
+
+  // Load path overrides from config (paths section)
+  let pathsCfg = {};
+  const configFilePath = path.join(scriptDir, "Rolecard_Batch_Generator.config.json");
+  if (fs.existsSync(configFilePath)) {
+    try {
+      const cfg = JSON.parse(fs.readFileSync(configFilePath, "utf8"));
+      if (cfg && typeof cfg.paths === "object" && cfg.paths !== null) {
+        pathsCfg = cfg.paths;
+      }
+    } catch (_) { /* use defaults */ }
+  }
+
+  const cardsRoleDir   = path.join(path.resolve(workspaceRoot, pathsCfg.cardsDir        ?? "Cards"),                            opts.roleFolder);
+  const artworksRoleDir = path.join(path.resolve(workspaceRoot, pathsCfg.artworksDir     ?? "Artworks"),                        opts.roleFolder);
+  const cardConjurerRoot = path.resolve(workspaceRoot, pathsCfg.cardConjurerRoot ?? "cardconjurer-master/cardconjurer-master");
   const localArtOutDir = path.join(cardConjurerRoot, "local_art", "auto", opts.roleFolder);
-  const generatedOutDir = path.join(workspaceRoot, "Cards", "templates", opts.roleFolder);
-  const reportPath = path.join(workspaceRoot, "Copilot", `cardconjurer_batch_${opts.roleFolder.toLowerCase()}_report.txt`);
-  const roleSetCodes = loadRoleSetCodes(workspaceRoot);
+  const templatesDir   = path.resolve(workspaceRoot, pathsCfg.templatesDir    ?? "Cards/templates");
+  const generatedOutDir = path.join(templatesDir, opts.roleFolder);
+  const reportPath     = path.join(path.resolve(workspaceRoot, pathsCfg.reportDir       ?? "Copilot"),
+                           `cardconjurer_batch_${opts.roleFolder.toLowerCase()}_report.txt`);
+  const setCodesPath   = path.resolve(workspaceRoot, pathsCfg.setCodesFile    ?? "Copilot/SetCodes.txt");
+
+  const roleSetCodes = loadRoleSetCodes(setCodesPath);
   const roleSingular = singularizeRoleFolder(opts.roleFolder);
   const roleDefaultSetCode = roleSetCodes[roleSingular] || "";
 
-  const templatePath = resolveTemplatePath(workspaceRoot, opts.roleFolder);
+  const templatePath = resolveTemplatePath(templatesDir, opts.roleFolder);
   const templateCard = loadTemplateCard(templatePath);
   // Overwrite the set symbol baked into the template with the role's setcode
   const roleSetInfo = parseSetCodeInfo(roleDefaultSetCode);

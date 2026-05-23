@@ -1,9 +1,17 @@
 {
     "_comment": "XML Export settings for Generate-MpcFillXml.ps1. Edit via the CardWeaver GUI (XML Export tab \u2192 Save).",
     "mode": 0,
-    "inputFolder": "C:\\Users\\hecke\\Desktop\\Mtg-Roles\\Cards\\Generic\\output",
-    "roles": 0,
+    "manual": {
+        "inputFolder": "C:\\Users\\hecke\\Desktop\\Mtg-Roles\\Cards\\Generic\\output",
+        "recurse": false
+    },
+    "rolecard": {
+        "roles": 0,
+        "templatesRoot": "C:\\Users\\hecke\\Desktop\\Mtg-Roles\\Cards\\templates"
+    },
     "cardbackPath": "",
+    "cardbacksDir": "C:\\Users\\hecke\\Desktop\\Mtg-Roles\\Cards\\Cardbacks",
+    "autofillDir": "C:\\Users\\hecke\\Desktop\\Mtg-Roles\\Autofill",
     "stock": 0,
     "foil": false,
     "outputXml": ""
