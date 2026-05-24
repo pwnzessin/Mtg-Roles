@@ -60,6 +60,7 @@ function parseArgs(argv) {
     input: null,
     output: null,
     artDir: null,
+    artScanDir: null,
     baseUrl: null,
     headless: false,
     startLauncher: true,
@@ -67,6 +68,7 @@ function parseArgs(argv) {
     overwrite: false,
     limit: 0,
     newerThan: null,
+    basicLandLayout: "standard",
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -74,7 +76,8 @@ function parseArgs(argv) {
     const next = argv[i + 1];
     if (arg === "--input" && next)         { opts.input = next; i += 1; }
     else if (arg === "--output" && next)   { opts.output = next; i += 1; }
-    else if (arg === "--art-dir" && next)  { opts.artDir = next; i += 1; }
+    else if (arg === "--art-dir" && next)      { opts.artDir = next; i += 1; }
+    else if (arg === "--art-scan-dir" && next) { opts.artScanDir = next; i += 1; }
     else if (arg === "--base-url" && next) { opts.baseUrl = next; i += 1; }
     else if (arg === "--headless")  { opts.headless  = !next || next.startsWith("--") ? true  : (i += 1, next.toLowerCase() === "true"); }
     else if (arg === "--start-launcher") { opts.startLauncher = !next || next.startsWith("--") ? true : (i += 1, next.toLowerCase() === "true"); }
@@ -82,6 +85,7 @@ function parseArgs(argv) {
     else if (arg === "--overwrite") { opts.overwrite = !next || next.startsWith("--") ? true  : (i += 1, next.toLowerCase() === "true"); }
     else if (arg === "--limit" && next)    { opts.limit = Number.parseInt(next, 10) || 0; i += 1; }
     else if (arg === "--newer-than" && next) { opts.newerThan = next; i += 1; }
+    else if (arg === "--basic-land-layout" && next) { opts.basicLandLayout = next; i += 1; }
   }
 
   return opts;
@@ -141,7 +145,7 @@ function parseSetCodeInfo(setCodeRaw) {
 
 // ── Card object builder ────────────────────────────────────────────────────────
 
-function buildCardObject(baseUrl, c) {
+function buildCardObject(baseUrl, c, layouts = {}) {
   const setInfo = parseSetCodeInfo(c.setCode);
 
   const setSymbolSource = setInfo.setCode && setInfo.rarity
@@ -239,6 +243,38 @@ function buildCardObject(baseUrl, c) {
           name: "Loyalty", text: c.loyalty || "",
           x: 0.806, y: 0.902, width: 0.14, height: 0.0372,
           size: 0.0372, font: "belerenbsc", oneLine: true, align: "center", color: "white",
+        },
+      },
+    };
+  }
+
+  // ── Full-art Land ──────────────────────────────────────────────────────────
+  // Activated when layouts.basicLand === "fullArt" and the card's type line includes "Basic".
+  if (layouts.basicLand === "fullArt" && /\bbasic\b/i.test(c.typeLine || "")) {
+    const FA_LETTER = { W: "lw", U: "lu", B: "lb", R: "lr", G: "lg", M: "lm", L: "l", C: "l", A: "a", V: "v" };
+    const ck = c.color in FA_LETTER ? c.color : "L";
+    return {
+      ...commonInfo,
+      version:        "m15Regular",
+      onload:         null,
+      showsFlavorBar: false,
+      frames: [
+        { name: "Land Frame", src: `/img/frames/m15/new/fullart/${FA_LETTER[ck]}.png`, masks: [] },
+      ],
+      artBounds:       { x: 0, y: 0, width: 1, height: 1 },
+      setSymbolBounds: { x: 0.9213, y: 0.872, width: 0.12, height: 0.041, vertical: "center", horizontal: "right" },
+      text: {
+        title: {
+          name:    "Title",
+          text:    `{bold}${c.title || ""}{/bold}`,
+          x:       0.0854, y: 0.0522, width: 0.8292, height: 0.0543,
+          oneLine: true, font: "belerenb", size: 0.0381, color: "white",
+        },
+        type: {
+          name:    "Type",
+          text:    `{bold}${c.typeLine || ""}{/bold}`,
+          x:       0.0854, y: 0.872, width: 0.8292, height: 0.0543,
+          oneLine: true, font: "belerenb", size: 0.0324, color: "white",
         },
       },
     };
@@ -487,9 +523,12 @@ async function main() {
     const parsed = parseGenericCardFile(raw, filePath);
     const stem   = path.parse(filePath).name;
 
-    // Art lookup: --art-dir > same directory as txt file
+    // Art lookup: --art-dir first, then --art-scan-dir fallback, then same dir as txt
     const artSearchDir = opts.artDir ? path.resolve(opts.artDir) : path.dirname(filePath);
-    const artSrcPath   = findArtworkByStem(artSearchDir, stem);
+    let artSrcPath = findArtworkByStem(artSearchDir, stem);
+    if (!artSrcPath && opts.artScanDir) {
+      artSrcPath = findArtworkByStem(path.resolve(opts.artScanDir), stem);
+    }
 
     let artUrl = "";
     if (artSrcPath) {
@@ -595,7 +634,7 @@ async function main() {
       }
 
       try {
-        const cardObj = buildCardObject(opts.baseUrl, c);
+        const cardObj = buildCardObject(opts.baseUrl, c, { basicLand: opts.basicLandLayout });
 
         // Load card from localStorage and immediately re-trigger set symbol with
         // the 'resetSetSymbol' flag so it auto-positions from setSymbolBounds.

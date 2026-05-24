@@ -752,9 +752,11 @@ The config file is saved automatically after each pipeline run, persisting your 
 <h4>fetch</h4>
 <table>
   <tr><td>cardsDir</td><td>Output folder for fetched <code>.txt</code> card data files.<br>Default: <code>Cards\\Generic</code></td></tr>
-  <tr><td>artDir</td><td>Output folder for downloaded artwork (used in mode 2 when art download is enabled).<br>Default: <code>Artworks\\Downloaded</code></td></tr>
+  <tr><td>artDir</td><td>Output folder for downloaded artwork (used in mode 2 when art download is enabled).
+    During rendering this folder is always searched for card art, and also serves as the primary art source in generate-only runs.<br>Default: <code>Artworks\\Downloaded</code></td></tr>
   <tr><td>cardlistsDir</td><td>Folder shown when browsing for a card list file in mode 2.<br>Default: <code>Copilot\\cardconjurer_batch\\Cardlists</code></td></tr>
-  <tr><td>artScanDir</td><td>Folder scanned in mode 1. Each image filename (without extension) becomes a card name to fetch from Scryfall. Supports <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>.</td></tr>
+  <tr><td>artScanDir</td><td>Folder scanned in mode 1. Each image filename (without extension) becomes a card name to fetch from Scryfall. Supports <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>.<br>
+    This folder is also passed to the renderer as a <b>fallback art directory</b>: if a card&rsquo;s artwork is not found in <b>artDir</b>, the renderer automatically checks here. This means custom art placed in this folder is always picked up, even during generate-only runs.</td></tr>
   <tr><td>preferSet</td><td>Preferred MTG set code (e.g. <code>m21</code>, <code>lea</code>). Leave blank to use the default printing returned by Scryfall.</td></tr>
   <tr><td>artMode</td><td><code>1</code> &mdash; download the art image variant directly (see <b>artVersion</b>).<br><code>2</code> &mdash; download the full-card PNG then auto-crop to the art box and save as JPEG (see <b>pngCropJpegQuality</b>).</td></tr>
   <tr><td>artVersion</td><td>Scryfall image variant used when <b>artMode</b> is <code>1</code>.<br>Options: <code>art_crop</code>, <code>border_crop</code>, <code>normal</code>, <code>large</code>, <code>png</code>.</td></tr>
@@ -780,6 +782,17 @@ The config file is saved automatically after each pipeline run, persisting your 
   <tr><td>upscaleFactor</td><td>Scale multiplier for rendered output: <code>2</code> or <code>4</code>.</td></tr>
   <tr><td>limit</td><td>Maximum number of cards to render in one run. <code>0</code> = render all cards found in the input directory.</td></tr>
   <tr><td>dryRun</td><td>If <code>true</code>, the render step logs which cards it would process but skips all Playwright calls.</td></tr>
+</table>
+
+<h4>layouts</h4>
+<p>Per-card-type layout overrides applied during rendering. Each key is a card type; the value selects the visual layout variant for all cards of that type.</p>
+<table>
+  <tr><td>basicLand</td><td>Layout used for cards whose type line contains &ldquo;Basic&rdquo; (i.e. basic lands only &mdash; Forest, Island, Mountain, Plains, Swamp, Snow-covered variants, etc.).<br>
+    <code>standard</code> &mdash; normal M15 frame with a regular art window (default).<br>
+    <code>fullArt</code> &mdash; art fills the entire card; the frame is a single full-art overlay from <code>img/frames/m15/new/fullart/</code>.
+    The frame variant is chosen automatically from the card&rsquo;s color key
+    (<code>lw</code>, <code>lu</code>, <code>lb</code>, <code>lr</code>, <code>lg</code>, <code>lm</code>, or <code>l</code> for colorless).
+    Only the title and type line are rendered; rules, mana, and P/T fields are omitted.</td></tr>
 </table>
 """
 

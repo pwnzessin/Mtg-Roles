@@ -19,6 +19,10 @@
                   "dryRun":  false,
                   "chunkSize":  15
               },
+    "layouts":  {
+                    "_comment":  "Per-type layout overrides. basicLand: standard | fullArt",
+                    "basicLand":  "fullart"
+                },
     "generate":  {
                      "outputSubDir":  "output",
                      "baseUrl":  "http://localhost:8080",
