@@ -284,20 +284,43 @@ if ([System.IO.Path]::GetDirectoryName($OutputXml) -eq "") {
 }
 
 # ---------------------------------------------------------------------------
+# Separate front images from battle back images (stem ending in _back)
+# ---------------------------------------------------------------------------
+$backLookup  = @{}   # key = front stem, value = FileInfo for the matching _back image
+$frontImages = [System.Collections.Generic.List[object]]::new()
+
+foreach ($img in $images) {
+    $stem = [System.IO.Path]::GetFileNameWithoutExtension($img.Name)
+    if ($stem -match '_back$') {
+        $frontStem = $stem -replace '_back$', ''
+        $backLookup[$frontStem] = $img
+    } else {
+        $frontImages.Add($img)
+    }
+}
+
+$battleCount = ($frontImages | Where-Object {
+    $backLookup.ContainsKey([System.IO.Path]::GetFileNameWithoutExtension($_.Name))
+} | Measure-Object).Count
+if ($battleCount -gt 0) {
+    Write-Host ("Detected {0} battle pair(s) with per-card back images." -f $battleCount) -ForegroundColor Cyan
+}
+
+# ---------------------------------------------------------------------------
 # Build XML
 # ---------------------------------------------------------------------------
 $sb = New-Object System.Text.StringBuilder
 [void]$sb.AppendLine('<?xml version="1.0" encoding="utf-8"?>')
 [void]$sb.AppendLine('<order>')
 [void]$sb.AppendLine('    <details>')
-[void]$sb.AppendLine("        <quantity>$($images.Count)</quantity>")
+[void]$sb.AppendLine("        <quantity>$($frontImages.Count)</quantity>")
 [void]$sb.AppendLine("        <stock>$(Escape-Xml $Stock)</stock>")
 [void]$sb.AppendLine("        <foil>$Foil</foil>")
 [void]$sb.AppendLine('    </details>')
 [void]$sb.AppendLine('    <fronts>')
 
-for ($i = 0; $i -lt $images.Count; $i++) {
-    $img  = $images[$i]
+for ($i = 0; $i -lt $frontImages.Count; $i++) {
+    $img  = $frontImages[$i]
     $id   = Escape-Xml $img.FullName
     $name = Escape-Xml $img.Name
     [void]$sb.AppendLine('        <card>')
@@ -309,6 +332,30 @@ for ($i = 0; $i -lt $images.Count; $i++) {
 }
 
 [void]$sb.AppendLine('    </fronts>')
+
+# Per-card back images for battle cards
+$hasBackSection = $false
+for ($i = 0; $i -lt $frontImages.Count; $i++) {
+    $frontStem = [System.IO.Path]::GetFileNameWithoutExtension($frontImages[$i].Name)
+    if ($backLookup.ContainsKey($frontStem)) {
+        if (-not $hasBackSection) {
+            [void]$sb.AppendLine('    <backs>')
+            $hasBackSection = $true
+        }
+        $bimg  = $backLookup[$frontStem]
+        $bid   = Escape-Xml $bimg.FullName
+        $bname = Escape-Xml $bimg.Name
+        [void]$sb.AppendLine('        <card>')
+        [void]$sb.AppendLine("            <id>$bid</id>")
+        [void]$sb.AppendLine('            <sourceType>Local File</sourceType>')
+        [void]$sb.AppendLine("            <slots>$i</slots>")
+        [void]$sb.AppendLine("            <name>$bname</name>")
+        [void]$sb.AppendLine('        </card>')
+    }
+}
+if ($hasBackSection) {
+    [void]$sb.AppendLine('    </backs>')
+}
 
 if (-not [string]::IsNullOrWhiteSpace($CardbackPath)) {
     [void]$sb.AppendLine("    <cardback>$(Escape-Xml $CardbackPath)</cardback>")
@@ -328,7 +375,8 @@ if ($xmlDir -and -not (Test-Path $xmlDir)) {
 
 Write-Host ""
 Write-Host "XML written: $OutputXml" -ForegroundColor Green
-Write-Host ("Cards: {0}  |  Stock: {1}  |  Foil: {2}" -f $images.Count, $Stock, $Foil) -ForegroundColor Cyan
+$battleNote = if ($battleCount -gt 0) { "  |  Battles: $battleCount" } else { "" }
+Write-Host ("Cards: {0}{1}  |  Stock: {2}  |  Foil: {3}" -f $frontImages.Count, $battleNote, $Stock, $Foil) -ForegroundColor Cyan
 if (-not [string]::IsNullOrWhiteSpace($CardbackPath)) {
     Write-Host "Cardback: $CardbackPath" -ForegroundColor Cyan
 } else {

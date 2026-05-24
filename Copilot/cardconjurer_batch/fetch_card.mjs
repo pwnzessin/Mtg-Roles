@@ -151,6 +151,54 @@ function buildRoomTxt(card) {
   return lines.join("\n");
 }
 
+// ── Battle card detection & builders ────────────────────────────────────────
+
+function isBattleCard(card) {
+  if (card.layout !== "transform") return false;
+  if (!card.card_faces || card.card_faces.length < 2) return false;
+  return /\bBattle\b/i.test(card.card_faces[0].type_line || "");
+}
+
+function buildBattleFrontTxt(card) {
+  const face    = card.card_faces[0];
+  const setCode = (card.set    || "").toUpperCase();
+  const rarity  = (card.rarity || "common")[0].toUpperCase();
+
+  // Build a minimal card-like object so determineColorKey works correctly
+  const colorKey = determineColorKey({
+    type_line:      face.type_line,
+    colors:         face.colors,
+    color_identity: card.color_identity,
+  });
+
+  const lines = [];
+  lines.push(`<LAYOUT>battle</LAYOUT>`);
+  lines.push(`<COLOR>${colorKey}</COLOR>`);
+  lines.push(`<TITLE>${face.name}</TITLE>`);
+  if (face.mana_cost) lines.push(`<MANA>${face.mana_cost}</MANA>`);
+  lines.push(`<TYPE>${face.type_line}</TYPE>`);
+  lines.push(`<SETCODE>${setCode} ${rarity}</SETCODE>`);
+  if (face.defense != null) lines.push(`<DEFENSE>${face.defense}</DEFENSE>`);
+  lines.push(`<RULES>`);
+  lines.push(convertSymbols(face.oracle_text || "").trim());
+  lines.push(`</RULES>`);
+  if (face.artist || card.artist) lines.push(`<ARTIST>${face.artist || card.artist}</ARTIST>`);
+
+  return lines.join("\n");
+}
+
+function buildBattleBackTxt(card, includeFlavor = true) {
+  const face = card.card_faces[1];
+  // Synthesise a root-card-like object from the back face so buildTxt() works as-is
+  const synthetic = {
+    ...face,
+    set:            card.set,
+    rarity:         card.rarity,
+    color_identity: card.color_identity,
+  };
+  return buildTxt(synthetic, includeFlavor);
+}
+
 // ── .txt builder ──────────────────────────────────────────────────────────────
 
 function buildTxt(card, includeFlavor = true) {
@@ -222,6 +270,9 @@ async function fetchCard(name, preferSet) {
 
     const json = await res.json();
     if (!res.ok) throw new Error(json.details || json.code || `HTTP ${res.status}`);
+
+    // Battle cards: keep both faces intact — we build two separate .txt files
+    if (isBattleCard(json)) return json;
 
     // Room cards: keep both faces intact — buildRoomTxt() handles them
     if (isRoomCard(json)) return json;
@@ -338,6 +389,52 @@ async function main() {
 
       process.stdout.write(`Fetching "${name}"... `);
       const card = await fetchCard(lookupName, opts.set);
+
+      // ── Battle card: two .txt files + two art images (one per face) ────────
+      if (isBattleCard(card)) {
+        const safeName = (n) => n.replace(/[\\/]/g, "_").trim();
+        const frontBase = safeName(card.card_faces[0].name);
+        const backBase  = `${frontBase}_back`;  // e.g. "Invasion of Zendikar_back"
+        const frontTxt  = buildBattleFrontTxt(card);
+        const backTxt   = buildBattleBackTxt(card, opts.flavor);
+
+        if (opts.dryRun) {
+          console.log(`\n[BATTLE FRONT]\n${"─".repeat(60)}\n${frontTxt}\n`);
+          console.log(`\n[BATTLE BACK]\n${"─".repeat(60)}\n${backTxt}\n`);
+          ok++;
+          continue;
+        }
+
+        for (const [base, txt, face] of [
+          [frontBase, frontTxt, card.card_faces[0]],
+          [backBase,  backTxt,  card.card_faces[1]],
+        ]) {
+          const outPath   = path.join(outDir, `${base}.txt`);
+          const artInfo   = opts.art ? getArtInfo(face, opts.artVersion) : null;
+          const artPath   = artInfo ? path.join(artDir, `${base}${artInfo.extension}`) : null;
+          const txtExists = fs.existsSync(outPath);
+          const artExists = artPath ? fs.existsSync(artPath) : false;
+          const allExist  = opts.art ? (txtExists && artExists) : txtExists;
+          if (allExist && !opts.overwrite) { console.log(`  SKIP (exists) → ${base}.txt`); continue; }
+          if (!txtExists || opts.overwrite) fs.writeFileSync(outPath, txt, "utf8");
+          let artNote = "";
+          if (opts.art && (!artExists || opts.overwrite)) {
+            if (!artInfo) {
+              artNote = ` (no '${opts.artVersion}' image)`;
+            } else {
+              try {
+                await downloadArt(face, artDir, opts.artVersion, base, artInfo.extension);
+                artNote = ` + art(${opts.artVersion})`;
+              } catch (artErr) {
+                artNote = ` (art failed: ${artErr.message})`;
+              }
+            }
+          }
+          console.log(`  OK → ${base}.txt${artNote}`);
+        }
+        ok++;
+        continue;
+      }
 
       const txt = isRoomCard(card) ? buildRoomTxt(card) : buildTxt(card, opts.flavor);
 

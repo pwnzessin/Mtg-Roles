@@ -514,7 +514,7 @@ class XmlExportTab(_PipelineTabBase):
             if folder:
                 p = Path(folder)
                 if not p.is_absolute():
-                    p = _workspace_root() / folder
+                    p = _copilot_root().parent / folder
                 folder = str(p)
             if not folder or not Path(folder).is_dir():
                 QMessageBox.warning(self, "No Input Folder",

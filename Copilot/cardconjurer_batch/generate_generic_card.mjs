@@ -106,6 +106,7 @@ function parseGenericCardFile(raw, filePath) {
     throw new Error(`Missing TITLE/TYPE tags in ${filePath}`);
   }
 
+  const layout         = (getTag(raw, "LAYOUT") || "").toLowerCase();
   const isPlaneswalker = /planeswalker/i.test(typeLine);
   const artYPosRaw     = getTag(raw, "ART_YPOS");
   const color          = (getTag(raw, "COLOR") || "W").toUpperCase();
@@ -113,6 +114,14 @@ function parseGenericCardFile(raw, filePath) {
   const setCode        = getTag(raw, "SETCODE") || "";
   const artYPos        = artYPosRaw !== null ? parseFloat(artYPosRaw) : null;
   const artist         = getTag(raw, "ARTIST") || "Unknown";
+
+  if (layout === "battle") {
+    const rules = getTag(raw, "RULES");
+    if (!rules) throw new Error(`Missing RULES tag in ${filePath}`);
+    return { title, isBattle: true, isPlaneswalker: false, color, mana, typeLine, setCode, artYPos, artist,
+             defense: getTag(raw, "DEFENSE") || "",
+             rules, flavor: getTag(raw, "FLAVOR") || "" };
+  }
 
   if (isPlaneswalker) {
     const abilities = [0, 1, 2, 3].map((i) => {
@@ -247,7 +256,58 @@ function buildCardObject(baseUrl, c, layouts = {}) {
       },
     };
   }
+  // ── Battle (front face) ─────────────────────────────────────────────────
+  // M15 frame with defense value rendered in the P/T box (no actual P/T box frame
+  // is added since battles have no power/toughness — defense stands alone).
+  if (c.isBattle) {
+    const colorKey  = c.color in COLOR_FRAMES ? c.color : "W";
+    const mainFrame = COLOR_FRAMES[colorKey];
+    const frames    = [];
+    if (colorKey in COLOR_PT) {
+      frames.push({ ...COLOR_PT[colorKey], bounds: M15_PT_BOUNDS, masks: [] });
+    }
+    frames.push({ ...mainFrame, masks: [] });
 
+    let rulesText = c.rules || "";
+    if (c.flavor) rulesText = `${rulesText}\n{flavor}\n${c.flavor}`;
+
+    return {
+      ...commonInfo,
+      version:        "m15Regular",
+      onload:         null,
+      showsFlavorBar: !!c.flavor,
+      frames,
+      artBounds:       { x: 0.0767, y: 0.1129, width: 0.8476, height: 0.4429 },
+      setSymbolBounds: { x: 0.9213, y: 0.591,  width: 0.12,   height: 0.041, vertical: "center", horizontal: "right" },
+      text: {
+        mana: {
+          name: "Mana Cost", text: c.mana || "",
+          y: 0.0613, width: 0.9292, height: 71 / 2100,
+          oneLine: true, size: 71 / 1638, align: "right",
+          shadowX: -0.001, shadowY: 0.0029, manaCost: true, manaSpacing: 0,
+        },
+        title: {
+          name: "Title", text: `{bold}${c.title || ""}{/bold}`,
+          x: 0.0854, y: 0.0522, width: 0.8292, height: 0.0543,
+          oneLine: true, font: "belerenb", size: 0.0381,
+        },
+        type: {
+          name: "Type", text: `{bold}${c.typeLine || ""}{/bold}`,
+          x: 0.0854, y: 0.5664, width: 0.8292, height: 0.0543,
+          oneLine: true, font: "belerenb", size: 0.0324,
+        },
+        rules: {
+          name: "Rules Text", text: rulesText,
+          x: 0.086, y: 0.6303, width: 0.828, height: 0.2875, size: 0.0362,
+        },
+        pt: {
+          name: "Defense", text: `{bold}${c.defense || ""}{/bold}`,
+          x: 0.7928, y: 0.902, width: 0.1367, height: 0.0372,
+          size: 0.0372, font: "belerenbsc", oneLine: true, align: "center",
+        },
+      },
+    };
+  }
   // ── Full-art Land ──────────────────────────────────────────────────────────
   // Activated when layouts.basicLand === "fullArt" and the card's type line includes "Basic".
   if (layouts.basicLand === "fullArt" && /\bbasic\b/i.test(c.typeLine || "")) {
@@ -562,7 +622,7 @@ async function main() {
   if (opts.dryRun) {
     lines.push("Dry run card list:");
     for (const c of queue) {
-      const cardType = c.isPlaneswalker ? "planeswalker" : "regular";
+      const cardType = c.isPlaneswalker ? "planeswalker" : c.isBattle ? "battle" : "regular";
       lines.push(`- ${path.basename(c.filePath)} | title=${c.title} | type=${cardType} | color=${c.color} | art=${c.artUrl || "(none)"}`);
     }
     fs.writeFileSync(reportPath, lines.join("\n") + "\n", "utf8");

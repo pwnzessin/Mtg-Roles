@@ -14,7 +14,7 @@
                   "upscaleEngine":  "auto",
                   "upscaleFactor":  2,
                   "overwrite":  true,
-                  "downloadArt":  false,
+                  "downloadArt":  true,
                   "includeFlavor":  false,
                   "dryRun":  false,
                   "chunkSize":  15

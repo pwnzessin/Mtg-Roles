@@ -1,14 +1,22 @@
 Generic card batch report
-Generated: 2026-05-24T00:27:00.766Z
+Generated: 2026-05-24T23:48:49.850Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 1
-Cards in run queue: 1
+Total parsed cards: 9
+Cards in run queue: 9
 Dry run: false
 
-OK | Warstorm Surge.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Warstorm Surge.png
+OK | Anim Pakal, Thousandth Moon.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Anim Pakal, Thousandth Moon.png
+OK | Breena, the Demagogue.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Breena, the Demagogue.png
+OK | Giada, Font of Hope.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Giada, Font of Hope.png
+OK | Invasion of Gobakhan.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Gobakhan.png
+OK | Invasion of Gobakhan_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Gobakhan_back.png
+OK | Invasion of New Capenna.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of New Capenna.png
+OK | Invasion of New Capenna_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of New Capenna_back.png
+OK | Invasion of Xerex.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Xerex.png
+OK | Invasion of Xerex_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Xerex_back.png
 
-Generated:        1
+Generated:        9
 Skipped (exists): 0
 Failed:           0
