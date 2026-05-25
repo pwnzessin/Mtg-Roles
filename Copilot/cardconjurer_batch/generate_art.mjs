@@ -141,7 +141,6 @@ async function generateArt(card) {
   if (dryRun) {
     console.log(`  DRY  → ${stem}.jpg`);
     console.log(`         "${prompt}"`);
-    return "dry";
   }
 
   const url = `https://router.huggingface.co/hf-inference/models/${modelArg}`;
