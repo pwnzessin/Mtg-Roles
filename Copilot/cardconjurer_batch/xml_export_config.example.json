@@ -1,0 +1,19 @@
+{
+    "_comment": "XML Export settings for Generate-MpcFillXml.ps1. All paths are relative to workspace root unless absolute. Edit via the CardWeaver GUI (XML Export tab → Save).",
+    "_setup":   "Copy this file to xml_export_config.json and adjust paths for your machine.",
+    "mode": 0,
+    "manual": {
+        "inputFolder": "Cards\\Generic\\output",
+        "recurse": false
+    },
+    "rolecard": {
+        "roles": 0,
+        "templatesRoot": "Cards\\templates"
+    },
+    "cardbackPath": "",
+    "cardbacksDir": "Cards\\Cardbacks",
+    "autofillDir": "Autofill",
+    "stock": 0,
+    "foil": false,
+    "outputXml": ""
+}

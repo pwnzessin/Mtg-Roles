@@ -481,7 +481,7 @@
  [],
  False,
  False,
- 1779671894,
+ 1779672351,
  [('runw.exe',
    'C:\\Users\\hecke\\Desktop\\Mtg-Roles\\.venv\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
    'EXECUTABLE')],

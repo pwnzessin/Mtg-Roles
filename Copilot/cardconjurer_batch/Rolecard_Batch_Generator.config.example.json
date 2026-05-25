@@ -1,0 +1,20 @@
+{
+    "_setup":    "Copy this file to Rolecard_Batch_Generator.config.json and adjust settings for your machine.",
+    "limit":  2,
+    "qualityChoice":  "4",
+    "applyMargin":  false,
+    "finalUpscaleEnabled":  false,
+    "finalUpscaleFactor":  2,
+    "baseUrl":  "http://localhost:8080",
+    "headless":  true,
+    "startLauncher":  true,
+    "overwrite":  true,
+    "paths":  {
+        "cardsDir":  "Cards",
+        "artworksDir":  "Artworks",
+        "templatesDir":  "Cards/templates",
+        "cardConjurerRoot":  "cardconjurer-master/cardconjurer-master",
+        "setCodesFile":  "Copilot/SetCodes.txt",
+        "reportDir":  "Copilot"
+    }
+}

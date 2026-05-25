@@ -38,6 +38,12 @@ Copilot/pipeline_gui/.env.local
 # Copy art_gen_config.example.json -> art_gen_config.json and fill in your token
 Copilot/cardconjurer_batch/art_gen_config.json
 
+# Pipeline config files contain local paths/settings — keep out of git
+# Copy *.example.json -> the matching .json and adjust to your setup
+Copilot/cardconjurer_batch/generic_card_config.json
+Copilot/cardconjurer_batch/Rolecard_Batch_Generator.config.json
+Copilot/cardconjurer_batch/xml_export_config.json
+
 # Optional Node/Vite cache and tooling artifacts
 Copilot/pipeline_gui/.vite/
 Copilot/pipeline_gui/.turbo/
