@@ -419,7 +419,7 @@ if ($mode -eq "2") {
     Write-Section "Select Card List"
 
     if ($CardListFile -and (Test-Path $CardListFile)) {
-        $preloadedCardNames = Expand-CardList (Get-Content $CardListFile)
+        $preloadedCardNames = @(Expand-CardList (Get-Content $CardListFile))
         Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $(Split-Path $CardListFile -Leaf)" -ForegroundColor DarkGray
     } else {
         $cardlistsDir = Resolve-ConfigPath $root $cfg.fetch.cardlistsDir
@@ -443,7 +443,7 @@ if ($mode -eq "2") {
         }
 
         $selectedFile = $txtFiles[$idx - 1].FullName
-        $preloadedCardNames = Expand-CardList (Get-Content $selectedFile)
+        $preloadedCardNames = @(Expand-CardList (Get-Content $selectedFile))
         Write-Host "    Loaded $($preloadedCardNames.Count) card(s) from $($txtFiles[$idx-1].Name)" -ForegroundColor DarkGray
     }
 }

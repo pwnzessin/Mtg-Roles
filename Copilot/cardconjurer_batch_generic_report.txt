@@ -1,22 +1,19 @@
 Generic card batch report
-Generated: 2026-05-24T23:48:49.850Z
+Generated: 2026-05-25T01:24:03.068Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 9
-Cards in run queue: 9
+Total parsed cards: 6
+Cards in run queue: 6
 Dry run: false
 
-OK | Anim Pakal, Thousandth Moon.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Anim Pakal, Thousandth Moon.png
-OK | Breena, the Demagogue.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Breena, the Demagogue.png
-OK | Giada, Font of Hope.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Giada, Font of Hope.png
-OK | Invasion of Gobakhan.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Gobakhan.png
-OK | Invasion of Gobakhan_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Gobakhan_back.png
-OK | Invasion of New Capenna.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of New Capenna.png
-OK | Invasion of New Capenna_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of New Capenna_back.png
-OK | Invasion of Xerex.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Xerex.png
-OK | Invasion of Xerex_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Xerex_back.png
+OK | Avatar Aang.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Avatar Aang.png
+OK | Avatar Aang_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Avatar Aang_back.png
+OK | Tetzin, Gnome Champion.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Tetzin, Gnome Champion.png
+OK | Tetzin, Gnome Champion_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Tetzin, Gnome Champion_back.png
+OK | Tovolar, Dire Overlord.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Tovolar, Dire Overlord.png
+OK | Tovolar, Dire Overlord_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Tovolar, Dire Overlord_back.png
 
-Generated:        9
+Generated:        6
 Skipped (exists): 0
 Failed:           0

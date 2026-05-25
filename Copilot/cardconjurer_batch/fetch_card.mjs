@@ -159,6 +159,15 @@ function isBattleCard(card) {
   return /\bBattle\b/i.test(card.card_faces[0].type_line || "");
 }
 
+// Double-faced cards (transform / modal_dfc) that are not battles or rooms
+function isDfcCard(card) {
+  if (!card.card_faces || card.card_faces.length < 2) return false;
+  if (isBattleCard(card)) return false;
+  if (isRoomCard(card)) return false;
+  // DFCs have no root-level oracle_text; single-faced or adventure cards do
+  return !card.oracle_text;
+}
+
 function buildBattleFrontTxt(card) {
   const face    = card.card_faces[0];
   const setCode = (card.set    || "").toUpperCase();
@@ -190,6 +199,17 @@ function buildBattleFrontTxt(card) {
 function buildBattleBackTxt(card, includeFlavor = true) {
   const face = card.card_faces[1];
   // Synthesise a root-card-like object from the back face so buildTxt() works as-is
+  const synthetic = {
+    ...face,
+    set:            card.set,
+    rarity:         card.rarity,
+    color_identity: card.color_identity,
+  };
+  return buildTxt(synthetic, includeFlavor);
+}
+
+function buildDfcFaceTxt(card, faceIndex, includeFlavor = true) {
+  const face = card.card_faces[faceIndex];
   const synthetic = {
     ...face,
     set:            card.set,
@@ -277,7 +297,10 @@ async function fetchCard(name, preferSet) {
     // Room cards: keep both faces intact — buildRoomTxt() handles them
     if (isRoomCard(json)) return json;
 
-    // For double-faced / adventure cards use the front face data
+    // Transform / modal DFC cards: keep both faces intact — we build two .txt files
+    if (isDfcCard(json)) return json;
+
+    // For adventure cards use the front face data
     if (json.card_faces && !json.oracle_text) {
       const front = json.card_faces[0];
       json.oracle_text  = front.oracle_text;
@@ -401,6 +424,52 @@ async function main() {
         if (opts.dryRun) {
           console.log(`\n[BATTLE FRONT]\n${"─".repeat(60)}\n${frontTxt}\n`);
           console.log(`\n[BATTLE BACK]\n${"─".repeat(60)}\n${backTxt}\n`);
+          ok++;
+          continue;
+        }
+
+        for (const [base, txt, face] of [
+          [frontBase, frontTxt, card.card_faces[0]],
+          [backBase,  backTxt,  card.card_faces[1]],
+        ]) {
+          const outPath   = path.join(outDir, `${base}.txt`);
+          const artInfo   = opts.art ? getArtInfo(face, opts.artVersion) : null;
+          const artPath   = artInfo ? path.join(artDir, `${base}${artInfo.extension}`) : null;
+          const txtExists = fs.existsSync(outPath);
+          const artExists = artPath ? fs.existsSync(artPath) : false;
+          const allExist  = opts.art ? (txtExists && artExists) : txtExists;
+          if (allExist && !opts.overwrite) { console.log(`  SKIP (exists) → ${base}.txt`); continue; }
+          if (!txtExists || opts.overwrite) fs.writeFileSync(outPath, txt, "utf8");
+          let artNote = "";
+          if (opts.art && (!artExists || opts.overwrite)) {
+            if (!artInfo) {
+              artNote = ` (no '${opts.artVersion}' image)`;
+            } else {
+              try {
+                await downloadArt(face, artDir, opts.artVersion, base, artInfo.extension);
+                artNote = ` + art(${opts.artVersion})`;
+              } catch (artErr) {
+                artNote = ` (art failed: ${artErr.message})`;
+              }
+            }
+          }
+          console.log(`  OK → ${base}.txt${artNote}`);
+        }
+        ok++;
+        continue;
+      }
+
+      // ── Transform / modal DFC: two .txt files + two art images ─────────────
+      if (isDfcCard(card)) {
+        const safeName  = (n) => n.replace(/[\\/]/g, "_").trim();
+        const frontBase = safeName(card.card_faces[0].name);
+        const backBase  = `${frontBase}_back`;
+        const frontTxt  = buildDfcFaceTxt(card, 0, opts.flavor);
+        const backTxt   = buildDfcFaceTxt(card, 1, opts.flavor);
+
+        if (opts.dryRun) {
+          console.log(`\n[DFC FRONT]\n${"─".repeat(60)}\n${frontTxt}\n`);
+          console.log(`\n[DFC BACK]\n${"─".repeat(60)}\n${backTxt}\n`);
           ok++;
           continue;
         }
