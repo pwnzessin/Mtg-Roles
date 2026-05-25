@@ -9,11 +9,11 @@
     "startLauncher":  true,
     "overwrite":  true,
     "paths":  {
-                  "cardsDir":  "Cards",
-                  "artworksDir":  "Artworks",
-                  "templatesDir":  "Cards/templates",
-                  "cardConjurerRoot":  "cardconjurer-master/cardconjurer-master",
-                  "setCodesFile":  "Copilot/SetCodes.txt",
-                  "reportDir":  "Copilot"
-              }
+        "cardsDir":  "Cards",
+        "artworksDir":  "Artworks",
+        "templatesDir":  "Cards/templates",
+        "cardConjurerRoot":  "cardconjurer-master/cardconjurer-master",
+        "setCodesFile":  "Copilot/SetCodes.txt",
+        "reportDir":  "Copilot"
+    }
 }

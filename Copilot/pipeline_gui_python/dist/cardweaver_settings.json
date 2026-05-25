@@ -1,4 +1,5 @@
 {
   "generic_config": "C:/Users/hecke/Desktop/Mtg-Roles/Copilot/cardconjurer_batch/generic_card_config.json",
-  "rolecard_config": "C:/Users/hecke/Desktop/Mtg-Roles/Copilot/cardconjurer_batch/Rolecard_Batch_Generator.config.json"
+  "rolecard_config": "C:/Users/hecke/Desktop/Mtg-Roles/Copilot/cardconjurer_batch/Rolecard_Batch_Generator.config.json",
+  "art_gen_config": "C:/Users/hecke/Desktop/Mtg-Roles/Copilot/cardconjurer_batch/art_gen_config.json"
 }

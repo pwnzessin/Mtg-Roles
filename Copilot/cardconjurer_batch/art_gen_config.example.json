@@ -1,0 +1,18 @@
+{
+    "_comment":     "Default values for generate_art_pipeline.ps1. All paths are relative to workspaceRoot unless absolute.",
+    "_setup":       "Copy this file to art_gen_config.json and fill in your apiToken. Never commit art_gen_config.json.",
+    "_token_help":  "Get a free HuggingFace token at https://huggingface.co/settings/tokens (read access is enough).",
+    "workspaceRoot": null,
+    "cardlistsDir":  "Copilot\\cardconjurer_batch\\Cardlists",
+    "outputDir":     "Artworks\\Generated",
+    "apiToken":      "",
+    "model":         "black-forest-labs/FLUX.1-schnell",
+    "style":         "fantasy card art, digital painting, highly detailed, no text, no borders",
+    "prefix":        "",
+    "overwrite":     false,
+    "concurrency":   1,
+    "width":         1008,
+    "height":        1184,
+    "seed":          null,
+    "dryRun":        false
+}

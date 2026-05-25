@@ -146,7 +146,7 @@ class _PipelineTabBase(QWidget):
         root.addLayout(cfg_row)
 
         # Config preview / editor
-        root.addWidget(self._section_label("Config (editable — click Save to write changes)"))
+        root.addWidget(self._section_label("Config"))
         self.config_preview = QTextEdit()
         self.config_preview.setFont(QFont("Courier New", 9))
         self.config_preview.setPlaceholderText("Load a config file to preview its contents here…")
@@ -154,6 +154,15 @@ class _PipelineTabBase(QWidget):
         self.config_preview.setMaximumHeight(420)
         root.addWidget(self.config_preview)
         self._highlighter = _hl.JsonHighlighter(self.config_preview.document(), dark=True)
+
+        # Config Help button — sits directly below the JSON editor
+        help_row = QHBoxLayout()
+        self._help_btn = QPushButton("Config Help")
+        self._help_btn.setObjectName("helpButton")
+        self._help_btn.clicked.connect(self._open_help)
+        help_row.addWidget(self._help_btn)
+        help_row.addStretch()
+        root.addLayout(help_row)
 
         if self.HAS_MODES:
             # Mode selector
@@ -225,6 +234,10 @@ class _PipelineTabBase(QWidget):
 
     def _init_extra_ui(self, root):
         """Subclass hook for extra controls inserted before the Run button."""
+        pass
+
+    def _open_help(self):
+        """Subclass hook: open the tab's config help dialog."""
         pass
 
     def update_theme(self, dark: bool) -> None:
@@ -406,6 +419,9 @@ class GenericPipelineTab(_PipelineTabBase):
     RUN_LABEL    = "Run Generic Pipeline"
     SETTINGS_KEY = "generic_config"
 
+    def _open_help(self):
+        GenericConfigHelpDialog(self).exec()
+
 
 class RolecardPipelineTab(_PipelineTabBase):
     SCRIPT_NAME  = "Rolecard_Batch_Generator.ps1"
@@ -429,6 +445,9 @@ class RolecardPipelineTab(_PipelineTabBase):
         idx = self.role_combo.currentIndex()
         role_values = ["A", "Assassins", "Bandits", "Guardians", "Kings"]
         return ["-Roles", role_values[idx], "-Yes"]
+
+    def _open_help(self):
+        RolecardConfigHelpDialog(self).exec()
 
 
 class XmlExportTab(_PipelineTabBase):
@@ -457,7 +476,7 @@ class XmlExportTab(_PipelineTabBase):
         root.addWidget(self._section_label("Mode"))
         self.mode_combo = QComboBox()
         self.mode_combo.addItems([
-            "Manual \u2014 specify a folder",
+            "Standard \u2014 use inputFolder",
             "RoleCard \u2014 pick roles",
         ])
         root.addWidget(self.mode_combo)
@@ -560,6 +579,198 @@ class XmlExportTab(_PipelineTabBase):
         self.pipeline_thread.finished_signal.connect(self._on_finished)
         self.pipeline_thread.start()
 
+    def _open_help(self):
+        XmlExportConfigHelpDialog(self).exec()
+
+
+class ArtGenerationTab(_PipelineTabBase):
+    """Tab for generate_art_pipeline.ps1 — same structure as GenericPipelineTab."""
+
+    SCRIPT_NAME  = "generate_art_pipeline.ps1"
+    RUN_LABEL    = "Generate Art"
+    HAS_MODES    = True
+    SETTINGS_KEY = "art_gen_config"
+
+    def _init_extra_ui(self, root):
+        # Replace the generic mode labels with art-gen specific labels.
+        # The combo is already created by the base class before this hook is called.
+        self.mode_combo.clear()
+        self.mode_combo.addItems([
+            "1 \u2014 Enter card names",
+            "2 \u2014 Load card list file",
+        ])
+        self.mode_combo.setCurrentIndex(0)
+
+    def _on_mode_changed(self, index):
+        # index 0 → card names entry  (stack page 0)
+        # index 1 → card list file    (stack page 1)
+        if index == 1:
+            self._card_stack.setCurrentIndex(1)
+        else:
+            self._card_stack.setCurrentIndex(0)
+
+    def _apply_config(self, cfg):
+        # art_gen_config.json has cardlistsDir at the top level (not under "fetch")
+        cardlists_rel = cfg.get("cardlistsDir", "")
+        if cardlists_rel and not self.card_list_input.text():
+            root = cfg.get("workspaceRoot") or ""
+            if not root:
+                config_path = self.config_input.text()
+                if config_path:
+                    root = str(Path(config_path).parent.parent.parent)
+            candidate = Path(root) / cardlists_rel if root else None
+            if candidate and candidate.exists():
+                txts = sorted(candidate.glob("*.txt"))
+                if txts:
+                    self.card_list_input.setText(str(txts[0]))
+
+    def _restore_last_config(self):
+        settings = _load_settings()
+        path_str = settings.get(self.SETTINGS_KEY, "")
+        if not path_str:
+            candidate = _copilot_root() / "cardconjurer_batch" / "art_gen_config.json"
+            if candidate.exists():
+                path_str = str(candidate)
+        if path_str and Path(path_str).exists():
+            self.config_input.setText(path_str)
+            try:
+                with open(path_str, encoding="utf-8-sig") as f:
+                    raw = f.read()
+                self._config_data = json.loads(raw)
+                self.config_preview.setPlainText(raw)
+                self._apply_config(self._config_data)
+            except Exception:
+                pass
+
+    def _run_pipeline(self):
+        script_path = _copilot_root() / "cardconjurer_batch" / self.SCRIPT_NAME
+        if not script_path.exists():
+            QMessageBox.critical(self, "Script Not Found",
+                                 f"Pipeline script not found:\n{script_path}")
+            return
+
+        mode_index = self.mode_combo.currentIndex()
+        run_mode   = mode_index + 1
+        extra_args = ["-RunMode", str(run_mode), "-Yes"]
+
+        config_path = self.config_input.text().strip()
+        if config_path and Path(config_path).exists():
+            extra_args += ["-ConfigFile", config_path]
+
+        if run_mode == 1:
+            names = self.card_names_input.text().strip()
+            if not names:
+                QMessageBox.warning(self, "No Card Names",
+                                    "Enter one or more card names (comma-separated).")
+                return
+            extra_args += ["-CardNames", names]
+        else:
+            card_list = self.card_list_input.text().strip()
+            if not card_list or not Path(card_list).exists():
+                QMessageBox.warning(self, "No Card List",
+                                    "Browse to a valid card list .txt file.")
+                return
+            extra_args += ["-CardListFile", card_list]
+
+        self.run_btn.setEnabled(False)
+        self.output_text.clear()
+        self.output_text.append("[Art generation started]\n")
+
+        self.pipeline_thread = PipelineThread(str(script_path), extra_args)
+        self.pipeline_thread.output_signal.connect(self._on_output)
+        self.pipeline_thread.error_signal.connect(self._on_error)
+        self.pipeline_thread.finished_signal.connect(self._on_finished)
+        self.pipeline_thread.start()
+
+    def _open_help(self):
+        ArtGenerationHelpDialog(self).exec()
+
+
+class ArtGenerationHelpDialog(QDialog):
+    """Explains every parameter in art_gen_config.json."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Art Generation \u2014 Config Reference")
+        self.resize(680, 480)
+
+        root = QVBoxLayout(self)
+
+        browser = QTextBrowser()
+        browser.setOpenExternalLinks(False)
+        browser.setHtml(self._help_html())
+        root.addWidget(browser, stretch=1)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
+        buttons.rejected.connect(self.reject)
+        root.addWidget(buttons)
+
+    @staticmethod
+    def _help_html() -> str:
+        return """
+<style>
+  body  { font-family: Segoe UI, Arial, sans-serif; font-size: 13px; margin: 8px; }
+  h3    { color: #d4af37; margin-bottom: 4px; }
+  h4    { border-bottom: 1px solid #666; padding-bottom: 3px; margin-top: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  td    { padding: 4px 6px; vertical-align: top; }
+  td:first-child { width: 160px; white-space: nowrap; font-weight: bold; }
+  tr:nth-child(even) { background: rgba(128,128,128,0.08); }
+  code  { background: rgba(128,128,128,0.15); padding: 0 3px; border-radius: 3px; }
+  p     { margin: 4px 0 10px; }
+</style>
+<h3>Art Generation Pipeline &mdash; Config Reference</h3>
+<p>Generates card artwork via the <b>HuggingFace Inference API</b> (free tier).<br>
+Set <code>apiToken</code> to a free token from
+<a href="https://huggingface.co/settings/tokens">huggingface.co/settings/tokens</a>.<br>
+Edit values directly in the JSON preview, then click <b>Save</b>.</p>
+
+<h4>Authentication</h4>
+<table>
+  <tr><td>apiToken</td><td>Your HuggingFace API token (<code>hf_...</code>). Required for image generation.<br>
+    Get a free read-access token at <code>https://huggingface.co/settings/tokens</code>.<br>
+    Alternatively, set the <code>HF_TOKEN</code> environment variable and leave this blank.</td></tr>
+  <tr><td>model</td><td>HuggingFace model ID to use for generation.<br>
+    Default: <code>black-forest-labs/FLUX.1-schnell</code> (fast, free-tier).</td></tr>
+</table>
+
+<h4>Paths</h4>
+<table>
+  <tr><td>cardlistsDir</td><td>Workspace-relative folder scanned for card list <code>.txt</code> files,
+    used to pre-fill the card-list file picker on startup.<br>
+    Default: <code>Copilot\\cardconjurer_batch\\Cardlists</code></td></tr>
+  <tr><td>outputDir</td><td>Workspace-relative (or absolute) folder where generated <code>.jpg</code>
+    art images are saved.<br>
+    Default: <code>Artworks\\Generated</code></td></tr>
+</table>
+
+<h4>Prompt</h4>
+<table>
+  <tr><td>style</td><td>Art style descriptor appended to every prompt after the card name and type.<br>
+    Example: <code>fantasy card art, digital painting, highly detailed, no text, no borders</code></td></tr>
+  <tr><td>prefix</td><td>Optional free text prepended to every prompt before the card name.<br>
+    Leave blank to omit. Example: <code>dark fantasy portrait of</code></td></tr>
+</table>
+
+<h4>Generation</h4>
+<table>
+  <tr><td>overwrite</td><td><code>true</code> = regenerate art even if the output file already exists.<br>
+    <code>false</code> = skip cards that already have an output image (default).</td></tr>
+  <tr><td>concurrency</td><td>Number of simultaneous HuggingFace requests.<br>
+    Keep at <code>1</code> to avoid rate limits; raise to <code>2</code> with caution.<br>
+    Default: <code>1</code></td></tr>
+  <tr><td>dryRun</td><td><code>true</code> = print prompts without downloading any images.<br>
+    <code>false</code> = download and save images (default).</td></tr>
+</table>
+
+<h4>Image Size</h4>
+<table>
+  <tr><td>width</td><td>Output image width in pixels.<br>Default: <code>626</code> (standard MTG art crop width).</td></tr>
+  <tr><td>height</td><td>Output image height in pixels.<br>Default: <code>457</code> (standard MTG art crop height).</td></tr>
+  <tr><td>seed</td><td>Optional integer seed for reproducibility. Set to <code>null</code> for a random result each run.</td></tr>
+</table>
+"""
+
 
 class PipelineGUI(QMainWindow):
 
@@ -579,40 +790,28 @@ class PipelineGUI(QMainWindow):
         root.setContentsMargins(0, 6, 0, 0)
         root.setSpacing(0)
 
-        # Tabs
-        self.tabs = QTabWidget()
-        self.tabs.addTab(GenericPipelineTab(),  "Generic Pipeline")
-        self.tabs.addTab(RolecardPipelineTab(), "Rolecard Pipeline")
-        self.tabs.addTab(XmlExportTab(),        "XML Export")
-
-        # Corner buttons — rendered inline with the tab bar
-        corner = QWidget()
-        corner_layout = QHBoxLayout(corner)
-        corner_layout.setContentsMargins(0, 0, 8, 0)
-        corner_layout.setSpacing(6)
-
-        help_btn = QPushButton("Config Help")
-        help_btn.setObjectName("helpButton")
-        help_btn.clicked.connect(self._open_config_help)
-        corner_layout.addWidget(help_btn)
+        # Toolbar row above tabs (keeps tab bar uncluttered)
+        toolbar = QWidget()
+        toolbar_layout = QHBoxLayout(toolbar)
+        toolbar_layout.setContentsMargins(8, 0, 8, 4)
+        toolbar_layout.setSpacing(6)
+        toolbar_layout.addStretch()
 
         self.theme_btn = QPushButton("☀ Light")
         self.theme_btn.setObjectName("themeButton")
         self.theme_btn.clicked.connect(self._toggle_theme)
-        corner_layout.addWidget(self.theme_btn)
+        toolbar_layout.addWidget(self.theme_btn)
 
-        self.tabs.setCornerWidget(corner, Qt.Corner.TopRightCorner)
+        root.addWidget(toolbar)
+
+        # Tabs
+        self.tabs = QTabWidget()
+        self.tabs.addTab(GenericPipelineTab(),    "Generic Pipeline")
+        self.tabs.addTab(RolecardPipelineTab(),  "Rolecard Pipeline")
+        self.tabs.addTab(XmlExportTab(),          "XML Export")
+        self.tabs.addTab(ArtGenerationTab(),      "Art Generation")
 
         root.addWidget(self.tabs)
-
-    def _open_config_help(self):
-        idx = self.tabs.currentIndex()
-        if idx == 1:
-            RolecardConfigHelpDialog(self).exec()
-        elif idx == 2:
-            XmlExportConfigHelpDialog(self).exec()
-        else:
-            GenericConfigHelpDialog(self).exec()
 
     def _toggle_theme(self):
         self.dark_mode = not self.dark_mode
