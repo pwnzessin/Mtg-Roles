@@ -66,9 +66,10 @@ class ConfigEditorDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle(title)
         self.resize(620, 560)
-        self._config  = config    # modified in-place on accept
-        self._schema  = schema
-        self._widgets = {}        # key → (FieldDef, widget)
+        self._config    = config    # modified in-place on accept
+        self._schema    = schema
+        self._widgets   = {}        # key → (FieldDef, widget)
+        self._text_refs = {}        # key → QLineEdit for dir/file fields
         self._init_ui()
 
     # ── UI construction ───────────────────────────────────────────────────────
@@ -85,24 +86,44 @@ class ConfigEditorDialog(QDialog):
         hint.setContentsMargins(16, 10, 16, 4)
         outer.addWidget(hint)
 
-        scroll = QScrollArea()
-        scroll.setWidgetResizable(True)
-        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        tab_widget = QTabWidget()
+        outer.addWidget(tab_widget, stretch=1)
 
-        inner = QWidget()
-        form  = QFormLayout(inner)
-        form.setContentsMargins(16, 8, 16, 12)
-        form.setSpacing(6)
-        form.setHorizontalSpacing(14)
-        form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        current_form: QFormLayout | None = None
 
         for fd in self._schema:
             if fd.ftype == "section":
-                sep = QLabel(fd.label)
-                sep.setObjectName("sectionLabel")
-                sep.setContentsMargins(0, 8, 0, 2)
-                form.addRow(sep)
+                # Each section becomes a new tab with its own scrollable form
+                inner = QWidget()
+                form  = QFormLayout(inner)
+                form.setContentsMargins(14, 10, 14, 10)
+                form.setSpacing(7)
+                form.setHorizontalSpacing(14)
+                form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+
+                scroll = QScrollArea()
+                scroll.setWidgetResizable(True)
+                scroll.setFrameShape(QFrame.Shape.NoFrame)
+                scroll.setWidget(inner)
+
+                tab_widget.addTab(scroll, fd.label)
+                current_form = form
                 continue
+
+            if current_form is None:
+                # Fields before the first section — add a fallback "General" tab
+                inner = QWidget()
+                current_form = QFormLayout(inner)
+                current_form.setContentsMargins(14, 10, 14, 10)
+                current_form.setSpacing(7)
+                current_form.setHorizontalSpacing(14)
+                current_form.setFieldGrowthPolicy(
+                    QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+                scroll = QScrollArea()
+                scroll.setWidgetResizable(True)
+                scroll.setFrameShape(QFrame.Shape.NoFrame)
+                scroll.setWidget(inner)
+                tab_widget.addTab(scroll, "General")
 
             current = _nested_get(self._config, fd.key)
             widget  = self._make_widget(fd, current)
@@ -112,10 +133,7 @@ class ConfigEditorDialog(QDialog):
             if fd.desc:
                 lbl.setToolTip(fd.desc)
                 widget.setToolTip(fd.desc)
-            form.addRow(lbl, widget)
-
-        scroll.setWidget(inner)
-        outer.addWidget(scroll, stretch=1)
+            current_form.addRow(lbl, widget)
 
         btns = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
@@ -157,12 +175,51 @@ class ConfigEditorDialog(QDialog):
                     break
             return w
 
+        if fd.ftype in ("dir", "file"):
+            return self._make_browse_widget(fd, current)
+
         # str (default)
         w = QLineEdit()
         w.setText(str(current) if current is not None else "")
         if fd.desc:
             w.setPlaceholderText(fd.desc[:70])
         return w
+
+    def _make_browse_widget(self, fd: _FieldDef, current) -> QWidget:
+        """QLineEdit + Browse button for directory or file path fields."""
+        container = QWidget()
+        layout = QHBoxLayout(container)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(4)
+
+        line = QLineEdit()
+        line.setText(str(current) if current is not None else "")
+        if fd.desc:
+            line.setPlaceholderText(fd.desc[:70])
+        layout.addWidget(line)
+
+        btn = QPushButton("Browse\u2026")
+        btn.setFixedWidth(84)
+        if fd.ftype == "dir":
+            btn.clicked.connect(lambda checked=False, l=line: self._browse_dir(l))
+        else:
+            btn.clicked.connect(lambda checked=False, l=line: self._browse_file(l))
+        layout.addWidget(btn)
+
+        self._text_refs[fd.key] = line
+        return container
+
+    def _browse_dir(self, line: QLineEdit) -> None:
+        start = line.text().strip() or ""
+        path = QFileDialog.getExistingDirectory(self, "Select Folder", start)
+        if path:
+            line.setText(path)
+
+    def _browse_file(self, line: QLineEdit) -> None:
+        start = str(Path(line.text().strip()).parent) if line.text().strip() else ""
+        path, _ = QFileDialog.getOpenFileName(self, "Select File", start, "All Files (*)")
+        if path:
+            line.setText(path)
 
     # ── Accept ────────────────────────────────────────────────────────────────
 
@@ -178,6 +235,9 @@ class ConfigEditorDialog(QDialog):
             elif fd.ftype == "combo":
                 idx = w.currentIndex()
                 val = fd.options[idx][1] if 0 <= idx < len(fd.options) else None
+            elif fd.ftype in ("dir", "file"):
+                t   = self._text_refs[fd.key].text().strip()
+                val = None if (fd.nullable and t == "") else t
             else:   # str
                 t   = w.text().strip()
                 val = None if (fd.nullable and t == "") else t
@@ -626,17 +686,14 @@ class GenericPipelineTab(_PipelineTabBase):
 
     def _config_schema(self):
         return [
-            _FieldDef("", "General", "section"),
-            _FieldDef("workspaceRoot", "Workspace Root", "str",
-                      "Override workspace root. Leave blank for auto-detect.", nullable=True),
             _FieldDef("", "Fetch", "section"),
-            _FieldDef("fetch.cardsDir", "Cards Dir", "str",
+            _FieldDef("fetch.cardsDir", "Cards Dir", "dir",
                       "Output folder for fetched .txt card data files."),
-            _FieldDef("fetch.artDir", "Art Dir", "str",
+            _FieldDef("fetch.artDir", "Art Dir", "dir",
                       "Output folder for downloaded artwork."),
-            _FieldDef("fetch.cardlistsDir", "Card Lists Dir", "str",
+            _FieldDef("fetch.cardlistsDir", "Card Lists Dir", "dir",
                       "Folder shown when browsing for a card list file."),
-            _FieldDef("fetch.artScanDir", "Art Scan Dir", "str",
+            _FieldDef("fetch.artScanDir", "Art Scan Dir", "dir",
                       "Folder scanned in mode 1 for custom art (also used as fallback art dir)."),
             _FieldDef("fetch.preferSet", "Prefer Set", "str",
                       "Preferred MTG set code (e.g. m21). Leave blank for default."),
@@ -756,7 +813,6 @@ class RolecardPipelineTab(_PipelineTabBase):
                       "Upscale final output using bicubic interpolation."),
             _FieldDef("finalUpscaleFactor", "Upscale Factor", "int",
                       "Scale multiplier when Final Upscale is enabled.", min_val=1, max_val=8),
-            _FieldDef("", "Server & Generation", "section"),
             _FieldDef("baseUrl", "Base URL", "str",
                       "URL of the CardConjurer server."),
             _FieldDef("headless", "Headless Browser", "bool",
@@ -766,17 +822,17 @@ class RolecardPipelineTab(_PipelineTabBase):
             _FieldDef("overwrite", "Overwrite", "bool",
                       "Re-render cards that already have an output PNG."),
             _FieldDef("", "Paths", "section"),
-            _FieldDef("paths.cardsDir", "Cards Dir", "str",
+            _FieldDef("paths.cardsDir", "Cards Dir", "dir",
                       "Folder containing per-role card .txt files."),
-            _FieldDef("paths.artworksDir", "Artworks Dir", "str",
+            _FieldDef("paths.artworksDir", "Artworks Dir", "dir",
                       "Folder containing per-role artwork images."),
-            _FieldDef("paths.templatesDir", "Templates Dir", "str",
+            _FieldDef("paths.templatesDir", "Templates Dir", "dir",
                       "Folder holding role template .cardconjurer files."),
-            _FieldDef("paths.cardConjurerRoot", "CardConjurer Root", "str",
+            _FieldDef("paths.cardConjurerRoot", "CardConjurer Root", "dir",
                       "Root of the CardConjurer installation."),
-            _FieldDef("paths.setCodesFile", "Set Codes File", "str",
+            _FieldDef("paths.setCodesFile", "Set Codes File", "file",
                       "Path to the set-codes definition file."),
-            _FieldDef("paths.reportDir", "Report Dir", "str",
+            _FieldDef("paths.reportDir", "Report Dir", "dir",
                       "Folder where generation report files are written."),
         ]
 
@@ -915,15 +971,33 @@ class XmlExportTab(_PipelineTabBase):
 
     def _config_schema(self):
         return [
-            _FieldDef("", "Mode", "section"),
+            _FieldDef("", "General", "section"),
             _FieldDef("mode", "Mode", "combo",
                       "Which input source to use at run time.",
                       options=[
                           ("0 \u2014 Manual (inputFolder)", 0),
                           ("1 \u2014 RoleCard (role-based)", 1),
                       ]),
+            _FieldDef("cardbackPath", "Cardback Path", "file",
+                      "Path to a specific cardback image. Leave blank to omit."),
+            _FieldDef("cardbacksDir", "Cardbacks Dir", "dir",
+                      "Folder scanned for cardback images when no explicit path is set."),
+            _FieldDef("stock", "Stock", "combo",
+                      "MPC card stock.",
+                      options=[
+                          ("(S30) Standard Smooth", 0),
+                          ("(S33) Superior Smooth", 1),
+                          ("(M31) Linen", 2),
+                          ("(P10) Plastic", 3),
+                      ]),
+            _FieldDef("foil", "Foil", "bool",
+                      "Mark all front faces as foil in the XML."),
+            _FieldDef("autofillDir", "Autofill Dir", "dir",
+                      "Folder where the XML file is written when outputXml is blank."),
+            _FieldDef("outputXml", "Output XML", "file",
+                      "Path for the generated XML file. Leave blank for auto-name."),
             _FieldDef("", "Manual Settings", "section"),
-            _FieldDef("manual.inputFolder", "Input Folder", "str",
+            _FieldDef("manual.inputFolder", "Input Folder", "dir",
                       "Folder containing rendered card images to include in the XML."),
             _FieldDef("manual.recurse", "Recurse Sub-folders", "bool",
                       "Include images in sub-folders recursively."),
@@ -938,29 +1012,8 @@ class XmlExportTab(_PipelineTabBase):
                           ("4 \u2014 Kings", 4),
                           ("5 \u2014 Renegades", 5),
                       ]),
-            _FieldDef("rolecard.templatesRoot", "Templates Root", "str",
+            _FieldDef("rolecard.templatesRoot", "Templates Root", "dir",
                       "Path to Cards\\templates folder. Leave blank to auto-detect."),
-            _FieldDef("", "Cardback", "section"),
-            _FieldDef("cardbackPath", "Cardback Path", "str",
-                      "Path to a specific cardback image. Leave blank to omit."),
-            _FieldDef("cardbacksDir", "Cardbacks Dir", "str",
-                      "Folder scanned for cardback images when no explicit path is set."),
-            _FieldDef("", "Print Settings", "section"),
-            _FieldDef("stock", "Stock", "combo",
-                      "MPC card stock.",
-                      options=[
-                          ("(S30) Standard Smooth", 0),
-                          ("(S33) Superior Smooth", 1),
-                          ("(M31) Linen", 2),
-                          ("(P10) Plastic", 3),
-                      ]),
-            _FieldDef("foil", "Foil", "bool",
-                      "Mark all front faces as foil in the XML."),
-            _FieldDef("", "Output", "section"),
-            _FieldDef("autofillDir", "Autofill Dir", "str",
-                      "Folder where the XML file is written when outputXml is blank."),
-            _FieldDef("outputXml", "Output XML", "str",
-                      "Path for the generated XML file. Leave blank for auto-name."),
         ]
 
 
@@ -1068,24 +1121,19 @@ class ArtGenerationTab(_PipelineTabBase):
 
     def _config_schema(self):
         return [
-            _FieldDef("", "Authentication", "section"),
+            _FieldDef("", "General", "section"),
             _FieldDef("apiToken", "API Token", "str",
                       "HuggingFace API token (hf_...). Leave blank to use HF_TOKEN env var."),
             _FieldDef("model", "Model", "str",
                       "HuggingFace model ID (e.g. black-forest-labs/FLUX.1-schnell)."),
-            _FieldDef("", "Paths", "section"),
-            _FieldDef("workspaceRoot", "Workspace Root", "str",
-                      "Override workspace root path. Leave blank for auto-detect.", nullable=True),
-            _FieldDef("cardlistsDir", "Card Lists Dir", "str",
+            _FieldDef("cardlistsDir", "Card Lists Dir", "dir",
                       "Workspace-relative folder scanned for card list .txt files."),
-            _FieldDef("outputDir", "Output Dir", "str",
+            _FieldDef("outputDir", "Output Dir", "dir",
                       "Folder where generated art images are saved."),
-            _FieldDef("", "Prompt", "section"),
             _FieldDef("style", "Style", "str",
                       "Art style descriptor appended to every prompt after the card name."),
             _FieldDef("prefix", "Prefix", "str",
                       "Free text prepended to every prompt before the card name (optional)."),
-            _FieldDef("", "Generation", "section"),
             _FieldDef("overwrite", "Overwrite", "bool",
                       "Regenerate art even if output file already exists."),
             _FieldDef("concurrency", "Concurrency", "int",
@@ -1093,7 +1141,6 @@ class ArtGenerationTab(_PipelineTabBase):
                       min_val=1, max_val=10),
             _FieldDef("dryRun", "Dry Run", "bool",
                       "Print prompts without downloading images."),
-            _FieldDef("", "Image Size", "section"),
             _FieldDef("width", "Width (px)", "int",
                       "Output image width in pixels.", min_val=64, max_val=2048),
             _FieldDef("height", "Height (px)", "int",
