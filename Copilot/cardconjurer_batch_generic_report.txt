@@ -1,5 +1,5 @@
 Generic card batch report
-Generated: 2026-05-25T18:18:44.326Z
+Generated: 2026-05-29T20:38:32.537Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
@@ -7,7 +7,7 @@ Total parsed cards: 1
 Cards in run queue: 1
 Dry run: false
 
-OK | Beast Within.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Beast Within.png
+OK | Winter, Misanthropic Guide.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Winter, Misanthropic Guide.png
 
 Generated:        1
 Skipped (exists): 0

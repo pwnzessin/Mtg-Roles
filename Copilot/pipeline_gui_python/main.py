@@ -1,13 +1,15 @@
 import sys
 import json
 import html
+import copy
 import subprocess
 from pathlib import Path
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QTabWidget, QLabel, QLineEdit, QPushButton, QTextEdit,
     QMessageBox, QFileDialog, QComboBox, QStackedWidget, QDialog,
-    QDialogButtonBox, QTextBrowser,
+    QDialogButtonBox, QTextBrowser, QScrollArea, QFrame,
+    QSpinBox, QDoubleSpinBox, QCheckBox, QFormLayout,
 )
 from PyQt6.QtCore import QThread, QTimer, Qt, pyqtSignal
 from PyQt6.QtGui import QColor, QFont, QPainter, QPen, QPixmap
@@ -16,6 +18,178 @@ import theme
 import highlighter as _hl
 import pipeline
 
+
+# ── Config editor infrastructure ──────────────────────────────────────────────
+
+class _FieldDef:
+    """Schema definition for a single field in the config editor dialog."""
+
+    __slots__ = ("key", "label", "ftype", "desc", "options", "min_val", "max_val", "nullable")
+
+    def __init__(self, key, label, ftype, desc="", options=None,
+                 min_val=0, max_val=99999, nullable=False):
+        self.key      = key
+        self.label    = label
+        self.ftype    = ftype      # "str" | "bool" | "int" | "float" | "combo" | "section"
+        self.desc     = desc
+        self.options  = options or []  # combo: list of (display_str, raw_value)
+        self.min_val  = min_val
+        self.max_val  = max_val
+        self.nullable = nullable
+
+
+def _nested_get(d: dict, dotted_key: str):
+    """Read a value from a nested dict via dot-separated key (e.g. 'fetch.artDir')."""
+    cur = d
+    for k in dotted_key.split("."):
+        if not isinstance(cur, dict):
+            return None
+        cur = cur.get(k)
+    return cur
+
+
+def _nested_set(d: dict, dotted_key: str, value) -> None:
+    """Write a value into a nested dict via dot-separated key, creating sub-dicts as needed."""
+    keys = dotted_key.split(".")
+    cur  = d
+    for k in keys[:-1]:
+        if k not in cur or not isinstance(cur[k], dict):
+            cur[k] = {}
+        cur = cur[k]
+    cur[keys[-1]] = value
+
+
+class ConfigEditorDialog(QDialog):
+    """Renders a list of _FieldDef entries as a scrollable, user-friendly config form."""
+
+    def __init__(self, title: str, config: dict, schema: list, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(title)
+        self.resize(620, 560)
+        self._config  = config    # modified in-place on accept
+        self._schema  = schema
+        self._widgets = {}        # key → (FieldDef, widget)
+        self._init_ui()
+
+    # ── UI construction ───────────────────────────────────────────────────────
+
+    def _init_ui(self):
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0, 0, 0, 8)
+
+        hint = QLabel(
+            "Edit config values below.  Click <b>OK</b> to apply changes to the JSON preview, "
+            "then click <b>Save</b> in the main window to write to disk."
+        )
+        hint.setWordWrap(True)
+        hint.setContentsMargins(16, 10, 16, 4)
+        outer.addWidget(hint)
+
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+
+        inner = QWidget()
+        form  = QFormLayout(inner)
+        form.setContentsMargins(16, 8, 16, 12)
+        form.setSpacing(6)
+        form.setHorizontalSpacing(14)
+        form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+
+        for fd in self._schema:
+            if fd.ftype == "section":
+                sep = QLabel(fd.label)
+                sep.setObjectName("sectionLabel")
+                sep.setContentsMargins(0, 8, 0, 2)
+                form.addRow(sep)
+                continue
+
+            current = _nested_get(self._config, fd.key)
+            widget  = self._make_widget(fd, current)
+            self._widgets[fd.key] = (fd, widget)
+
+            lbl = QLabel(fd.label + ":")
+            if fd.desc:
+                lbl.setToolTip(fd.desc)
+                widget.setToolTip(fd.desc)
+            form.addRow(lbl, widget)
+
+        scroll.setWidget(inner)
+        outer.addWidget(scroll, stretch=1)
+
+        btns = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        )
+        btns.accepted.connect(self._on_accept)
+        btns.rejected.connect(self.reject)
+        outer.addWidget(btns)
+
+    def _make_widget(self, fd: _FieldDef, current):
+        if fd.ftype == "bool":
+            w = QCheckBox()
+            w.setChecked(bool(current))
+            return w
+
+        if fd.ftype == "int":
+            w = QSpinBox()
+            w.setRange(fd.min_val, fd.max_val)
+            if fd.nullable:
+                w.setSpecialValueText("(none / auto)")
+            if fd.nullable and current is None:
+                w.setValue(fd.min_val)
+            else:
+                w.setValue(int(current) if current is not None else fd.min_val)
+            return w
+
+        if fd.ftype == "float":
+            w = QDoubleSpinBox()
+            w.setRange(fd.min_val, fd.max_val)
+            w.setValue(float(current) if current is not None else fd.min_val)
+            return w
+
+        if fd.ftype == "combo":
+            w = QComboBox()
+            for disp, _ in fd.options:
+                w.addItem(disp)
+            for i, (_, val) in enumerate(fd.options):
+                if val == current:
+                    w.setCurrentIndex(i)
+                    break
+            return w
+
+        # str (default)
+        w = QLineEdit()
+        w.setText(str(current) if current is not None else "")
+        if fd.desc:
+            w.setPlaceholderText(fd.desc[:70])
+        return w
+
+    # ── Accept ────────────────────────────────────────────────────────────────
+
+    def _on_accept(self):
+        for key, (fd, w) in self._widgets.items():
+            if fd.ftype == "bool":
+                val = w.isChecked()
+            elif fd.ftype == "int":
+                v   = w.value()
+                val = None if (fd.nullable and v == fd.min_val) else v
+            elif fd.ftype == "float":
+                val = w.value()
+            elif fd.ftype == "combo":
+                idx = w.currentIndex()
+                val = fd.options[idx][1] if 0 <= idx < len(fd.options) else None
+            else:   # str
+                t   = w.text().strip()
+                val = None if (fd.nullable and t == "") else t
+            _nested_set(self._config, key, val)
+        self.accept()
+
+    def updated_json(self) -> str:
+        """Return the updated config as a pretty-printed JSON string."""
+        return json.dumps(self._config, indent=4, ensure_ascii=False)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 
 def _check_dependencies() -> list[str]:
     """Return a list of human-readable problem strings, empty if all good."""
@@ -155,12 +329,16 @@ class _PipelineTabBase(QWidget):
         root.addWidget(self.config_preview)
         self._highlighter = _hl.JsonHighlighter(self.config_preview.document(), dark=True)
 
-        # Config Help button — sits directly below the JSON editor
+        # Config Help / Edit Config buttons — sit directly below the JSON editor
         help_row = QHBoxLayout()
         self._help_btn = QPushButton("Config Help")
         self._help_btn.setObjectName("helpButton")
         self._help_btn.clicked.connect(self._open_help)
         help_row.addWidget(self._help_btn)
+        self._edit_cfg_btn = QPushButton("Edit Config\u2026")
+        self._edit_cfg_btn.setObjectName("helpButton")
+        self._edit_cfg_btn.clicked.connect(self._open_config_editor)
+        help_row.addWidget(self._edit_cfg_btn)
         help_row.addStretch()
         root.addLayout(help_row)
 
@@ -239,6 +417,30 @@ class _PipelineTabBase(QWidget):
     def _open_help(self):
         """Subclass hook: open the tab's config help dialog."""
         pass
+
+    def _open_config_editor(self):
+        """Open the visual config editor dialog for the current tab."""
+        if not self._config_data:
+            QMessageBox.information(
+                self, "No Config Loaded",
+                "Load a config file first (Browse\u2026), then click Edit Config."
+            )
+            return
+        schema = self._config_schema()
+        if not schema:
+            return
+        config_copy = copy.deepcopy(self._config_data)
+        dlg = ConfigEditorDialog(
+            f"{self.RUN_LABEL} \u2014 Edit Config", config_copy, schema, self
+        )
+        if dlg.exec() == QDialog.DialogCode.Accepted:
+            new_json = dlg.updated_json()
+            self._config_data = json.loads(new_json)
+            self.config_preview.setPlainText(new_json)
+
+    def _config_schema(self) -> list:
+        """Subclass hook: return list of _FieldDef entries for the config editor."""
+        return []
 
     def update_theme(self, dark: bool) -> None:
         self._highlighter.set_dark(dark)
@@ -422,6 +624,92 @@ class GenericPipelineTab(_PipelineTabBase):
     def _open_help(self):
         GenericConfigHelpDialog(self).exec()
 
+    def _config_schema(self):
+        return [
+            _FieldDef("", "General", "section"),
+            _FieldDef("workspaceRoot", "Workspace Root", "str",
+                      "Override workspace root. Leave blank for auto-detect.", nullable=True),
+            _FieldDef("", "Fetch", "section"),
+            _FieldDef("fetch.cardsDir", "Cards Dir", "str",
+                      "Output folder for fetched .txt card data files."),
+            _FieldDef("fetch.artDir", "Art Dir", "str",
+                      "Output folder for downloaded artwork."),
+            _FieldDef("fetch.cardlistsDir", "Card Lists Dir", "str",
+                      "Folder shown when browsing for a card list file."),
+            _FieldDef("fetch.artScanDir", "Art Scan Dir", "str",
+                      "Folder scanned in mode 1 for custom art (also used as fallback art dir)."),
+            _FieldDef("fetch.preferSet", "Prefer Set", "str",
+                      "Preferred MTG set code (e.g. m21). Leave blank for default."),
+            _FieldDef("fetch.artMode", "Art Mode", "combo", "How artwork is downloaded.",
+                      options=[
+                          ("1 — Direct art download", 1),
+                          ("2 — Full card PNG then auto-crop", 2),
+                      ]),
+            _FieldDef("fetch.artVersion", "Art Version", "combo",
+                      "Scryfall image variant (art mode 1 only).",
+                      options=[
+                          ("art_crop", "art_crop"),
+                          ("border_crop", "border_crop"),
+                          ("normal", "normal"),
+                          ("large", "large"),
+                          ("png", "png"),
+                      ]),
+            _FieldDef("fetch.pngCropJpegQuality", "PNG Crop JPEG Quality", "int",
+                      "JPEG quality for art mode 2 (1–100).", min_val=1, max_val=100),
+            _FieldDef("fetch.upscaleEnabled", "Upscale (Fetch)", "bool",
+                      "Upscale downloaded art after fetch."),
+            _FieldDef("fetch.upscaleEngine", "Upscale Engine (Fetch)", "combo",
+                      "Engine for fetched art upscaling.",
+                      options=[
+                          ("auto (Real-ESRGAN if available, else Lanczos)", "auto"),
+                          ("realesrgan (must be in PATH)", "realesrgan"),
+                          ("lanczos (no extra tools needed)", "lanczos"),
+                      ]),
+            _FieldDef("fetch.upscaleFactor", "Upscale Factor (Fetch)", "combo",
+                      "Scale multiplier.", options=[("2\xd7", 2), ("4\xd7", 4)]),
+            _FieldDef("fetch.overwrite", "Overwrite (Fetch)", "bool",
+                      "Overwrite existing .txt and art files."),
+            _FieldDef("fetch.downloadArt", "Download Art", "bool",
+                      "Download artwork during mode 2 fetch."),
+            _FieldDef("fetch.dryRun", "Dry Run (Fetch)", "bool",
+                      "Log what would happen but write no files."),
+            _FieldDef("fetch.chunkSize", "Chunk Size", "int",
+                      "Cards per fetch\u2192render batch. 0 = no chunking.", min_val=0, max_val=9999),
+            _FieldDef("", "Generate", "section"),
+            _FieldDef("generate.outputSubDir", "Output Sub-dir", "str",
+                      "Sub-folder relative to the .txt input dir for rendered PNGs."),
+            _FieldDef("generate.baseUrl", "Base URL", "str",
+                      "URL of the local CardConjurer server."),
+            _FieldDef("generate.headless", "Headless Browser", "bool",
+                      "Run Playwright browser invisibly."),
+            _FieldDef("generate.startLauncher", "Auto-start Launcher", "bool",
+                      "Auto-start CardConjurer before rendering."),
+            _FieldDef("generate.overwrite", "Overwrite (Generate)", "bool",
+                      "Overwrite existing output PNG files."),
+            _FieldDef("generate.upscaleEnabled", "Upscale (Generate)", "bool",
+                      "Upscale rendered PNG after generation."),
+            _FieldDef("generate.upscaleEngine", "Upscale Engine (Generate)", "combo",
+                      "Engine for rendered output upscaling.",
+                      options=[
+                          ("auto (Real-ESRGAN if available, else Lanczos)", "auto"),
+                          ("realesrgan (must be in PATH)", "realesrgan"),
+                          ("lanczos (no extra tools needed)", "lanczos"),
+                      ]),
+            _FieldDef("generate.upscaleFactor", "Upscale Factor (Generate)", "combo",
+                      "Scale multiplier.", options=[("2\xd7", 2), ("4\xd7", 4)]),
+            _FieldDef("generate.limit", "Render Limit", "int",
+                      "Max cards to render. 0 = all.", min_val=0, max_val=9999),
+            _FieldDef("generate.dryRun", "Dry Run (Generate)", "bool",
+                      "Log which cards would be processed, skip rendering."),
+            _FieldDef("", "Layouts", "section"),
+            _FieldDef("layouts.basicLand", "Basic Land Layout", "combo",
+                      "Layout used for basic land cards.",
+                      options=[
+                          ("standard \u2014 normal M15 frame", "standard"),
+                          ("fullart \u2014 art fills entire card", "fullart"),
+                      ]),
+        ]
+
 
 class RolecardPipelineTab(_PipelineTabBase):
     SCRIPT_NAME  = "Rolecard_Batch_Generator.ps1"
@@ -448,6 +736,49 @@ class RolecardPipelineTab(_PipelineTabBase):
 
     def _open_help(self):
         RolecardConfigHelpDialog(self).exec()
+
+    def _config_schema(self):
+        return [
+            _FieldDef("", "General", "section"),
+            _FieldDef("limit", "Card Limit", "int",
+                      "Max cards per role. 0 = all cards.", min_val=0, max_val=9999),
+            _FieldDef("qualityChoice", "Quality", "combo",
+                      "Output image quality preset.",
+                      options=[
+                          ("1 \u2014 Original PNG (full res, lossless)", "1"),
+                          ("2 \u2014 50% PNG (half res, lossless)", "2"),
+                          ("3 \u2014 37% PNG, 750\xd71050 px @ 300 DPI", "3"),
+                          ("4 \u2014 50% JPEG Q85 (default)", "4"),
+                      ]),
+            _FieldDef("applyMargin", "Apply Margin", "bool",
+                      "Add a white print margin around each card."),
+            _FieldDef("finalUpscaleEnabled", "Final Upscale", "bool",
+                      "Upscale final output using bicubic interpolation."),
+            _FieldDef("finalUpscaleFactor", "Upscale Factor", "int",
+                      "Scale multiplier when Final Upscale is enabled.", min_val=1, max_val=8),
+            _FieldDef("", "Server & Generation", "section"),
+            _FieldDef("baseUrl", "Base URL", "str",
+                      "URL of the CardConjurer server."),
+            _FieldDef("headless", "Headless Browser", "bool",
+                      "Run Playwright browser invisibly."),
+            _FieldDef("startLauncher", "Auto-start Launcher", "bool",
+                      "Auto-start the CardConjurer launcher before rendering."),
+            _FieldDef("overwrite", "Overwrite", "bool",
+                      "Re-render cards that already have an output PNG."),
+            _FieldDef("", "Paths", "section"),
+            _FieldDef("paths.cardsDir", "Cards Dir", "str",
+                      "Folder containing per-role card .txt files."),
+            _FieldDef("paths.artworksDir", "Artworks Dir", "str",
+                      "Folder containing per-role artwork images."),
+            _FieldDef("paths.templatesDir", "Templates Dir", "str",
+                      "Folder holding role template .cardconjurer files."),
+            _FieldDef("paths.cardConjurerRoot", "CardConjurer Root", "str",
+                      "Root of the CardConjurer installation."),
+            _FieldDef("paths.setCodesFile", "Set Codes File", "str",
+                      "Path to the set-codes definition file."),
+            _FieldDef("paths.reportDir", "Report Dir", "str",
+                      "Folder where generation report files are written."),
+        ]
 
 
 class XmlExportTab(_PipelineTabBase):
@@ -582,6 +913,56 @@ class XmlExportTab(_PipelineTabBase):
     def _open_help(self):
         XmlExportConfigHelpDialog(self).exec()
 
+    def _config_schema(self):
+        return [
+            _FieldDef("", "Mode", "section"),
+            _FieldDef("mode", "Mode", "combo",
+                      "Which input source to use at run time.",
+                      options=[
+                          ("0 \u2014 Manual (inputFolder)", 0),
+                          ("1 \u2014 RoleCard (role-based)", 1),
+                      ]),
+            _FieldDef("", "Manual Settings", "section"),
+            _FieldDef("manual.inputFolder", "Input Folder", "str",
+                      "Folder containing rendered card images to include in the XML."),
+            _FieldDef("manual.recurse", "Recurse Sub-folders", "bool",
+                      "Include images in sub-folders recursively."),
+            _FieldDef("", "RoleCard Settings", "section"),
+            _FieldDef("rolecard.roles", "Roles", "combo",
+                      "Which role(s) to include.",
+                      options=[
+                          ("0 \u2014 All roles", 0),
+                          ("1 \u2014 Assassins", 1),
+                          ("2 \u2014 Bandits", 2),
+                          ("3 \u2014 Guardians", 3),
+                          ("4 \u2014 Kings", 4),
+                          ("5 \u2014 Renegades", 5),
+                      ]),
+            _FieldDef("rolecard.templatesRoot", "Templates Root", "str",
+                      "Path to Cards\\templates folder. Leave blank to auto-detect."),
+            _FieldDef("", "Cardback", "section"),
+            _FieldDef("cardbackPath", "Cardback Path", "str",
+                      "Path to a specific cardback image. Leave blank to omit."),
+            _FieldDef("cardbacksDir", "Cardbacks Dir", "str",
+                      "Folder scanned for cardback images when no explicit path is set."),
+            _FieldDef("", "Print Settings", "section"),
+            _FieldDef("stock", "Stock", "combo",
+                      "MPC card stock.",
+                      options=[
+                          ("(S30) Standard Smooth", 0),
+                          ("(S33) Superior Smooth", 1),
+                          ("(M31) Linen", 2),
+                          ("(P10) Plastic", 3),
+                      ]),
+            _FieldDef("foil", "Foil", "bool",
+                      "Mark all front faces as foil in the XML."),
+            _FieldDef("", "Output", "section"),
+            _FieldDef("autofillDir", "Autofill Dir", "str",
+                      "Folder where the XML file is written when outputXml is blank."),
+            _FieldDef("outputXml", "Output XML", "str",
+                      "Path for the generated XML file. Leave blank for auto-name."),
+        ]
+
 
 class ArtGenerationTab(_PipelineTabBase):
     """Tab for generate_art_pipeline.ps1 — same structure as GenericPipelineTab."""
@@ -684,6 +1065,43 @@ class ArtGenerationTab(_PipelineTabBase):
 
     def _open_help(self):
         ArtGenerationHelpDialog(self).exec()
+
+    def _config_schema(self):
+        return [
+            _FieldDef("", "Authentication", "section"),
+            _FieldDef("apiToken", "API Token", "str",
+                      "HuggingFace API token (hf_...). Leave blank to use HF_TOKEN env var."),
+            _FieldDef("model", "Model", "str",
+                      "HuggingFace model ID (e.g. black-forest-labs/FLUX.1-schnell)."),
+            _FieldDef("", "Paths", "section"),
+            _FieldDef("workspaceRoot", "Workspace Root", "str",
+                      "Override workspace root path. Leave blank for auto-detect.", nullable=True),
+            _FieldDef("cardlistsDir", "Card Lists Dir", "str",
+                      "Workspace-relative folder scanned for card list .txt files."),
+            _FieldDef("outputDir", "Output Dir", "str",
+                      "Folder where generated art images are saved."),
+            _FieldDef("", "Prompt", "section"),
+            _FieldDef("style", "Style", "str",
+                      "Art style descriptor appended to every prompt after the card name."),
+            _FieldDef("prefix", "Prefix", "str",
+                      "Free text prepended to every prompt before the card name (optional)."),
+            _FieldDef("", "Generation", "section"),
+            _FieldDef("overwrite", "Overwrite", "bool",
+                      "Regenerate art even if output file already exists."),
+            _FieldDef("concurrency", "Concurrency", "int",
+                      "Simultaneous HuggingFace requests. Keep at 1 to avoid rate limits.",
+                      min_val=1, max_val=10),
+            _FieldDef("dryRun", "Dry Run", "bool",
+                      "Print prompts without downloading images."),
+            _FieldDef("", "Image Size", "section"),
+            _FieldDef("width", "Width (px)", "int",
+                      "Output image width in pixels.", min_val=64, max_val=2048),
+            _FieldDef("height", "Height (px)", "int",
+                      "Output image height in pixels.", min_val=64, max_val=2048),
+            _FieldDef("seed", "Seed", "int",
+                      "Integer seed for reproducibility. Set to 0 (shown as 'none / auto') for a random result.",
+                      min_val=0, max_val=2147483647, nullable=True),
+        ]
 
 
 class ArtGenerationHelpDialog(QDialog):
