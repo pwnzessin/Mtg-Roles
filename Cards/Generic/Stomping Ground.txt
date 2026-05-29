@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Stomping Ground</TITLE>
+<TYPE>Land — Mountain Forest</TYPE>
+<SETCODE>EOE R</SETCODE>
+<RULES>
+({t}: Add {r} or {g}.)
+As this land enters, you may pay 2 life. If you don't, it enters tapped.
+</RULES>
+<ARTIST>Bruce Brenneise</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>R</COLOR>
+<TITLE>Tecutlan, the Searing Rift</TITLE>
+<TYPE>Legendary Land — Cave</TYPE>
+<SETCODE>LCI R</SETCODE>
+<RULES>
+(Transforms from Brass's Tunnel-Grinder.)
+{t}: Add {r}.
+Whenever you cast a permanent spell using mana produced by Tecutlan, discover X, where X is that spell's mana value.
+</RULES>
+<ARTIST>Cristi Balanescu</ARTIST>

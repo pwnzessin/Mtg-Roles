@@ -1,0 +1,9 @@
+<COLOR>G</COLOR>
+<TITLE>Burgeoning</TITLE>
+<MANA>{G}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>C16 R</SETCODE>
+<RULES>
+Whenever an opponent plays a land, you may put a land card from your hand onto the battlefield.
+</RULES>
+<ARTIST>Titus Lunter</ARTIST>

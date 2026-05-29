@@ -1,0 +1,11 @@
+<COLOR>G</COLOR>
+<TITLE>Ignoble Hierarch</TITLE>
+<MANA>{G}</MANA>
+<TYPE>Creature — Goblin Shaman</TYPE>
+<SETCODE>ECC R</SETCODE>
+<PT>0/1</PT>
+<RULES>
+Exalted (Whenever a creature you control attacks alone, that creature gets +1/+1 until end of turn.)
+{t}: Add {b}, {r}, or {g}.
+</RULES>
+<ARTIST>Victor Adame Minguez</ARTIST>

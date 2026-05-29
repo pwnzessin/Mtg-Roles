@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Geth's Grimoire</TITLE>
+<MANA>{4}</MANA>
+<TYPE>Artifact — Book</TYPE>
+<SETCODE>DST U</SETCODE>
+<RULES>
+Whenever an opponent discards a card, you may draw a card.
+</RULES>
+<ARTIST>Heather Hudson</ARTIST>

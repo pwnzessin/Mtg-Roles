@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Golgari Signet</TITLE>
+<MANA>{2}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>DSC U</SETCODE>
+<RULES>
+{1}, {t}: Add {b}{g}.
+</RULES>
+<ARTIST>Raoul Vitale</ARTIST>

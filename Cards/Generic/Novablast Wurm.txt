@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Novablast Wurm</TITLE>
+<MANA>{3}{G}{G}{W}{W}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>WWK M</SETCODE>
+<PT>7/7</PT>
+<RULES>
+Whenever this creature attacks, destroy all other creatures.
+</RULES>
+<ARTIST>Michael Komarck</ARTIST>

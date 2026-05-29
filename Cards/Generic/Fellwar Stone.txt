@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Fellwar Stone</TITLE>
+<MANA>{2}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+{t}: Add one mana of any color that a land an opponent controls could produce.
+</RULES>
+<ARTIST>John Avon</ARTIST>

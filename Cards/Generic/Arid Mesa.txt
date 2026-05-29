@@ -1,0 +1,8 @@
+<COLOR>L</COLOR>
+<TITLE>Arid Mesa</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>MH2 R</SETCODE>
+<RULES>
+{t}, Pay 1 life, Sacrifice this land: Search your library for a Mountain or Plains card, put it onto the battlefield, then shuffle.
+</RULES>
+<ARTIST>Raymond Swanland</ARTIST>

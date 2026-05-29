@@ -1,0 +1,9 @@
+<COLOR>B</COLOR>
+<TITLE>Oppression</TITLE>
+<MANA>{1}{B}{B}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>7ED R</SETCODE>
+<RULES>
+Whenever a player casts a spell, that player discards a card.
+</RULES>
+<ARTIST>Alex Horley-Orlandelli</ARTIST>

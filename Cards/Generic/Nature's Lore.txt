@@ -1,0 +1,9 @@
+<COLOR>G</COLOR>
+<TITLE>Nature's Lore</TITLE>
+<MANA>{1}{G}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+Search your library for a Forest card, put that card onto the battlefield, then shuffle.
+</RULES>
+<ARTIST>Julie Dillon</ARTIST>

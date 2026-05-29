@@ -1,19 +1,14 @@
 Generic card batch report
-Generated: 2026-05-25T01:24:03.068Z
+Generated: 2026-05-25T18:18:44.326Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 6
-Cards in run queue: 6
+Total parsed cards: 1
+Cards in run queue: 1
 Dry run: false
 
-OK | Avatar Aang.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Avatar Aang.png
-OK | Avatar Aang_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Avatar Aang_back.png
-OK | Tetzin, Gnome Champion.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Tetzin, Gnome Champion.png
-OK | Tetzin, Gnome Champion_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Tetzin, Gnome Champion_back.png
-OK | Tovolar, Dire Overlord.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Tovolar, Dire Overlord.png
-OK | Tovolar, Dire Overlord_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Tovolar, Dire Overlord_back.png
+OK | Beast Within.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Beast Within.png
 
-Generated:        6
+Generated:        1
 Skipped (exists): 0
 Failed:           0

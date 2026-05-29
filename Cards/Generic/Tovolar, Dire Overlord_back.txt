@@ -1,0 +1,11 @@
+<COLOR>M</COLOR>
+<TITLE>Tovolar, the Midnight Scourge</TITLE>
+<TYPE>Legendary Creature — Werewolf</TYPE>
+<SETCODE>MID R</SETCODE>
+<PT>4/4</PT>
+<RULES>
+Whenever a Wolf or Werewolf you control deals combat damage to a player, draw a card.
+{x}{r}{g}: Target Wolf or Werewolf you control gets +X/+0 and gains trample until end of turn.
+Nightbound
+</RULES>
+<ARTIST>Chris Rahn</ARTIST>

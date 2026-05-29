@@ -1,0 +1,12 @@
+<COLOR>G</COLOR>
+<TITLE>Quilled Greatwurm</TITLE>
+<MANA>{4}{G}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>FDN M</SETCODE>
+<PT>7/7</PT>
+<RULES>
+Trample
+Whenever a creature you control deals combat damage during your turn, put that many +1/+1 counters on it. (It must survive to get the counters.)
+You may cast this card from your graveyard by removing six counters from among creatures you control in addition to paying its other costs.
+</RULES>
+<ARTIST>Michal Ivan</ARTIST>

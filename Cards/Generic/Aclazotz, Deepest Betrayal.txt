@@ -1,0 +1,13 @@
+<COLOR>B</COLOR>
+<TITLE>Aclazotz, Deepest Betrayal</TITLE>
+<MANA>{3}{B}{B}</MANA>
+<TYPE>Legendary Creature — Bat God</TYPE>
+<SETCODE>LCI M</SETCODE>
+<PT>4/4</PT>
+<RULES>
+Flying, lifelink
+Whenever Aclazotz attacks, each opponent discards a card. For each opponent who can't, you draw a card.
+Whenever an opponent discards a land card, create a 1/1 black Bat creature token with flying.
+When Aclazotz dies, return it to the battlefield tapped and transformed under its owner's control.
+</RULES>
+<ARTIST>Steve Prescott</ARTIST>

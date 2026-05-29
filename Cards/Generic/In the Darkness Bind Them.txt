@@ -1,0 +1,11 @@
+<COLOR>M</COLOR>
+<TITLE>In the Darkness Bind Them</TITLE>
+<MANA>{2}{U}{B}{R}</MANA>
+<TYPE>Enchantment — Saga</TYPE>
+<SETCODE>LTC R</SETCODE>
+<RULES>
+(As this Saga enters and after your draw step, add a lore counter. Sacrifice after IV.)
+I, II, III — Create a 3/3 black Wraith creature token with menace. The Ring tempts you.
+IV — For each opponent, gain control of up to one target creature that player controls until end of turn. Untap those creatures. They gain haste until end of turn. The Ring tempts you.
+</RULES>
+<ARTIST>Daarken</ARTIST>

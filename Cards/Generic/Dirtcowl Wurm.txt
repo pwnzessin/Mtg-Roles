@@ -1,0 +1,10 @@
+<COLOR>G</COLOR>
+<TITLE>Dirtcowl Wurm</TITLE>
+<MANA>{4}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>TMP R</SETCODE>
+<PT>3/4</PT>
+<RULES>
+Whenever an opponent plays a land, put a +1/+1 counter on this creature.
+</RULES>
+<ARTIST>Dan Frazier</ARTIST>

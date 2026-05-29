@@ -1,0 +1,9 @@
+<COLOR>C</COLOR>
+<TITLE>Zoological Study</TITLE>
+<MANA>{2}{G}</MANA>
+<TYPE>Sorcery — Adventure</TYPE>
+<SETCODE>CLB R</SETCODE>
+<RULES>
+Mill five cards, then return a creature card milled this way to your hand. (Then exile this card. You may cast the artifact later from exile.)
+</RULES>
+<ARTIST>David Gaillet</ARTIST>

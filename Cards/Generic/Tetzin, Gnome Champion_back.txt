@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>The Golden-Gear Colossus</TITLE>
+<TYPE>Legendary Artifact Creature — Gnome</TYPE>
+<SETCODE>LCC R</SETCODE>
+<PT>6/6</PT>
+<RULES>
+Vigilance, trample
+Whenever The Golden-Gear Colossus enters or attacks, transform up to one other target double-faced artifact you control. Create two 1/1 colorless Gnome artifact creature tokens.
+</RULES>
+<ARTIST>Kekai Kotaki</ARTIST>

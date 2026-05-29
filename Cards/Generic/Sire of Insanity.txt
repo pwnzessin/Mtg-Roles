@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Sire of Insanity</TITLE>
+<MANA>{4}{B}{R}</MANA>
+<TYPE>Creature — Demon</TYPE>
+<SETCODE>DGM R</SETCODE>
+<PT>6/4</PT>
+<RULES>
+At the beginning of each end step, each player discards their hand.
+</RULES>
+<ARTIST>Peter Mohrbacher</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>G</COLOR>
+<TITLE>Crush of Wurms</TITLE>
+<MANA>{6}{G}{G}{G}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>JUD R</SETCODE>
+<RULES>
+Create three 6/6 green Wurm creature tokens.
+Flashback {9}{g}{g}{g} (You may cast this card from your graveyard for its flashback cost. Then exile it.)
+</RULES>
+<ARTIST>Christopher Moeller</ARTIST>

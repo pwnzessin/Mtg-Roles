@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Overgrown Tomb</TITLE>
+<TYPE>Land — Swamp Forest</TYPE>
+<SETCODE>ECL R</SETCODE>
+<RULES>
+({t}: Add {b} or {g}.)
+As this land enters, you may pay 2 life. If you don't, it enters tapped.
+</RULES>
+<ARTIST>Adam Paquette</ARTIST>

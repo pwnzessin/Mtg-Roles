@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Bountiful Promenade</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>CLB R</SETCODE>
+<RULES>
+This land enters tapped unless you have two or more opponents.
+{t}: Add {g} or {w}.
+</RULES>
+<ARTIST>Alayna Danner</ARTIST>

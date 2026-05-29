@@ -1,0 +1,12 @@
+<COLOR>B</COLOR>
+<TITLE>Sangromancer</TITLE>
+<MANA>{2}{B}{B}</MANA>
+<TYPE>Creature — Vampire Shaman</TYPE>
+<SETCODE>C21 R</SETCODE>
+<PT>3/3</PT>
+<RULES>
+Flying
+Whenever a creature an opponent controls dies, you may gain 3 life.
+Whenever an opponent discards a card, you may gain 3 life.
+</RULES>
+<ARTIST>Igor Kieryluk</ARTIST>

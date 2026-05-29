@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Drag to the Roots</TITLE>
+<MANA>{2}{B}{G}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>DSK U</SETCODE>
+<RULES>
+Delirium — This spell costs {2} less to cast as long as there are four or more card types among cards in your graveyard.
+Destroy target nonland permanent.
+</RULES>
+<ARTIST>Deruchenko Alexander</ARTIST>

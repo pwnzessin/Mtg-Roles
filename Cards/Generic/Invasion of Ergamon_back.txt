@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Truga Cliffcharger</TITLE>
+<TYPE>Creature — Rhino</TYPE>
+<SETCODE>MOM U</SETCODE>
+<PT>3/4</PT>
+<RULES>
+Trample
+When this creature enters, you may discard a card. If you do, search your library for a land or battle card, reveal it, put it into your hand, then shuffle.
+</RULES>
+<ARTIST>Manuel Castañón</ARTIST>

@@ -1,0 +1,12 @@
+<LAYOUT>battle</LAYOUT>
+<COLOR>G</COLOR>
+<TITLE>Invasion of Zendikar</TITLE>
+<MANA>{3}{G}</MANA>
+<TYPE>Battle — Siege</TYPE>
+<SETCODE>MOM U</SETCODE>
+<DEFENSE>3</DEFENSE>
+<RULES>
+(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)
+When this Siege enters, search your library for up to two basic land cards, put them onto the battlefield tapped, then shuffle.
+</RULES>
+<ARTIST>Diego Gisbert</ARTIST>

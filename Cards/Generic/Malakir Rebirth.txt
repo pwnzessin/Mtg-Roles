@@ -1,0 +1,9 @@
+<COLOR>B</COLOR>
+<TITLE>Malakir Rebirth</TITLE>
+<MANA>{B}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>ZNR U</SETCODE>
+<RULES>
+Choose target creature. You lose 2 life. Until end of turn, that creature gains "When this creature dies, return it to the battlefield tapped under its owner's control."
+</RULES>
+<ARTIST>Marta Nael</ARTIST>

@@ -1,0 +1,11 @@
+<COLOR>B</COLOR>
+<TITLE>Master of the Feast</TITLE>
+<MANA>{1}{B}{B}</MANA>
+<TYPE>Enchantment Creature — Demon</TYPE>
+<SETCODE>JOU R</SETCODE>
+<PT>5/5</PT>
+<RULES>
+Flying
+At the beginning of your upkeep, each opponent draws a card.
+</RULES>
+<ARTIST>Chris Rahn</ARTIST>

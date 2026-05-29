@@ -1,0 +1,11 @@
+<COLOR>G</COLOR>
+<TITLE>Birds of Paradise</TITLE>
+<MANA>{G}</MANA>
+<TYPE>Creature — Bird</TYPE>
+<SETCODE>RVR R</SETCODE>
+<PT>0/1</PT>
+<RULES>
+Flying
+{t}: Add one mana of any color.
+</RULES>
+<ARTIST>Marcelo Vignali</ARTIST>

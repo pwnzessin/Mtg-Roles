@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Sol Ring</TITLE>
+<MANA>{1}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+{t}: Add {c}{c}.
+</RULES>
+<ARTIST>Jorge Jacinto</ARTIST>

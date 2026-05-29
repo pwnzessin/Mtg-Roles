@@ -1,0 +1,10 @@
+<COLOR>A</COLOR>
+<TITLE>Chimeric Egg</TITLE>
+<MANA>{3}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>DST U</SETCODE>
+<RULES>
+Whenever an opponent casts a nonartifact spell, put a charge counter on this artifact.
+Remove three charge counters from this artifact: This artifact becomes a 6/6 Construct artifact creature with trample until end of turn.
+</RULES>
+<ARTIST>Michael Sutfin</ARTIST>

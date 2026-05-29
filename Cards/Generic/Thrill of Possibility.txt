@@ -1,0 +1,10 @@
+<COLOR>R</COLOR>
+<TITLE>Thrill of Possibility</TITLE>
+<MANA>{1}{R}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>FDN C</SETCODE>
+<RULES>
+As an additional cost to cast this spell, discard a card.
+Draw two cards.
+</RULES>
+<ARTIST>Steve Argyle</ARTIST>

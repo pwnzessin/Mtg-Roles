@@ -1,0 +1,9 @@
+<COLOR>L</COLOR>
+<TITLE>Mikokoro, Center of the Sea</TITLE>
+<TYPE>Legendary Land</TYPE>
+<SETCODE>DMC R</SETCODE>
+<RULES>
+{t}: Add {c}.
+{2}, {t}: Each player draws a card.
+</RULES>
+<ARTIST>John Avon</ARTIST>

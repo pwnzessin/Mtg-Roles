@@ -1,0 +1,9 @@
+<COLOR>B</COLOR>
+<TITLE>Torment of Hailfire</TITLE>
+<MANA>{X}{B}{B}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>HOU R</SETCODE>
+<RULES>
+Repeat the following process X times. Each opponent loses 3 life unless that player sacrifices a nonland permanent of their choice or discards a card.
+</RULES>
+<ARTIST>Grzegorz Rutkowski</ARTIST>

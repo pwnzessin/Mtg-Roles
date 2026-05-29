@@ -309,8 +309,8 @@ function buildCardObject(baseUrl, c, layouts = {}) {
     };
   }
   // ── Full-art Land ──────────────────────────────────────────────────────────
-  // Activated when layouts.basicLand === "fullArt" and the card's type line includes "Basic".
-  if (layouts.basicLand === "fullArt" && /\bbasic\b/i.test(c.typeLine || "")) {
+  // Activated when layouts.basicLand === "fullArt" (case-insensitive) and the card's type line includes "Basic".
+  if ((layouts.basicLand || "").toLowerCase() === "fullart" && /\bbasic\b/i.test(c.typeLine || "")) {
     const FA_LETTER = { W: "lw", U: "lu", B: "lb", R: "lr", G: "lg", M: "lm", L: "l", C: "l", A: "a", V: "v" };
     const ck = c.color in FA_LETTER ? c.color : "L";
     return {
@@ -328,12 +328,12 @@ function buildCardObject(baseUrl, c, layouts = {}) {
           name:    "Title",
           text:    `{bold}${c.title || ""}{/bold}`,
           x:       0.0854, y: 0.0522, width: 0.8292, height: 0.0543,
-          oneLine: true, font: "belerenb", size: 0.0381, color: "white",
+          oneLine: true, font: "belerenb", size: 0.0381, color: "black",
         },
         type: {
           name:    "Type",
           text:    `{bold}${c.typeLine || ""}{/bold}`,
-          x:       0.0854, y: 0.872, width: 0.8292, height: 0.0543,
+          x:       0.0854, y: 0.5664, width: 0.8292, height: 0.0543,
           oneLine: true, font: "belerenb", size: 0.0324, color: "white",
         },
       },

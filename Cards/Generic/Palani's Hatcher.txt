@@ -1,0 +1,12 @@
+<COLOR>M</COLOR>
+<TITLE>Palani's Hatcher</TITLE>
+<MANA>{3}{R}{G}</MANA>
+<TYPE>Creature — Dinosaur</TYPE>
+<SETCODE>LCI R</SETCODE>
+<PT>5/3</PT>
+<RULES>
+Other Dinosaurs you control have haste.
+When this creature enters, create two 0/1 green Dinosaur Egg creature tokens.
+At the beginning of combat on your turn, if you control one or more Eggs, sacrifice an Egg, then create a 3/3 green Dinosaur creature token.
+</RULES>
+<ARTIST>Aaron Miller</ARTIST>

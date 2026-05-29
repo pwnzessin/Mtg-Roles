@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Spiteful Visions</TITLE>
+<MANA>{2}{B/R}{B/R}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>DSC R</SETCODE>
+<RULES>
+At the beginning of each player's draw step, that player draws an additional card.
+Whenever a player draws a card, this enchantment deals 1 damage to that player.
+</RULES>
+<ARTIST>Brandon Kitkouski</ARTIST>

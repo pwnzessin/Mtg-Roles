@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Arcane Signet</TITLE>
+<MANA>{2}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+{t}: Add one mana of any color in your commander's color identity.
+</RULES>
+<ARTIST>Joe Slucher</ARTIST>

@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Ashnod's Altar</TITLE>
+<MANA>{3}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>CMM U</SETCODE>
+<RULES>
+Sacrifice a creature: Add {c}{c}.
+</RULES>
+<ARTIST>Greg Staples</ARTIST>

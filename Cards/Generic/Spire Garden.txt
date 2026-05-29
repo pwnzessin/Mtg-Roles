@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Spire Garden</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>TMC R</SETCODE>
+<RULES>
+This land enters tapped unless you have two or more opponents.
+{t}: Add {r} or {g}.
+</RULES>
+<ARTIST>Salvatorre Zee Yazzie</ARTIST>

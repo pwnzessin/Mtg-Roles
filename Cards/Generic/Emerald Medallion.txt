@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Emerald Medallion</TITLE>
+<MANA>{2}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>MH3 R</SETCODE>
+<RULES>
+Green spells you cast cost {1} less to cast.
+</RULES>
+<ARTIST>Daniel Ljunggren</ARTIST>

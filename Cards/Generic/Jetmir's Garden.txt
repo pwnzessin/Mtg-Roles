@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Jetmir's Garden</TITLE>
+<TYPE>Land — Mountain Forest Plains</TYPE>
+<SETCODE>SNC R</SETCODE>
+<RULES>
+({t}: Add {r}, {g}, or {w}.)
+This land enters tapped.
+Cycling {3} ({3}, Discard this card: Draw a card.)
+</RULES>
+<ARTIST>Kasia 'Kafis' Zielińska</ARTIST>

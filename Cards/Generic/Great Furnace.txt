@@ -1,0 +1,8 @@
+<COLOR>R</COLOR>
+<TITLE>Great Furnace</TITLE>
+<TYPE>Artifact Land</TYPE>
+<SETCODE>EOC C</SETCODE>
+<RULES>
+{t}: Add {r}.
+</RULES>
+<ARTIST>Rob Alexander</ARTIST>

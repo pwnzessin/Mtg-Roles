@@ -1,0 +1,9 @@
+<COLOR>R</COLOR>
+<TITLE>Tibalt's Trickery</TITLE>
+<MANA>{1}{R}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>KHM R</SETCODE>
+<RULES>
+Counter target spell. Choose 1, 2, or 3 at random. Its controller mills that many cards, then exiles cards from the top of their library until they exile a nonland card with a different name than that spell. They may cast that card without paying its mana cost. Then they put the exiled cards on the bottom of their library in a random order.
+</RULES>
+<ARTIST>Anna Podedworna</ARTIST>

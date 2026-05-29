@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Rhythm of the Wild</TITLE>
+<MANA>{1}{R}{G}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>RVR U</SETCODE>
+<RULES>
+Creature spells you control can't be countered.
+Nontoken creatures you control have riot. (They enter with your choice of a +1/+1 counter or haste.)
+</RULES>
+<ARTIST>Maxime Minard</ARTIST>

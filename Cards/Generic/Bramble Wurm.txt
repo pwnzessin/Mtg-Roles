@@ -1,0 +1,12 @@
+<COLOR>G</COLOR>
+<TITLE>Bramble Wurm</TITLE>
+<MANA>{6}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>INR C</SETCODE>
+<PT>7/6</PT>
+<RULES>
+Reach, trample
+When this creature enters, you gain 5 life.
+{2}{g}, Exile this card from your graveyard: You gain 5 life.
+</RULES>
+<ARTIST>Lars Grant-West</ARTIST>

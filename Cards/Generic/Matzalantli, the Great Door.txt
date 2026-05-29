@@ -1,0 +1,10 @@
+<COLOR>A</COLOR>
+<TITLE>Matzalantli, the Great Door</TITLE>
+<MANA>{3}</MANA>
+<TYPE>Legendary Artifact</TYPE>
+<SETCODE>LCI R</SETCODE>
+<RULES>
+{t}: Draw a card, then discard a card.
+{4}, {t}: Transform Matzalantli. Activate only if there are four or more permanent types among cards in your graveyard. (Artifact, battle, creature, enchantment, land, and planeswalker are permanent types.)
+</RULES>
+<ARTIST>Piotr Dura</ARTIST>

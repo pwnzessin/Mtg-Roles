@@ -1,0 +1,11 @@
+<COLOR>W</COLOR>
+<TITLE>War of the Last Alliance</TITLE>
+<MANA>{3}{W}</MANA>
+<TYPE>Enchantment — Saga</TYPE>
+<SETCODE>LTR R</SETCODE>
+<RULES>
+(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
+I, II — Search your library for a legendary creature card, reveal it, put it into your hand, then shuffle.
+III — Creatures you control gain double strike until end of turn. The Ring tempts you.
+</RULES>
+<ARTIST>Alexander Forssberg</ARTIST>

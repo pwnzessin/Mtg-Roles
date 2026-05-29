@@ -1,0 +1,9 @@
+<COLOR>G</COLOR>
+<TITLE>On the Trail</TITLE>
+<MANA>{1}{G}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>MKC R</SETCODE>
+<RULES>
+Whenever you draw your second card each turn, you may put a land card from your hand onto the battlefield tapped.
+</RULES>
+<ARTIST>Erikas Perl</ARTIST>

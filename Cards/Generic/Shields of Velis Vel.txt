@@ -1,0 +1,10 @@
+<COLOR>W</COLOR>
+<TITLE>Shields of Velis Vel</TITLE>
+<MANA>{W}</MANA>
+<TYPE>Kindred Instant — Shapeshifter</TYPE>
+<SETCODE>LRW C</SETCODE>
+<RULES>
+Changeling (This card is every creature type.)
+Creatures target player controls get +0/+1 and gain all creature types until end of turn.
+</RULES>
+<ARTIST>Ralph Horsley</ARTIST>

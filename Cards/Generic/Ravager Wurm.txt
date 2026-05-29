@@ -1,0 +1,13 @@
+<COLOR>M</COLOR>
+<TITLE>Ravager Wurm</TITLE>
+<MANA>{3}{R}{G}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>RNA M</SETCODE>
+<PT>4/5</PT>
+<RULES>
+Riot (This creature enters with your choice of a +1/+1 counter or haste.)
+When this creature enters, choose up to one —
+• {indent}This creature fights target creature you don't control.
+• {indent}Destroy target land with an activated ability that isn't a mana ability.
+</RULES>
+<ARTIST>Svetlin Velinov</ARTIST>

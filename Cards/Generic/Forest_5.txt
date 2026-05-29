@@ -1,0 +1,8 @@
+<COLOR>G</COLOR>
+<TITLE>Forest</TITLE>
+<TYPE>Basic Land — Forest</TYPE>
+<SETCODE>HOB C</SETCODE>
+<RULES>
+({t}: Add {g}.)
+</RULES>
+<ARTIST>WFlemming Illustration</ARTIST>

@@ -1,0 +1,18 @@
+<LAYOUT>room</LAYOUT>
+<COLOR>B</COLOR>
+<SETCODE>DSK U</SETCODE>
+<ARTIST>Martin de Diego Sádaba</ARTIST>
+
+<FACE1_TITLE>Defiled Crypt</FACE1_TITLE>
+<FACE1_MANA>{3}{B}</FACE1_MANA>
+<FACE1_RULES>
+Whenever one or more cards leave your graveyard, create a 2/2 black Horror enchantment creature token. This ability triggers only once each turn.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)
+</FACE1_RULES>
+
+<FACE2_TITLE>Cadaver Lab</FACE2_TITLE>
+<FACE2_MANA>{B}</FACE2_MANA>
+<FACE2_RULES>
+When you unlock this door, return target creature card from your graveyard to your hand.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)
+</FACE2_RULES>

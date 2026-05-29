@@ -1,0 +1,11 @@
+<COLOR>M</COLOR>
+<TITLE>Breena, the Demagogue</TITLE>
+<MANA>{1}{W}{B}</MANA>
+<TYPE>Legendary Creature — Bird Warlock</TYPE>
+<SETCODE>SOC M</SETCODE>
+<PT>1/3</PT>
+<RULES>
+Flying
+Whenever a player attacks one of your opponents, if that opponent has more life than another of your opponents, that attacking player draws a card and you put two +1/+1 counters on a creature you control.
+</RULES>
+<ARTIST>Simon Dominic</ARTIST>

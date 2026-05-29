@@ -1,0 +1,11 @@
+<COLOR>R</COLOR>
+<TITLE>Jeska's Will</TITLE>
+<MANA>{2}{R}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>MKC R</SETCODE>
+<RULES>
+Choose one. If you control a commander as you cast this spell, you may choose both instead.
+• {indent}Add {r} for each card in target opponent's hand.
+• {indent}Exile the top three cards of your library. You may play them this turn.
+</RULES>
+<ARTIST>Izzy</ARTIST>

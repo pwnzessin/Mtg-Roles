@@ -1,0 +1,9 @@
+<COLOR>W</COLOR>
+<TITLE>Path to Exile</TITLE>
+<MANA>{W}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+Exile target creature. Its controller may search their library for a basic land card, put that card onto the battlefield tapped, then shuffle.
+</RULES>
+<ARTIST>Todd Lockwood</ARTIST>

@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Holy Frazzle-Cannon</TITLE>
+<TYPE>Artifact — Equipment</TYPE>
+<SETCODE>MOM U</SETCODE>
+<RULES>
+Whenever equipped creature attacks, put a +1/+1 counter on that creature and each other creature you control that shares a creature type with it.
+Equip {1}
+</RULES>
+<ARTIST>Diego Gisbert</ARTIST>

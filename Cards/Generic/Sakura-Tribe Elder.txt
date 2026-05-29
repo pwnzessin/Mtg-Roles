@@ -1,0 +1,10 @@
+<COLOR>G</COLOR>
+<TITLE>Sakura-Tribe Elder</TITLE>
+<MANA>{1}{G}</MANA>
+<TYPE>Creature — Snake Shaman</TYPE>
+<SETCODE>SOC C</SETCODE>
+<PT>1/1</PT>
+<RULES>
+Sacrifice this creature: Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.
+</RULES>
+<ARTIST>Anastasia Ovchinnikova</ARTIST>

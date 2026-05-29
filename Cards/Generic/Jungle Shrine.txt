@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Jungle Shrine</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>ECC U</SETCODE>
+<RULES>
+This land enters tapped.
+{t}: Add {r}, {g}, or {w}.
+</RULES>
+<ARTIST>Wayne Reynolds</ARTIST>

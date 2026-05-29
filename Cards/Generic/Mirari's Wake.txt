@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Mirari's Wake</TITLE>
+<MANA>{3}{G}{W}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>CMM M</SETCODE>
+<RULES>
+Creatures you control get +1/+1.
+Whenever you tap a land for mana, add one mana of any type that land produced.
+</RULES>
+<ARTIST>Volkan Baǵa</ARTIST>

@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Temple Bell</TITLE>
+<MANA>{3}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>C16 R</SETCODE>
+<RULES>
+{t}: Each player draws a card.
+</RULES>
+<ARTIST>Mark Tedin</ARTIST>

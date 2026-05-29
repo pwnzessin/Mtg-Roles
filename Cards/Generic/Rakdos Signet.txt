@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Rakdos Signet</TITLE>
+<MANA>{2}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>DSC U</SETCODE>
+<RULES>
+{1}, {t}: Add {b}{r}.
+</RULES>
+<ARTIST>Martina Pilcerova</ARTIST>

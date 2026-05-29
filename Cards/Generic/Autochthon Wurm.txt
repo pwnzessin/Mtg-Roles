@@ -1,0 +1,11 @@
+<COLOR>M</COLOR>
+<TITLE>Autochthon Wurm</TITLE>
+<MANA>{10}{G}{G}{G}{W}{W}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>RAV R</SETCODE>
+<PT>9/14</PT>
+<RULES>
+Convoke (Your creatures can help cast this spell. Each creature you tap while casting this spell pays for {1} or one mana of that creature's color.)
+Trample
+</RULES>
+<ARTIST>Michael Phillippi</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Cabal Ritual</TITLE>
+<MANA>{1}{B}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>VMA U</SETCODE>
+<RULES>
+Add {b}{b}{b}.
+Threshold — Add {b}{b}{b}{b}{b} instead if there are seven or more cards in your graveyard.
+</RULES>
+<ARTIST>Greg Hildebrandt</ARTIST>

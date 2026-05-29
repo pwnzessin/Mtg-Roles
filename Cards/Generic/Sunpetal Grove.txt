@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Sunpetal Grove</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>TDC R</SETCODE>
+<RULES>
+This land enters tapped unless you control a Forest or a Plains.
+{t}: Add {g} or {w}.
+</RULES>
+<ARTIST>Dimitar Marinski</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>A</COLOR>
+<TITLE>Lightning Greaves</TITLE>
+<MANA>{2}</MANA>
+<TYPE>Artifact — Equipment</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+Equipped creature has haste and shroud. (It can't be the target of spells or abilities.)
+Equip {0}
+</RULES>
+<ARTIST>Adrián Rodríguez Pérez</ARTIST>

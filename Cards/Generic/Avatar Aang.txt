@@ -1,0 +1,11 @@
+<COLOR>M</COLOR>
+<TITLE>Avatar Aang</TITLE>
+<MANA>{R}{G}{W}{U}</MANA>
+<TYPE>Legendary Creature — Human Avatar Ally</TYPE>
+<SETCODE>TLA M</SETCODE>
+<PT>4/4</PT>
+<RULES>
+Flying, firebending 2
+Whenever you waterbend, earthbend, firebend, or airbend, draw a card. Then if you've done all four this turn, transform Avatar Aang.
+</RULES>
+<ARTIST>Fahmi Fauzi</ARTIST>

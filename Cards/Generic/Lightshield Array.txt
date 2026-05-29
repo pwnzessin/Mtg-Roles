@@ -1,0 +1,9 @@
+<COLOR>W</COLOR>
+<TITLE>Lightshield Array</TITLE>
+<TYPE>Enchantment</TYPE>
+<SETCODE>MOM R</SETCODE>
+<RULES>
+At the beginning of your end step, put a +1/+1 counter on each creature that attacked this turn.
+Sacrifice this enchantment: Creatures you control gain hexproof and indestructible until end of turn.
+</RULES>
+<ARTIST>Andreas Zafiratos</ARTIST>

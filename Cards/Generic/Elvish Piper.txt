@@ -1,0 +1,10 @@
+<COLOR>G</COLOR>
+<TITLE>Elvish Piper</TITLE>
+<MANA>{3}{G}</MANA>
+<TYPE>Creature — Elf Shaman</TYPE>
+<SETCODE>A25 R</SETCODE>
+<PT>1/1</PT>
+<RULES>
+{g}, {t}: You may put a creature card from your hand onto the battlefield.
+</RULES>
+<ARTIST>Rebecca Guay</ARTIST>

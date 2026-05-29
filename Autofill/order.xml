@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<order>
+    <details>
+        <quantity>6</quantity>
+        <stock>(S30) Standard Smooth</stock>
+        <foil>false</foil>
+    </details>
+    <fronts>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Anim Pakal, Thousandth Moon.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>0</slots>
+            <name>Anim Pakal, Thousandth Moon.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Breena, the Demagogue.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>1</slots>
+            <name>Breena, the Demagogue.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Giada, Font of Hope.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>2</slots>
+            <name>Giada, Font of Hope.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Gobakhan.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>3</slots>
+            <name>Invasion of Gobakhan.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of New Capenna.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>4</slots>
+            <name>Invasion of New Capenna.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Xerex.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>5</slots>
+            <name>Invasion of Xerex.png</name>
+        </card>
+    </fronts>
+    <backs>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Gobakhan_back.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>3</slots>
+            <name>Invasion of Gobakhan_back.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of New Capenna_back.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>4</slots>
+            <name>Invasion of New Capenna_back.png</name>
+        </card>
+        <card>
+            <id>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Xerex_back.png</id>
+            <sourceType>Local File</sourceType>
+            <slots>5</slots>
+            <name>Invasion of Xerex_back.png</name>
+        </card>
+    </backs>
+    <cardback>C:\Users\hecke\Desktop\Mtg-Roles\Cards\Cardbacks\Back WUBRG.png</cardback>
+</order>

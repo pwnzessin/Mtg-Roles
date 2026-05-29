@@ -1,0 +1,12 @@
+<COLOR>B</COLOR>
+<TITLE>Dauthi Voidwalker</TITLE>
+<MANA>{B}{B}</MANA>
+<TYPE>Creature — Dauthi Rogue</TYPE>
+<SETCODE>TDC R</SETCODE>
+<PT>3/2</PT>
+<RULES>
+Shadow (This creature can block or be blocked by only creatures with shadow.)
+If a card would be put into an opponent's graveyard from anywhere, instead exile it with a void counter on it.
+{t}, Sacrifice this creature: Choose an exiled card an opponent owns with a void counter on it. You may play it this turn without paying its mana cost.
+</RULES>
+<ARTIST>Sidharth Chaturvedi</ARTIST>

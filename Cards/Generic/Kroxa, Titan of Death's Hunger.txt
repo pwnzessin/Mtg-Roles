@@ -1,0 +1,12 @@
+<COLOR>M</COLOR>
+<TITLE>Kroxa, Titan of Death's Hunger</TITLE>
+<MANA>{B}{R}</MANA>
+<TYPE>Legendary Creature — Elder Giant</TYPE>
+<SETCODE>THB M</SETCODE>
+<PT>6/6</PT>
+<RULES>
+When Kroxa enters, sacrifice it unless it escaped.
+Whenever Kroxa enters or attacks, each opponent discards a card, then each opponent who didn't discard a nonland card this way loses 3 life.
+Escape—{b}{b}{r}{r}, Exile five other cards from your graveyard. (You may cast this card from your graveyard for its escape cost.)
+</RULES>
+<ARTIST>Vincent Proce</ARTIST>

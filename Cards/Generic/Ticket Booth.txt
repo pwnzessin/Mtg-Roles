@@ -1,0 +1,18 @@
+<LAYOUT>room</LAYOUT>
+<COLOR>R</COLOR>
+<SETCODE>DSK C</SETCODE>
+<ARTIST>Marco Gorlei</ARTIST>
+
+<FACE1_TITLE>Ticket Booth</FACE1_TITLE>
+<FACE1_MANA>{2}{R}</FACE1_MANA>
+<FACE1_RULES>
+When you unlock this door, manifest dread.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)
+</FACE1_RULES>
+
+<FACE2_TITLE>Tunnel of Hate</FACE2_TITLE>
+<FACE2_MANA>{4}{R}{R}</FACE2_MANA>
+<FACE2_RULES>
+Whenever you attack, target attacking creature gains double strike until end of turn.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)
+</FACE2_RULES>

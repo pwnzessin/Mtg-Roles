@@ -1,0 +1,8 @@
+<COLOR>M</COLOR>
+<TITLE>Command Tower</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>SOC C</SETCODE>
+<RULES>
+{t}: Add one mana of any color in your commander's color identity.
+</RULES>
+<ARTIST>Constantin Marin</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Gnat Miser</TITLE>
+<MANA>{B}</MANA>
+<TYPE>Creature — Rat Shaman</TYPE>
+<SETCODE>SOK C</SETCODE>
+<PT>1/1</PT>
+<RULES>
+Each opponent's maximum hand size is reduced by one.
+</RULES>
+<ARTIST>Thomas M. Baxa</ARTIST>

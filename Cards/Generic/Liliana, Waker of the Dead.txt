@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Liliana, Waker of the Dead</TITLE>
+<MANA>{2}{B}{B}</MANA>
+<TYPE>Legendary Planeswalker — Liliana</TYPE>
+<SETCODE>M21 M</SETCODE>
+<LOYALTY>4</LOYALTY>
+<ABILITY0>+1 | Each player discards a card. Each opponent who can't loses 3 life.</ABILITY0>
+<ABILITY1>-3 | Target creature gets -X/-X until end of turn, where X is the number of cards in your graveyard.</ABILITY1>
+<ABILITY2>-7 | You get an emblem with "At the beginning of combat on your turn, put target creature card from a graveyard onto the battlefield under your control. It gains haste."</ABILITY2>
+<ARTIST>Anna Steinbauer</ARTIST>

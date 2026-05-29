@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Blood Crypt</TITLE>
+<TYPE>Land — Swamp Mountain</TYPE>
+<SETCODE>ECL R</SETCODE>
+<RULES>
+({t}: Add {b} or {r}.)
+As this land enters, you may pay 2 life. If you don't, it enters tapped.
+</RULES>
+<ARTIST>Adam Paquette</ARTIST>

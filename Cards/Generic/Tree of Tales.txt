@@ -1,0 +1,8 @@
+<COLOR>G</COLOR>
+<TITLE>Tree of Tales</TITLE>
+<TYPE>Artifact Land</TYPE>
+<SETCODE>DSC C</SETCODE>
+<RULES>
+{t}: Add {g}.
+</RULES>
+<ARTIST>John Avon</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>G</COLOR>
+<TITLE>Peerless Recycling</TITLE>
+<MANA>{1}{G}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>BLB U</SETCODE>
+<RULES>
+Gift a card (You may promise an opponent a gift as you cast this spell. If you do, they draw a card before its other effects.)
+Return target permanent card from your graveyard to your hand. If the gift was promised, instead return two target permanent cards from your graveyard to your hand.
+</RULES>
+<ARTIST>Jeff Miracola</ARTIST>

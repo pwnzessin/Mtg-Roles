@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Temple Garden</TITLE>
+<TYPE>Land — Forest Plains</TYPE>
+<SETCODE>ECL R</SETCODE>
+<RULES>
+({t}: Add {g} or {w}.)
+As this land enters, you may pay 2 life. If you don't, it enters tapped.
+</RULES>
+<ARTIST>Adam Paquette</ARTIST>

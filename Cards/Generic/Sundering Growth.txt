@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Sundering Growth</TITLE>
+<MANA>{G/W}{G/W}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>C19 C</SETCODE>
+<RULES>
+Destroy target artifact or enchantment, then populate. (Create a token that's a copy of a creature token you control.)
+</RULES>
+<ARTIST>David Palumbo</ARTIST>

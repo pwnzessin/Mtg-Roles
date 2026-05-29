@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Seizan, Perverter of Truth</TITLE>
+<MANA>{3}{B}{B}</MANA>
+<TYPE>Legendary Creature — Demon Spirit</TYPE>
+<SETCODE>CHK R</SETCODE>
+<PT>6/5</PT>
+<RULES>
+At the beginning of each player's upkeep, that player loses 2 life and draws two cards.
+</RULES>
+<ARTIST>Kev Walker</ARTIST>

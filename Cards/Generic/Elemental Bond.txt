@@ -1,0 +1,9 @@
+<COLOR>G</COLOR>
+<TITLE>Elemental Bond</TITLE>
+<MANA>{2}{G}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>TDC U</SETCODE>
+<RULES>
+Whenever a creature you control with power 3 or greater enters, draw a card.
+</RULES>
+<ARTIST>David Gaillet</ARTIST>

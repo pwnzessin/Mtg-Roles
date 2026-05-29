@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Monster Manual</TITLE>
+<MANA>{3}{G}</MANA>
+<TYPE>Artifact — Book</TYPE>
+<SETCODE>CLB R</SETCODE>
+<RULES>
+{1}{g}, {t}: You may put a creature card from your hand onto the battlefield.
+</RULES>
+<ARTIST>David Gaillet</ARTIST>

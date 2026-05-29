@@ -1,0 +1,10 @@
+<COLOR>A</COLOR>
+<TITLE>Patriar's Seal</TITLE>
+<MANA>{3}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>CLB U</SETCODE>
+<RULES>
+{t}: Add one mana of any color.
+{1}, {t}: Untap target legendary creature you control.
+</RULES>
+<ARTIST>Kamila Szutenberg</ARTIST>

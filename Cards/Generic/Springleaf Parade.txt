@@ -1,0 +1,10 @@
+<COLOR>G</COLOR>
+<TITLE>Springleaf Parade</TITLE>
+<MANA>{X}{G}{G}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>ECC R</SETCODE>
+<RULES>
+When this enchantment enters, create X 1/1 colorless Shapeshifter creature tokens with changeling. (They're every creature type.)
+Creature tokens you control have "{t}: Add one mana of any color."
+</RULES>
+<ARTIST>Cory Godbey</ARTIST>

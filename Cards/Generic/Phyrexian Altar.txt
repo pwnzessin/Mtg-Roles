@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Phyrexian Altar</TITLE>
+<MANA>{3}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>2X2 R</SETCODE>
+<RULES>
+Sacrifice a creature: Add one mana of any color.
+</RULES>
+<ARTIST>Yigit Koroglu</ARTIST>

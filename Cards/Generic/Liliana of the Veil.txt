@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Liliana of the Veil</TITLE>
+<MANA>{1}{B}{B}</MANA>
+<TYPE>Legendary Planeswalker — Liliana</TYPE>
+<SETCODE>INR M</SETCODE>
+<LOYALTY>3</LOYALTY>
+<ABILITY0>+1 | Each player discards a card.</ABILITY0>
+<ABILITY1>-2 | Target player sacrifices a creature.</ABILITY1>
+<ABILITY2>-6 | Separate all permanents target player controls into two piles. That player sacrifices all permanents in the pile of their choice.</ABILITY2>
+<ARTIST>Steve Argyle</ARTIST>

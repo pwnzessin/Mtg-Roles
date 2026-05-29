@@ -1,0 +1,9 @@
+<COLOR>B</COLOR>
+<TITLE>Necrogen Mists</TITLE>
+<MANA>{2}{B}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>MRD R</SETCODE>
+<RULES>
+At the beginning of each player's upkeep, that player discards a card.
+</RULES>
+<ARTIST>Alex Horley-Orlandelli</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Cunning Lethemancer</TITLE>
+<MANA>{2}{B}</MANA>
+<TYPE>Creature — Human Wizard</TYPE>
+<SETCODE>ALA R</SETCODE>
+<PT>2/2</PT>
+<RULES>
+At the beginning of your upkeep, each player discards a card.
+</RULES>
+<ARTIST>Paul Bonner</ARTIST>

@@ -1,0 +1,11 @@
+<COLOR>M</COLOR>
+<TITLE>Sarinth Greatwurm</TITLE>
+<MANA>{4}{R}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>BRO M</SETCODE>
+<PT>7/6</PT>
+<RULES>
+Trample
+Whenever a land enters, create a tapped Powerstone token. (It's an artifact with "{t}: Add {c}. This mana can't be spent to cast a nonartifact spell.")
+</RULES>
+<ARTIST>Jesper Ejsing</ARTIST>

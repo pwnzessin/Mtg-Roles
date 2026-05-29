@@ -1,0 +1,9 @@
+<COLOR>G</COLOR>
+<TITLE>Farseek</TITLE>
+<MANA>{1}{G}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>EOC C</SETCODE>
+<RULES>
+Search your library for a Plains, Island, Swamp, or Mountain card, put it onto the battlefield tapped, then shuffle.
+</RULES>
+<ARTIST>Julian Kok Joon Wen</ARTIST>

@@ -1,0 +1,9 @@
+<COLOR>B</COLOR>
+<TITLE>Reanimate</TITLE>
+<MANA>{B}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>DSC R</SETCODE>
+<RULES>
+Put target creature card from a graveyard onto the battlefield under your control. You lose life equal to that card's mana value.
+</RULES>
+<ARTIST>Johann Bodin</ARTIST>

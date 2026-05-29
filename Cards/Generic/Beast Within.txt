@@ -1,0 +1,9 @@
+<COLOR>G</COLOR>
+<TITLE>Beast Within</TITLE>
+<MANA>{2}{G}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+Destroy target permanent. Its controller creates a 3/3 green Beast creature token.
+</RULES>
+<ARTIST>Jesper Ejsing</ARTIST>

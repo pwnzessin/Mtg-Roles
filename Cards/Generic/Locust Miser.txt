@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Locust Miser</TITLE>
+<MANA>{2}{B}{B}</MANA>
+<TYPE>Creature — Rat Shaman</TYPE>
+<SETCODE>SOK U</SETCODE>
+<PT>2/2</PT>
+<RULES>
+Each opponent's maximum hand size is reduced by two.
+</RULES>
+<ARTIST>Alan Pollack</ARTIST>

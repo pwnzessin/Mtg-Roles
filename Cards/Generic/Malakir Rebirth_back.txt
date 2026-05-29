@@ -1,0 +1,9 @@
+<COLOR>B</COLOR>
+<TITLE>Malakir Mire</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>ZNR U</SETCODE>
+<RULES>
+This land enters tapped.
+{t}: Add {b}.
+</RULES>
+<ARTIST>Marta Nael</ARTIST>

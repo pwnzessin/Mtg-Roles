@@ -1,0 +1,9 @@
+<COLOR>L</COLOR>
+<TITLE>The Core</TITLE>
+<TYPE>Legendary Land</TYPE>
+<SETCODE>LCI R</SETCODE>
+<RULES>
+(Transforms from Matzalantli.)
+Fathomless descent — {t}: Add X mana of any one color, where X is the number of permanent cards in your graveyard.
+</RULES>
+<ARTIST>Piotr Dura</ARTIST>

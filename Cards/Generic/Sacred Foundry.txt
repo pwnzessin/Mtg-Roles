@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Sacred Foundry</TITLE>
+<TYPE>Land — Mountain Plains</TYPE>
+<SETCODE>EOE R</SETCODE>
+<RULES>
+({t}: Add {r} or {w}.)
+As this land enters, you may pay 2 life. If you don't, it enters tapped.
+</RULES>
+<ARTIST>Titus Lunter</ARTIST>

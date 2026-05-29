@@ -1,0 +1,11 @@
+<COLOR>B</COLOR>
+<TITLE>Tinybones, Trinket Thief</TITLE>
+<MANA>{1}{B}</MANA>
+<TYPE>Legendary Creature — Skeleton Rogue</TYPE>
+<SETCODE>JMP M</SETCODE>
+<PT>1/2</PT>
+<RULES>
+At the beginning of each end step, if an opponent discarded a card this turn, you draw a card and you lose 1 life.
+{4}{b}{b}: Each opponent with no cards in hand loses 10 life.
+</RULES>
+<ARTIST>Jason Rainville</ARTIST>

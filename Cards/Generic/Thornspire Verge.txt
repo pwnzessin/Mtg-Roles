@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Thornspire Verge</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>DSK R</SETCODE>
+<RULES>
+{t}: Add {r}.
+{t}: Add {g}. Activate only if you control a Mountain or a Forest.
+</RULES>
+<ARTIST>Kasia 'Kafis' Zielińska</ARTIST>

@@ -1,0 +1,12 @@
+<COLOR>M</COLOR>
+<TITLE>The Horus Heresy</TITLE>
+<MANA>{3}{U}{B}{R}</MANA>
+<TYPE>Enchantment — Saga</TYPE>
+<SETCODE>40K R</SETCODE>
+<RULES>
+(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
+I — For each opponent, gain control of up to one target nonlegendary creature that player controls for as long as this Saga remains on the battlefield.
+II — Draw a card for each creature you control but don't own.
+III — Starting with you, each player chooses a creature. Destroy each creature chosen this way.
+</RULES>
+<ARTIST>Roman Tishenin</ARTIST>

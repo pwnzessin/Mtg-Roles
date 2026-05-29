@@ -1,0 +1,12 @@
+<COLOR>G</COLOR>
+<TITLE>Bookwurm</TITLE>
+<MANA>{7}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>STX U</SETCODE>
+<PT>7/7</PT>
+<RULES>
+Trample
+When this creature enters, you gain 3 life and draw a card.
+{2}{g}: Put this card from your graveyard into your library third from the top.
+</RULES>
+<ARTIST>Wayne Reynolds</ARTIST>

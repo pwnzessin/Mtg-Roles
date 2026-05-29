@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Hushwood Verge</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>DSK R</SETCODE>
+<RULES>
+{t}: Add {g}.
+{t}: Add {w}. Activate only if you control a Forest or a Plains.
+</RULES>
+<ARTIST>Kasia 'Kafis' Zielińska</ARTIST>

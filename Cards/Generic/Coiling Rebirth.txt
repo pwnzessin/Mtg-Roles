@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Coiling Rebirth</TITLE>
+<MANA>{3}{B}{B}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>BLB R</SETCODE>
+<RULES>
+Gift a card (You may promise an opponent a gift as you cast this spell. If you do, they draw a card before its other effects.)
+Return target creature card from your graveyard to the battlefield. Then if the gift was promised and that creature isn't legendary, create a token that's a copy of that creature, except it's 1/1.
+</RULES>
+<ARTIST>Rovina Cai</ARTIST>

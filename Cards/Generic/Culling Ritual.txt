@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Culling Ritual</TITLE>
+<MANA>{2}{B}{G}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>SOC R</SETCODE>
+<RULES>
+Destroy each nonland permanent with mana value 2 or less. Add {b} or {g} for each permanent destroyed this way.
+</RULES>
+<ARTIST>Lorenzo Mastroianni</ARTIST>

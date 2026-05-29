@@ -1,0 +1,11 @@
+<COLOR>A</COLOR>
+<TITLE>Skullclamp</TITLE>
+<MANA>{1}</MANA>
+<TYPE>Artifact — Equipment</TYPE>
+<SETCODE>TDC U</SETCODE>
+<RULES>
+Equipped creature gets +1/-1.
+Whenever equipped creature dies, draw two cards.
+Equip {1}
+</RULES>
+<ARTIST>Igor Krstic</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Temple of the Dead</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>LCI M</SETCODE>
+<RULES>
+(Transforms from Aclazotz, Deepest Betrayal.)
+{t}: Add {b}.
+{2}{b}, {t}: Transform this land. Activate only if a player has one or fewer cards in hand and only as a sorcery.
+</RULES>
+<ARTIST>Steve Prescott</ARTIST>

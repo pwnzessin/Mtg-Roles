@@ -1,0 +1,9 @@
+<COLOR>G</COLOR>
+<TITLE>Heroic Intervention</TITLE>
+<MANA>{1}{G}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>CMM R</SETCODE>
+<RULES>
+Permanents you control gain hexproof and indestructible until end of turn.
+</RULES>
+<ARTIST>James Ryman</ARTIST>

@@ -1,0 +1,11 @@
+<COLOR>G</COLOR>
+<TITLE>Emergent Woodwurm</TITLE>
+<MANA>{6}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>MOC R</SETCODE>
+<PT>4/4</PT>
+<RULES>
+Backup 3 (When this creature enters, put three +1/+1 counters on target creature. If that's another creature, it gains the following ability until end of turn.)
+Whenever this creature attacks, look at the top X cards of your library, where X is its power. You may put a permanent card with mana value X or less from among them onto the battlefield. Put the rest on the bottom of your library in a random order.
+</RULES>
+<ARTIST>Mathias Kollros</ARTIST>

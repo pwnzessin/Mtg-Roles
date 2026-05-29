@@ -1,0 +1,11 @@
+<COLOR>M</COLOR>
+<TITLE>Armada Wurm</TITLE>
+<MANA>{2}{G}{G}{W}{W}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>RTR M</SETCODE>
+<PT>5/5</PT>
+<RULES>
+Trample
+When this creature enters, create a 5/5 green Wurm creature token with trample.
+</RULES>
+<ARTIST>Volkan Baǵa</ARTIST>

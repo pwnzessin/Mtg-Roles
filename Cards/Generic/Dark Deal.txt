@@ -1,0 +1,9 @@
+<COLOR>B</COLOR>
+<TITLE>Dark Deal</TITLE>
+<MANA>{2}{B}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>FRF U</SETCODE>
+<RULES>
+Each player discards all the cards in their hand, then draws that many cards minus one.
+</RULES>
+<ARTIST>Scott Murphy</ARTIST>

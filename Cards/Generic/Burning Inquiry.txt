@@ -1,0 +1,9 @@
+<COLOR>R</COLOR>
+<TITLE>Burning Inquiry</TITLE>
+<MANA>{R}</MANA>
+<TYPE>Sorcery</TYPE>
+<SETCODE>M10 C</SETCODE>
+<RULES>
+Each player draws three cards, then discards three cards at random.
+</RULES>
+<ARTIST>Zoltan Boros & Gabor Szikszai</ARTIST>

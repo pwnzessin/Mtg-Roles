@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Angrath, the Flame-Chained</TITLE>
+<MANA>{3}{B}{R}</MANA>
+<TYPE>Legendary Planeswalker — Angrath</TYPE>
+<SETCODE>RIX M</SETCODE>
+<LOYALTY>4</LOYALTY>
+<ABILITY0>+1 | Each opponent discards a card and loses 2 life.</ABILITY0>
+<ABILITY1>-3 | Gain control of target creature until end of turn. Untap it. It gains haste until end of turn. Sacrifice it at the beginning of the next end step if it has mana value 3 or less.</ABILITY1>
+<ABILITY2>-8 | Each opponent loses life equal to the number of cards in their graveyard.</ABILITY2>
+<ARTIST>Raymond Swanland</ARTIST>

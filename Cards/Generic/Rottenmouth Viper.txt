@@ -1,0 +1,11 @@
+<COLOR>B</COLOR>
+<TITLE>Rottenmouth Viper</TITLE>
+<MANA>{5}{B}</MANA>
+<TYPE>Creature — Elemental Snake</TYPE>
+<SETCODE>BLB M</SETCODE>
+<PT>6/6</PT>
+<RULES>
+As an additional cost to cast this spell, you may sacrifice any number of nonland permanents. This spell costs {1} less to cast for each permanent sacrificed this way.
+Whenever this creature enters or attacks, put a blight counter on it. Then for each blight counter on it, each opponent loses 4 life unless that player sacrifices a nonland permanent of their choice or discards a card.
+</RULES>
+<ARTIST>Andrea Piparo</ARTIST>

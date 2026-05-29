@@ -1,0 +1,14 @@
+<COLOR>B</COLOR>
+<TITLE>Rankle, Master of Pranks</TITLE>
+<MANA>{2}{B}{B}</MANA>
+<TYPE>Legendary Creature — Faerie Rogue</TYPE>
+<SETCODE>OTC R</SETCODE>
+<PT>3/3</PT>
+<RULES>
+Flying, haste
+Whenever Rankle deals combat damage to a player, choose any number —
+• {indent}Each player discards a card.
+• {indent}Each player loses 1 life and draws a card.
+• {indent}Each player sacrifices a creature of their choice.
+</RULES>
+<ARTIST>Dmitry Burmak</ARTIST>

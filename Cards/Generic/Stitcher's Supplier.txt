@@ -1,0 +1,10 @@
+<COLOR>B</COLOR>
+<TITLE>Stitcher's Supplier</TITLE>
+<MANA>{B}</MANA>
+<TYPE>Creature — Zombie</TYPE>
+<SETCODE>TDC U</SETCODE>
+<PT>1/1</PT>
+<RULES>
+When this creature enters or dies, mill three cards. (Put the top three cards of your library into your graveyard.)
+</RULES>
+<ARTIST>Chris Seaman</ARTIST>

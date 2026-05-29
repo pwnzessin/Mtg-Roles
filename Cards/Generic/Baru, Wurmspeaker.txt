@@ -1,0 +1,11 @@
+<COLOR>G</COLOR>
+<TITLE>Baru, Wurmspeaker</TITLE>
+<MANA>{2}{G}{G}</MANA>
+<TYPE>Legendary Creature — Human Druid</TYPE>
+<SETCODE>DMC R</SETCODE>
+<PT>3/3</PT>
+<RULES>
+Wurms you control get +2/+2 and have trample.
+{7}{g}, {t}: Create a 4/4 green Wurm creature token. This ability costs {x} less to activate, where X is the greatest power among Wurms you control.
+</RULES>
+<ARTIST>Andrew Mar</ARTIST>

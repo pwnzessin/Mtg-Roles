@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Font of Mythos</TITLE>
+<MANA>{4}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>CON R</SETCODE>
+<RULES>
+At the beginning of each player's draw step, that player draws two additional cards.
+</RULES>
+<ARTIST>Dave Allsop</ARTIST>

@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Vertex Paladin</TITLE>
+<TYPE>Creature — Angel Knight</TYPE>
+<SETCODE>MOM U</SETCODE>
+<PT>*/*</PT>
+<RULES>
+Flying
+Vertex Paladin's power and toughness are each equal to the number of creatures you control.
+</RULES>
+<ARTIST>Fajareka Setiawan</ARTIST>

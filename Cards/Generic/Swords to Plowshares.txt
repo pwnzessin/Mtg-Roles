@@ -1,0 +1,9 @@
+<COLOR>W</COLOR>
+<TITLE>Swords to Plowshares</TITLE>
+<MANA>{W}</MANA>
+<TYPE>Instant</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+Exile target creature. Its controller gains life equal to its power.
+</RULES>
+<ARTIST>Jesper Ejsing</ARTIST>

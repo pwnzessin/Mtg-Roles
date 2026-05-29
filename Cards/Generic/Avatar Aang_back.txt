@@ -1,0 +1,11 @@
+<COLOR>C</COLOR>
+<TITLE>Aang, Master of Elements</TITLE>
+<TYPE>Legendary Creature — Avatar Ally</TYPE>
+<SETCODE>TLA M</SETCODE>
+<PT>6/6</PT>
+<RULES>
+Flying
+Spells you cast cost {w}{u}{b}{r}{g} less to cast. (This can reduce generic costs.)
+At the beginning of each upkeep, you may transform Aang, Master of Elements. If you do, you gain 4 life, draw four cards, put four +1/+1 counters on him, and he deals 4 damage to each opponent.
+</RULES>
+<ARTIST>Fahmi Fauzi</ARTIST>

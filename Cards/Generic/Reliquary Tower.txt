@@ -1,0 +1,9 @@
+<COLOR>L</COLOR>
+<TITLE>Reliquary Tower</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>SOC U</SETCODE>
+<RULES>
+You have no maximum hand size.
+{t}: Add {c}.
+</RULES>
+<ARTIST>Jesper Ejsing</ARTIST>

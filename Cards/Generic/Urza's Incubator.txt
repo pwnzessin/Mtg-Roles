@@ -1,0 +1,10 @@
+<COLOR>A</COLOR>
+<TITLE>Urza's Incubator</TITLE>
+<MANA>{3}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>MH3 R</SETCODE>
+<RULES>
+As this artifact enters, choose a creature type.
+Creature spells of the chosen type cost {2} less to cast.
+</RULES>
+<ARTIST>Grzegorz Rutkowski</ARTIST>

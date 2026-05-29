@@ -1,0 +1,10 @@
+<COLOR>G</COLOR>
+<TITLE>Plated Slagwurm</TITLE>
+<MANA>{4}{G}{G}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>GVL R</SETCODE>
+<PT>8/8</PT>
+<RULES>
+Hexproof (This creature can't be the target of spells or abilities your opponents control.)
+</RULES>
+<ARTIST>Justin Sweet</ARTIST>

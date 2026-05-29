@@ -1,0 +1,10 @@
+<COLOR>R</COLOR>
+<TITLE>Brass's Tunnel-Grinder</TITLE>
+<MANA>{2}{R}</MANA>
+<TYPE>Legendary Artifact</TYPE>
+<SETCODE>LCI R</SETCODE>
+<RULES>
+When Brass's Tunnel-Grinder enters, discard any number of cards, then draw that many cards plus one.
+At the beginning of your end step, if you descended this turn, put a bore counter on Brass's Tunnel-Grinder. Then if there are three or more bore counters on it, remove those counters and transform it. (You descended if a permanent card was put into your graveyard from anywhere.)
+</RULES>
+<ARTIST>Cristi Balanescu</ARTIST>

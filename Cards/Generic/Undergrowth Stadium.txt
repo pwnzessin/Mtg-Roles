@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Undergrowth Stadium</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>TMC R</SETCODE>
+<RULES>
+This land enters tapped unless you have two or more opponents.
+{t}: Add {b} or {g}.
+</RULES>
+<ARTIST>Gabriel Tanko</ARTIST>

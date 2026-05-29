@@ -1,0 +1,9 @@
+<COLOR>B</COLOR>
+<TITLE>Bottomless Pit</TITLE>
+<MANA>{1}{B}{B}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>STH U</SETCODE>
+<RULES>
+At the beginning of each player's upkeep, that player discards a card at random.
+</RULES>
+<ARTIST>Kev Walker</ARTIST>

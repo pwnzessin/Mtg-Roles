@@ -1,0 +1,9 @@
+<COLOR>G</COLOR>
+<TITLE>Dryad Arbor</TITLE>
+<TYPE>Land Creature — Forest Dryad</TYPE>
+<SETCODE>DSC R</SETCODE>
+<PT>1/1</PT>
+<RULES>
+(This land isn't a spell, it's affected by summoning sickness, and it has "{t}: Add {g}.")
+</RULES>
+<ARTIST>Eric Fortune</ARTIST>

@@ -1,0 +1,9 @@
+<COLOR>M</COLOR>
+<TITLE>Spectator Seating</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>CMM R</SETCODE>
+<RULES>
+This land enters tapped unless you have two or more opponents.
+{t}: Add {r} or {w}.
+</RULES>
+<ARTIST>Ravenna Tran</ARTIST>

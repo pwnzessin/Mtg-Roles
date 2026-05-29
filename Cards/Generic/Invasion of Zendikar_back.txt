@@ -1,0 +1,11 @@
+<COLOR>G</COLOR>
+<TITLE>Awakened Skyclave</TITLE>
+<TYPE>Creature — Elemental</TYPE>
+<SETCODE>MOM U</SETCODE>
+<PT>4/4</PT>
+<RULES>
+Vigilance, haste
+As long as this creature is on the battlefield, it's a land in addition to its other types.
+{t}: Add one mana of any color.
+</RULES>
+<ARTIST>Diego Gisbert</ARTIST>

@@ -1,0 +1,12 @@
+<COLOR>M</COLOR>
+<TITLE>Tovolar, Dire Overlord</TITLE>
+<MANA>{1}{R}{G}</MANA>
+<TYPE>Legendary Creature — Human Werewolf</TYPE>
+<SETCODE>MID R</SETCODE>
+<PT>3/3</PT>
+<RULES>
+Whenever a Wolf or Werewolf you control deals combat damage to a player, draw a card.
+At the beginning of your upkeep, if you control three or more Wolves and/or Werewolves, it becomes night. Then transform any number of Human Werewolves you control.
+Daybound
+</RULES>
+<ARTIST>Chris Rahn</ARTIST>

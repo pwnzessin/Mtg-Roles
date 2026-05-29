@@ -1,0 +1,8 @@
+<COLOR>R</COLOR>
+<TITLE>Mountain</TITLE>
+<TYPE>Basic Land — Mountain</TYPE>
+<SETCODE>HOB C</SETCODE>
+<RULES>
+({t}: Add {r}.)
+</RULES>
+<ARTIST>WFlemming Illustration</ARTIST>

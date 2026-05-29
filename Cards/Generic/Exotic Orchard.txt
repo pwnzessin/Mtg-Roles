@@ -1,0 +1,8 @@
+<COLOR>M</COLOR>
+<TITLE>Exotic Orchard</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>SOC R</SETCODE>
+<RULES>
+{t}: Add one mana of any color that a land an opponent controls could produce.
+</RULES>
+<ARTIST>Ron Spears</ARTIST>

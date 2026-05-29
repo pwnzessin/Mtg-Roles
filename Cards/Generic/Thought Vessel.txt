@@ -7,7 +7,4 @@
 You have no maximum hand size.
 {t}: Add {c}.
 </RULES>
-<FLAVOR>
-Infinite possibilities contained in a finite space.
-</FLAVOR>
 <ARTIST>rk post</ARTIST>

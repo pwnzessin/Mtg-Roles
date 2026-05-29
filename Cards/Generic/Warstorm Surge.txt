@@ -1,0 +1,9 @@
+<COLOR>R</COLOR>
+<TITLE>Warstorm Surge</TITLE>
+<MANA>{5}{R}</MANA>
+<TYPE>Enchantment</TYPE>
+<SETCODE>CLB R</SETCODE>
+<RULES>
+Whenever a creature you control enters, it deals damage equal to its power to any target.
+</RULES>
+<ARTIST>Raymond Swanland</ARTIST>

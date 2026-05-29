@@ -1,0 +1,10 @@
+<COLOR>M</COLOR>
+<TITLE>Twisted Landscape</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>MH3 C</SETCODE>
+<RULES>
+{t}: Add {c}.
+{t}, Sacrifice this land: Search your library for a basic Swamp, Mountain, or Forest card, put it onto the battlefield tapped, then shuffle.
+Cycling {b}{r}{g} ({b}{r}{g}, Discard this card: Draw a card.)
+</RULES>
+<ARTIST>Piotr Dura</ARTIST>

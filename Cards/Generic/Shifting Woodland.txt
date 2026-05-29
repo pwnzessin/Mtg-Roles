@@ -1,0 +1,10 @@
+<COLOR>G</COLOR>
+<TITLE>Shifting Woodland</TITLE>
+<TYPE>Land</TYPE>
+<SETCODE>MH3 R</SETCODE>
+<RULES>
+This land enters tapped unless you control a Forest.
+{t}: Add {g}.
+Delirium — {2}{g}{g}: This land becomes a copy of target permanent card in your graveyard until end of turn. Activate only if there are four or more card types among cards in your graveyard.
+</RULES>
+<ARTIST>Josu Hernaiz</ARTIST>

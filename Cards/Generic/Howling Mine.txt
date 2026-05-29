@@ -1,0 +1,9 @@
+<COLOR>A</COLOR>
+<TITLE>Howling Mine</TITLE>
+<MANA>{2}</MANA>
+<TYPE>Artifact</TYPE>
+<SETCODE>C16 R</SETCODE>
+<RULES>
+At the beginning of each player's draw step, if this artifact is untapped, that player draws an additional card.
+</RULES>
+<ARTIST>Ralph Horsley</ARTIST>

@@ -1,0 +1,12 @@
+<COLOR>G</COLOR>
+<TITLE>Elderscale Wurm</TITLE>
+<MANA>{4}{G}{G}{G}</MANA>
+<TYPE>Creature — Wurm</TYPE>
+<SETCODE>M13 M</SETCODE>
+<PT>7/7</PT>
+<RULES>
+Trample
+When this creature enters, if your life total is less than 7, your life total becomes 7.
+As long as you have 7 or more life, damage that would reduce your life total to less than 7 reduces it to 7 instead.
+</RULES>
+<ARTIST>Richard Wright</ARTIST>
