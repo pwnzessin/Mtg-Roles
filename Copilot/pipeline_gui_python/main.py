@@ -2,6 +2,7 @@ import sys
 import json
 import html
 import copy
+import math
 import subprocess
 from pathlib import Path
 from PyQt6.QtWidgets import (
@@ -12,7 +13,7 @@ from PyQt6.QtWidgets import (
     QSpinBox, QDoubleSpinBox, QCheckBox, QFormLayout,
 )
 from PyQt6.QtCore import QThread, QTimer, Qt, pyqtSignal
-from PyQt6.QtGui import QColor, QFont, QPainter, QPen, QPixmap
+from PyQt6.QtGui import QColor, QFont, QPainter, QPainterPath, QPen, QPixmap
 
 import theme
 import highlighter as _hl
@@ -342,6 +343,78 @@ class PipelineThread(QThread):
             self.finished_signal.emit(1)
 
 
+class AnimatedRunButton(QPushButton):
+    """Run button that shows a sine wave sweeping left-to-right while the pipeline is running.
+
+    The animation starts automatically when the button is disabled and stops when re-enabled,
+    so no extra call-sites are needed beyond the existing setEnabled(False/True) calls.
+    """
+
+    _INTERVAL = 25    # ms between frames  (~40 fps)
+    _SPEED    = 0.10  # phase increment per frame
+    _FREQ     = 0.6   # sine cycles visible across the button width
+    _ALPHA    = 50    # wave overlay opacity (0–255)
+
+    def __init__(self, text, parent=None):
+        super().__init__(text, parent)
+        self._phase     = 0.0
+        self._animating = False
+        self._anim_timer = QTimer(self)
+        self._anim_timer.setInterval(self._INTERVAL)
+        self._anim_timer.timeout.connect(self._tick)
+
+    # ── public ────────────────────────────────────────────────────────────
+
+    def setEnabled(self, enabled: bool):
+        super().setEnabled(enabled)
+        if not enabled:
+            self._start()
+        else:
+            self._stop()
+
+    # ── internals ─────────────────────────────────────────────────────────
+
+    def _start(self):
+        self._animating = True
+        self._phase = 0.0
+        self._anim_timer.start()
+
+    def _stop(self):
+        self._animating = False
+        self._anim_timer.stop()
+        self.update()
+
+    def _tick(self):
+        self._phase = (self._phase + self._SPEED) % (2 * math.pi)
+        self.update()
+
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        if not self._animating:
+            return
+
+        w, h = self.width(), self.height()
+        amp  = h * 0.28
+
+        # Build the wave-filled region path
+        path = QPainterPath()
+        y0   = h * 0.5 + amp * math.sin(-self._phase)
+        path.moveTo(0.0, y0)
+        for x in range(1, w + 1):
+            t = x / w
+            y = h * 0.5 + amp * math.sin(2 * math.pi * self._FREQ * t - self._phase)
+            path.lineTo(float(x), y)
+        path.lineTo(float(w), float(h))
+        path.lineTo(0.0, float(h))
+        path.closeSubpath()
+
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setClipRect(self.rect())
+        painter.fillPath(path, QColor(127, 179, 41, self._ALPHA))
+        painter.end()
+
+
 class _PipelineTabBase(QWidget):
     """Shared base for Generic and Rolecard pipeline tabs."""
 
@@ -456,7 +529,7 @@ class _PipelineTabBase(QWidget):
         self._init_extra_ui(root)
 
         # Run button
-        self.run_btn = QPushButton(self.RUN_LABEL)
+        self.run_btn = AnimatedRunButton(self.RUN_LABEL)
         self.run_btn.setMinimumHeight(38)
         self.run_btn.setObjectName("runButton")
         self.run_btn.clicked.connect(self._run_pipeline)
@@ -759,6 +832,12 @@ class GenericPipelineTab(_PipelineTabBase):
             _FieldDef("generate.dryRun", "Dry Run (Generate)", "bool",
                       "Log which cards would be processed, skip rendering."),
             _FieldDef("", "Layouts", "section"),
+            _FieldDef("layouts.default", "Default Frame", "combo",
+                      "Frame style used for all non-basic-land cards.",
+                      options=[
+                          ("standard \u2014 regular M15 frame", "standard"),
+                          ("borderless \u2014 Generic Showcase frame", "borderless"),
+                      ]),
             _FieldDef("layouts.basicLand", "Basic Land Layout", "combo",
                       "Layout used for basic land cards.",
                       options=[

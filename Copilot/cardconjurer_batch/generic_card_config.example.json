@@ -21,8 +21,9 @@
                   "chunkSize":  15
               },
     "layouts":  {
-                    "_comment":  "Per-type layout overrides. basicLand: standard | fullArt",
-                    "basicLand":  "fullart"
+                    "_comment":  "Per-type layout overrides. basicLand: standard | fullArt | borderless. default: standard | borderless",
+                    "basicLand":  "fullart",
+                    "default":    "standard"
                 },
     "generate":  {
                      "outputSubDir":  "output",

@@ -547,6 +547,7 @@ if ($doGenerate) {
     $genHeadless      = [bool]$cfg.generate.headless
     $genLauncher      = [bool]$cfg.generate.startLauncher
     $genBasicLandLayout = if ($cfg.layouts -and $cfg.layouts.basicLand) { [string]$cfg.layouts.basicLand } else { "standard" }
+    $genDefaultLayout   = if ($cfg.layouts -and $cfg.layouts.PSObject.Properties["default"]) { [string]$cfg.layouts.default } else { "standard" }
     $genArtScanDir    = if ($cfg.fetch.artScanDir) { Resolve-ConfigPath $root $cfg.fetch.artScanDir } else { $null }
 
     # Input dir: auto-set when chaining from fetch, otherwise ask
@@ -660,6 +661,7 @@ if ($doGenerate) {
     $cfg.generate.upscaleFactor  = $genUpscaleFactor
     if (-not $cfg.PSObject.Properties["layouts"]) { $cfg | Add-Member -Type NoteProperty -Name "layouts" -Value ([pscustomobject]@{}) }
     $cfg.layouts.basicLand = $genBasicLandLayout
+    if (-not $cfg.layouts.PSObject.Properties["default"]) { $cfg.layouts | Add-Member -Type NoteProperty -Name "default" -Value $genDefaultLayout } else { $cfg.layouts.default = $genDefaultLayout }
 }
 $cfg | ConvertTo-Json -Depth 4 | Set-Content -Path $ConfigFile -Encoding utf8
 Write-Host "  Config saved." -ForegroundColor DarkGray
@@ -668,7 +670,7 @@ Write-Host "  Config saved." -ForegroundColor DarkGray
 
 # Shared helper: build the static part of the generate args
 function Build-GenArgs {
-    param($genInputDir, $genOutputDir, $genArtDir, $genBaseUrl, $genHeadless, $genLauncher, $genOverwrite, $genLimit, $genDryRun, $genBasicLandLayout = "standard")
+    param($genInputDir, $genOutputDir, $genArtDir, $genBaseUrl, $genHeadless, $genLauncher, $genOverwrite, $genLimit, $genDryRun, $genBasicLandLayout = "standard", $genDefaultLayout = "standard")
     $a  = @()
     $a += "--input",          "`"$genInputDir`""
     $a += "--output",         "`"$genOutputDir`""
@@ -678,6 +680,7 @@ function Build-GenArgs {
     $a += "--start-launcher", ($genLauncher.ToString().ToLower())
     $a += "--overwrite",      ($genOverwrite.ToString().ToLower())
     $a += "--basic-land-layout", $genBasicLandLayout
+    $a += "--default-layout",    $genDefaultLayout
     if ($genArtScanDir) { $a += "--art-scan-dir", "`"$genArtScanDir`"" }
     if ($genLimit -gt 0) { $a += "--limit", $genLimit }
     if ($genDryRun)      { $a += "--dry-run" }
@@ -743,7 +746,7 @@ if ($useChunked) {
         # Render this chunk (only .txt files newer than $beforeFetch)
         Write-Host ""
 
-        $genArgs  = Build-GenArgs $genInputDir $genOutputDir $genArtDir $genBaseUrl $genHeadless $genLauncher $genOverwrite 0 $genDryRun $genBasicLandLayout
+        $genArgs  = Build-GenArgs $genInputDir $genOutputDir $genArtDir $genBaseUrl $genHeadless $genLauncher $genOverwrite 0 $genDryRun $genBasicLandLayout $genDefaultLayout
         $genArgs += "--newer-than", "`"$beforeFetch`""
 
         $genCmd = "node `"$generateScript`" $($genArgs -join ' ')"
@@ -813,7 +816,7 @@ if ($useChunked) {
             New-Item -ItemType Directory -Force -Path $genOutputDir | Out-Null
         }
 
-        $genArgs  = Build-GenArgs $genInputDir $genOutputDir $genArtDir $genBaseUrl $genHeadless $genLauncher $genOverwrite $genLimit $genDryRun $genBasicLandLayout
+        $genArgs  = Build-GenArgs $genInputDir $genOutputDir $genArtDir $genBaseUrl $genHeadless $genLauncher $genOverwrite $genLimit $genDryRun $genBasicLandLayout $genDefaultLayout
         if ($doFetch) {
             # In fetch+render mode, only render .txt files created/updated in this run.
             $genArgs += "--newer-than", "`"$beforeFetchIso`""
@@ -831,7 +834,7 @@ if ($useChunked) {
                 Write-Host ""
                 Write-Host "  Render failed (exit $firstRenderExit). Retrying once with launcher disabled..." -ForegroundColor Yellow
 
-                $retryGenArgs = Build-GenArgs $genInputDir $genOutputDir $genArtDir $genBaseUrl $genHeadless $false $genOverwrite $genLimit $genDryRun $genBasicLandLayout
+                $retryGenArgs = Build-GenArgs $genInputDir $genOutputDir $genArtDir $genBaseUrl $genHeadless $false $genOverwrite $genLimit $genDryRun $genBasicLandLayout $genDefaultLayout
                 if ($doFetch) {
                     $retryGenArgs += "--newer-than", "`"$beforeFetchIso`""
                 }

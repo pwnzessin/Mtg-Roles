@@ -14,14 +14,15 @@
                   "upscaleEngine":  "auto",
                   "upscaleFactor":  2,
                   "overwrite":  true,
-                  "downloadArt":  true,
+                  "downloadArt":  false,
                   "includeFlavor":  false,
                   "dryRun":  false,
                   "chunkSize":  15
               },
     "layouts":  {
                     "_comment":  "Per-type layout overrides. basicLand: standard | fullArt",
-                    "basicLand":  "fullart"
+                    "basicLand":  "fullart",
+                    "default":  "borderless"
                 },
     "generate":  {
                      "outputSubDir":  "output",

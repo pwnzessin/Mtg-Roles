@@ -1,14 +1,30 @@
 Generic card batch report
-Generated: 2026-05-29T20:38:32.537Z
+Generated: 2026-05-29T22:12:55.778Z
 Input: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic
 Output: C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output
 
-Total parsed cards: 1
-Cards in run queue: 1
+Total parsed cards: 17
+Cards in run queue: 17
 Dry run: false
 
-OK | Winter, Misanthropic Guide.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Winter, Misanthropic Guide.png
+OK | Farseek.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Farseek.png
+OK | Fellwar Stone.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Fellwar Stone.png
+OK | Font of Mythos.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Font of Mythos.png
+OK | Forest_1.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Forest_1.png
+OK | Forest_2.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Forest_2.png
+OK | Geth's Grimoire.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Geth's Grimoire.png
+OK | Gnat Miser.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Gnat Miser.png
+OK | Golgari Signet.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Golgari Signet.png
+OK | Great Furnace.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Great Furnace.png
+OK | Ignoble Hierarch.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Ignoble Hierarch.png
+OK | Invasion of Ergamon.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Ergamon.png
+OK | Invasion of Ergamon_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Ergamon_back.png
+OK | Invasion of Zendikar.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Zendikar.png
+OK | Invasion of Zendikar_back.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Invasion of Zendikar_back.png
+OK | Jeska's Will.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Jeska's Will.png
+OK | Kroxa, Titan of Death's Hunger.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Kroxa, Titan of Death's Hunger.png
+OK | Lightning Greaves.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\Generic\output\Lightning Greaves.png
 
-Generated:        1
+Generated:        17
 Skipped (exists): 0
 Failed:           0

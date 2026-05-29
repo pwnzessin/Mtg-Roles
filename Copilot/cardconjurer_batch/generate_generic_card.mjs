@@ -16,6 +16,34 @@ const M15_MASKS = [
 
 const M15_PT_BOUNDS = { x: 0.7573, y: 0.8848, width: 0.188, height: 0.0733 };
 
+// ── Borderless (Generic Showcase) frame constants ──────────────────────────────
+
+const BORDERLESS_FRAMES = {
+  W: { name: "White Frame",        src: "/img/frames/m15/borderless/m15GenericShowcaseFrameW.png" },
+  U: { name: "Blue Frame",         src: "/img/frames/m15/borderless/m15GenericShowcaseFrameU.png" },
+  B: { name: "Black Frame",        src: "/img/frames/m15/borderless/m15GenericShowcaseFrameB.png" },
+  R: { name: "Red Frame",          src: "/img/frames/m15/borderless/m15GenericShowcaseFrameR.png" },
+  G: { name: "Green Frame",        src: "/img/frames/m15/borderless/m15GenericShowcaseFrameG.png" },
+  M: { name: "Multicolored Frame", src: "/img/frames/m15/borderless/m15GenericShowcaseFrameM.png" },
+  A: { name: "Artifact Frame",     src: "/img/frames/m15/borderless/m15GenericShowcaseFrameA.png" },
+  L: { name: "Land Frame",         src: "/img/frames/m15/borderless/m15GenericShowcaseFrameL.png" },
+  C: { name: "Colorless Frame",    src: "/img/frames/m15/borderless/m15GenericShowcaseFrameC.png" },
+};
+
+const BORDERLESS_PT = {
+  W: { name: "White PT",        src: "/img/frames/m15/borderless/pt/w.png" },
+  U: { name: "Blue PT",         src: "/img/frames/m15/borderless/pt/u.png" },
+  B: { name: "Black PT",        src: "/img/frames/m15/borderless/pt/b.png" },
+  R: { name: "Red PT",          src: "/img/frames/m15/borderless/pt/r.png" },
+  G: { name: "Green PT",        src: "/img/frames/m15/borderless/pt/g.png" },
+  M: { name: "Multicolored PT", src: "/img/frames/m15/borderless/pt/m.png" },
+  A: { name: "Artifact PT",     src: "/img/frames/m15/borderless/pt/a.png" },
+  C: { name: "Colorless PT",    src: "/img/frames/m15/borderless/pt/c.png" },
+  L: { name: "Land PT",         src: "/img/frames/m15/borderless/pt/l.png" },
+};
+
+const BORDERLESS_PT_BOUNDS = { x: 1191 / 1500, y: 1954 / 2100, width: 205 / 1500, height: 78 / 2100 };
+
 const COLOR_FRAMES = {
   W: { name: "White Frame",       src: "/img/frames/m15/regular/m15FrameW.png" },
   U: { name: "Blue Frame",        src: "/img/frames/m15/regular/m15FrameU.png" },
@@ -69,6 +97,7 @@ function parseArgs(argv) {
     limit: 0,
     newerThan: null,
     basicLandLayout: "standard",
+    defaultLayout:   "standard",
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -86,6 +115,7 @@ function parseArgs(argv) {
     else if (arg === "--limit" && next)    { opts.limit = Number.parseInt(next, 10) || 0; i += 1; }
     else if (arg === "--newer-than" && next) { opts.newerThan = next; i += 1; }
     else if (arg === "--basic-land-layout" && next) { opts.basicLandLayout = next; i += 1; }
+    else if (arg === "--default-layout" && next)    { opts.defaultLayout = next; i += 1; }
   }
 
   return opts;
@@ -335,6 +365,92 @@ function buildCardObject(baseUrl, c, layouts = {}) {
           text:    `{bold}${c.typeLine || ""}{/bold}`,
           x:       0.0854, y: 0.5664, width: 0.8292, height: 0.0543,
           oneLine: true, font: "belerenb", size: 0.0324, color: "white",
+        },
+      },
+    };
+  }
+
+  // ── Borderless (Generic Showcase) ──────────────────────────────────────────
+  if ((layouts.default || "").toLowerCase() === "borderless") {
+    const ck = c.color in BORDERLESS_FRAMES ? c.color : "W";
+    const blFrames = [];
+    if (c.pt && ck in BORDERLESS_PT) {
+      blFrames.push({ ...BORDERLESS_PT[ck], bounds: BORDERLESS_PT_BOUNDS, masks: [] });
+    }
+    blFrames.push({ ...BORDERLESS_FRAMES[ck], masks: [] });
+
+    let blRulesText = c.rules || "";
+    if (c.flavor) { blRulesText = `${blRulesText}\n{flavor}\n${c.flavor}`; }
+
+    return {
+      ...commonInfo,
+      version:        "m15Regular",
+      onload:         null,
+      showsFlavorBar: !!c.flavor,
+      frames:          blFrames,
+      artBounds:       { x: 0, y: 0, width: 1, height: 1936 / 2100 },
+      setSymbolBounds: { x: 0.9213, y: 0.594, width: 0.12, height: 0.041, vertical: "center", horizontal: "right" },
+      text: {
+        mana: {
+          name:        "Mana Cost",
+          text:        c.mana || "",
+          y:           0.0613,
+          width:       0.9292,
+          height:      71 / 2100,
+          oneLine:     true,
+          size:        71 / 1638,
+          align:       "right",
+          shadowX:     -0.001,
+          shadowY:     0.0029,
+          manaCost:    true,
+          manaSpacing: 0,
+        },
+        title: {
+          name:    "Title",
+          text:    `{bold}${c.title || ""}{/bold}`,
+          x:       126 / 1500,
+          y:       125 / 2100,
+          width:   1248 / 1500,
+          height:  80 / 2100,
+          oneLine: true,
+          font:    "belerenb",
+          size:    80 / 2100,
+          color:   "white",
+        },
+        type: {
+          name:    "Type",
+          text:    `{bold}${c.typeLine || ""}{/bold}`,
+          x:       126 / 1500,
+          y:       1214 / 2100,
+          width:   1248 / 1500,
+          height:  68 / 2100,
+          oneLine: true,
+          font:    "belerenb",
+          size:    68 / 2100,
+          color:   "white",
+        },
+        rules: {
+          name:   "Rules Text",
+          text:   blRulesText,
+          x:      135 / 1500,
+          y:      1305 / 2100,
+          width:  1230 / 1500,
+          height: 555 / 2100,
+          size:   74 / 2100,
+          color:  "white",
+        },
+        pt: {
+          name:    "Power/Toughness",
+          text:    `{bold}${c.pt || ""}{/bold}`,
+          x:       1191 / 1500,
+          y:       1954 / 2100,
+          width:   205 / 1500,
+          height:  78 / 2100,
+          size:    78 / 2100,
+          font:    "belerenbsc",
+          oneLine: true,
+          align:   "center",
+          color:   "white",
         },
       },
     };
@@ -694,7 +810,7 @@ async function main() {
       }
 
       try {
-        const cardObj = buildCardObject(opts.baseUrl, c, { basicLand: opts.basicLandLayout });
+        const cardObj = buildCardObject(opts.baseUrl, c, { basicLand: opts.basicLandLayout, default: opts.defaultLayout });
 
         // Load card from localStorage and immediately re-trigger set symbol with
         // the 'resetSetSymbol' flag so it auto-positions from setSymbolBounds.
