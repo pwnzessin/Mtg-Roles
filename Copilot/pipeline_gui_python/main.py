@@ -1776,7 +1776,7 @@ class SplashScreen(QWidget):
         self._status_lbl.setStyleSheet(
             "color: #d4af37;"
             "background: transparent;"
-            "font-size: 11px;"
+            "font-size: 16px;"
         )
         root.addWidget(self._status_lbl)
 
