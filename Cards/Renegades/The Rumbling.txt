@@ -4,6 +4,6 @@
 <RULES>
 Unveil only during your end step. As an additional cost, sacrifice all creatures you control.  
 When The Rumbling is unveiled, each nontoken permanent you control becomes a 9/9 Golem artifact creature with trample and reach. They lose all other card types and abilities.  
-{flavor}I will put an end to this world — Eren Jaeger
+{flavor}"I will put an end to this world" — Eren Jaeger
 
 </RULES>

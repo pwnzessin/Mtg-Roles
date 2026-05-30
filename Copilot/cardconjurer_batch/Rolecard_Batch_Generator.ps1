@@ -40,6 +40,7 @@ function Read-RoleSelection {
         "2" = "Bandits"
         "3" = "Guardians"
         "4" = "Kings"
+        "5" = "Renegades"
     }
 
     while ($true) {
@@ -49,6 +50,7 @@ function Read-RoleSelection {
         Write-Host "  2. Bandits"
         Write-Host "  3. Guardians"
         Write-Host "  4. Kings"
+        Write-Host "  5. Renegades"
         $inputRaw = Read-Host "Enter comma-separated numbers or A for all"
 
         if ([string]::IsNullOrWhiteSpace($inputRaw)) {
@@ -57,7 +59,7 @@ function Read-RoleSelection {
 
         $trimmed = $inputRaw.Trim()
         if ($trimmed -match "^[Aa]$") {
-            return @("Assassins", "Bandits", "Guardians", "Kings")
+            return @("Assassins", "Bandits", "Guardians", "Kings", "Renegades")
         }
 
         $parts = @($trimmed.Split(",") | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" })
@@ -541,10 +543,10 @@ Ensure-NodeAndDeps -BatchDir $batchDir
 if ($Yes -or -not [string]::IsNullOrWhiteSpace($Roles)) {
     $rolesInput = if ([string]::IsNullOrWhiteSpace($Roles)) { 'A' } else { $Roles.Trim() }
     if ($rolesInput -match '^[Aa]$') {
-        [string[]]$roles = @('Assassins', 'Bandits', 'Guardians', 'Kings')
+        [string[]]$roles = @('Assassins', 'Bandits', 'Guardians', 'Kings', 'Renegades')
     } else {
-        $roleNameMap = @{ '1'='Assassins'; '2'='Bandits'; '3'='Guardians'; '4'='Kings';
-                          'Assassins'='Assassins'; 'Bandits'='Bandits'; 'Guardians'='Guardians'; 'Kings'='Kings' }
+        $roleNameMap = @{ '1'='Assassins'; '2'='Bandits'; '3'='Guardians'; '4'='Kings'; '5'='Renegades';
+                          'Assassins'='Assassins'; 'Bandits'='Bandits'; 'Guardians'='Guardians'; 'Kings'='Kings'; 'Renegades'='Renegades' }
         [string[]]$roles = @($rolesInput -split ',' | ForEach-Object { $_.Trim() } | ForEach-Object {
             if ($roleNameMap.ContainsKey($_)) { $roleNameMap[$_] } else { $_ }
         } | Where-Object { $_ -ne '' } | Select-Object -Unique)

@@ -871,12 +871,13 @@ class RolecardPipelineTab(_PipelineTabBase):
             "Bandits",
             "Guardians",
             "Kings",
+            "Renegades",
         ])
         root.addWidget(self.role_combo)
 
     def _extra_run_args(self):
         idx = self.role_combo.currentIndex()
-        role_values = ["A", "Assassins", "Bandits", "Guardians", "Kings"]
+        role_values = ["A", "Assassins", "Bandits", "Guardians", "Kings", "Renegades"]
         return ["-Roles", role_values[idx], "-Yes"]
 
     def _open_help(self):

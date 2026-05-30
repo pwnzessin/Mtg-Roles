@@ -1,5 +1,5 @@
 Assassin:PD3 c
 King:v11 r 0.195
 Bandit:ktk m 0.35
-Renegade:2xm m
+Renegade:2xm m 0.45
 Guardian:clb u 0.245

@@ -1,7 +1,0 @@
-<TITLE>Wrath of doG</TITLE>
-<ROLE>Renegade</ROLE>
-<SETCODE>2xm m</SETCODE>
-<RULES>
-Unveil as a sorcery: put a buried counter on all nontoken creatures (they become lands with tap: add {C} and lose all other card types and abilities).  
-{20}: You win the game.
-</RULES>

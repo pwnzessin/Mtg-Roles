@@ -1,0 +1,29 @@
+CardConjurer batch report for role folder: Renegades
+Generated: 2026-05-30T21:12:26.075Z
+
+Total parsed cards: 18
+Cards in run queue: 18
+Dry run: false
+
+OK | Ah shit, here we go again.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\Ah shit, here we go again.png
+OK | Behold the Beheld Beholder.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\Behold the Beheld Beholder.png
+OK | It's just a prank BRO.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\It's just a prank BRO.png
+OK | Mully, Good King Mulldrifter.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\Mully, Good King Mulldrifter.png
+OK | The Aggro Magnet.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Aggro Magnet.png
+OK | The Covenant.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Covenant.png
+OK | The Demonstrator.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Demonstrator.png
+OK | The English Patient Zero.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The English Patient Zero.png
+OK | The GOAT.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The GOAT.png
+OK | The Illusionist.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Illusionist.png
+OK | The Lifebender.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Lifebender.png
+OK | The Mommy.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Mommy.png
+OK | The Necromancer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Necromancer.png
+OK | The Party Rock Anthem.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Party Rock Anthem.png
+OK | The Rumbling.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Rumbling.png
+OK | The Substitute Teacher.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Substitute Teacher.png
+OK | The Truther or Darer.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\The Truther or Darer.png
+OK | Viktor I. Winkontroll.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Renegades\Viktor I. Winkontroll.png
+
+Generated: 18
+Skipped existing: 0
+Failed: 0
