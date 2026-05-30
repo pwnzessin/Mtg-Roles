@@ -1,4 +1,4 @@
-<TITLE>Gyro BULWARK</TITLE>
+<TITLE>BULWARK</TITLE>
 <ROLE>Token Artifact Creature {-} Gyro</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>0/5</PT>

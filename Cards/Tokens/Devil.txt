@@ -3,6 +3,7 @@
 <SETCODE>UNMAPPED</SETCODE>
 <PT>1/1</PT>
 <COLOR>Red</COLOR>
+<COPIES>4</COPIES>
 <RULES>
 When this creature dies, choose a player at random. That player exiles cards from the top of their library until they exile a nonland card. You may put that card into their graveyard.
 </RULES>

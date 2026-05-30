@@ -3,6 +3,7 @@
 <SETCODE>UNMAPPED</SETCODE>
 <PT>2/2</PT>
 <COLOR>Green</COLOR>
+<COPIES>3</COPIES>
 <RULES>
 Haste
 {T}: This creature deals damage equal to its power to target creature. If a creature dealt damage this way dies this turn, put a +1/+1 counter on this creature.

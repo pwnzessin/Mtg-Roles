@@ -2,6 +2,7 @@
 <ROLE>Token Creature {-} Elemental</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>1/1</PT>
+<COPIES>2</COPIES>
 <COLOR>Green</COLOR>
 <RULES>
 Haste

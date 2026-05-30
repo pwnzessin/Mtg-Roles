@@ -1,8 +1,9 @@
-<TITLE>White Elemental</TITLE>
+<TITLE>Elemental</TITLE>
 <ROLE>Token Creature {-} Elemental</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>0/3</PT>
 <COLOR>White</COLOR>
+<COPIES>2</COPIES>
 <RULES>
 Defender
 </RULES>

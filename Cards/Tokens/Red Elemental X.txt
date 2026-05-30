@@ -1,4 +1,4 @@
-<TITLE>Red Elemental X</TITLE>
+<TITLE>Elemental</TITLE>
 <ROLE>Token Creature {-} Elemental</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>X/X</PT>

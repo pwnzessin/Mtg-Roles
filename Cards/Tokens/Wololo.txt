@@ -2,6 +2,7 @@
 <ROLE>Token Enchantment {-} Aura</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <COLOR>White</COLOR>
+<COPIES>8</COPIES>
 <RULES>
 Enchant creature
 Enchanted creature can't attack unless its controller cites the bible (full verse with name from memory) or pays {3}.

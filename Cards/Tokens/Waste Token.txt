@@ -1,4 +1,4 @@
-<TITLE>Waste Token</TITLE>
+<TITLE>Waste</TITLE>
 <ROLE>Token Land {-} Waste</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <COLOR>Colorless</COLOR>

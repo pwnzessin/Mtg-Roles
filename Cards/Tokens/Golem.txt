@@ -2,6 +2,7 @@
 <ROLE>Token Artifact Creature {-} Golem</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>3/3</PT>
+<COPIES>2</COPIES>
 <COLOR>Artifact</COLOR>
 <RULES>
 </RULES>

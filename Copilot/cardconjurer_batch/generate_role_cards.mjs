@@ -62,13 +62,19 @@ function parseTaggedCardFile(raw, filePath) {
   }
 
   const artYPosMatch = raw.match(/<ART_YPOS>([\s\S]*?)<\/ART_YPOS>/i);
+  const copiesMatch = raw.match(/<COPIES>([\s\S]*?)<\/COPIES>/i);
+  const ptMatch = raw.match(/<PT>([\s\S]*?)<\/PT>/i);
+  const colorMatch = raw.match(/<COLOR>([\s\S]*?)<\/COLOR>/i);
 
   return {
     title: titleMatch[1].trim(),
     role: roleMatch[1].trim(),
     setCode: setCodeMatch ? setCodeMatch[1].trim() : "",
     rules: rulesMatch[1].trim(),
-    artYPos: artYPosMatch ? parseFloat(artYPosMatch[1].trim()) : null
+    artYPos: artYPosMatch ? parseFloat(artYPosMatch[1].trim()) : null,
+    copies: copiesMatch ? Math.max(1, parseInt(copiesMatch[1].trim(), 10) || 1) : 1,
+    pt: ptMatch ? ptMatch[1].trim() : "",
+    color: colorMatch ? colorMatch[1].trim() : ""
   };
 }
 
@@ -162,6 +168,26 @@ function loadRoleSetCodes(setCodesPath) {
 
 function slugifyForUrl(p) {
   return p.split(path.sep).join("/");
+}
+
+function colorToFramePaths(color) {
+  const norm = (color || "").toLowerCase().trim();
+  const letterMap = {
+    white: "W", blue: "U", black: "B", red: "R", green: "G",
+    multicolor: "M", multi: "M", gold: "M",
+    artifact: "A", land: "L"
+  };
+  if (norm === "colorless") {
+    return {
+      main: "/img/frames/token/regular/frameC.png",
+      pt: "/img/frames/m15/regular/m15PTC.png"
+    };
+  }
+  const letter = letterMap[norm] || "M";
+  return {
+    main: `/img/frames/token/regular/tokenFrame${letter}Regular.png`,
+    pt: `/img/frames/m15/regular/m15PT${letter}.png`
+  };
 }
 
 function findArtworkByStem(artDir, stem) {
@@ -356,28 +382,60 @@ async function main() {
     const effectiveSetCode = parsed.setCode || roleDefaultSetCode;
     const parsedSetInfo = parseSetCodeInfo(effectiveSetCode);
     const stem = path.parse(filePath).name;
+    const copies = parsed.copies;
 
-    const artSrcPath = findArtworkByStem(artworksRoleDir, stem);
-    let artUrl = "";
-    if (artSrcPath) {
-      const destPath = path.join(localArtOutDir, `${stem}.png`);
-      fs.copyFileSync(artSrcPath, destPath);
-      artUrl = "/" + slugifyForUrl(path.relative(cardConjurerRoot, destPath));
+    const colorFramePaths = colorToFramePaths(parsed.color);
+
+    if (copies > 1) {
+      for (let i = 1; i <= copies; i++) {
+        const artStem = `${stem}_${i}`;
+        const artSrcPath = findArtworkByStem(artworksRoleDir, artStem);
+        let artUrl = "";
+        if (artSrcPath) {
+          const destPath = path.join(localArtOutDir, `${artStem}.png`);
+          fs.copyFileSync(artSrcPath, destPath);
+          artUrl = "/" + slugifyForUrl(path.relative(cardConjurerRoot, destPath));
+        }
+        cards.push({
+          stem: artStem,
+          filePath,
+          title: parsed.title,
+          role: parsed.role,
+          setCode: parsedSetInfo.setCode,
+          rarity: parsedSetInfo.rarity,
+          number: parsedSetInfo.number,
+          rules: parsed.rules,
+          artUrl,
+          artYPos: parsed.artYPos,
+          pt: parsed.pt,
+          colorFramePaths,
+          outputPath: path.join(generatedOutDir, `${artStem}.png`)
+        });
+      }
+    } else {
+      const artSrcPath = findArtworkByStem(artworksRoleDir, stem);
+      let artUrl = "";
+      if (artSrcPath) {
+        const destPath = path.join(localArtOutDir, `${stem}.png`);
+        fs.copyFileSync(artSrcPath, destPath);
+        artUrl = "/" + slugifyForUrl(path.relative(cardConjurerRoot, destPath));
+      }
+      cards.push({
+        stem,
+        filePath,
+        title: parsed.title,
+        role: parsed.role,
+        setCode: parsedSetInfo.setCode,
+        rarity: parsedSetInfo.rarity,
+        number: parsedSetInfo.number,
+        rules: parsed.rules,
+        artUrl,
+        artYPos: parsed.artYPos,
+        pt: parsed.pt,
+        colorFramePaths,
+        outputPath: path.join(generatedOutDir, `${stem}.png`)
+      });
     }
-
-    cards.push({
-      stem,
-      filePath,
-      title: parsed.title,
-      role: parsed.role,
-      setCode: parsedSetInfo.setCode,
-      rarity: parsedSetInfo.rarity,
-      number: parsedSetInfo.number,
-      rules: parsed.rules,
-      artUrl,
-      artYPos: parsed.artYPos,
-      outputPath: path.join(generatedOutDir, `${stem}.png`)
-    });
   }
 
   const queue = opts.limit > 0 ? cards.slice(0, opts.limit) : cards;
@@ -498,7 +556,33 @@ async function main() {
             card.text.reminder.text = "";
           }
           if (card.text?.pt) {
-            card.text.pt.text = "";
+            card.text.pt.text = payload.pt || "";
+          }
+
+          // Swap color-specific frames when colorFramePaths is provided.
+          if (payload.colorFramePaths && Array.isArray(card.frames)) {
+            // If no PT, remove the PT frame (index 1) so the box doesn't render.
+            if (!payload.pt) {
+              card.frames = card.frames.filter((f) => !f.name.includes("Power/Toughness"));
+            } else if (card.frames[1]) {
+              // Swap PT frame to the correct color.
+              card.frames[1].src = payload.colorFramePaths.pt;
+              card.frames[1].name = card.frames[1].name.replace(/^\S+/, payload.colorFramePaths.pt.split("/").pop().replace(".png", ""));
+              const ptImg = new Image();
+              ptImg.crossOrigin = "anonymous";
+              ptImg.onload = () => { if (typeof window.drawFrames === "function") window.drawFrames(); };
+              ptImg.src = payload.colorFramePaths.pt;
+              card.frames[1].image = ptImg;
+            }
+            // Swap main color frame (index 0).
+            if (card.frames[0]) {
+              card.frames[0].src = payload.colorFramePaths.main;
+              const mainImg = new Image();
+              mainImg.crossOrigin = "anonymous";
+              mainImg.onload = () => { if (typeof window.drawFrames === "function") window.drawFrames(); };
+              mainImg.src = payload.colorFramePaths.main;
+              card.frames[0].image = mainImg;
+            }
           }
 
           const infoSet = document.querySelector("#info-set");
@@ -552,6 +636,8 @@ async function main() {
         });
 
         await page.waitForFunction(() => window.art && window.art.complete && window.art.naturalWidth > 0, null, { timeout: 15000 });
+        // Wait for any re-swapped frame images to finish loading.
+        await page.waitForFunction(() => card.frames.every((frame) => !frame.image || (frame.image.complete && frame.image.naturalWidth > 0)), null, { timeout: 15000 });
         await page.waitForTimeout(700);
 
         if (c.artYPos !== null && !isNaN(c.artYPos)) {

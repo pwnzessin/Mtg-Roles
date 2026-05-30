@@ -1,4 +1,4 @@
-<TITLE>Gyro PURGE</TITLE>
+<TITLE>PURGE</TITLE>
 <ROLE>Token Artifact Creature {-} Gyro</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>0/2</PT>

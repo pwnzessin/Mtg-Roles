@@ -1,0 +1,13 @@
+CardConjurer batch report for role folder: Tokens
+Generated: 2026-05-30T23:11:22.726Z
+
+Total parsed cards: 104
+Cards in run queue: 2
+Dry run: false
+
+OK | Assassin Berserker.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Tokens\Assassin Berserker.png
+OK | Black Goat.txt | C:\Users\hecke\Desktop\Mtg-Roles\Cards\templates\Tokens\Black Goat_1.png
+
+Generated: 2
+Skipped existing: 0
+Failed: 0

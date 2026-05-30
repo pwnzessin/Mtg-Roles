@@ -1,4 +1,4 @@
-<TITLE>Swamp Token</TITLE>
+<TITLE>Swamp</TITLE>
 <ROLE>Token Land {-} Swamp</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <COLOR>Black</COLOR>

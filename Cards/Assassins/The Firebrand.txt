@@ -1,7 +1,7 @@
 <TITLE>The Firebrand</TITLE>
 <ROLE>Assassin</ROLE>
 <SETCODE>PD3 c</SETCODE>
-<ART_YPOS>0.02</ART_YPOS>
+<ART_YPOS>0.01</ART_YPOS>
 <RULES>
 When The Firebrand is unveiled, each player exiles their hand and the top card of their library, then draws that many cards minus 1.
 Deal damage equal to the total mana value of cards exiled this way to all creatures and Planeswalkers.

@@ -1,8 +1,9 @@
-<TITLE>Red Goat</TITLE>
+<TITLE>Goat</TITLE>
 <ROLE>Token Creature {-} Goat</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>0/1</PT>
 <COLOR>Red</COLOR>
+<COPIES>2</COPIES>
 <RULES>
 Defender, reach
 </RULES>

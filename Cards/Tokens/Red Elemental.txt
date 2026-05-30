@@ -1,8 +1,9 @@
-<TITLE>Red Elemental</TITLE>
+<TITLE>Elemental</TITLE>
 <ROLE>Token Creature {-} Elemental</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>2/1</PT>
 <COLOR>Red</COLOR>
+<COPIES>2</COPIES>
 <RULES>
 Flying
 </RULES>

@@ -1,4 +1,4 @@
-<TITLE>Gyro BLAST</TITLE>
+<TITLE>BLAST</TITLE>
 <ROLE>Token Artifact Creature {-} Gyro</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>5/1</PT>

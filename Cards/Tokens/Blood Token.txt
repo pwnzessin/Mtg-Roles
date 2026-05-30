@@ -2,6 +2,7 @@
 <ROLE>Token Artifact {-} Blood</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <COLOR>Artifact</COLOR>
+<COPIES>2</COPIES>
 <RULES>
 {1}, Discard a card, Sacrifice this artifact: Draw a card.
 </RULES>

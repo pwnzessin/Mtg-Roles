@@ -1,6 +1,9 @@
 # Ignore local CardConjurer source folder
 /cardconjurer-master/
 
+# Ignore token artwork (large generated images)
+Artworks/Tokens/
+
 # Ignore generated PNGs in template subfolders, but keep .jpg output files
 Cards/templates/Assassins/*
 Cards/templates/Bandits/*

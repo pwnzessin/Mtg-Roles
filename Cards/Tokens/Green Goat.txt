@@ -1,7 +1,8 @@
-<TITLE>Green Goat</TITLE>
+<TITLE>Goat</TITLE>
 <ROLE>Token Creature {-} Goat</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <PT>0/1</PT>
+<COPIES>2</COPIES>
 <COLOR>Green</COLOR>
 <RULES>
 Defender, reach

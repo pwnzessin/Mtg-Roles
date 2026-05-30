@@ -1,5 +1,5 @@
-<TITLE>Personal Decoy</TITLE>
-<ROLE>Token Planeswalker {-} Duck</ROLE>
+<TITLE>Ducklganger</TITLE>
+<ROLE>Token Planeswalker {-} Ducklganger</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
 <COLOR></COLOR>
 <RULES>
