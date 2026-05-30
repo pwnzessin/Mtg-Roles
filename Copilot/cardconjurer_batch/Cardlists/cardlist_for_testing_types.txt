@@ -6,23 +6,16 @@
 1 Blood Crypt
 1 Bottomless Pit
 1 Brass's Tunnel-Grinder
-1 Burning Inquiry
 1 Coiling Rebirth
-1 Culling Ritual
 1 Cunning Lethemancer
 1 Dark Deal
 1 Dauthi Voidwalker
 1 Drag to the Roots
 1 Dryad Arbor
 1 Farseek
-1 Fellwar Stone
-1 Font of Mythos
 2 Forest
 1 Geth's Grimoire
 1 Gnat Miser
-1 Golgari Signet
-1 Great Furnace
-1 Ignoble Hierarch
 1 Invasion of Ergamon
 1 Invasion of Zendikar
 1 Jeska's Will
@@ -30,43 +23,15 @@
 1 Lightning Greaves
 1 Liliana, Waker of the Dead
 1 Locust Miser
-1 Luxury Suite
-1 Malakir Rebirth
-1 Master of the Feast
 1 Matzalantli, the Great Door
 1 Mikokoro, Center of the Sea
 1 Mountain
 1 Nature's Lore
 1 Necrogen Mists
 1 On the Trail
-1 Oppression
 1 Peerless Recycling
-1 Rakdos Signet
-1 Rankle, Master of Pranks
-1 Raucous Theater
-1 Reanimate
-1 Reliquary Tower
-1 Spiteful Visions
-1 Stitcher's Supplier
-1 Stomping Ground
 5 Swamp
 1 Syphon Mind
-1 Temple Bell
-1 Thought Vessel
-1 Torment of Hailfire
-1 Tree of Tales
-1 Twisted Landscape
-1 Underground Mortuary
-1 Undergrowth Stadium
-1 Unholy Heat
-1 Urborg, Tomb of Yawgmoth
-1 Valgavoth's Lair
-1 Vault of Whispers
-1 Verdant Catacombs
-1 Waste Not
-1 Wheel of Misfortune
-1 Wrenn and Realmbreaker
 1 Yavimaya, Cradle of Growth
 1 Ziatora's Proving Ground
-1 Zurzoth, Chaos Rider
 1 Winter, Misanthropic Guide

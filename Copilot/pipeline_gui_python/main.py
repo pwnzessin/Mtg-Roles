@@ -579,6 +579,7 @@ class _PipelineTabBase(QWidget):
             new_json = dlg.updated_json()
             self._config_data = json.loads(new_json)
             self.config_preview.setPlainText(new_json)
+            self._save_config()
 
     def _config_schema(self) -> list:
         """Subclass hook: return list of _FieldDef entries for the config editor."""
@@ -729,6 +730,7 @@ class _PipelineTabBase(QWidget):
             extra_args += self._extra_run_args()
 
         self.run_btn.setEnabled(False)
+        self.run_btn.setText("Running Pipeline...")
         self.output_text.clear()
         self.output_text.append("[Pipeline started]\n")
 
@@ -752,6 +754,7 @@ class _PipelineTabBase(QWidget):
 
     def _on_finished(self, exit_code):
         self.run_btn.setEnabled(True)
+        self.run_btn.setText(self.RUN_LABEL)
         if exit_code == 0:
             self.output_text.append("\n[Pipeline completed successfully]")
         else:
@@ -810,6 +813,8 @@ class GenericPipelineTab(_PipelineTabBase):
                       "Overwrite existing .txt and art files."),
             _FieldDef("fetch.downloadArt", "Download Art", "bool",
                       "Download artwork during mode 2 fetch."),
+            _FieldDef("fetch.includeFlavor", "Include Flavor Text", "bool",
+                      "Include the card's flavor text in the fetched .txt file."),
             _FieldDef("fetch.dryRun", "Dry Run (Fetch)", "bool",
                       "Log what would happen but write no files."),
             _FieldDef("fetch.chunkSize", "Chunk Size", "int",
@@ -1550,6 +1555,7 @@ The config file is saved automatically after each pipeline run, persisting your 
   <tr><td>upscaleFactor</td><td>Scale multiplier applied during upscale. Accepted values: <code>2</code> or <code>4</code>.</td></tr>
   <tr><td>overwrite</td><td>Whether to overwrite existing <code>.txt</code> and art files.<br><code>true</code> = always overwrite &nbsp; <code>false</code> = skip already-existing files.</td></tr>
   <tr><td>downloadArt</td><td>Pre-filled default for the &ldquo;Download artwork?&rdquo; prompt shown in mode 2.<br><code>false</code> = fetch <code>.txt</code> only &nbsp; <code>true</code> = fetch <code>.txt</code> + artwork.<br>Always ignored in mode 1 (art is already on disk).</td></tr>
+  <tr><td>includeFlavor</td><td>Include the card&rsquo;s flavor text in the fetched <code>.txt</code> file.<br><code>true</code> = append a <code>&lt;FLAVOR&gt;</code> block &nbsp; <code>false</code> = omit flavor text (default).</td></tr>
   <tr><td>dryRun</td><td>If <code>true</code>, the fetch step logs what it would do but writes no files and makes no Scryfall requests. Useful for testing card lists.</td></tr>
   <tr><td>chunkSize</td><td>Cards per batch when chaining fetch&rarr;render. <code>0</code> disables chunking (fetch all first, then render all). Chunking is useful for large lists to avoid Playwright memory issues.</td></tr>
 </table>
@@ -1571,6 +1577,9 @@ The config file is saved automatically after each pipeline run, persisting your 
 <h4>layouts</h4>
 <p>Per-card-type layout overrides applied during rendering. Each key is a card type; the value selects the visual layout variant for all cards of that type.</p>
 <table>
+  <tr><td>default</td><td>Frame style used for all non-basic-land cards.<br>
+    <code>standard</code> &mdash; regular M15 frame (default).<br>
+    <code>borderless</code> &mdash; Generic Showcase frame with extended art window.</td></tr>
   <tr><td>basicLand</td><td>Layout used for cards whose type line contains &ldquo;Basic&rdquo; (i.e. basic lands only &mdash; Forest, Island, Mountain, Plains, Swamp, Snow-covered variants, etc.).<br>
     <code>standard</code> &mdash; normal M15 frame with a regular art window (default).<br>
     <code>fullArt</code> &mdash; art fills the entire card; the frame is a single full-art overlay from <code>img/frames/m15/new/fullart/</code>.
