@@ -1,0 +1,9 @@
+<TITLE>Fish</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+3/3 blue Fish creature token
+Trample
+When this creature leaves the battlefield, create a Timmy token.
+Created by: The Abysal Prawler
+</RULES>

@@ -1,6 +1,0 @@
-<TITLE>Stealth</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-The Stealth-is-optional guy
-</RULES>

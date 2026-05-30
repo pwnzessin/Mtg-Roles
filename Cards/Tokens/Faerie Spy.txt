@@ -1,0 +1,9 @@
+<TITLE>Faerie Spy</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+1/1 colorless Faerie Spy creature token
+Flying, deathtouch
+Goaded for the rest of the game.
+Created by: The Puppetmaster
+</RULES>

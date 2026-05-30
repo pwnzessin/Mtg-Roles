@@ -1,0 +1,7 @@
+<TITLE>Goblin</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+1/1 red Goblin creature token
+Created by: The Gathering
+</RULES>

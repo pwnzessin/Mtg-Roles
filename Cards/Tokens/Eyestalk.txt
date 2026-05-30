@@ -1,0 +1,8 @@
+<TITLE>Eyestalk</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+0/1 colorless Eye creature token
+Defender, shroud
+Created by: Behold the Beheld Beholder
+</RULES>

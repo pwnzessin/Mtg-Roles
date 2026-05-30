@@ -1,6 +1,0 @@
-<TITLE>oreeeobot_The_Goat-Tank_a_monstrous_fusion_of_iron_war_machine__c2cf93c7-e4e8-441e-8035-9f881e449b5e</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-The GOAT
-</RULES>

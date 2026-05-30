@@ -1,0 +1,8 @@
+<TITLE>Hound - Lifelink</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+1/1 black and red Hound creature token
+Lifelink
+Created by: The Gatekeeper (when Cerberus dies)
+</RULES>

@@ -1,0 +1,10 @@
+<TITLE>Troll</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+5/5 green and white Troll creature token
+Vigilance, reach
+{3}: Regenerate this creature.
+No more than one creature can attack you each combat.
+Created by: The Virtuous Bridge Troll
+</RULES>

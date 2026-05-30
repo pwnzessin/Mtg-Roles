@@ -1,0 +1,8 @@
+<TITLE>Treasure</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+Colorless Treasure artifact token
+{T}, Sacrifice this artifact: Add one mana of any color.
+Created by: Das Alte Lineal, The Chaos Bringer, The Curser, The King over the Scrapyard, The Rummaging Goblin, The Taxer, The Tempest, The Abysal Prawler (via Worm)
+</RULES>

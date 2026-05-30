@@ -1,0 +1,7 @@
+<TITLE>Gingerbread</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+1/1 colorless Food creature token
+Created by: Shrek The Third
+</RULES>

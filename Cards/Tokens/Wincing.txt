@@ -1,0 +1,10 @@
+<TITLE>Wincing</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+Blue Incarnation Avatar creature token
+Flying, shroud
+This creature's power and toughness are each equal to the turn count.
+When this creature enters, draw cards equal to its power.
+Created by: Viktor I. Winkontroll
+</RULES>

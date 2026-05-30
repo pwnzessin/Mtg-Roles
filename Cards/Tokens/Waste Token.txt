@@ -1,0 +1,9 @@
+<TITLE>Waste Token</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+Basic Land — Waste
+(Land token. Enters tapped with a stun counter on it.)
+{T}: Add {C}.
+Created by: The Gathering
+</RULES>

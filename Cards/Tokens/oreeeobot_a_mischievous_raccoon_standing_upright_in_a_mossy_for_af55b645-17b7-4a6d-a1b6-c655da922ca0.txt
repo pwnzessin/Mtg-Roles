@@ -1,6 +1,0 @@
-<TITLE>oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_af55b645-17b7-4a6d-a1b6-c655da922ca0</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-oreeeobot_a_mischievous_raccoon_standing_upright_in_a_mossy_for_af55b645-17b7-4a6d-a1b6-c655da922ca0.png
-</RULES>

@@ -1,0 +1,8 @@
+<TITLE>Green Goat</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+0/1 green Goat creature token
+Defender, reach
+Created by: The Scapegoat
+</RULES>

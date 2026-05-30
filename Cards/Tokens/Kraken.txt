@@ -1,0 +1,8 @@
+<TITLE>Kraken</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+9/9 blue Kraken creature token
+Double strike, trample, ward 2
+Created by: The Abysal Prawler
+</RULES>

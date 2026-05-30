@@ -1,7 +1,0 @@
-<TITLE>Purge</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-* • {indent}PURGE: A 0/2 Gyro artifact creature token with flying and “When this creature enters, you lose all counters.”  
-* • {indent}MEDIC: A 0/1 Gyro artifact creature token with flying and “When this creature enters, you gain 5 life and draw a card.”
-</RULES>

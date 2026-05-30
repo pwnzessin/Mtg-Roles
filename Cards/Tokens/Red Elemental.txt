@@ -1,0 +1,8 @@
+<TITLE>Red Elemental</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+2/1 red Elemental creature token
+Flying
+Created by: The Elementalist
+</RULES>

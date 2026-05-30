@@ -1,6 +1,0 @@
-<TITLE>War_Bear_2</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-War_Bear_2.png
-</RULES>

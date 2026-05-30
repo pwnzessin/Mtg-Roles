@@ -1,0 +1,8 @@
+<TITLE>Black Goat</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+0/1 black Goat creature token
+Defender, reach
+Created by: The Scapegoat
+</RULES>

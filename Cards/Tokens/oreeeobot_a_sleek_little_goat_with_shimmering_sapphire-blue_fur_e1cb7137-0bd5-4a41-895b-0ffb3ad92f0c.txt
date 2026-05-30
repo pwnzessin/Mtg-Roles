@@ -1,6 +1,0 @@
-<TITLE>oreeeobot_a_sleek_little_goat_with_shimmering_sapphire-blue_fur_e1cb7137-0bd5-4a41-895b-0ffb3ad92f0c</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-oreeeobot_a_sleek_little_goat_with_shimmering_sapphire-blue_fur_e1cb7137-0bd5-4a41-895b-0ffb3ad92f0c.png
-</RULES>

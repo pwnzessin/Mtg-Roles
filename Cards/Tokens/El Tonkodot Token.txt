@@ -1,0 +1,9 @@
+<TITLE>El Tonkodot</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+Legendary green 1/1 Ooze creature token
+Reach, trample
+Whenever a Gunk card is discarded or a player mills one or more cards, put a +1/+1 counter on this creature.
+Created by: El tonkodot
+</RULES>

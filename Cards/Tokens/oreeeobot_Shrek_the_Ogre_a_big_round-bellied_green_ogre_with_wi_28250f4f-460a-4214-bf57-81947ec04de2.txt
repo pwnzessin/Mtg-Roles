@@ -1,6 +1,0 @@
-<TITLE>oreeeobot_Shrek_the_Ogre_a_big_round-bellied_green_ogre_with_wi_28250f4f-460a-4214-bf57-81947ec04de2</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-oreeeobot_Shrek_the_Ogre_a_big_round-bellied_green_ogre_with_wi_28250f4f-460a-4214-bf57-81947ec04de2.png
-</RULES>

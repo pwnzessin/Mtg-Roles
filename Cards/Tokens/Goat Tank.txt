@@ -1,0 +1,8 @@
+<TITLE>Goat Tank</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+0/4 white Goat Tank creature token
+Defender
+Created by: The Chaos Bringer
+</RULES>

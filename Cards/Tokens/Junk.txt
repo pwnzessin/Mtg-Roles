@@ -1,0 +1,7 @@
+<TITLE>Junk</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+Colorless Junk artifact token
+Created by: The King over the Scrapyard
+</RULES>

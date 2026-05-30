@@ -1,0 +1,10 @@
+<TITLE>Gyro BLAST</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+Tapped 5/1 colorless Gyro artifact creature token
+Flying, haste
+When this creature dies, it deals 5 damage to you and 1 damage to each creature you control.
+Sacrifice this creature at the beginning of your next end step.
+Created by: The Scrapper
+</RULES>

@@ -1,0 +1,9 @@
+<TITLE>Gunk</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+Colorless kindred — Ooze card token (conjured into hand)
+No mana cost. Cycling {4}.
+This card can't be discarded during your end step unless your hand size is less than the number of cards named Gunk in your hand.
+Created by: El tonkodot
+</RULES>

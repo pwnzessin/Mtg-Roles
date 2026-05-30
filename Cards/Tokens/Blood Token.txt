@@ -1,0 +1,8 @@
+<TITLE>Blood Token</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+Colorless Blood artifact token
+{1}, Discard a card, Sacrifice this artifact: Draw a card.
+Created by: The Midnight Lady
+</RULES>

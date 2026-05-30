@@ -1,0 +1,8 @@
+<TITLE>White Elemental</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+0/3 white Elemental creature token
+Defender
+Created by: The Elementalist
+</RULES>

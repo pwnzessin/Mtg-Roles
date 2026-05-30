@@ -1,0 +1,9 @@
+<TITLE>Gyro BULWARK</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+0/5 colorless Gyro artifact creature token
+Flying, defender
+When this creature enters, you gain hexproof until the end of your next turn.
+Created by: The Scrapper
+</RULES>

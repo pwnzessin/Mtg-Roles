@@ -1,6 +1,0 @@
-<TITLE>oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_3fa162ce-b149-46f3-b05b-1e2c231df7f8</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-oreeeobot_A_colossal_humanoid_titan_marching_across_a_shattered_3fa162ce-b149-46f3-b05b-1e2c231df7f8.png
-</RULES>

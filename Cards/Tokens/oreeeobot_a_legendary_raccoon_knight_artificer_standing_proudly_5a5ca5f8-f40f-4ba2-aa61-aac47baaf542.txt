@@ -1,6 +1,0 @@
-<TITLE>oreeeobot_a_legendary_raccoon_knight_artificer_standing_proudly_5a5ca5f8-f40f-4ba2-aa61-aac47baaf542</TITLE>
-<ROLE>Token</ROLE>
-<SETCODE>UNMAPPED</SETCODE>
-<RULES>
-oreeeobot_a_legendary_raccoon_knight_artificer_standing_proudly_5a5ca5f8-f40f-4ba2-aa61-aac47baaf542.png
-</RULES>

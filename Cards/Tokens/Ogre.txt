@@ -1,0 +1,8 @@
+<TITLE>Ogre</TITLE>
+<ROLE>Token</ROLE>
+<SETCODE>UNMAPPED</SETCODE>
+<RULES>
+4/4 green Ogre creature token
+Renown 2
+Created by: Shrek The Third
+</RULES>
