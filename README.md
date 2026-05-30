@@ -123,6 +123,87 @@ Use mode 2 when you already have artwork on disk and only need card data fetched
 
 ---
 
+## Art Generation Pipeline
+
+`Copilot/cardconjurer_batch/generate_art_pipeline.ps1` generates artwork for each card in a card list and saves the images to a chosen output folder, ready to be used as card art by the rendering pipeline.
+
+Two providers are supported — selected via the **`model`** key in `art_gen_config.json`:
+
+| `model` value | Provider | Notes |
+|---|---|---|
+| `midjourney` | Midjourney via Discord self-bot | High quality; requires your Discord user token and a channel where the Midjourney bot is active |
+| `black-forest-labs/FLUX.1-schnell` (or any HF model ID) | HuggingFace Inference API | Free tier available; set `apiToken` to a `hf_…` token |
+
+### Running
+
+```powershell
+cd Copilot\cardconjurer_batch
+.\generate_art_pipeline.ps1
+```
+
+Or use the **Art Generation** tab in the CardWeaver GUI (see below).
+
+### Configuration
+
+Default values live in `Copilot/cardconjurer_batch/art_gen_config.json` (gitignored — copy from the template if missing):
+
+| Key | Default | Description |
+|---|---|---|
+| `model` | `"midjourney"` | Provider/model. `"midjourney"` uses Midjourney; any other value is a HuggingFace model ID |
+| `cardlistsDir` | `Copilot\cardconjurer_batch\Cardlists` | Folder scanned for card list `.txt` files |
+| `outputDir` | `Artworks\Generated` | Folder where generated art images are saved |
+| `style` | _(see file)_ | Art style descriptor appended to every prompt |
+| `prefix` | _(empty)_ | Optional text prepended to every prompt before the card name |
+| `overwrite` | `true` | Regenerate even if output file already exists |
+| `concurrency` | `1` | Simultaneous requests (keep `1` for Midjourney) |
+| `dryRun` | `false` | Print prompts without downloading images |
+| `width` | `1008` | Output width in pixels (HuggingFace only) |
+| `height` | `1184` | Output height in pixels (HuggingFace only) |
+| `seed` | `null` | Integer seed for reproducibility (HuggingFace only) |
+| `apiToken` | _(empty)_ | HuggingFace API token (`hf_…`); or set `HF_TOKEN` env var |
+| `discordToken` | _(empty)_ | Discord user token for Midjourney (browser DevTools → Network → `Authorization` header) |
+| `discordChannelId` | _(empty)_ | Discord channel ID where the Midjourney bot is active |
+| `discordGuildId` | _(empty)_ | Discord server ID containing the Midjourney channel |
+
+Midjourney prompts are automatically sent with `--ar 6:7` to match the card art aspect ratio.
+
+---
+
+## CardWeaver GUI
+
+`Copilot/pipeline_gui_python/dist/CardWeaver.exe` is a standalone desktop GUI for running all pipeline tasks without using the command line.
+
+### Tabs
+
+| Tab | Pipeline script |
+|---|---|
+| Generic Pipeline | `generic_card_pipeline.ps1` |
+| Rolecard Pipeline | `role_card_pipeline.ps1` |
+| Art Generation | `generate_art_pipeline.ps1` |
+
+### Quick start
+
+Double-click `Copilot/pipeline_gui_python/dist/CardWeaver.exe` — no Python installation required.
+
+To run from source or rebuild the executable:
+
+```bash
+cd Copilot\pipeline_gui_python
+python -m pip install PyQt6==6.7.1
+python main.py          # run from source
+python build.py         # rebuild dist\CardWeaver.exe
+```
+
+### Config editor
+
+Each tab has a **Config** button that opens a dialog to edit all settings for that pipeline. For the Art Generation tab, the dialog has three sections:
+
+- **General** — model (combo box with Midjourney and HuggingFace presets, or type any HF model ID), paths, style, and generation options
+- **HuggingFace** — API token
+- **Midjourney** — Discord token, channel ID, and guild ID
+
+---
+
 ## Generic Card File Format
 
 Cards in `Cards/Generic/` use a simpler format than role cards. Flavor text is stored in a separate `<FLAVOR>` tag; the pipeline appends it to the rules text with the `{flavor}` marker when rendering.

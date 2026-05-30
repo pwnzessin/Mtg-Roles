@@ -4,10 +4,10 @@ A modern, standalone GUI for running MTG Roles pipeline tasks (Generic and Rolec
 
 ## Features
 
-- **Two Pipeline Tabs**: Generic Card Pipeline & Rolecard Pipeline
+- **Three Pipeline Tabs**: Generic Card Pipeline, Rolecard Pipeline & Art Generation
 - **Modern Design**: Lichess-inspired, clean aesthetic
 - **Theme Support**: Dark mode (default) & Light mode toggle
-- **Config Management**: Load/Save pipeline configurations
+- **Config Management**: Load/Save pipeline configurations with a per-tab config editor dialog
 - **Directory Browsing**: Easy file/folder selection
 - **Live Output**: Real-time pipeline execution logs
 - **Responsive UI**: Pipeline execution runs on background thread
@@ -87,6 +87,18 @@ Name your artwork files exactly after the card (e.g. `Lightning Bolt.jpg`) and p
 
 Same workflow as Generic Pipeline, but for rolecard-specific rendering.
 
+### Art Generation
+
+1. **Select Tab**: Click "Art Generation" tab.
+2. **Load Config**: Browse to `Copilot/cardconjurer_batch/art_gen_config.json`.
+3. **Choose a card list** or type individual card names.
+4. **Run**: Click "Run Art Generation Pipeline".
+5. **Monitor**: Watch real-time output in the log area.
+
+To change the provider, click **Config** and use the **Model** combo box:
+- Select `midjourney` to use Midjourney (fill in the Midjourney tab with your Discord credentials).
+- Select or type a HuggingFace model ID (fill in the HuggingFace tab with your API token).
+
 ### Theme Toggle
 
 - Click **☀️ Light Mode** (dark mode) or **🌙 Dark Mode** (light mode) button in top-right
@@ -98,6 +110,7 @@ The GUI calls these PowerShell scripts:
 
 - Generic: `Copilot/cardconjurer_batch/generic_card_pipeline.ps1`
 - Rolecard: `Copilot/cardconjurer_batch/role_card_pipeline.ps1`
+- Art Generation: `Copilot/cardconjurer_batch/generate_art_pipeline.ps1` (Node.js worker: `generate_art.mjs`)
 
 Both must be present and executable.
 
