@@ -42,7 +42,7 @@ const BORDERLESS_PT = {
   L: { name: "Land PT",         src: "/img/frames/m15/borderless/pt/l.png" },
 };
 
-const BORDERLESS_PT_BOUNDS = { x: 1191 / 1500, y: 1954 / 2100, width: 205 / 1500, height: 78 / 2100 };
+const BORDERLESS_PT_BOUNDS = { x: 1146 / 1500, y: 1861 / 2100, width: 274 / 1500, height: 140 / 2100 };
 
 const COLOR_FRAMES = {
   W: { name: "White Frame",       src: "/img/frames/m15/regular/m15FrameW.png" },
@@ -378,6 +378,11 @@ function buildCardObject(baseUrl, c, layouts = {}) {
       blFrames.push({ ...BORDERLESS_PT[ck], bounds: BORDERLESS_PT_BOUNDS, masks: [] });
     }
     blFrames.push({ ...BORDERLESS_FRAMES[ck], masks: [] });
+    // No border extension frame: borderlessBorderExtension.png is mostly transparent and only
+    // adds small black shapes at the bottom corners, which causes asymmetric borders (art fills
+    // top/left/right margins but not the bottom margin → thick black only at the bottom).
+    // The showcase frame PNG already contains all visual chrome. page.evaluate() provides
+    // equal black borders on all 4 sides (same as fullart land).
 
     let blRulesText = c.rules || "";
     if (c.flavor) { blRulesText = `${blRulesText}\n{flavor}\n${c.flavor}`; }
@@ -388,8 +393,8 @@ function buildCardObject(baseUrl, c, layouts = {}) {
       onload:         null,
       showsFlavorBar: !!c.flavor,
       frames:          blFrames,
-      artBounds:       { x: 0, y: 0, width: 1, height: 1936 / 2100 },
-      setSymbolBounds: { x: 0.9213, y: 0.594, width: 0.12, height: 0.041, vertical: "center", horizontal: "right" },
+      artBounds:       { x: 0, y: 0, width: 1, height: 0.9224 },
+      setSymbolBounds: { x: 0.9213, y: 0.5910, width: 0.12, height: 0.0410, vertical: "center", horizontal: "right" },
       text: {
         mana: {
           name:        "Mana Cost",
@@ -408,45 +413,45 @@ function buildCardObject(baseUrl, c, layouts = {}) {
         title: {
           name:    "Title",
           text:    `{bold}${c.title || ""}{/bold}`,
-          x:       126 / 1500,
-          y:       125 / 2100,
-          width:   1248 / 1500,
-          height:  80 / 2100,
+          x:       0.0854,
+          y:       0.0522,
+          width:   0.8292,
+          height:  0.0543,
           oneLine: true,
           font:    "belerenb",
-          size:    80 / 2100,
+          size:    0.0381,
           color:   "white",
         },
         type: {
           name:    "Type",
           text:    `{bold}${c.typeLine || ""}{/bold}`,
-          x:       126 / 1500,
-          y:       1214 / 2100,
-          width:   1248 / 1500,
-          height:  68 / 2100,
+          x:       0.0854,
+          y:       0.5664,
+          width:   0.8292,
+          height:  0.0543,
           oneLine: true,
           font:    "belerenb",
-          size:    68 / 2100,
+          size:    0.0324,
           color:   "white",
         },
         rules: {
           name:   "Rules Text",
           text:   blRulesText,
-          x:      135 / 1500,
-          y:      1305 / 2100,
-          width:  1230 / 1500,
-          height: 555 / 2100,
-          size:   74 / 2100,
+          x:      0.086,
+          y:      0.6303,
+          width:  0.828,
+          height: 0.2875,
+          size:   0.0362,
           color:  "white",
         },
         pt: {
           name:    "Power/Toughness",
           text:    `{bold}${c.pt || ""}{/bold}`,
-          x:       1191 / 1500,
-          y:       1954 / 2100,
-          width:   205 / 1500,
-          height:  78 / 2100,
-          size:    78 / 2100,
+          x:       0.7928,
+          y:       0.902,
+          width:   0.1367,
+          height:  0.0372,
+          size:    0.0372,
           font:    "belerenbsc",
           oneLine: true,
           align:   "center",
