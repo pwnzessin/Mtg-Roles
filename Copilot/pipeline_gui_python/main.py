@@ -25,10 +25,10 @@ import pipeline
 class _FieldDef:
     """Schema definition for a single field in the config editor dialog."""
 
-    __slots__ = ("key", "label", "ftype", "desc", "options", "min_val", "max_val", "nullable")
+    __slots__ = ("key", "label", "ftype", "desc", "options", "min_val", "max_val", "nullable", "editable")
 
     def __init__(self, key, label, ftype, desc="", options=None,
-                 min_val=0, max_val=99999, nullable=False):
+                 min_val=0, max_val=99999, nullable=False, editable=False):
         self.key      = key
         self.label    = label
         self.ftype    = ftype      # "str" | "bool" | "int" | "float" | "combo" | "section"
@@ -37,6 +37,7 @@ class _FieldDef:
         self.min_val  = min_val
         self.max_val  = max_val
         self.nullable = nullable
+        self.editable = editable   # combo: allow free-text entry in addition to preset choices
 
 
 def _nested_get(d: dict, dotted_key: str):
@@ -170,10 +171,14 @@ class ConfigEditorDialog(QDialog):
             w = QComboBox()
             for disp, _ in fd.options:
                 w.addItem(disp)
-            for i, (_, val) in enumerate(fd.options):
-                if val == current:
-                    w.setCurrentIndex(i)
-                    break
+            if fd.editable:
+                w.setEditable(True)
+                w.setCurrentText(str(current) if current is not None else "")
+            else:
+                for i, (_, val) in enumerate(fd.options):
+                    if val == current:
+                        w.setCurrentIndex(i)
+                        break
             return w
 
         if fd.ftype in ("dir", "file"):
@@ -234,8 +239,12 @@ class ConfigEditorDialog(QDialog):
             elif fd.ftype == "float":
                 val = w.value()
             elif fd.ftype == "combo":
-                idx = w.currentIndex()
-                val = fd.options[idx][1] if 0 <= idx < len(fd.options) else None
+                if fd.editable:
+                    val = w.currentText().strip()
+                    val = None if (fd.nullable and val == "") else val
+                else:
+                    idx = w.currentIndex()
+                    val = fd.options[idx][1] if 0 <= idx < len(fd.options) else None
             elif fd.ftype in ("dir", "file"):
                 t   = self._text_refs[fd.key].text().strip()
                 val = None if (fd.nullable and t == "") else t
@@ -1201,10 +1210,15 @@ class ArtGenerationTab(_PipelineTabBase):
     def _config_schema(self):
         return [
             _FieldDef("", "General", "section"),
-            _FieldDef("apiToken", "API Token", "str",
-                      "HuggingFace API token (hf_...). Leave blank to use HF_TOKEN env var."),
-            _FieldDef("model", "Model", "str",
-                      "HuggingFace model ID (e.g. black-forest-labs/FLUX.1-schnell)."),
+            _FieldDef("model", "Model", "combo",
+                      "AI provider / model. Select Midjourney or a HuggingFace model ID.",
+                      options=[
+                          ("midjourney",                             "midjourney"),
+                          ("FLUX.1-schnell  (HF, fast)",            "black-forest-labs/FLUX.1-schnell"),
+                          ("FLUX.1-dev  (HF, quality)",             "black-forest-labs/FLUX.1-dev"),
+                          ("stable-diffusion-xl-base-1.0  (HF)",   "stabilityai/stable-diffusion-xl-base-1.0"),
+                      ],
+                      editable=True),
             _FieldDef("cardlistsDir", "Card Lists Dir", "dir",
                       "Workspace-relative folder scanned for card list .txt files."),
             _FieldDef("outputDir", "Output Dir", "dir",
@@ -1216,17 +1230,27 @@ class ArtGenerationTab(_PipelineTabBase):
             _FieldDef("overwrite", "Overwrite", "bool",
                       "Regenerate art even if output file already exists."),
             _FieldDef("concurrency", "Concurrency", "int",
-                      "Simultaneous HuggingFace requests. Keep at 1 to avoid rate limits.",
+                      "Simultaneous requests. Keep at 1 for Midjourney to avoid rate limits.",
                       min_val=1, max_val=10),
             _FieldDef("dryRun", "Dry Run", "bool",
                       "Print prompts without downloading images."),
             _FieldDef("width", "Width (px)", "int",
-                      "Output image width in pixels.", min_val=64, max_val=2048),
+                      "Output image width in pixels (HuggingFace only).", min_val=64, max_val=2048),
             _FieldDef("height", "Height (px)", "int",
-                      "Output image height in pixels.", min_val=64, max_val=2048),
+                      "Output image height in pixels (HuggingFace only).", min_val=64, max_val=2048),
             _FieldDef("seed", "Seed", "int",
                       "Integer seed for reproducibility. Set to 0 (shown as 'none / auto') for a random result.",
                       min_val=0, max_val=2147483647, nullable=True),
+            _FieldDef("", "HuggingFace", "section"),
+            _FieldDef("apiToken", "API Token", "str",
+                      "HuggingFace API token (hf_...). Leave blank to use HF_TOKEN env var."),
+            _FieldDef("", "Midjourney", "section"),
+            _FieldDef("discordToken", "Discord Token", "str",
+                      "Discord user token (browser DevTools → Network tab → Authorization header)."),
+            _FieldDef("discordChannelId", "Channel ID", "str",
+                      "ID of the Discord channel where the Midjourney bot is active."),
+            _FieldDef("discordGuildId", "Guild ID", "str",
+                      "ID of the Discord server (guild) containing the Midjourney channel."),
         ]
 
 
@@ -1264,18 +1288,34 @@ class ArtGenerationHelpDialog(QDialog):
   p     { margin: 4px 0 10px; }
 </style>
 <h3>Art Generation Pipeline &mdash; Config Reference</h3>
-<p>Generates card artwork via the <b>HuggingFace Inference API</b> (free tier).<br>
-Set <code>apiToken</code> to a free token from
-<a href="https://huggingface.co/settings/tokens">huggingface.co/settings/tokens</a>.<br>
+<p>Generates card artwork via <b>Midjourney</b> (Discord self-bot) or the <b>HuggingFace Inference API</b>.<br>
+Select the provider in the <b>Model</b> combo box — choosing <code>midjourney</code> uses Midjourney,
+any other value is treated as a HuggingFace model ID.<br>
 Edit values directly in the JSON preview, then click <b>Save</b>.</p>
 
-<h4>Authentication</h4>
+<h4>Provider / Model</h4>
 <table>
-  <tr><td>apiToken</td><td>Your HuggingFace API token (<code>hf_...</code>). Required for image generation.<br>
+  <tr><td>model</td><td>AI provider and model.<br>
+    <b><code>midjourney</code></b> — use Midjourney via Discord self-bot (requires Discord credentials below).<br>
+    Any other value is treated as a HuggingFace model ID, e.g. <code>black-forest-labs/FLUX.1-schnell</code>.<br>
+    You can type a custom HuggingFace model ID directly into the combo box.</td></tr>
+</table>
+
+<h4>HuggingFace Authentication</h4>
+<table>
+  <tr><td>apiToken</td><td>Your HuggingFace API token (<code>hf_...</code>). Required when model is a HuggingFace ID.<br>
     Get a free read-access token at <code>https://huggingface.co/settings/tokens</code>.<br>
     Alternatively, set the <code>HF_TOKEN</code> environment variable and leave this blank.</td></tr>
-  <tr><td>model</td><td>HuggingFace model ID to use for generation.<br>
-    Default: <code>black-forest-labs/FLUX.1-schnell</code> (fast, free-tier).</td></tr>
+</table>
+
+<h4>Midjourney (Discord)</h4>
+<table>
+  <tr><td>discordToken</td><td>Your Discord <b>user</b> token (not a bot token).<br>
+    Find it in browser DevTools → Network tab → any Discord request → <code>Authorization</code> header.</td></tr>
+  <tr><td>discordChannelId</td><td>ID of the Discord text channel where the Midjourney bot is active.<br>
+    Right-click the channel → <i>Copy Channel ID</i> (Developer Mode must be on).</td></tr>
+  <tr><td>discordGuildId</td><td>ID of the Discord server containing that channel.<br>
+    Right-click the server icon → <i>Copy Server ID</i>.</td></tr>
 </table>
 
 <h4>Paths</h4>

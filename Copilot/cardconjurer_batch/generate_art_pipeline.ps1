@@ -148,34 +148,57 @@ $h      = [int]$cfg.height
 $ow     = [bool]$cfg.overwrite
 $dry    = [bool]$cfg.dryRun
 $seed   = $cfg.seed
-$token  = if ($cfg.PSObject.Properties['apiToken']) { [string]$cfg.apiToken } else { "" }
-$model  = if ($cfg.PSObject.Properties['model']    -and [string]$cfg.model) { [string]$cfg.model } else { "black-forest-labs/FLUX.1-schnell" }
+$token          = if ($cfg.PSObject.Properties['apiToken']) { [string]$cfg.apiToken } else { "" }
+$model          = if ($cfg.PSObject.Properties['model'] -and [string]$cfg.model) { [string]$cfg.model } else { "black-forest-labs/FLUX.1-schnell" }
+$provider       = if ($model -eq "midjourney") { "midjourney" } else { "huggingface" }
+$discordToken   = if ($cfg.PSObject.Properties['discordToken'])     { [string]$cfg.discordToken }     else { "" }
+$discordChannel = if ($cfg.PSObject.Properties['discordChannelId']) { [string]$cfg.discordChannelId } else { "" }
+$discordGuild   = if ($cfg.PSObject.Properties['discordGuildId'])   { [string]$cfg.discordGuildId }   else { "" }
 
-if ([string]::IsNullOrWhiteSpace($token)) {
-    $token = $env:HF_TOKEN
-}
-if ([string]::IsNullOrWhiteSpace($token)) {
-    Write-Error "apiToken is not set in config and HF_TOKEN env var is empty.`nGet a free token at https://huggingface.co/settings/tokens"
+if ($provider -eq "huggingface") {
+    if ([string]::IsNullOrWhiteSpace($token)) { $token = $env:HF_TOKEN }
+    if ([string]::IsNullOrWhiteSpace($token)) {
+        Write-Error "apiToken is not set in config and HF_TOKEN env var is empty.`nGet a free token at https://huggingface.co/settings/tokens"
+        exit 1
+    }
+} elseif ($provider -eq "midjourney") {
+    if ([string]::IsNullOrWhiteSpace($discordToken)) { $discordToken = $env:DISCORD_TOKEN }
+    if ([string]::IsNullOrWhiteSpace($discordToken)) {
+        Write-Error "discordToken is not set in config and DISCORD_TOKEN env var is empty."
+        exit 1
+    }
+    if ([string]::IsNullOrWhiteSpace($discordChannel)) {
+        Write-Error "discordChannelId is not set in art_gen_config.json."
+        exit 1
+    }
+    if ([string]::IsNullOrWhiteSpace($discordGuild)) {
+        Write-Error "discordGuildId is not set in art_gen_config.json."
+        exit 1
+    }
+} else {
+    Write-Error "Unknown provider '$provider'. Valid values: huggingface, midjourney"
     exit 1
 }
 
 if (-not $Yes) {
     Write-Host ""
-    Write-Host "  Output : $outDir"
-    Write-Host "  Style  : $style"
+    Write-Host "  Provider: $provider"
+    Write-Host "  Output  : $outDir"
+    Write-Host "  Style   : $style"
+    if ($provider -eq "midjourney") {
+        Write-Host "  Channel : $discordChannel"
+        Write-Host "  Guild   : $discordGuild"
+    }
     $confirm = Read-Host "  Proceed? [Y/n]"
     if ($confirm -imatch '^(n|no)$') { Write-Host "Aborted."; exit 0 }
 }
 
-$nodeArgs = $nodeInput + @(
-    "--output",      $outDir,
-    "--token",       $token,
-    "--model",       $model,
-    "--style",       $style,
-    "--concurrency", $conc,
-    "--width",       $w,
-    "--height",      $h
-)
+$nodeArgs = $nodeInput + @("--output", $outDir, "--model", $model, "--style", $style, "--concurrency", $conc)
+if ($provider -eq "huggingface") {
+    $nodeArgs += @("--token", $token, "--width", $w, "--height", $h)
+} elseif ($provider -eq "midjourney") {
+    $nodeArgs += @("--discord-token", $discordToken, "--discord-channel", $discordChannel, "--discord-guild", $discordGuild)
+}
 if ($prefix)                               { $nodeArgs += @("--prefix",  $prefix) }
 if ($ow)                                   { $nodeArgs += "--overwrite" }
 if ($dry)                                  { $nodeArgs += "--dry-run" }
