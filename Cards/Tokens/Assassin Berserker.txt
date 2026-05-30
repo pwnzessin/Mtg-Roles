@@ -1,10 +1,10 @@
 <TITLE>Assassin Berserker</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Assassin Berserker</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>*/1</PT>
+<COLOR></COLOR>
 <RULES>
-*/1 green Assassin Berserker creature token
 Trample
 This creature's power is equal to the number of lands you control.
 Ward — Pay * life.
-Created by: The Stealth is optional guy
 </RULES>

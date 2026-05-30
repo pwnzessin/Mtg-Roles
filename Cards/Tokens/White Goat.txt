@@ -1,8 +1,8 @@
 <TITLE>White Goat</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Goat</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>0/1</PT>
+<COLOR>White</COLOR>
 <RULES>
-0/1 white Goat creature token
 Defender, reach
-Created by: The Scapegoat
 </RULES>

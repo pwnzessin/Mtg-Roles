@@ -1,9 +1,9 @@
 <TITLE>Worm</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Worm</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>1/1</PT>
+<COLOR>Blue</COLOR>
 <RULES>
-1/1 blue Worm creature token
 When this creature deals combat damage to a player, create a Treasure token.
 When this creature leaves the battlefield, create a Fish token.
-Created by: The Abysal Prawler
 </RULES>

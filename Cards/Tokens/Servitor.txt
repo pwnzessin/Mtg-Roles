@@ -1,7 +1,7 @@
 <TITLE>Servitor</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact Creature {-} Servitor</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>3/3</PT>
+<COLOR>Artifact</COLOR>
 <RULES>
-3/3 colorless Servitor artifact creature token
-Created by: The King over the Scrapyard
 </RULES>

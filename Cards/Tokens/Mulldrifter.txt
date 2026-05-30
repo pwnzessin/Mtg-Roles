@@ -1,10 +1,10 @@
 <TITLE>Mulldrifter</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Elemental</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>2/2</PT>
+<COLOR>Blue</COLOR>
 <RULES>
-2/2 blue Elemental creature token
 Flying
 When this creature enters, draw 2 cards.
 Evoke {2}{U}
-Created by: Mully, Good King Mulldrifter
 </RULES>

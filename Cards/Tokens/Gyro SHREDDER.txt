@@ -1,8 +1,8 @@
 <TITLE>Gyro SHREDDER</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact Creature {-} Gyro</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>2/4</PT>
+<COLOR>Artifact</COLOR>
 <RULES>
-2/4 colorless Gyro artifact creature token
 Flying, haste, vanishing 3
-Created by: The Scrapper
 </RULES>

@@ -1,9 +1,9 @@
 <TITLE>Gyro PURGE</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact Creature {-} Gyro</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>0/2</PT>
+<COLOR>Artifact</COLOR>
 <RULES>
-0/2 colorless Gyro artifact creature token
 Flying
 When this creature enters, you lose all counters.
-Created by: The Scrapper
 </RULES>

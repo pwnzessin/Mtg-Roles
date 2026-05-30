@@ -1,10 +1,9 @@
 <TITLE>Wololo</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Enchantment {-} Aura</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<COLOR>White</COLOR>
 <RULES>
-White Aura enchantment token
 Enchant creature
 Enchanted creature can't attack unless its controller cites the bible (full verse with name from memory) or pays {3}.
 When two or more Auras named Wololo are attached to enchanted creature, enchanted creature's controller loses control of it and it untaps.
-Created by: The Missionary Priest
 </RULES>

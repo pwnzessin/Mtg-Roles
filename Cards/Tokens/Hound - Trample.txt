@@ -1,8 +1,8 @@
-<TITLE>Hound - Trample</TITLE>
-<ROLE>Token</ROLE>
+<TITLE>Hound</TITLE>
+<ROLE>Token Creature {-} Hound</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>1/1</PT>
+<COLOR>Red, Black</COLOR>
 <RULES>
-1/1 black and red Hound creature token
 Trample
-Created by: The Gatekeeper (when Cerberus dies)
 </RULES>

@@ -1,9 +1,9 @@
 <TITLE>Cerberus</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Hound</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>4/8</PT>
+<COLOR>Red</COLOR>
 <RULES>
-Legendary 4/8 black and red Hound creature token
 Menace, double strike, trample, lifelink
 When this creature dies, create three 1/1 black and red Hound creature tokens — one with double strike, one with trample, and one with lifelink.
-Created by: The Gatekeeper
 </RULES>

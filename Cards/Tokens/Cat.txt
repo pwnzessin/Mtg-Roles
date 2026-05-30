@@ -1,8 +1,8 @@
 <TITLE>Cat</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Cat</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>2/2</PT>
+<COLOR>Red</COLOR>
 <RULES>
-2/2 colorless Cat creature token
 Double strike
-Created by: Shrek The Third
 </RULES>

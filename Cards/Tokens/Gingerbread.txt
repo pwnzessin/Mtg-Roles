@@ -1,7 +1,8 @@
 <TITLE>Gingerbread</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact Creature {-} Food</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>1/1</PT>
+<COLOR>Artifact</COLOR>
 <RULES>
-1/1 colorless Food creature token
-Created by: Shrek The Third
+{2}, {T}, Sacrifice this artifact: You gain 3 life.
 </RULES>

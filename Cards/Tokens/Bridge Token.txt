@@ -1,8 +1,7 @@
 <TITLE>Bridge Token</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Land {-} Bridge</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<COLOR>Colorless</COLOR>
 <RULES>
-Colorless Bridge land token
 {T}: Add {1}.
-Created by: The Virtuous Bridge Troll
 </RULES>

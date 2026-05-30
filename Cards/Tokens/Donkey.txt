@@ -1,8 +1,8 @@
 <TITLE>Donkey</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Donkey</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>1/1</PT>
+<COLOR>White</COLOR>
 <RULES>
-1/1 colorless Donkey creature token
 Flying
-Created by: Shrek The Third
 </RULES>

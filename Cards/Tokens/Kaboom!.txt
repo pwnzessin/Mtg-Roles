@@ -1,8 +1,7 @@
 <TITLE>Kaboom!</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact {-} Kaboom!</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<COLOR>Artifact</COLOR>
 <RULES>
-Colorless artifact token
 {1}, {T}, Sacrifice this artifact: Destroy target nonland permanent. Its controller loses 1 life.
-Created by: The Grenadier
 </RULES>

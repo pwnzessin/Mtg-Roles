@@ -1,8 +1,8 @@
 <TITLE>Raccoon</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Raccoon</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>1/1</PT>
+<COLOR>Green</COLOR>
 <RULES>
-1/1 green Raccoon creature token
 Haste
-Created by: The Thrash Panda
 </RULES>

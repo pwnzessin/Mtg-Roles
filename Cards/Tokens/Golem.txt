@@ -1,7 +1,7 @@
 <TITLE>Golem</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact Creature {-} Golem</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>3/3</PT>
+<COLOR>Artifact</COLOR>
 <RULES>
-3/3 colorless Golem artifact creature token
-Created by: The Golem
 </RULES>

@@ -1,8 +1,6 @@
 <TITLE>Swamp Token</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Land {-} Swamp</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<COLOR>Black</COLOR>
 <RULES>
-Land — Swamp
-(Land token)
-Created by: Shrek The Third
 </RULES>

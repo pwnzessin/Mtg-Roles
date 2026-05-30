@@ -1,7 +1,7 @@
 <TITLE>Soldier</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Soldier</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>1/1</PT>
+<COLOR>White</COLOR>
 <RULES>
-1/1 white Soldier creature token
-Created by: The Taxer
 </RULES>

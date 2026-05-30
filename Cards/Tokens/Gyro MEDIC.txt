@@ -1,9 +1,9 @@
 <TITLE>Gyro MEDIC</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact Creature {-} Gyro</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>0/1</PT>
+<COLOR>Artifact</COLOR>
 <RULES>
-0/1 colorless Gyro artifact creature token
 Flying
 When this creature enters, you gain 5 life and draw a card.
-Created by: The Scrapper
 </RULES>

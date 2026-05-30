@@ -1,7 +1,7 @@
-<TITLE>Blue Elemental</TITLE>
-<ROLE>Token</ROLE>
+<TITLE>Elemental</TITLE>
+<ROLE>Token Creature {-} Elemental</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>1/2</PT>
+<COLOR>Blue</COLOR>
 <RULES>
-1/2 blue Elemental creature token
-Created by: The Elementalist
 </RULES>

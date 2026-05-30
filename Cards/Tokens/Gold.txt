@@ -1,8 +1,7 @@
 <TITLE>Gold</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<COLOR>Artifact</COLOR>
 <RULES>
-Colorless Gold artifact token
 Sacrifice this artifact: Add one mana of any color.
-Created by: The Curser
 </RULES>

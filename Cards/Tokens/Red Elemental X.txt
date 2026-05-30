@@ -1,9 +1,8 @@
 <TITLE>Red Elemental X</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Elemental</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>X/X</PT>
+<COLOR>Red</COLOR>
 <RULES>
-X/X red Elemental creature token
 Haste, trample
-(X = total mana value of permanents destroyed when this token was created)
-Created by: The War Shaman
 </RULES>

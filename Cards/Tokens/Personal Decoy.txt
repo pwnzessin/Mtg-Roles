@@ -1,11 +1,10 @@
 <TITLE>Personal Decoy</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Planeswalker {-} Duck</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<COLOR></COLOR>
 <RULES>
-Planeswalker — Duck token
 Enters with a number of loyalty counters equal to half the King's life total.
 You can't be attacked.
 +1: You gain 1 life.
 -4: You and target player each draw a card.
-Created by: The King's Ducklganger
 </RULES>

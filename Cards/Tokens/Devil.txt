@@ -1,8 +1,8 @@
 <TITLE>Devil</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Devil</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>1/1</PT>
+<COLOR>Red</COLOR>
 <RULES>
-1/1 red Devil creature token
 When this creature dies, choose a player at random. That player exiles cards from the top of their library until they exile a nonland card. You may put that card into their graveyard.
-Created by: The Wildfire devil
 </RULES>

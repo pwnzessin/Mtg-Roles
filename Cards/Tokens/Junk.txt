@@ -1,7 +1,8 @@
 <TITLE>Junk</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Artifact {-} Junk</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<COLOR>Artifact</COLOR>
 <RULES>
-Colorless Junk artifact token
-Created by: The King over the Scrapyard
+{T}, Sacrifice this artifact: Exile the top card of your library.
+You may play that card this turn. Activate only as a sorcery.
 </RULES>

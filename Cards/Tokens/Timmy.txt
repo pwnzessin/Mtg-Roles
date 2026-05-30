@@ -1,9 +1,9 @@
 <TITLE>Timmy</TITLE>
-<ROLE>Token</ROLE>
+<ROLE>Token Creature {-} Whale</ROLE>
 <SETCODE>UNMAPPED</SETCODE>
+<PT>6/6</PT>
+<COLOR>Blue</COLOR>
 <RULES>
-6/6 blue Whale creature token
 Islandwalk, double strike
 When this creature leaves the battlefield, create a Kraken token.
-Created by: The Abysal Prawler
 </RULES>
