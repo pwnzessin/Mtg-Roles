@@ -196,7 +196,7 @@ function Get-GeneratedPathsFromReport {
     }
 
     $paths = New-Object System.Collections.Generic.List[string]
-    foreach ($line in Get-Content -Path $ReportPath) {
+    foreach ($line in Get-Content -Path $ReportPath -Encoding UTF8) {
         if (-not $line.StartsWith("OK | ")) {
             continue
         }
@@ -207,7 +207,7 @@ function Get-GeneratedPathsFromReport {
         }
 
         $outputPath = $parts[2].Trim()
-        if (-not [string]::IsNullOrWhiteSpace($outputPath) -and (Test-Path $outputPath)) {
+        if (-not [string]::IsNullOrWhiteSpace($outputPath) -and (Test-Path -LiteralPath $outputPath)) {
             $paths.Add($outputPath)
         }
     }

@@ -288,7 +288,13 @@ async function fetchCard(name, preferSet) {
       continue;
     }
 
-    const json = await res.json();
+    const rawText = await res.text();
+    let json;
+    try {
+      json = JSON.parse(rawText);
+    } catch {
+      throw new Error(`Non-JSON response (HTTP ${res.status}): ${rawText.slice(0, 200)}`);
+    }
     if (!res.ok) throw new Error(json.details || json.code || `HTTP ${res.status}`);
 
     // Battle cards: keep both faces intact — we build two separate .txt files

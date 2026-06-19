@@ -172,6 +172,7 @@ function slugifyForUrl(p) {
 
 function colorToFramePaths(color) {
   const norm = (color || "").toLowerCase().trim();
+  if (!norm) return null; // No color specified — keep the template's own frame unchanged.
   const letterMap = {
     white: "W", blue: "U", black: "B", red: "R", green: "G",
     multicolor: "M", multi: "M", gold: "M",

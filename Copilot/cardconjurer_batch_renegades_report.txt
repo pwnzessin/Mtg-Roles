@@ -1,5 +1,5 @@
 CardConjurer batch report for role folder: Renegades
-Generated: 2026-05-30T21:12:26.075Z
+Generated: 2026-06-05T19:22:53.478Z
 
 Total parsed cards: 18
 Cards in run queue: 18
